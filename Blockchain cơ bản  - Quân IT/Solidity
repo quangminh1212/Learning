@@ -1,0 +1,74 @@
+I.Hello World
+    . Sử dụng Framework Remix (công cụ của etherium, như 1 playground để hỗ trợ viết smartcontract)
+        . Workspace // nơi tạo ra các màn hình làm việc
+        . contract // nơi chưa các hợp đồng dạng file .sol
+        . test // lưu trữ các test case
+    . Trong lúc gõ có lỗi Remix sễ hỗ trợ compile realtime
+    . Solodity compiler
+        . Autocompile // tự động biên dịch khi gõ
+        . Hide warning // giấu các cảnh báo
+    . Deploy n run transaction
+        . Enviroment // môi trường test EVM 
+        . Account // tài khoản đề test
+        . Contract // hợp đồng muốn test
+II.Biến và kiểu dữ liệu
+    . Variable - Biến (giống các ngôn ngữ static khác)
+        . User Define
+            . bool // true/false
+            . uint // chữ số
+            . address // 1 chuỗi dạng 0x......
+            . bytes32 // chỉ chứa ký tự binary độ lớn 32 byte
+                -> thường dùng để lưu string vì smartcontract xử lý string không tốt
+            . bytes // giống bytes 32, nhưng lưu bao nhiêu sẽ chiếm bấy nhiêu bộ nhớ
+            . mapping(a --> b) // lưu giá trị a vào b
+            . struct User
+                {
+                    uint id;
+                    string name;
+                    bool isFriend;
+                }
+            . enum Color 
+                {
+                    red,
+                    green,
+                    blue
+                }
+        . Build in
+            . msg.sender //người gọi hàm
+            . msg.value //giá trị hàm gọi đó
+III.Hàm và Contructor
+    . Hàm
+        . Định nghĩa tên hàn bằng function ____ (type parameter)
+        . returns() // định nghĩa kiểu dữ liệu trả về
+        . return // trả về dữ liệu
+        . parameter //tham số truyền vào tham số
+        . type // kiểu dữ liệu của tham số
+    . Contructor
+        . Là hàm đặc biệt chỉ chạy 1 lần khi deploy smartcontract
+IV.Functions, variable visibility
+    . Visibility (hàm và biến tương tự nhau)
+        . private // chỉ được gọi trong smartcontract
+        . internal // có thể gọi trong smartcontract này hoặc các smartcontract khác được enharit với nó
+        . external // chỉ được gọi từ bên ngoài, bên trong không được gọi
+        . public // ở đâu cũng gọi được
+    . với biến mặc định là private nếu không khai báo
+        . private trong biến chỉ trong smartcontract này chứ khoogn phải với toàn blockchain
+        . Chỉ cần biết biến deploy ở đâu và đọc đúng slot thì vẫn xem được đó là biến gì
+    . với biến để public thì không cần viết hàm get mà Solodity sẽ tự tạo ra hàm get
+V.Control Structures
+    . if else // check giá trị logic
+    . for // duyệt từng thành phần cho đến khi hết logic
+    . while // chạy vòng lặp khi điều kiện đúng
+    -> hạn chế sử dụng vòng lặp do nếu chạy nhiều quá sẽ khiến chi phí rất contract
+    . nếu sử dụng vượt gas limit thì smartcontract sẽ không bao giờ được thực hiện
+VI.Storage Array 
+    . storage Array
+            . Được lưu trữ trên blockchain
+            . Sẽ có bài toán duyệt array -> tốn phí gas
+            . Khai báo bên ngoài, trong contract
+        . CRUD (create, read, update, delete)
+            . myArray.push
+    . memory Array
+        . Lưu trong bộ nhớ, không tốn gas
+        . Khai báo trong function
+    . array as parameter
