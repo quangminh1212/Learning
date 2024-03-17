@@ -3,11 +3,13 @@ I.Khái niệm DApp
     . Cần kết nối đầu ví đầu tiên để sử dụng DApp
     . DApp không quản lý ví mà các bên thứ 3 sẽ làm điều đó
     . DApp = Frontend giao tiếp với phần mềm quản lý ví để kết nối với smartcontract
+
 II.Cấu trúc DApp
     . Viết smartcontract, deploy lên blockchain
     . Tạo Frontend
     . Giao tiếp với chương trình quản lý ví
     . Giao tiếp với smartcontract thông qua web3 hoặc ether JS
+    
 III.Build DApp
     . Xác định logic smartcontract
     . Code smartcontract
