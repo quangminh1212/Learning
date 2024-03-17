@@ -1,0 +1,9 @@
+Day 1: Giới thiệu
+    . Cần có highlevel overview về cấu trúc - triển khai - vận hành để xử lý những vấn đề sâu hơn
+    . Dùng framework Hass
+    . VN cày code tốt nhưng không làm sâu
+
+Day 2: EIP 721 Standard, the BalanceOf function
+    . Khái niệm cơ bản
+        . Fungibile (có thể trao đổi) 
+        . Non - Fungibile (có thể trao đổi)
