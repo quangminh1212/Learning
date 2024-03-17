@@ -5,6 +5,7 @@ Day 1: Giới thiệu
 
 Day 2: EIP 721 Standard, the BalanceOf function
     . Khái niệm cơ bản
+        . ![Alt text](/Picture/1.1.png)
         . Fungibile (có thể trao đổi) = Interchangeable
         . Non - Fungibile (có thể trao đổi) = Not Interchangeable
     . Ứng dụng thông dụng của NFT với tính duy nhất
