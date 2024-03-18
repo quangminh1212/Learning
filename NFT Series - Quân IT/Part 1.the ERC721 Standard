@@ -1,10 +1,10 @@
-Day 1: Giới thiệu
+Day 0: Giới thiệu
     . Cần có highlevel overview về cấu trúc - triển khai - vận hành để xử lý những vấn đề sâu hơn
     . Dùng framework Hass
     . VN cày code tốt nhưng không làm sâu
 
-Day 2: EIP 721 Standard, the BalanceOf function
-    . Khái niệm cơ bản (NFT Series - Quân IT\Pic\2.1.png)
+Day 1: EIP 721 Standard, the BalanceOf function
+    . Khái niệm cơ bản (1.1.png)
         . Fungibile (có thể trao đổi) = Interchangeable
         . Non - Fungibile (có thể trao đổi) = Not Interchangeable
     . Ứng dụng thông dụng của NFT với tính duy nhất
@@ -12,5 +12,13 @@ Day 2: EIP 721 Standard, the BalanceOf function
         . Nghệ thuật
         . Tài sản trong game/reallife/metawworld ...
     . Các thuộc tính của NFT tạo độ hiếm cho NFT ảnh hưởng đến giá
-    . Lịch sử NFT (NFT Series - Quân IT\Pic\2.2.png)
-    . 
+    . Lịch sử NFT (1.2.png)
+    . Cấu trúc làm NTF (1.3.png)
+        . IDFS là dịch vụ phi tập trung để  lưu trữ các NFT metadata
+        . 1 smartcontract có thể mint ra nhiều NFT
+        . Metadata không lưu trên blockchain do phí cao và tốc độ chậm
+        . Frontend sẽ có 1 webside sẽ gọi tokenUrl() chứa toàn bộ thông tin để web lấy toàn bộ metadata từ IPFS và hiển thị lên
+
+Day 2: EIP 721 Standard, the BalanceOf function
+    . EIP 721 là tiêu chuẩn quốc tế định nghĩa 1 NFT cho DEV, bao gồm cả các yêu cầu khi phát triển
+    . Sử dụng hardhat để phát triển (có thể dùng Truffle tương đương)
