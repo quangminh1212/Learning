@@ -48,4 +48,30 @@ Day 4: The approval functions
         . Đầu vào là address owner và token ID của NFT muốn gán quyền operator
         . Cần ownerOf ở dạng Public
         . Cần định nghĩa Approval với 3 tham số owner, approve , tokenID
-        . Yêu cầu sender phải là owner hoặc operator isApprovalForAll
+        . Yêu cầu sender phải là owner hoặc operator isApprovalForAll , nếu không sẽ trả về lỗi
+    . function getAproved  
+        . Trả về tokenApprovals[tokenID]
+        . Yêu cầu có tokenID, nếu thiếu sẽ trả về không 
+
+Day 5: the transferFrom function.
+    . function transferFrom
+        . Nhận vào địa chỉ gửi, địa chỉ nhận và tokenID
+        . Lấy address owner trước, reset address owner về 0 trước khi update
+        . chuyển approve thành public để sử dụng
+        . Hiệp ước chuyển giao NFT
+            . update balance[from] -= 1 // giảm của ng gửi đi 1
+            . balance[to] += 1 // tăng của ng nhận lên 1
+            . owners[tokenID] = to // đổi owner của NFT
+        . Chỉ có owner/operator isApprovalForAll/ operator approve mới có quyền giao dịch NFT này
+    
+Day 6: Hoàn thiện chuẩn ERC721 
+    . function safeTransferFrom
+        . là hàm transfer có thêm hàm kiểm tra xem contract giữa các ví có thể nhận NFT được không
+        . chuyển hàm transferFrom thành public và kiểm tra theo dạng 
+            . _checkOnERC721Received() , nếu trả về fail thì không gửi
+    . function checkOnERC721Received 
+        . trả về true để khi người khác gọi sẽ biết contract của mình hỗ trợ ERC721
+        . là yêu cầu phải có trong tiêu chuẩn ERC721
+    . function supportInterface
+        . đây là function Opensea yêu cầu mà ERC721 không có
+        . return 0x80ac58cd //   
