@@ -37,4 +37,15 @@ Day 3: the ownerOf function, operator functions.
         . Hàm này enable/disable 1 operator, cần tạo 1 biến để lưu địa chỉ cho 1 operator
         . Khi approve cho 1 người nào đó quản lý thì cần emit 1 event 
         . trước đó cần emit 1 event cho phép ApprovelForAll
-    
+    . function isApprovalForAll 
+        . Kiểm tra xem 1 địa chỉ có phải là operator của địa chỉ khác hay không
+        . return lại biến lưu địa chỉ cho operator đấy
+
+Day 4: The approval functions
+    . function approve  
+        . Cấp quyền operator cho 1 NFT nhất định
+        . Cần 1 biến để lưu approve
+        . Đầu vào là address owner và token ID của NFT muốn gán quyền operator
+        . Cần ownerOf ở dạng Public
+        . Cần định nghĩa Approval với 3 tham số owner, approve , tokenID
+        . Yêu cầu sender phải là owner hoặc operator isApprovalForAll
