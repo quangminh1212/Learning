@@ -1,1 +1,27 @@
 Day 7: the collectible smart contract
+    . Tạo ra một collectible smart contract để hỗ trợ mint NFT
+    . Hợp đồng nằm cùng 1 thư mục với hợp đồng khác có thể import cho hợp đồng đó
+    . function tokenURI
+        . Trả về URI của tokenID , kiểm tra token tồn tại hay không trước khi trả về
+        -> cần biến để lưu URI đó trong ERC721
+    . function mint
+        . Để dạng public
+        . Cần thêm biến để lưu số token đã mint
+        . Tăng token và balance lên 1
+        . emit Transfer cho addredd 0 ( do mới được mint ra chưa có chủ) 
+
+Day 8 : the metadata
+    . Metadata bao gồm ảnh, thuộc tính, tên, description
+    . Metadata standard của OpenSea được trên 90% các bên theo
+    . Metadata nên sử dụng JSON để định nghĩa 
+        . name
+        . description
+        . image - link truy cập đến ipfs của ảnh
+        . attributes - thuộc tính
+    . Không up trực tiếp qua ipfs được do nếu up trực tiếp thì nếu metadata có ít ng truy cập qua sẽ bị tự xóa đi.
+    . ipfs là lưu trữ phi tập trung
+    . Pinata hỗ trợ ping định kỳ nên deploy qua đó sẽ không bị xóa meta data
+
+Day 9 : Configure project for deployment
+    . Cần lưu các thông tin bí mật/nhạy cảm vào file riêng
+        . node
