@@ -1,0 +1,12 @@
+Bài 1: Giới thiệu về Machine Learning
+    . Machine Learning là một tập con của AI
+    . Machine Learning là một lĩnh vực nhỏ của Khoa Học Máy Tính, nó có khả năng tự học hỏi dựa trên dữ liệu đưa vào mà không cần phải được lập trình cụ thể
+    . Yêu cầu kiến thức về Đại Số Tuyến Tính (Linear Algebra), Xác Suất Thống Kê (Probability and Statistics) và có kinh nghiệm về lập trình Python.
+
+Bài 2: Phân nhóm các thuật toán Machine Learning
+    . Có hai cách phổ biến phân nhóm các thuật toán Machine learning. Một là dựa trên phương thức học (learning style), hai là dựa trên chức năng (function) (của mỗi thuật toán).
+        . Phân nhóm dựa trên phương thức học
+            . Supervised Learning (Học có giám sát)
+                . là thuật toán dự đoán đầu ra (outcome) của một dữ liệu mới (new input) dựa trên các cặp (input, outcome) đã biết từ trước.
+                . Cặp dữ liệu này còn được gọi là (data, label), tức (dữ liệu, nhãn)
+                . là nhóm phổ biến nhất trong các thuật toán Machine Learning
