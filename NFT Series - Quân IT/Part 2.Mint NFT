@@ -23,5 +23,17 @@ Day 8 : the metadata
     . Pinata hỗ trợ ping định kỳ nên deploy qua đó sẽ không bị xóa meta data
 
 Day 9 : Configure project for deployment
-    . Cần lưu các thông tin bí mật/nhạy cảm vào file riêng
-        . node
+    . Cần lưu các thông tin bí mật/nhạy cảm vào file riêng (privatekey, token URI, account, owner)
+        . nodeJS hỗ trợ .env để bảo mật những thông tin bí mật không muốn public
+        . .env sẽ là proset chạy dưới máy local -> sẽ bảo mật được
+    . Deploy lên mumbai test net 
+        . Mumbai là mạng testnet của Polygon matic (rẻ, nhanh, dùng tương tự nhiều mạng test net khác)
+
+Day 10 : Deploy 
+    . Viết script để deploys.js lên mạng Mumbai
+    . Hàm main (10.1) chờ và return promise
+    . Hàm async function main() chạy toàn bộ các function khởi tạo deploy
+        . Khởi tạo các hằng số liên quan đến tên , biểu tượng
+        . Khởi tạo tính năng mint nếu muốn có thể đào ngay từ đầu 
+
+Day 11 : Import từ openzeppelin là xong
