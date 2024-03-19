@@ -1,0 +1,71 @@
+Bài 1: Giới thiệu về Machine Learning
+    . Machine Learning là một tập con của AI
+    . Machine Learning là một lĩnh vực nhỏ của Khoa Học Máy Tính, nó có khả năng tự học hỏi dựa trên dữ liệu đưa vào mà không cần phải được lập trình cụ thể
+    . Yêu cầu kiến thức về Đại Số Tuyến Tính (Linear Algebra), Xác Suất Thống Kê (Probability and Statistics) và có kinh nghiệm về lập trình Python.
+
+Bài 2: Phân nhóm các thuật toán Machine Learning
+    . Có hai cách phổ biến phân nhóm các thuật toán Machine learning. Một là dựa trên phương thức học (learning style), hai là dựa trên chức năng (function) (của mỗi thuật toán).
+        . Phân nhóm dựa trên phương thức học
+            . Supervised Learning (Học có giám sát)
+                . là thuật toán dự đoán đầu ra (outcome) của một dữ liệu mới (new input) dựa trên các cặp (input, outcome) đã biết từ trước.
+                . Cặp dữ liệu này còn được gọi là (data, label), tức (dữ liệu, nhãn)
+                . là nhóm phổ biến nhất trong các thuật toán Machine Learning
+                . Giải thích theo toán học (1.1)
+                . Thuật toán supervised learning còn được tiếp tục chia nhỏ ra thành hai loại chính:
+                    . Classification (Phân loại)
+                        . Một bài toán được gọi là classification nếu các label của input data được chia thành một số hữu hạn nhóm
+                    . Regression (Hồi quy)
+                        . Nếu label không được chia thành các nhóm mà là một giá trị thực cụ thể
+            . Unsupervised Learning (Học không giám sát)
+                . không biết được outcome hay nhãn mà chỉ có dữ liệu đầu vào
+                . dựa vào cấu trúc của dữ liệu để thực hiện một công việc nào đó như phân nhóm (clustering) hoặc giảm số chiều của dữ liệu (dimension reduction) để thuận tiện trong việc lưu trữ và tính toán.
+                . Unsupervised learning là khi chúng ta chỉ có dữ liệu vào X mà không biết nhãn Y tương ứng.
+                . Những thuật toán loại này được gọi là Unsupervised learning vì không giống như Supervised learning, chúng ta không biết câu trả lời chính xác cho mỗi dữ liệu đầu vào
+                . Các bài toán Unsupervised learning được tiếp tục chia nhỏ thành hai loại:
+                    . Clustering (phân nhóm)
+                        . Một bài toán phân nhóm toàn bộ dữ liệu X thành các nhóm nhỏ dựa trên sự liên quan giữa các dữ liệu trong mỗi nhóm
+                    . Association
+                        . Là bài toán khi chúng ta muốn khám phá ra một quy luật dựa trên nhiều dữ liệu cho trước
+            . Semi-Supervised Learning (Học bán giám sát)
+                . Các bài toán khi chúng ta có một lượng lớn dữ liệu X nhưng chỉ một phần trong chúng được gán nhãn được gọi là Semi-Supervised Learning
+                . Những bài toán thuộc nhóm này nằm giữa hai nhóm được nêu bên trên.
+                . Rất nhiều các bài toán Machine Learning thuộc vào nhóm này vì việc thu thập dữ liệu có nhãn tốn rất nhiều thời gian và có chi phí cao. Rất nhiều loại dữ liệu thậm chí cần phải có chuyên gia mới gán nhãn được 
+            . Reinforcement Learning (Học Củng Cố)
+                . Reinforcement learning là các bài toán giúp cho một hệ thống tự động xác định hành vi dựa trên hoàn cảnh để đạt được lợi ích cao nhất (maximizing the performance).
+                . chủ yếu được áp dụng vào Lý Thuyết Trò Chơi (Game Theory), các thuật toán cần xác định nước đi tiếp theo để đạt được điểm số cao nhất
+        . Phân nhóm dựa trên chức năng
+            . Regression Algorithms
+                . Linear Regression
+                . Logistic Regression
+                . Stepwise Regression
+            . Classification Algorithms
+                . Linear Classifier
+                . Support Vector Machine (SVM)
+                . Kernel SVM
+                . Sparse Representation-based classification (SRC)
+            . Instance-based Algorithms
+                . k-Nearest Neighbor (kNN)
+                . Learning Vector Quantization (LVQ)
+            . Regularization Algorithms
+                . Ridge Regression
+                . Least Absolute Shrinkage and Selection Operator (LASSO)
+                . Least-Angle Regression (LARS)
+            . Bayesian Algorithms
+                . Naive Bayes
+                . Gaussian Naive Bayes
+            . Clustering Algorithms
+                . k-Means clustering
+                . k-Medians
+                . Expectation Maximization (EM)
+            . Artificial Neural Network Algorithms
+                . Perceptron
+                . Softmax Regression
+                . Multi-layer Perceptron
+                . Back-Propagation
+            . Dimensionality Reduction Algorithms
+                . Principal Component Analysis (PCA)
+                . Linear Discriminant Analysis (LDA)
+            . Ensemble Algorithms
+                . Boosting
+                . AdaBoost
+                . Random Forest
