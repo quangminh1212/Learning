@@ -1,24 +1,24 @@
 Bài 1: Giới thiệu về Machine Learning
     . Machine Learning là một tập con của AI
     . Machine Learning là một lĩnh vực nhỏ của Khoa Học Máy Tính, nó có khả năng tự học hỏi dựa trên dữ liệu đưa vào mà không cần phải được lập trình cụ thể
-    . Yêu cầu kiến thức về Đại Số Tuyến Tính (Linear Algebra), Xác Suất Thống Kê (Probability and Statistics) và có kinh nghiệm về lập trình Python.
+    . Yêu cầu kiến thức về Đại Số Tuyến Tính-Linear Algebra, Xác Suất Thống Kê-Probability and Statisticsnvà có kinh nghiệm về lập trình Python.
 
 Bài 2: Phân nhóm các thuật toán Machine Learning
-    . Có hai cách phổ biến phân nhóm các thuật toán Machine learning. Một là dựa trên phương thức học (learning style), hai là dựa trên chức năng (function) (của mỗi thuật toán).
+    . Có hai cách phổ biến phân nhóm các thuật toán Machine learning. Một là dựa trên phương thức học-learning style, hai là dựa trên chức năng-functioncủa mỗi thuật toán.
         . Phân nhóm dựa trên phương thức học
-            . Supervised Learning (Học có giám sát)
-                . là thuật toán dự đoán đầu ra (outcome) của một dữ liệu mới (new input) dựa trên các cặp (input, outcome) đã biết từ trước.
-                . Cặp dữ liệu này còn được gọi là (data, label), tức (dữ liệu, nhãn)
+            . Supervised Learning - Học có giám sát
+                . là thuật toán dự đoán đầu ra-outcome của một dữ liệu mới-new input dựa trên các cặp-input, outcome đã biết từ trước.
+                . Cặp dữ liệu này còn được gọi là data-dữ liệu, label-nhãn
                 . là nhóm phổ biến nhất trong các thuật toán Machine Learning
                 . Giải thích theo toán học (1.1)
                 . Thuật toán supervised learning còn được tiếp tục chia nhỏ ra thành hai loại chính:
-                    . Classification (Phân loại)
+                    . Classification-Phân loại
                         . Một bài toán được gọi là classification nếu các label của input data được chia thành một số hữu hạn nhóm
-                    . Regression (Hồi quy)
+                    . Regression-Hồi quy
                         . Nếu label không được chia thành các nhóm mà là một giá trị thực cụ thể
-            . Unsupervised Learning (Học không giám sát)
+            . Unsupervised Learning-Học không giám sát
                 . không biết được outcome hay nhãn mà chỉ có dữ liệu đầu vào
-                . dựa vào cấu trúc của dữ liệu để thực hiện một công việc nào đó như phân nhóm (clustering) hoặc giảm số chiều của dữ liệu (dimension reduction) để thuận tiện trong việc lưu trữ và tính toán.
+                . dựa vào cấu trúc của dữ liệu để thực hiện một công việc nào đó như phân nhóm-clustering hoặc giảm số chiều của dữ liệu-dimension reduction để thuận tiện trong việc lưu trữ và tính toán.
                 . Unsupervised learning là khi chúng ta chỉ có dữ liệu vào X mà không biết nhãn Y tương ứng.
                 . Những thuật toán loại này được gọi là Unsupervised learning vì không giống như Supervised learning, chúng ta không biết câu trả lời chính xác cho mỗi dữ liệu đầu vào
                 . Các bài toán Unsupervised learning được tiếp tục chia nhỏ thành hai loại:
@@ -72,11 +72,13 @@ Bài 2: Phân nhóm các thuật toán Machine Learning
 
 Bài 3: Linear Regression
     . Giới thiệu
-        . là một thuật toán Supervised learning có tên Linear Regression (Hồi Quy Tuyến Tính). Bài toán này đôi khi được gọi là Linear Fitting (trong thống kê) hoặc Linear Least Square. 
+        . là một thuật toán Supervised learning có tên Linear Regression/Hồi Quy Tuyến Tính. Bài toán này đôi khi được gọi là Linear Fitting trong thống kê hoặc Linear Least Square. 
         . một trong những thuật toán cơ bản nhất (và đơn giản nhất) của Machine Learning.
     . Phân tích toán học
         . Dạng của Linear Regression (2.1) (2.2)
         . Sai số dự đoán (2.3)
             . Chúng ta mong muốn rằng sự sai khác e giữa giá trị thực và giá trị dự đoán  là nhỏ nhất. Nói cách khác, chúng ta muốn giá trị sau đây càng nhỏ càng tốt 
         . Hàm mất mát
-            . chúng ta muốn tổng sai số là nhỏ nhất, tương đương với tìm w để hàm trong ảnh 2.4 đạt giá trị nhỏ nhất
+            . Chúng ta muốn tổng sai số là nhỏ nhất, tương đương với tìm w để hàm trong ảnh (2.4) đạt giá trị nhỏ nhất
+        . Nghiệm cho bài toán Linear Regression (2.5)
+            . Cách phổ biến nhất để tìm nghiệm cho một bài toán tối ưu là giải phương trình đạo hàm/gradient bằng 0
