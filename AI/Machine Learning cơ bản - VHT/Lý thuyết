@@ -69,3 +69,14 @@ Bài 2: Phân nhóm các thuật toán Machine Learning
                 . Boosting
                 . AdaBoost
                 . Random Forest
+
+Bài 3: Linear Regression
+    . Giới thiệu
+        . là một thuật toán Supervised learning có tên Linear Regression (Hồi Quy Tuyến Tính). Bài toán này đôi khi được gọi là Linear Fitting (trong thống kê) hoặc Linear Least Square. 
+        . một trong những thuật toán cơ bản nhất (và đơn giản nhất) của Machine Learning.
+    . Phân tích toán học
+        . Dạng của Linear Regression (2.1) (2.2)
+        . Sai số dự đoán (2.3)
+            . Chúng ta mong muốn rằng sự sai khác e giữa giá trị thực và giá trị dự đoán  là nhỏ nhất. Nói cách khác, chúng ta muốn giá trị sau đây càng nhỏ càng tốt 
+        . Hàm mất mát
+            . chúng ta muốn tổng sai số là nhỏ nhất, tương đương với tìm w để hàm trong ảnh 2.4 đạt giá trị nhỏ nhất
