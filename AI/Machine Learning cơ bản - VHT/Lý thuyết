@@ -82,3 +82,13 @@ Bài 3: Linear Regression
             . Chúng ta muốn tổng sai số là nhỏ nhất, tương đương với tìm w để hàm trong ảnh (2.4) đạt giá trị nhỏ nhất
         . Nghiệm cho bài toán Linear Regression (2.5)
             . Cách phổ biến nhất để tìm nghiệm cho một bài toán tối ưu là giải phương trình đạo hàm/gradient bằng 0
+    . Ví dụ trên Python
+        . Bài toán đặt ra là: liệu có thể dự đoán cân nặng của một người dựa vào chiều cao của họ không? (Trên thực tế, tất nhiên là không, vì cân nặng còn phụ thuộc vào nhiều yếu tố khác nữa, thể tích chẳng hạn) giả sử rằng chúng ta có thể dự đoán được.
+            . Sử dụng thư viện numpy cho đại số tuyến tính matplotlib cho việc vẽ hình.
+            . dữ liệu đầu vào chỉ có 1 giá trị (1 chiều) để thuận tiện cho việc minh hoạ trong mặt phẳng.
+            . cân nặng sẽ tỉ lệ thuận với chiều cao (càng cao càng nặng), nên có thể sử dụng Linear Regression model cho việc dự đoán này.
+            . Để kiểm tra độ chính xác sẽ giữ lại 1 mẫu cột 155 và 160 cm để kiểm thử, các cột còn lại được sử dụng để huấn luyện (train) model.
+        . Hiển thị dữ liệu trên đồ thị
+            . Khai báo và biểu diễn dữ liệu  bằng python (3.1)
+        . Nghiệm theo công thức
+            . 
