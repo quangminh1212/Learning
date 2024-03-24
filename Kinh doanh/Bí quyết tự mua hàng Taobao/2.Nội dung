@@ -56,3 +56,23 @@
     . Kiểm tra các đánh giá xấu trước, uuw tiên các comment có hình ảnh
     . Xếp hạng danh hiệu shop (17.1)
     . Số năm thành lập, mức độ tin cậy
+18.So sánh Taobao - 1688 - TMall
+    . Đều thuộc Alibaba, dùng chung 1 tài khoàn khi đăng Nhập
+    . 1688 và Taobao sử dụng chung giỏ hàng
+        . Taobao chuyên bán nhỏ lẻ
+        . 1688 chuyên ban buôn, giá giảm khi lấy số lượng lớn
+    . TMall sử dụng giỏ hàng độc lập, chuyên bán các hàng có nhãn hiệu
+19.Quản lý giỏ hàng
+    . Giỏ hàng sẽ hiển thị giá hàng, số lượng và trạng thái thanh toán
+20.Vận chuyển hàng hóa
+    . Vận chuyển chính ngạch
+        . Giá cao hơn
+        . hàng được đảm bảo rõ ràng, không móp méo
+        . Không bao giờ mất hàng, mất sẽ được bồi hoàn 100%
+        . Xuất hóa đơn rõ ràng
+    . Vận chuyển tiểu ngạch
+        . Nếu không tắc nghẽn thì về nhanh trong 1-2 ngày
+        . Vỡ hỏng hàng hóa từ 2-5%
+        . Mất hàng sẽ được đền bù
+21.Tổng kết
+    . Khóa cơ bản và tổng quát
