@@ -1,0 +1,77 @@
+Day 0: Giới thiệu
+    . Cần có highlevel overview về cấu trúc - triển khai - vận hành để xử lý những vấn đề sâu hơn
+    . Dùng framework Hass
+    . VN cày code tốt nhưng không làm sâu
+
+Day 1: EIP 721 Standard, the BalanceOf function
+    . Khái niệm cơ bản (1.1.png)
+        . Fungibile (có thể trao đổi) = Interchangeable
+        . Non - Fungibile (có thể trao đổi) = Not Interchangeable
+    . Ứng dụng thông dụng của NFT với tính duy nhất
+        . Bộ sưu tập
+        . Nghệ thuật
+        . Tài sản trong game/reallife/metawworld ...
+    . Các thuộc tính của NFT tạo độ hiếm cho NFT ảnh hưởng đến giá
+    . Lịch sử NFT (1.2.png)
+    . Cấu trúc làm NTF (1.3.png)
+        . IDFS là dịch vụ phi tập trung để  lưu trữ các NFT metadata
+        . 1 smartcontract có thể mint ra nhiều NFT
+        . Metadata không lưu trên blockchain do phí cao và tốc độ chậm
+        . Frontend sẽ có 1 webside sẽ gọi tokenUrl() chứa toàn bộ thông tin để web lấy toàn bộ metadata từ IPFS và hiển thị lên
+
+Day 2: EIP 721 Standard, the BalanceOf function
+        . EIP 721 là tiêu chuẩn quốc tế định nghĩa 1 NFT cho DEV, bao gồm cả các yêu cầu khi phát triển
+        . Sử dụng hardhat để phát triển (có thể dùng Truffle tương đương)
+    . function balanceOf
+        . truyền vào 1 địa chỉ, hàm này sẽ trả về số NFT địa chỉ đó đang sở hữu 
+        . Cần 1 biến mapping internal để lưu trữ lượng NFT ví sở hữu, function trên chỉ cần return biến đấy ra (mapping)
+        . Ví này không được là ví 0 do ví 0 là ví burned
+
+Day 3: the ownerOf function, operator functions.
+    . function ownerOf 
+        . truyền vào 1 địa chỉ của NFT, hàm này sẽ trả về chủ sở hữu của NFT đó
+        . Cần 1 biến mapping internal để lưu địa chỉ chủ sở hữu, function chỉ cần lấy biến đấy ra
+        . Owner phải khác 0, nếu owner = 0 thì NFT đó đã bị ban, trả về 1 thông báo lỗi
+    . function setApprovalForAll 
+        . Là hàm operator (quan trọng) để giao quyền cho các operator khác trên market. cho operator có quyển quản lý tất cả các NTF trong market
+        . Hàm này enable/disable 1 operator, cần tạo 1 biến để lưu địa chỉ cho 1 operator
+        . Khi approve cho 1 người nào đó quản lý thì cần emit 1 event 
+        . trước đó cần emit 1 event cho phép ApprovelForAll
+    . function isApprovalForAll 
+        . Kiểm tra xem 1 địa chỉ có phải là operator của địa chỉ khác hay không
+        . return lại biến lưu địa chỉ cho operator đấy
+
+Day 4: The approval functions
+    . function approve  
+        . Cấp quyền operator cho 1 NFT nhất định
+        . Cần 1 biến để lưu approve
+        . Đầu vào là address owner và token ID của NFT muốn gán quyền operator
+        . Cần ownerOf ở dạng Public
+        . Cần định nghĩa Approval với 3 tham số owner, approve , tokenID
+        . Yêu cầu sender phải là owner hoặc operator isApprovalForAll , nếu không sẽ trả về lỗi
+    . function getAproved  
+        . Trả về tokenApprovals[tokenID]
+        . Yêu cầu có tokenID, nếu thiếu sẽ trả về không 
+
+Day 5: the transferFrom function.
+    . function transferFrom
+        . Nhận vào địa chỉ gửi, địa chỉ nhận và tokenID
+        . Lấy address owner trước, reset address owner về 0 trước khi update
+        . chuyển approve thành public để sử dụng
+        . Hiệp ước chuyển giao NFT
+            . update balance[from] -= 1 // giảm của ng gửi đi 1
+            . balance[to] += 1 // tăng của ng nhận lên 1
+            . owners[tokenID] = to // đổi owner của NFT
+        . Chỉ có owner/operator isApprovalForAll/ operator approve mới có quyền giao dịch NFT này
+    
+Day 6: Hoàn thiện chuẩn ERC721 
+    . function safeTransferFrom
+        . là hàm transfer có thêm hàm kiểm tra xem contract giữa các ví có thể nhận NFT được không
+        . chuyển hàm transferFrom thành public và kiểm tra theo dạng 
+            . _checkOnERC721Received() , nếu trả về fail thì không gửi
+    . function checkOnERC721Received 
+        . trả về true để khi người khác gọi sẽ biết contract của mình hỗ trợ ERC721
+        . là yêu cầu phải có trong tiêu chuẩn ERC721
+    . function supportInterface
+        . đây là function Opensea yêu cầu mà ERC721 không có
+        . return 0x80ac58cd //   

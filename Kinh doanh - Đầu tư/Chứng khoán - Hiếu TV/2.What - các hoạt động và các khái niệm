@@ -1,0 +1,53 @@
+1.Khái niệm căn bản trong đầu tư
+    . vận hành và sở hữu cần rạch ròi khi góp vốn, chi phí vận hành sẽ được tính bao gồm cả chi phí lương cho người sở hữu
+    . khi công ty thiếu vốn
+        . vay vốn bên ngoài (bond)
+        . nhận góp vốn từ cổ đông (đồng sở hữu công ty)
+    . định giá công ty sử dụng để tính tỉ lệ sỡ hữu của cổ đông cũ và nhà đàu tư mới
+        . không có ai đầu tư vô thì định giá không có ý nghĩa
+        . khi có người vốn mới đóng góp vào công ty thì cổ phiếu sẽ bị pha loãng để chia phần sở hữu cho nguồn vốn mới. người cũ sẽ giảm sở hữu nhưng tăng giá trị cổ phiếu hiện có lên
+    . stock split đơn giản là xé nhỏ cổ phiếu lớn thành các cổ phiếu nhỏ để tiện giao dịch hơn
+    . share - cổ phần, stock - cổ phiếu
+        . share thường dùng đi kèm tỉ lệ %, stock thường dùng kèm số lượng
+        . stock thường dùng cho các công ty, tập đoàn. share dùng cho nhiều trường hợp hơn
+        . công ty tư nhân dùng share, công ty đại chúng thường dùng stock
+    . cổ tức - dividend là phàn lợi nhuận được chia cho cổ đông sở hữu theo tỉ lệ sở hữu của họ
+    . marketcap = share princt * share outstanding
+2.Căn bản về thị trường chứng khoán
+    . thị trường chứng khoán là chợ buôn bán quyền sở hữu công ty cho đại chúng
+        . công ty di chuyển từ ngoài chợ vào trong chợ được gọi là IPO (chuyển từ công ty tư nhân sang công ty đại chúng)
+        . được quản lý bởi
+            . SSC - ủy ban chứng khoán nhà nước
+            . SEC - ủy ban giao dịch chứng khoán hoa kỳ
+            . ASIC - ủy ban chứng khoán và đầu tư úc
+        . IPO thường là công ty sẽ phát hành thêm cổ phiếu trên thị trường chứng khoán, hợp tác với ngân hàng đầu tư để chào bán cổ phiếu mới với giá cao nhất. 
+            . IPO chuyển công ty tư nhân thành công ty đại chúng
+            . trước khi IPO thì công ty sẽ quảng bá rất nhiều để nhu cầu mua cho nhà đầu tư -> sau khi IPO xong giá cổ phiểu có thể giảm
+        . thị trường chứng khoán là khái niệm chung cho các chợ, khái niệm chợ trong thị trường chứng khoán là sàn giao dịch (HOSE, HNX, ASX, NASDAQ, NYSE,...) nơi các công ty bày bán (niêm yết) cổ phần/cổ phiếu của mình trên đấy
+3.Các hoạt động giao dịch trên thị trường chứng khoán
+    . cá nhân để mua cổ phiếu trên thị trường chứng khoán cần qua 1 công ty môi giới (broker)
+    . để giao dịch cần viết mẫ cổ phiếu của công ty đấy
+        . khối lượng giao dịch
+            . quantity - dựa trên số lượng cổ phần
+            . value - dựa trên giá trị giao dịch
+        . giá muốn mua 
+            . market prince - giá thị trường
+            . litmit prince - giá muốn mua, expire date - ngày hết hạn
+        . khi giao dịch sẽ mất broker fee - phí môi giới
+        . khớp lệnh là khi giá người mua - người bán khớp nhau
+            . giá sẽ được quyết định bởi thị trường
+            . giá khớp lệnh sẽ trở thành mức giá thị trường mới
+    => tiền không mua được hạnh phúc nhưng không có tiền thì khó giữ được hạnh phúc
+4.Sector, Industtry, Index, Indices
+    . Có hai hệ thống phân nhóm 
+        . dựa theo lĩnh vực cho các công ty
+            . GICS
+                . sector (các ngành tổng quát nhất)
+                . industry group (nhóm ngành nhỏ hơn)
+                . industry (ngành)
+                . sub-industry (ngách)
+            . ICB
+        . dựa theo độ lớn của công ty - index (các công ty trong top là indices)
+            . top 50
+            . top 100
+            . top 500
