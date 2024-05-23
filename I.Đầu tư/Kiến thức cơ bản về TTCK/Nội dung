@@ -53,7 +53,32 @@
             . giá tham chiếu được = tổng số tiền mua / tổng số cổ phiếu được nhận
 5.Các quy định trên TTCK Việt Nam (tiếp)
     . các loại lệnh (5.1)
-    . lệnh giới hạn - LO 
-        . là lệnh mua/bán tại một mức giá xác định hoặc giá tốt hơn
-        . hiệu lực của lệnh có giá trị trong cả phiên giao dịch
-        . là lệnh được sử dụng nhiều nhất toàn thị trường
+        . lệnh giới hạn - LO 
+            . là lệnh mua/bán tại một mức giá xác định hoặc giá tốt hơn
+            . hiệu lực của lệnh có giá trị trong cả phiên giao dịch
+            . là lệnh được sử dụng nhiều nhất toàn thị trường
+        . lệnh ATO
+            . là lệnh mua/bán tại mức giá mở cửa (đợt khớp lệnh định kỳ xác định giá mở cửa của HOSE)
+            . chỉ có giá trị trong đợt khớp lệnh định kỳ tương ứng
+            . được ưu tiên khớp lệnh so với các lệnh giới hạn (lệnh LO)
+        . lệnh ATC
+            . là lệnh mua/bán tại mức giá đóng cửa (đợt khớp lệnh định kỳ xác định giá đóng cửa của HOSE)
+            . chỉ có giá trị trong đợt khớp lệnh định kỳ tương ứng
+            . được ưu tiên khớp lệnh so với các lệnh giới hạn (lệnh LO)
+        . lệnh thị trường MP/MTL (lệnh thị trường)
+            . là lệnh mua chứng khoán tại mức giá thấp nhất hoặc lệnh bán chứng khoán tại mức giá cao nhất hiện có trên thị trường
+            . chỉ được áp dụng trong thời gian khớp lệnh liên tục
+            . bản chất 2 lệnh MP và MTL hoàn toàn giống nhau. MP của sàn HOSE, MTL của sàn HNX
+        . lệnh MOK 
+            . là lệnh khớp toàn bộ thị trường hoặc hủy
+            . là lệnh thị trường nếu không được thực hiện toàn bộ thì bị hủy trên hệ thống giao dịch ngay sau khi nhập
+            . chỉ có ở sàn HNX trong đợt khớp lệnh kiên tục
+        . lệnh MAK 
+            . là lệnh khớp toàn bộ thị trường và hủy
+            . là lệnh thị trường có thể thực hiện toàn bộ hoặc một phần, phần còn lại bị hủy ngay sau khi khớp lệnh
+            . chỉ có ở sàn HNX trong đợt khớp lệnh kiên tục
+    . nguyên tắc khớp lệnh
+        . giá giao dịch là mức giá mà tại đó khối lượng giao dịch là lớn nhất
+        . nếu mức giá thỏa mãn điều kiện trên thì mức giá gần với giá giao dịch liền trước sẽ được lựa chọn
+        . nếu mức giá thỏa mãn cả hai điều kiện trên thì giá cao hơn sẽ được lựa chọn là giá giao dịch
+6.Các loại lệnh và nguyên tắc khớp lệnh
