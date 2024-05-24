@@ -82,3 +82,38 @@
         . nếu mức giá thỏa mãn điều kiện trên thì mức giá gần với giá giao dịch liền trước sẽ được lựa chọn
         . nếu mức giá thỏa mãn cả hai điều kiện trên thì giá cao hơn sẽ được lựa chọn là giá giao dịch
 6.Các loại lệnh và nguyên tắc khớp lệnh
+    . đợt giao dịch liên tục
+        . khi có cách lệnh mua/bán thỏa mãn nhau thì lệnh sẽ lập tức được thực hiện và được đưa ra khỏi hệ thống
+    . chu kỳ thanh toán (6.1)
+        . VN theo giao dịch T+2, tiền không về luôn
+7.Cách đọc bảng giá chứng khoán
+    . các thông tin trên bàng giá
+        . mã cổ phiếu
+        . màu sắc
+            . vàng - giá tham chiếu
+            . xanh lá - giá tăng so với giá tham chiếu
+            . đỏ - giá giảm so với giá tham chiếu
+            . tím - tăng trần +7% giá tham chiếu
+            . xanh lam - giảm trần -7% giá tham chiếu
+        . tổng khối lượng giao dịch là tổng số cổ phiếu dc giao dịch mỗi phiên giao dịch
+    . bảng giá chỉ hiển thị 3 mức giá tốt nhất cho bên mua và bên bán
+8.Phân biệt đầu cơ và đầu tư
+    . Phân biệt (7.1)
+        . đầu cơ là mua bán chứng khoán ngắn hạn với mong muốn tìm kiếm lợi nhuận từ chênh lệch giá cổ phiếu
+            . cần tối ưu chi phí giao dịch
+            . sử dụng thành thạo phân tích kỹ thuật
+            . xác định rõ ngưỡng chốt lãi/cắt lỗ
+            . có thời gian theo sát biến động thị trường để ra quyết định thị trường
+        . đầu tư là hoạt động mua bán chứng khoán dài hạn với mong muốn hưởng chênh lẹch giá và cổ tức từ hoạt động kinh doanh của doanh nghiệp
+            . xây dựng công thức đầu tư
+            . chỉ đầu tư vào những công ty mình hiểu rõ
+            . kiên nhẫn và chịu áp lực tốt
+            . có dòng tiền dài hạn phug hợp chiến lược đầu tư
+9.Tìm kiếm thông tin
+    . các dạng thông tin cần Tìm
+        . báo cáo bạch, báo cáo thường niên
+        . báo cáo tài chính quý, năm
+        . thông tin giao dịch của cổ đông nội bộ, cổ đông lớn
+        . lịch thực hiện quyền
+        . bảng giá giao dịch
+        . biểu đồ giá 
