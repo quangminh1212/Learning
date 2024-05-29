@@ -99,11 +99,73 @@
     . /ɒ/
         . đặt lưỡi tự nhiên
         . quai hàm hơi rộng mở và môi tròn
-16. Luyện cặp âm /a:/, /ʌ/ (Phần 1)
+16.Luyện cặp âm /a:/, /ʌ/ (Phần 1)
     . /a:/
         . hai quai hàm mở rộng, lưỡi đặt tự nhiên
         . hạ lưỡi ở chân răng xong hàm trên
     . /ʌ/ 
         . quai hàm mở rộng, lưỡi đặt tự nhiên
         . phát âm ngắn và dứt khoát
-17. Luyện cặp âm /a:/, /ʌ/ (Phần 2)
+17.Luyện cặp âm /a:/, /ʌ/ (Phần 2)
+    . /a:/
+        "car" /ka:/
+        "father" /ˈfa:ðər/
+        "calm" /ka/
+    . /ʌ/
+        "cup" /kʌp/
+        "luck" /lʌk/
+        "sun" /sʌn/
+18.Luyện các âm /eɪ/, /ɔɪ/, /ɪə/, /ʊə/
+    . /eɪ/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /e/ và chuyển sang âm /ɪ/
+    . /ɔɪ/
+        .  Nguyên âm đôi (diphthong) bắt đầu từ âm /ɔ/ và chuyển sang âm /ɪ/
+    . /ɪə/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /ɪ/ và chuyển sang âm /ə/
+    . /ʊə/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /ʊ/ và chuyển sang âm /ə/
+19.Luyện các âm /əʊ/, /eə/, /aɪ/, /aʊ/ (Phần 1)
+    . /əʊ/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /ə/ và chuyển sang âm /ʊ/
+    . /eə/
+        .  Nguyên âm đôi (diphthong) bắt đầu từ âm /e/ và chuyển sang âm /ə/
+    . /aɪ/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /a/ và chuyển sang âm /ɪ/
+    . /aʊ/
+        . Nguyên âm đôi (diphthong) bắt đầu từ âm /a/ và chuyển sang âm /ʊ/
+20.Luyện các âm /əʊ/, /eə/, /aɪ/, /aʊ/ (Phần 2)
+    . /əʊ/
+        "go" /ɡəʊ/
+        "no" /nəʊ/
+        "home" /həʊm/
+    . /eə/
+        "care" /keə/
+        "air" /eə/
+        "bear" /beə/
+    . /aɪ/
+        "my" /maɪ/
+        "time" /taɪm/
+        "fly" /flaɪ/
+    . /aʊ/
+        "now" /naʊ/
+        "house" /haʊs/
+        "about" /əˈbaʊt/
+21.Luyện cặp âm /p/, /b/
+    . tiếng Anh có âm rung (hữu thanh) khi phát âm làm rung dây thanh quản và ngược lại là âm không rung (vô thanh)
+    . /p/
+        "pat" /pæt/
+        "pen" /pɛn/
+        "cup" /kʌp/
+    . /b/
+        "bat" /bæt/
+        "ben" /bɛn/
+        "cub" /kʌb/
+22.Luyện cặp âm /t/, /d/
+    . /t/: Âm vô thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài. Không có sự rung của dây thanh quản.
+        . "ten" /tɛn/
+        . "top" /tɒp/
+        . "cat" /kæt/
+    . /d/: Âm hữu thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài, có sự rung của dây thanh quản.
+        . "den" /dɛn/
+        . "dog" /dɒɡ/
+        . "mad" /mæd/
