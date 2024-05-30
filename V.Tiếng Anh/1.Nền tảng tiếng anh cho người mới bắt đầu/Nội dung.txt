@@ -161,11 +161,81 @@
         "ben" /bɛn/
         "cub" /kʌb/
 22.Luyện cặp âm /t/, /d/
-    . /t/: Âm vô thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài. Không có sự rung của dây thanh quản. phát âm nhẹ hơn khi đứng giữa 2 nguyên âm
+    . /t/: Âm vô thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài. Không có sự rung của dây thanh quản. 
+    => phát âm nhẹ hơn khi đứng giữa 2 nguyên âm
+    => phát âm không bật ra khi từ này đứng cuối câu
+
         . "ten" /tɛn/
         . "top" /tɒp/
         . "cat" /kæt/
-    . /d/: Âm hữu thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài, có sự rung của dây thanh quản.
+    . /d/: Âm hữu thanh, phát âm bằng cách đặt đầu lưỡi lên mặt sau của răng cửa trên và đẩy luồng hơi ra ngoài, có sự rung của dây thanh quản. 
+    => phát âm nhẹ hơn khi đứng giữa 2 nguyên âm
+    => phát âm không bật ra khi từ này đứng cuối câu
         . "den" /dɛn/
         . "dog" /dɒɡ/
         . "mad" /mæd/
+23.Luyện cặp âm /tʃ/, /dʒ/
+    . /tʃ/
+        . Đây là âm bật hơi, tắc, vòm mềm trước, vô thanh.
+        . Khi phát âm, bạn cần đặt lưỡi lên vòm miệng, rồi bật ra với một luồng hơi mạnh.
+            . chair (/tʃer/)
+            . cheese (/tʃiːz/)
+            . watch (/wɒtʃ/)
+    /dʒ/
+        . Đây là âm bật hơi, tắc, vòm mềm trước, hữu thanh.
+        . Khi phát âm, bạn cần đặt lưỡi lên vòm miệng, rồi bật ra với một luồng hơi nhẹ và đồng thời phát ra âm thanh từ dây thanh quản.
+            . joy (/dʒɔɪ/)
+            . juice (/dʒuːs/)
+            . bridge (/brɪdʒ/)
+24.Luyện cặp âm /k/, /g/
+    . /k/
+        . Đây là âm bật hơi, tắc, vòm mềm, vô thanh.
+        . Khi phát âm, bạn cần đặt lưỡi lên vòm mềm (phần sau của vòm miệng), rồi bật ra với một luồng hơi mạnh.
+            . cat (/kæt/)
+            . kite (/kaɪt/)
+            . back (/bæk/)
+    . /g/
+        . Đây là âm bật hơi, tắc, vòm mềm, hữu thanh.
+        . Khi phát âm, bạn cần đặt lưỡi lên vòm mềm (phần sau của vòm miệng), rồi bật ra với một luồng hơi nhẹ và đồng thời phát ra âm thanh từ dây thanh quản.
+            . go (/ɡoʊ/)
+            . game (/ɡeɪm/)
+            . bag (/bæɡ/)
+25.Luyện cặp âm /f/, /v/
+    . /f/
+        . Đây là âm xát, môi răng, vô thanh.
+        . Khi phát âm, bạn cần đặt hàm răng trên lên môi dưới và thổi ra một luồng hơi nhẹ.
+            . fish (/fɪʃ/)
+            . fun (/fʌn/)
+            . coffee (/ˈkɒfi/)
+    . /v/
+        . Đây là âm xát, môi răng, hữu thanh.
+        . Khi phát âm, bạn cần đặt hàm răng trên lên môi dưới và thổi ra một luồng hơi nhẹ nhưng đồng thời phát ra âm thanh từ dây thanh quản.
+            . van (/væn/)
+            . vote (/voʊt/)
+            . love (/lʌv/)
+26. Luyện cặp âm /s/, /z/
+    . /s/
+        . Đây là âm xát, vô thanh.
+        . Khi phát âm, bạn cần đặt lưỡi gần hàm răng trên và thổi ra một luồng hơi nhẹ, không có âm thanh từ dây thanh quản.
+            . see (/siː/)
+            . sit (/sɪt/)
+            . rice (/raɪs/)
+    . /z/
+        . Đây là âm xát, hữu thanh.
+        . Khi phát âm, bạn cần đặt lưỡi gần hàm răng trên và thổi ra một luồng hơi nhẹ nhưng đồng thời phát ra âm thanh từ dây thanh quản.
+            . zoo (/zuː/)
+            . buzz (/bʌz/)
+            . rose (/roʊz/)
+27. Luyện cặp âm θ, ð (Phần 1)
+    . /θ/
+        . Đây là âm xát, vô thanh.
+        . Khi phát âm, bạn cần đặt đầu lưỡi giữa hàm răng trên và dưới, rồi thổi ra một luồng hơi nhẹ, không có âm thanh từ dây thanh quản.
+            . think (/θɪŋk/)
+            . bath (/bæθ/)
+            . tooth  (/tuːθ/)
+    . /ð/
+        . Đây là âm xát, hữu thanh.
+        . Khi phát âm, bạn cần đặt đầu lưỡi giữa hàm răng trên và dưới, rồi thổi ra một luồng hơi nhẹ và đồng thời phát ra âm thanh từ dây thanh quản.
+            . this (/ðɪs/)
+            . mother (/ˈmʌðər/)
+            .   breathe (/briːð/)
