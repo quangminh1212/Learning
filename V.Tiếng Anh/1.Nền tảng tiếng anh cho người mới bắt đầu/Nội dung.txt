@@ -213,7 +213,7 @@
             . van (/væn/)
             . vote (/voʊt/)
             . love (/lʌv/)
-26. Luyện cặp âm /s/, /z/
+26.Luyện cặp âm /s/, /z/
     . /s/
         . Đây là âm xát, vô thanh.
         . Khi phát âm, bạn cần đặt lưỡi gần hàm răng trên và thổi ra một luồng hơi nhẹ, không có âm thanh từ dây thanh quản.
@@ -226,16 +226,76 @@
             . zoo (/zuː/)
             . buzz (/bʌz/)
             . rose (/roʊz/)
-27. Luyện cặp âm θ, ð (Phần 1)
+27.Luyện cặp âm θ, ð (Phần 1)
     . /θ/
         . Đây là âm xát, vô thanh.
         . Khi phát âm, bạn cần đặt đầu lưỡi giữa hàm răng trên và dưới, rồi thổi ra một luồng hơi nhẹ, không có âm thanh từ dây thanh quản.
-            . think (/θɪŋk/)
-            . bath (/bæθ/)
-            . tooth  (/tuːθ/)
     . /ð/
         . Đây là âm xát, hữu thanh.
         . Khi phát âm, bạn cần đặt đầu lưỡi giữa hàm răng trên và dưới, rồi thổi ra một luồng hơi nhẹ và đồng thời phát ra âm thanh từ dây thanh quản.
-            . this (/ðɪs/)
-            . mother (/ˈmʌðər/)
-            .   breathe (/briːð/)
+28.Luyện cặp âm θ, ð (Phần 2)
+    . /θ/
+        . think (/θɪŋk/)
+        . bath (/bæθ/)
+        . tooth  (/tuːθ/)
+    . /ð/
+        . this (/ðɪs/)
+        . mother (/ˈmʌðər/)
+        . breathe (/briːð/)
+29.Luyện cặp âm /ʃ/, /ʒ/ (Phần 1)
+    . /ʃ/
+        . Âm /ʃ/ được tạo ra bằng cách đẩy luồng không khí qua khe hẹp giữa lưỡi và phần sau của răng trên, không có rung dây thanh.
+        . Đặt đầu lưỡi gần nhưng không chạm vào phần sau của răng trên.
+        Đẩy không khí qua khe hẹp này, tạo ra âm ssssss.
+            . Ship /ʃɪp/
+            . She /ʃiː/
+            . Fish /fɪʃ/
+            . Push /pʊʃ/
+    . /ʒ/
+        . Âm /ʒ/ được tạo ra bằng cách đẩy luồng không khí qua khe hẹp giữa lưỡi và phần sau của răng trên, nhưng có rung dây thanh quản. Đây là âm hữu thanh.
+        . Đặt đầu lưỡi gần nhưng không chạm vào phần sau của răng trên.
+        Đẩy không khí qua khe hẹp này và làm rung dây thanh quản, tạo ra âm zzzzzz.
+            . Measure /ˈmɛʒər/
+            . Vision /ˈvɪʒən/
+            . Garage /ɡəˈrɑːʒ/
+            . Beige /beɪʒ/
+30.Luyện cặp âm /ʃ/, /ʒ/ (Phần 2)
+    . Âm /ʃ/:
+        . Shy /ʃaɪ/
+            . The little girl was very shy.
+        . Shop /ʃɒp/
+            . Let's go to the shop and buy some groceries.
+        . Brush /brʌʃ/
+            . Don't forget to brush your teeth.
+    . Âm /ʒ/:
+        . Usual /ˈjuːʒuəl/
+            . It's not our usual routine.
+        . Pleasure /ˈplɛʒər/
+            . It was a pleasure to meet you.
+        . Treasure /ˈtrɛʒər/
+            . They found a hidden treasure.
+31. Luyện cặp âm /m/, /n/, /ŋ/
+    . Âm /m/
+        . Âm /m/ được tạo ra bằng cách đặt hai môi với nhau và rung dây thanh quản khi phát âm. Đây là âm mũi hữu thanh.
+        . Đặt hai môi với nhau.
+        . Rung dây thanh quản khi phát âm.
+            . Map /mæp/
+            . Man /mæn/
+            . Summer /ˈsʌmər/
+            . Room /ruːm/
+    . Âm /n/
+        . Âm /n/ được tạo ra bằng cách đặt đầu lưỡi vào mặt sau của răng trên và rung dây thanh quản khi phát âm. Đây là âm mũi hữu thanh.
+        . Đặt đầu lưỡi vào mặt sau của răng trên.
+        . Rung dây thanh quản khi phát âm.
+            . No /noʊ/
+            . Nice /naɪs/
+            . Ten /tɛn/
+            . Dinner /ˈdɪnər/
+    . Âm /ŋ/
+        . Âm /ŋ/ được tạo ra bằng cách đưa mặt sau của lưỡi lên chạm vào vòm miệng mềm và rung dây thanh quản khi phát âm. Đây là âm mũi hữu thanh.
+        . Đưa mặt sau của lưỡi lên chạm vào vòm miệng mềm.
+        . Rung dây thanh quản khi phát âm.
+            . Sing /sɪŋ/
+            . Long /lɔːŋ/
+            . Song /sɔːŋ/
+            . Ring /rɪŋ/
