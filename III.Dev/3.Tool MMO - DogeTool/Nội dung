@@ -1,0 +1,15 @@
+. BUỔI 1
+    . Cài đặt tài nguyên
+        . không dùng visual studio được vì bên đấy chỉ hỗ trợ như text editor
+        . cài VS Studio bản community, cài đặt và điều chỉnh lại app
+        . cài extension .net trong VS Code
+        . viết bằng C Sharp
+    . Nội dung học
+        . C Sharp cơ bản
+        . postman sử dụng để test API
+        . http request
+        . selenium điều khiển chrome bằng trình duyệt
+        . làm ứng dụng với winform
+. BUỔI 2
+    . Làm việc với C Sharp trên VS Code
+    . các câu lệnh và cấu trúc cơ bản
