@@ -23,4 +23,12 @@
     . Nhóm phần mềm khác
 . Use – Case
     . Khái niệm (2.7)
-    . ví dụ 
+    . ví dụ (2.8 - 2.12)
+    . Sơ đồ Use – Case
+    . Tổng quát hóa giữa các Actor
+        . Ta có thể gom những Use-Case của nhiều Actor dùng chung thành một. Và đặt cho Actor đó một cái tên riêng. Các Actor có Actor chung có Use-Case riêng thì sẽ vẽ tách biệt ra. (2.13) (2.14)
+        . vai trò của các tác nhân (2.15) (2.16)
+. <<include>> và <<extend>>
+    . Khái niệm (2.17)
+    . Quan hệ <<include>> (2.18) (2.19)
+    . Quan hệ <<extent>> (2.20)
