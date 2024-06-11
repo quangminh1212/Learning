@@ -10,3 +10,7 @@
         . Decisition có thể hiểu đây là ký hiệu biểu thị nút điều kiện chuyển hướng. Tùy theo trường hợp đúng hay sai của kết quả biểu thức logic bên trong ký hiệu mà có hướng di chuyển tiếp theo tương ứng. (3.5)
         . Synchronization bar có thể hiểu đơn giản. Có các trường hợp cần hội tụ đủ nhiều luông điều khiển một lúc để gộp thành một luồng xử lý thì cần dùng Join. Và đôi khi cần phải tách một luồng điều khiển ra hai hoặc nhiều luồng khác biệt nhau thì cần Fork. Và mỗi luồng của Fork hoàn toàn không lệ thuộc nhau. (3.6)
         . End điểm kết thúc của luồng xử lý. (3.7)
+    . Cách ánh xạ từ sơ đồ Use – Case qua Activity - Diagram (3.8)
+. Minh họa
+    . Activity đăng nhập (3.9)
+    . Activity đăng ký tài khoản (3.10)
