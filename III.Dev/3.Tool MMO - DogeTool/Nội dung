@@ -18,3 +18,11 @@
 . BUỔI 4
     . vòng lặp
     . biến, mảng
+. BUỔI 5
+    . chuỗi
+    . hàm
+    . phân tích cú pháp
+. BUỔI 6
+    . Build dự án
+        . khi dev xong cần đóng gói file thành dạng ứng dụng để người sử dụng dễ dàng chạy chương trình
+        . nhấn start/build sollusion để chuyển đổi code viết thành file chạy và đưa file chạy đấy cho người khác dùng
