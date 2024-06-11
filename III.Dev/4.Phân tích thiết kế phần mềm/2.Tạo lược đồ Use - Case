@@ -28,7 +28,15 @@
     . Tổng quát hóa giữa các Actor
         . Ta có thể gom những Use-Case của nhiều Actor dùng chung thành một. Và đặt cho Actor đó một cái tên riêng. Các Actor có Actor chung có Use-Case riêng thì sẽ vẽ tách biệt ra. (2.13) (2.14)
         . vai trò của các tác nhân (2.15) (2.16)
-. <<include>> và <<extend>>
-    . Khái niệm (2.17)
-    . Quan hệ <<include>> (2.18) (2.19)
-    . Quan hệ <<extent>> (2.20)
+    . <<include>> và <<extend>>
+        . Khái niệm (2.17)
+        . Quan hệ <<include>> (2.18) (2.19)
+        . Quan hệ <<extent>> (2.20)
+    . Ví dụ về Sơ đồ Use – Case (2.21)
+        . Chúng ta có thể dùng các công cụ để vẽ sơ đồ Use – Case như
+            . IBM Rational Rose
+            . Enterprise Architecture
+            . Visio
+    . Đặc tả Use – Case
+        . Sau khi mô hình hóa yêu cầu hệ thống. Chúng ta cần Đặc Tả lại hệ thống theo phong cách chuyên ngành. Với mỗi Use – Case sẽ có một đặc tả riêng. (2.22)
+        . Chúng ta sẽ cùng tham khảo về Ví dụ Use – Case đăng nhập (2.23) (2.24)
