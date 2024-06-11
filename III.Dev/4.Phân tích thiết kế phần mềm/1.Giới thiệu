@@ -1,0 +1,47 @@
+. Tiêu chí 1 phần mềm chất lượng
+    . Tính đúng đắn
+        . Đầy đủ: Đầy đủ các yêu cầu của khách hàng đưa ra. Đầy đủ yêu cầu của đặc tả mong muốn.
+        . Chính xác: Chính xác những mong muốn từ đặc tả. Không thừa. Nếu mong muốn đưa ra những tính năng khác mà bản thân cho là phù hợp. Có thể gửi đề nghị cho khách hàng để thảo luận.
+    . Tính tiện dụng
+        . Dễ học: Dễ học cách sử dụng phần mềm.
+        . Dễ sử dụng: Dễ dàng sử dụng phần mềm. Không có những luồng đi thừa, phức tạp không cần thiết.
+        . Giao diện trực quan: Giao diện dễ dàng nắm bắt từ phía người dùng.
+        . Tự nhiên: Thao tác với giao diện dễ dàng và tự nhiên. Như các tab của button tuần tự nhau. Hay tiện lợi như ô nhập password. Nếu không nhập thì sẽ hiển thị nội dung là nhập password…
+    . Tính hiệu quả
+        . Tối ưu CPU: Đảm bảo không lấy tài nguyên dư thừa dẫn đến chiếm dụng CPU. Không thao tác lặp lại thừa, xin và giải phóng bộ nhớ liên tục. Thuật toán tối ưu xử lý về tốc độ và tài nguyên.
+        . Tối ưu bộ nhớ: Đảm bảo không xin cấp phát vùng nhớ vô tội vạ. Cấu trúc lưu trữ phù hợp.
+        . Tối ưu thiết bị sử dụng: Phù hợp và mượt mà trên thiết bị chạy phần mềm. Không crash, giật lag…
+    . Tính tương thích
+        . Import/Export dữ liệu: Có thể dễ dàng nhập xuất dữ liệu để phần mềm thao tác cũng như người dùng sử dụng.
+        . Tương tác: Đảm bảo tương tác với người dùng, hệ điều hành hợp lý. Không để xảy ra tình trạng đi ngược logic của hệ điều hành và thói quen của người dùng
+    . Tính tiến hóa
+        . Là một trong các tính chất quan trọng nhất được quan tâm xem xét trong ngành Công Nghệ Phần mềm. Một phần mềm chỉ sử dụng được tại một thời điểm. Và không thể nâng cấp lên theo công nghê thì đó là một phần mềm tồi.
+    . Tính dễ kiểm tra
+        . Việc kiểm tra các thành phần phù hợp với yêu cầu phần mềm là dễ dàng nhất có thể được.
+    . Tính dễ sửa lỗi
+        . Khi có sự không phù hợp so với yêu cầu trong quá trình kiểm tra một thành phần. Việc phát hiện chính xác vị trí lỗi và sửa lỗi nhanh nhất có thể được.
+    . Tính dễ bảo trì
+        . Khi cần nâng cấp, cải tiến một thành phần theo yêu cầu mới. Việc cập nhật phần mềm là nhanh, chính xác nhất có thể được và đặc biệt là cố gắng hạn chế ảnh hưởng đến các thành phần khác.
+    . Tính tái sử dụng
+        . Các thành phần đã thực hiện có thể dùng lại trong các phần mềm cùng lớp hoặc cùng lĩnh vực với thời gian và công sức ít nhất có thể được.
+. Quy trình phần mềm
+    . Chi phí sửa lỗi phát sinh tại giai đoạn càng sớm của quy trình phần mềm càng thấp.
+    . Quy trình thác nước (Waterfall - Linear sequential model) (1.1) (1.2)
+        . Khảo sát hiện trạng
+        . Xác định yêu cầu
+        . Phân tích
+        . Thiết kế
+        . Cài đặt
+        . Kiểm chứng
+        . Triển khai
+            (Phải kết thúc giai đoạn rồi mới qua giai đoạn kế tiếp.)
+    . Quy trình thác nước cải tiến (1.3)
+        . Khảo sát hiện trạng
+        . Xác định yêu cầu
+        . Phân tích
+        . Thiết kế
+        . Cài đặt
+        . Kiểm chứng
+        . Triển khai
+            (Bản chất tương tự như mô hình thác nước. Nhưng có thể quay lại bước trước đó để hoàn thiện hay sửa lỗi rồi mới tiếp tục)
+    . Quy trình Prototype (1.4) (1.5)
