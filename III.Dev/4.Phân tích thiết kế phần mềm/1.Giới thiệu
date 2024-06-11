@@ -45,3 +45,6 @@
         . Triển khai
             (Bản chất tương tự như mô hình thác nước. Nhưng có thể quay lại bước trước đó để hoàn thiện hay sửa lỗi rồi mới tiếp tục)
     . Quy trình Prototype (1.4) (1.5)
+        (Bản chất tương tự như mô hình thác nước. Nhưng sẽ có một vòng lặp tạo ra sản phẩm mẫu để đánh giá và xác định rõ yêu cầu. Khi đã đảm bảo yêu cầu sẽ bước vào phát triển phần mềm.)
+    . Quy trình xoắn ốc (1.6) (1.7) (1.8)
+        . Bản chất tương tự như mô hình Prototype. Nhưng sẽ là nhiều lần tạo ra các Prototype và sản phẩm. Mỗi lần như vậy sẽ được đánh giá hoàn thiện hay không. Và tiếp tục dựa trên sản phẩm đã hoàn thiện để thực hiện Prototype sau. Đến khi toàn bộ yêu cầu được hoàn thành. Hoặc có yêu cầu mới.
