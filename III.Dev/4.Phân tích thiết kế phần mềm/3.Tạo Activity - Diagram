@@ -1,0 +1,12 @@
+. Activity - Diagram
+    . Activity Diagram là một mô hình logic dùng để mô hình hoá các hoạt động trong một quy trình nghiệp vụ. Hay có thể hiểu. Activity – Diagram là sơ đồ luồng xử lý của hệ thống. Bao gồm luồng đi của dòng dữ liệu, dòng sự kiện.
+    . Dùng để mô tả các hoạt động trong một chức năng của hệ thống. Hay có thể hiểu là mô tả luồng xử lý của một Use – Case.
+    . Mô tả hoạt động chính và mối quan hệ giữa các hoạt động này trong quy trình. Hay có thể hiểu là mô tả cả luồng xử lý chính của hệ thống bao gồm các luồng con, luồng xử lý của các Use – Case gom lại mà thành.
+. Các thành phần của Activity - Diagram
+    . Cũng như Use – Case. Activity – Diagram cũng có các thành phần cấu thành sơ đồ như hình (3.1)
+        . start hay có thể hiểu là điểm bắt đầu của luồng xử lý. (3.2)
+        . activity nên đặt tên là động từ. Và mô tả đủ ý nghĩa tổng thể của hoạt động nhất có thể. (3.3)
+        . Transition từ hoạt động này tới hoạt động khác cần có Transition biểu thị đường đi. Lưu ý Transition có mũi tên biểu thị chiều của luồng xử lý. (3.4)
+        . Decisition có thể hiểu đây là ký hiệu biểu thị nút điều kiện chuyển hướng. Tùy theo trường hợp đúng hay sai của kết quả biểu thức logic bên trong ký hiệu mà có hướng di chuyển tiếp theo tương ứng. (3.5)
+        . Synchronization bar có thể hiểu đơn giản. Có các trường hợp cần hội tụ đủ nhiều luông điều khiển một lúc để gộp thành một luồng xử lý thì cần dùng Join. Và đôi khi cần phải tách một luồng điều khiển ra hai hoặc nhiều luồng khác biệt nhau thì cần Fork. Và mỗi luồng của Fork hoàn toàn không lệ thuộc nhau. (3.6)
+        . End điểm kết thúc của luồng xử lý. (3.7)
