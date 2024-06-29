@@ -1,0 +1,139 @@
+14. Runnables
+
+    . Định nghĩa và Chức năng
+        . Runnable hay thực thể runnable là những đoạn mã nhỏ nhất được định nghĩa trên một thành phần phần mềm.
+        . Đơn giản, runnable có thể được hiểu như các hàm riêng lẻ trong một thành phần phần mềm.
+        . Mỗi hàm trong file C phải được định nghĩa là runnable trong cấu hình Autosar và cần chỉ định quyền truy cập giao diện trong nó.
+        . Các runnable cùng với các sự kiện được cấu hình sẽ được hệ điều hành lập lịch.
+
+    . Quy tắc đặc biệt
+        . Thành phần hợp thành (Composition) hoặc thành phần phần mềm tham số (Parameter Software Component) không thể có runnable vì chúng không có chức năng liên kết file C.
+        . Ví dụ
+            . Giả sử có một file C trong Autosar định nghĩa 4 hàm: "Sum, Difference, Multiplication và Division".
+            . Các hàm này được coi là runnable và cần phải định nghĩa cấu hình runnable cho cả bốn hàm.
+
+                // Ví dụ C file
+                int Sum(int X, int Y) { return X + Y; }
+                int Difference(int X, int Y) { return X - Y; }
+                int Multiplication(int X, int Y) { return X * Y; }
+                int Division(int X, int Y) { return X / Y; }
+
+    . Cấu hình Runnable
+        . Định nghĩa runnable trong tag Runnable Entity.
+        . Định nghĩa các quyền truy cập dữ liệu đọc và ghi bên trong runnable.
+
+            <RunnableEntity>
+            <Name>Sum</Name>
+            <Symbol>Sum</Symbol>
+            <DataReadAccess>
+                <Variable>X</Variable>
+                <Variable>Y</Variable>
+            </DataReadAccess>
+            <DataWriteAccess>
+                <Variable>Result</Variable>
+            </DataWriteAccess>
+            </RunnableEntity>
+
+    . Giao tiếp và Quyền truy cập
+
+        . Data Read Access và Data Write Access
+            . Sử dụng cho giao tiếp không đồng bộ (implicit communication), đảm bảo tính nhất quán của tin nhắn.
+
+        . Explicit Communication
+            . Dữ liệu được truyền trực tiếp qua các cổng mà không quan tâm đến tính nhất quán của tin nhắn.
+
+        . Data Send Configuration
+            . Dùng cho giao tiếp hàng đợi, nơi RTE tạo hàng đợi tin nhắn để lưu trữ dữ liệu từ người gửi và truyền cho người nhận khi được yêu cầu.
+
+        . Parameter Access
+            . Các tham số chỉ có thể đọc và không thể ghi bởi phần mềm.
+
+        . Mode Switch Ports
+            . Mode Access Point: Đọc các trạng thái.
+            . Mode Switch Point: Thiết lập hoặc tính toán trạng thái.
+
+        . Local Interface Access
+            . Được chỉ định trong runnable nếu truy cập chúng.
+            . Bao gồm biến nội bộ (IRV) trong phạm vi module.
+
+        . Client Server Interface
+            . Chỉ định nếu truy cập chúng, có thể là synchronous hoặc asynchronous.
+
+        . Triggers
+            . Có thể là kích hoạt nội bộ hoặc bên ngoài, liên kết với các cổng kích hoạt và có thể cấu hình dựa trên các giao diện kích hoạt.
+
+    . Các Thuộc tính Chung
+        . Can be in concurrently: Chỉ định nếu runnable được phép gọi đệ quy hoặc song song trên các nhiệm vụ khác nhau.
+        . Symbol: Tag phải khớp chính xác với định danh hàm C để hệ điều hành biết tên hàm cần lập lịch cho runnable.
+
+    . Tổng kết
+        . Cấu hình runnable nên chứa tất cả thông tin về các giao diện hoặc cổng mà nó truy cập cùng với bất kỳ cấu hình phụ nào đã đề cập.
+        . Runnables là các đoạn mã nhỏ nhất trong một thành phần phần mềm, được định nghĩa và cấu hình trong Autosar để giao tiếp và hoạt động chính xác theo yêu cầu hệ thống.
+
+
+15.Events
+
+    . Định nghĩa và Chức năng
+        . Events là các cấu hình bổ sung cho Runnable, xác định cách hệ điều hành gọi hoặc lập lịch cho một Runnable.
+        . Runnables được ánh xạ tới các sự kiện RTE và hệ điều hành cùng với lớp RTE đảm bảo rằng hàm runnable được gọi theo cách mong đợi.
+
+    . Phân loại Events
+        . Autosar không phân loại các sự kiện như chúng ta sẽ thấy ở đây, nhưng để dễ hiểu, chúng tôi đã tách biệt chúng dựa trên cách sử dụng.
+
+        . Generic Events
+            . Init Event: Gọi một lần duy nhất để khởi tạo phần mềm khi khởi động.
+            . Timing Event: Gọi các runnables trong khoảng thời gian xác định (ví dụ: mỗi 100ms).
+            . External Trigger Occurred Event: Gọi khi có sự kiện kích hoạt từ bên ngoài.
+            . Internal Trigger Occurred Event: Gọi khi có sự kiện kích hoạt từ bên trong.
+            . Background Event: Gọi các runnables khi hệ thống ở trạng thái nhàn rỗi.
+
+        . Client Server Events
+            . Operation Invoked Event: Dùng trên server của giao tiếp client-server, gọi runnable khi client yêu cầu thực hiện dịch vụ.
+            . Asynchronous Server Result Event: Gọi khi hoàn thành cuộc gọi server không đồng bộ.
+
+        . Data Related Events
+            . Data Write Complete Event / Data Send Complete Event: Gọi khi dữ liệu được gửi trên cổng provider.
+            . Data Receive Event / Data Receive Error Event: Gọi khi dữ liệu được nhận trên cổng receiver hoặc khi có lỗi nhận dữ liệu.
+
+        . Mode Related Events
+            . Mode Switch Event: Gọi khi có thay đổi trạng thái trong một chế độ cụ thể (ví dụ: bật/tắt đèn pha).
+            . Mode Manager Error Event: Gọi khi có lỗi trong quản lý chế độ.
+            . Mode Switch Acknowledgement Event: Gọi khi xác nhận thay đổi chế độ.
+
+    . Ví dụ và Cấu hình
+        . Giả sử chúng ta có một thành phần phần mềm với 4 runnables: "Sum", "Difference", "Multiplication" và "Division".
+
+        . Sum Runnable
+            . Ánh xạ tới sự kiện timing, gọi hàm "Sum" định kỳ.
+            . Cấu hình:
+                <TimingEvent>
+                <Period>0.1</Period> <!-- Gọi mỗi 100ms -->
+                <RunnableEntity>Sum</RunnableEntity>
+                </TimingEvent>
+        . Difference Runnable
+            . Ánh xạ tới sự kiện operation invoked, gọi hàm "Diff" khi client yêu cầu qua cổng client-server.
+            . Cấu hình:
+                <OperationInvokedEvent>
+                <ClientServerOperation>Difference</ClientServerOperation>
+                <RunnableEntity>Diff</RunnableEntity>
+                </OperationInvokedEvent>
+        . Multiplication Runnable
+            . Ánh xạ tới sự kiện data received, gọi hàm "Mul" khi nhận dữ liệu mới trên cổng receiver.
+            . Cấu hình:
+                <DataReceivedEvent>
+                <ReceiverPort>DataReceiverPort</ReceiverPort>
+                <RunnableEntity>Mul</RunnableEntity>
+                </DataReceivedEvent>
+        . Division Runnable
+            . Ánh xạ tới sự kiện mode switch, gọi hàm "Div" khi chế độ cụ thể được kích hoạt.
+            . Cấu hình:
+                <ModeSwitchEvent>
+                <ModeSwitchPort>ModePort</ModeSwitchPort>
+                <RunnableEntity>Div</RunnableEntity>
+                </ModeSwitchEvent>
+    . Tổng kết
+        . Events xác định cách hệ điều hành gọi hoặc lập lịch cho các runnables trong Autosar.
+        . Generic Events: Sự kiện khởi tạo, sự kiện thời gian, sự kiện kích hoạt bên ngoài/nội bộ, sự kiện nền.
+        . Client Server Events: Sự kiện gọi hàm server, sự kiện hoàn thành gọi hàm server không đồng bộ.
+        . Data Related Events: Sự kiện gửi/nhận dữ liệu.
+        . Mode Related Events: Sự kiện chuyển đổi chế độ, sự kiện lỗi quản lý chế độ, sự kiện xác nhận chuyển đổi chế độ.
