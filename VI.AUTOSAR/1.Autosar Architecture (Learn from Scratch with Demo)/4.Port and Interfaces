@@ -53,8 +53,119 @@
 
 10. Sender Receiver Interface
 
+    . Mô hình Giao tiếp
+        . Phân phối thông tin không đồng bộ: Người gửi phân phối thông tin đến một hoặc nhiều người nhận.
+        . Người gửi không bị chặn: Là giao tiếp không đồng bộ, không mong đợi hoặc nhận phản hồi từ người nhận.
+        . Người gửi chỉ cung cấp thông tin: Người nhận tự quyết định khi nào và cách sử dụng thông tin.
+        . RTE chịu trách nhiệm phân phối thông tin: Cơ sở hạ tầng giao tiếp (RTE) phân phối thông tin tới người nhận.
+        . Người gửi không biết danh tính hoặc số lượng người nhận.
+
+    . Các Loại Kết Nối Giao tiếp
+        . Giao tiếp một-một (1:1): Một thành phần gửi thông tin và một thành phần nhận thông tin.
+        . Giao tiếp một-nhiều (1:M): Một provider và nhiều thành phần nhận thông tin.
+        . Giao tiếp nhiều-một (M:1): Nhiều provider và một receiver.
+        . Giao tiếp nhiều-nhiều (M:M): Không được Autosar hỗ trợ.
+
+    . Cấu hình Giao diện Sender Receiver
+        . Tạo Giao diện Sender Receiver
+            . Xác định dữ liệu cần giao tiếp trong variable data prototype.
+            . Tên ngắn của variable data prototype xác định tên của giao diện cần giao tiếp.
+            . Các thuộc tính bổ sung như đơn vị, phương pháp tính toán có thể được cung cấp từ Application-primitive hoặc Application-Record data type trong giao diện sender receiver.
+
+        . Gửi nhiều dữ liệu trên cùng một cổng
+            . Có thể chỉ định nhiều variable data prototypes trong cùng một giao diện sender receiver để gửi nhiều dữ liệu.
+
+        . Tạo Cổng trên Thành phần Phần mềm
+            . Tạo một cổng trên thành phần và liên kết giao diện sender receiver đã tạo vào đó.
+            . Hoàn thành cấu hình sender receiver và liên kết cổng cho thành phần phần mềm.
+
+    . Tóm tắt
+        . Giao diện sender receiver là một mô hình giao tiếp không đồng bộ, nơi người gửi phân phối thông tin tới một hoặc nhiều người nhận mà không cần phản hồi.
+        . Autosar hỗ trợ giao tiếp 1:1, 1:M, và M:1 nhưng không hỗ trợ M
+        . Quá trình cấu hình bao gồm tạo giao diện, xác định dữ liệu, tạo cổng và liên kết giao diện với cổng trên thành phần phần mềm.
+
+    . Trong phần demo, sẽ có các chi tiết cụ thể về cấu hình giao diện sender receiver.
+
 
 11. Client Server Interface
 
+    . Đặc điểm của Giao diện Client Server
+        . Giao diện client server được sử dụng cho các cuộc gọi hàm hoặc dịch vụ giữa các thành phần.
+        . Server là nhà cung cấp dịch vụ và client là người sử dụng dịch vụ.
+        . Client khởi tạo giao tiếp, yêu cầu server thực hiện dịch vụ và chuyển tham số nếu cần.
+        . Server chờ yêu cầu, thực hiện dịch vụ được yêu cầu và gửi phản hồi cho client.
+
+    . Phân loại Client và Server
+        . Client khởi tạo yêu cầu và có cổng nhận.
+        . Server thực hiện dịch vụ và có cổng cung cấp.
+        . Một thành phần có thể là cả client và server tùy thuộc vào hiện thực phần mềm.
+
+    . Ví dụ về Giao diện Client Server
+        . Thành phần thực hiện các phép toán toán học, có hàm "Sum" cộng hai số.
+        . Hàm "Sum" nhận các giá trị đầu vào X và Y, trả về kết quả S.
+        . Thành phần này là Server và tạo cổng cung cấp cho hàm này.
+        . Thành phần khác cần sử dụng hàm "Sum" sẽ là Client và có cổng nhận.
+        . Client sẽ gọi hàm server bằng cách truyền các tham số khi cần.
+
+    . Loại Gọi Hàm Server
+
+        . Gọi hàm đồng bộ (Synchronous Call)
+            . Client bị chặn cho đến khi nhận kết quả từ server.
+            . Sử dụng khi client cần kết quả ngay lập tức để xử lý tiếp.
+            . Ví dụ: Client truyền hai số và mong đợi kết quả cộng lại ngay lập tức.
+
+        . Gọi hàm không đồng bộ (Asynchronous Call)
+            . Client không bị chặn, tiếp tục thực hiện mã sau khi gọi hàm server.
+            . Sử dụng khi client không cần kết quả ngay lập tức hoặc không mong đợi kết quả từ server.
+
+    . Các Loại Kết Nối
+        . Kết nối một-một (1:1): Một sender và một receiver.
+        . Kết nối một-nhiều (1:M): Một sender và nhiều client sử dụng server.
+        . Kết nối nhiều-một (M:1) và nhiều-nhiều (M:M) không được phép.
+
+    . Cấu hình Giao diện Client Server
+        . Tạo giao diện client server và tạo một thao tác server mô tả dịch vụ server.
+        . Xác định các tham số của thao tác server với hướng IN, OUT hoặc INOUT.
+        . Ví dụ cấu hình cho hàm "Sum" với các tham số X và Y đầu vào và S đầu ra.
+        . Xác định các lỗi ứng dụng có thể server trả về nếu có vấn đề.
+        . Tạo nhiều thao tác trong cùng một giao diện client server nếu cần.
+        . Giống như giao diện sender receiver, có thể nhóm các thao tác vào cùng một định nghĩa giao diện.
+        Tạo cổng cung cấp cho server và cổng nhận cho client và ánh xạ giao diện client server vào đó.
+        Tổng kết
+        . Giao diện client server cho phép gọi hàm hoặc dịch vụ giữa các thành phần.
+        . Client khởi tạo yêu cầu, server thực hiện dịch vụ và trả về kết quả.
+        . Gọi hàm đồng bộ khi cần kết quả ngay lập tức, gọi hàm không đồng bộ khi không cần kết quả ngay lập tức.
+        . Cấu hình giao diện client server bao gồm tạo giao diện, xác định tham số, tạo cổng và ánh xạ giao diện.
+
+    . Trong phần demo, sẽ có các chi tiết cụ thể về cấu hình giao diện client server.
 
 12. Port Interface (Example)
+
+    . Cấu hình Giao diện Cho Các Thành phần
+    
+        . Thành phần Trừu tượng hóa ECU (ECU Abstraction Component)
+            . Thông tin từ cảm biến đến thành phần ứng dụng: Sử dụng giao diện sender receiver.
+            . Cổng provider trên thành phần trừu tượng hóa ECU và cổng receiver trên thành phần cảm biến/thiết bị chấp hành.
+
+        . Thành phần Cảm biến/Thiết bị chấp hành (Sensor Actuator Component)
+            . Tính toán tốc độ và gửi thông tin đến các thành phần ứng dụng khác: Sử dụng giao diện sender receiver, vì đây chỉ là giao tiếp dữ liệu.
+
+        . Thành phần Phần mềm Ứng dụng (Application Software Component)
+            . Lấy giá trị hiệu chỉnh cắt từ thành phần phần mềm tham số: Sử dụng giao diện parameter.
+            . Giao tiếp tốc độ tối đa cần ghi vào NV Block: Sử dụng giao diện NV interface.
+            . Giao tiếp với NVM manager của phần mềm cơ bản: Sử dụng giao diện client server, vì phần mềm cơ bản thường cung cấp dịch vụ.
+            . Ghi lỗi chẩn đoán: Sử dụng giao diện client server, vì đây là dịch vụ phần mềm từ module chẩn đoán.
+            . Cắt nhiên liệu: Gửi lệnh đến trình điều khiển thiết bị phức tạp (CDD). Có thể sử dụng giao diện sender receiver hoặc trigger interface.
+
+    . Tổng kết
+        . Sender Receiver Interface: Dùng cho giao tiếp dữ liệu giữa các thành phần.
+        . Từ thành phần trừu tượng hóa ECU đến cảm biến/thiết bị chấp hành.
+        . Từ cảm biến/thiết bị chấp hành đến thành phần phần mềm ứng dụng.
+        . Từ phần mềm ứng dụng đến trình điều khiển thiết bị phức tạp (CDD) cho lệnh cắt nhiên liệu.
+        . Parameter Interface: Dùng để lấy tham số hiệu chỉnh từ thành phần phần mềm tham số đến phần mềm ứng dụng.
+        . NV Interface: Dùng cho giao tiếp giữa phần mềm ứng dụng và NV Block để ghi dữ liệu không bay hơi.
+        . Client Server Interface: Dùng cho các cuộc gọi hàm từ phần mềm ứng dụng đến NVM manager và module chẩn đoán.
+
+    . Quy tắc Chung
+        . Giao tiếp dữ liệu: Sử dụng sender receiver interface.
+        . Gọi hàm hoặc dịch vụ: Sử dụng client server interface.
