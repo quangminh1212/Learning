@@ -1,43 +1,77 @@
 5. Base Software Overview (BSW)
-    Giới thiệu về Kiến trúc Phân lớp
+
+    . Giới thiệu về Kiến trúc Phân lớp
         . Autosar cung cấp cơ chế cần thiết cho sự độc lập giữa phần mềm và phần cứng.
         . Phân biệt ba lớp phần mềm chính chạy trên vi điều khiển: lớp ứng dụng (ASW), môi trường chạy thời gian (RTE) và phần mềm cơ bản (BSW).
 
-    Lớp Ứng dụng (ASW)
-        . Lớp phần mềm ứng dụng chủ yếu không phụ thuộc vào phần cứng.
-        . Tăng tính linh hoạt trong phát triển phần mềm qua trừu tượng hóa.
-        . Phần mềm ứng dụng có thể tái sử dụng trên các phương tiện khác nhau mà không cần thay đổi nhiều.
+        . Lớp Ứng dụng (ASW)
+            . Lớp phần mềm ứng dụng chủ yếu không phụ thuộc vào phần cứng.
+            . Tăng tính linh hoạt trong phát triển phần mềm qua trừu tượng hóa.
+            . Phần mềm ứng dụng có thể tái sử dụng trên các phương tiện khác nhau mà không cần thay đổi nhiều.
 
-    Môi trường Chạy Thời gian (RTE)
-        . RTE tạo ra sự phân tách rõ ràng giữa phần mềm ứng dụng độc lập phần cứng và phần mềm cơ bản hướng phần cứng.
-        . Phát triển các ứng dụng phần mềm không phụ thuộc vào phần cứng.
+        . Môi trường Chạy Thời gian (RTE)
+            . RTE tạo ra sự phân tách rõ ràng giữa phần mềm ứng dụng độc lập phần cứng và phần mềm cơ bản hướng phần cứng.
+            . Phát triển các ứng dụng phần mềm không phụ thuộc vào phần cứng.
 
-    Phần mềm Cơ bản (BSW)
+        . Phần mềm Cơ bản (BSW)
         . BSW được chia thành ba lớp chính và các trình điều khiển phức tạp: lớp dịch vụ, lớp trừu tượng hóa ECU và lớp trừu tượng hóa vi điều khiển (MCAL).
 
-    Lớp Dịch vụ
-        . Bao gồm các dịch vụ giao tiếp, dịch vụ bộ nhớ và dịch vụ hệ thống.
-        . Cung cấp giao diện đồng nhất cho mạng phương tiện, quản lý bộ nhớ không bay hơi, và các dịch vụ cơ bản cho các mô-đun phần mềm.
+            . Lớp Dịch vụ
+                . Bao gồm các dịch vụ giao tiếp, dịch vụ bộ nhớ và dịch vụ hệ thống.
+                . Cung cấp giao diện đồng nhất cho mạng phương tiện, quản lý bộ nhớ không bay hơi, và các dịch vụ cơ bản cho các mô-đun phần mềm.
 
-    Lớp Trừu tượng hóa ECU
-        . Cung cấp giao diện phần mềm cho các giá trị điện tử của bất kỳ ECU cụ thể nào.
-        . Được chia thành trừu tượng hóa phần cứng IO, trừu tượng hóa giao tiếp, trừu tượng hóa bộ nhớ và trừu tượng hóa thiết bị trên bo mạch.
+            . Lớp Trừu tượng hóa ECU
+                . Cung cấp giao diện phần mềm cho các giá trị điện tử của bất kỳ ECU cụ thể nào.
+                . Được chia thành trừu tượng hóa phần cứng IO, trừu tượng hóa giao tiếp, trừu tượng hóa bộ nhớ và trừu tượng hóa thiết bị trên bo mạch.
 
-    Lớp Trừu tượng hóa Vi điều khiển (MCAL)
-        . Là lớp thấp nhất của phần mềm cơ bản.
-        . Chứa các trình điều khiển với quyền truy cập trực tiếp vào vi điều khiển, các thiết bị ngoại vi nội bộ và các thiết bị ngoại vi bộ nhớ được ánh xạ.
-        . Đảm bảo giao diện chuẩn cho phần mềm cơ bản và quản lý các thiết bị ngoại vi của vi điều khiển.
+            . Lớp Trừu tượng hóa Vi điều khiển (MCAL)
+                . Là lớp thấp nhất của phần mềm cơ bản.
+                . Chứa các trình điều khiển với quyền truy cập trực tiếp vào vi điều khiển, các thiết bị ngoại vi nội bộ và các thiết bị ngoại vi bộ nhớ được ánh xạ.
+                . Đảm bảo giao diện chuẩn cho phần mềm cơ bản và quản lý các thiết bị ngoại vi của vi điều khiển.
 
-    Trình điều khiển phức tạp
+    . Trình điều khiển phức tạp (Complex Device Driver)
         . Thực hiện kiểm soát cảm biến và thiết bị chấp hành phức tạp với quyền truy cập trực tiếp vào vi điều khiển.
         . Được sử dụng khi có yêu cầu đặc biệt về chức năng và thời gian cho việc xử lý các cảm biến và thiết bị chấp hành phức tạp.
 
-    Lợi ích của Autosar
+    . Lợi ích của Autosar
         . Tăng tính linh hoạt và khả năng tái sử dụng phần mềm trên nhiều phần cứng khác nhau.
         . Phát triển phần mềm có thể được phân phối giữa các nhà cung cấp, dẫn đến phát triển nhanh chóng và đưa ra thị trường nhanh.
         . Cung cấp khả năng cắm và chạy phần mềm dễ dàng, cho phép khách hàng sử dụng phần mềm tốt nhất từ các nhà cung cấp khác nhau.
 
-    Tóm tắt
+    . Tóm tắt
         . Autosar cung cấp một kiến trúc phần mềm chuẩn hóa và linh hoạt cho ngành công nghiệp ô tô.
         . Tạo ra sự tách biệt rõ ràng giữa phần mềm ứng dụng và phần mềm cơ bản, tăng khả năng tái sử dụng và linh hoạt trong phát triển phần mềm.
         . Hỗ trợ phát triển song song và nhanh chóng đưa sản phẩm ra thị trường.
+6. Autosar Interfaces
+    . Các Loại Giao diện của Autosar
+        . Autosar phân loại các giao diện thành ba loại khác nhau: giao diện Autosar, giao diện Autosar chuẩn hóa và giao diện chuẩn hóa.
+
+        . Giao diện Autosar
+            . Giao diện Autosar là giao diện chung được tạo ra từ các cấu hình.
+            . Cung cấp bởi RTE và hoạt động như giao diện giữa phần mềm ứng dụng hoặc giữa phần mềm ứng dụng và phần mềm cơ bản như trừu tượng hóa phần cứng hoặc trình điều khiển thiết bị phức tạp.
+            . Ví dụ, phần mềm ứng dụng có thể đọc giá trị đầu vào và ghi giá trị đầu ra thông qua các giao diện này, sử dụng các API được tạo ra từ cấu hình.
+
+        . Giao diện Autosar Chuẩn hóa
+            . Là một loại giao diện đặc biệt được định nghĩa trước bởi tiêu chuẩn.
+            . Sử dụng bởi phần mềm ứng dụng để truy cập vào các dịch vụ được cung cấp bởi các mô-đun BSW của lớp dịch vụ, như quản lý trạng thái ECU hoặc quản lý chẩn đoán.
+
+        . Giao diện Chuẩn hóa
+            . Là giao diện được định nghĩa trước bởi tiêu chuẩn Autosar như một API trong ngôn ngữ C.
+            . Sử dụng giữa các mô-đun BSW trong một ECU hoặc giữa RTE và hệ điều hành hoặc giữa RTE và mô-đun giao tiếp BSW.
+            . Ví dụ, trong lớp MCAL, Autosar định nghĩa một API chức năng để đọc chân IO, được gọi là DIO_ReadChannel.
+
+    . Tóm tắt
+        . Giao diện Autosar: Giao diện chung từ cấu hình, phục vụ giao tiếp giữa các lớp phần mềm.
+        . Giao diện Autosar chuẩn hóa: Giao diện đặc biệt định nghĩa trước, dùng để truy cập dịch vụ từ BSW.
+        . Giao diện chuẩn hóa: Giao diện API định nghĩa trước trong C, dùng giữa các mô-đun BSW hoặc giữa RTE và các mô-đun khác.
+
+    . Lưu ý
+        . Khó hình dung và hiểu hoàn toàn các giao diện này ngay lúc này, nhưng cuối khóa học sẽ có ví dụ trực tiếp minh họa cho các loại giao diện này.
+        . Tiếp tục học với sự hiểu biết cơ bản về ba loại giao diện mà Autosar quy định.
+
+
+
+
+
+
+
