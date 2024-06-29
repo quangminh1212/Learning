@@ -1,0 +1,60 @@
+9. Autosar Port Interfaces
+
+    . Cổng Giao tiếp (Ports)
+        . Ports là điểm kết nối cho giao tiếp giữa các thành phần phần mềm trong Autosar.
+        . Chịu trách nhiệm truyền tải thông tin giữa các thành phần.
+
+    . Các Loại Cổng (Port Types)
+        . Provider Port (P-Port): Dùng để gửi thông tin từ một thành phần phần mềm.
+        . Receiver Port (R-Port): Dùng để nhận thông tin từ các thành phần khác.
+        . Provider Receiver Port (PR-Port): Kết hợp cả hai chức năng gửi và nhận thông tin đồng thời.
+
+    . Các Loại Giao diện Cổng (Port Interfaces)
+        . Thông tin được truyền qua cổng được xác định bởi giao diện cổng.
+        . Có sáu loại giao diện có thể chọn dựa trên thông tin được giao tiếp:
+        . Sender Receiver Interface
+        . Client Server Interface
+        . NV Data Interface
+        . Parameter Interface
+        . Mode Switch Interface
+        . Trigger Interface
+
+        . Sender Receiver Interface
+            . Dùng để giao tiếp dữ liệu giữa các cổng.
+            . Dữ liệu có thể là các loại nguyên thủy hoặc phức tạp như integer, float, cấu trúc, mảng, v.v.
+            . Thành phần gửi cần có provider port với giao diện sender receiver, thành phần nhận cần có receiver port với cùng giao diện.
+
+        . Client Server Interface
+            . Dùng để giao tiếp hoặc truy cập các dịch vụ từ thành phần khác.
+            . Thành phần có chức năng được gọi là server, có provider port.
+            . Thành phần gọi chức năng này được gọi là client, có receiver port.
+
+        . NV Data Interface
+            . Dùng bởi các thành phần phần mềm khối NV để giao tiếp giao diện không bay hơi (NVM).
+            . Gửi dữ liệu đến NV block sử dụng provider port, nhận dữ liệu từ NV block sử dụng receiver port.
+
+        . Parameter Interface
+            . Dùng để trao đổi các tham số hiệu chỉnh giữa các thành phần.
+            . Dùng cho các tham số không thay đổi hoặc không được ghi trong thời gian chạy.
+            . Thành phần phần mềm tham số chủ yếu sử dụng giao diện này để chia sẻ tham số hiệu chỉnh.
+
+        . Mode Switch Interface
+            . Dùng khi có các trạng thái hệ thống được định trước cho một chức năng.
+            . Ví dụ: Các trạng thái của đèn pha xe như TẮT, BẬT với chùm sáng cao, BẬT với chùm sáng thấp.
+            . Thành phần quyết định trạng thái sẽ là provider port, thành phần thực hiện hành động dựa trên quyết định sẽ là receiver port.
+
+        . Trigger Interface
+            . Dùng để kích hoạt chức năng trên thành phần khi có sự kiện xảy ra.
+            . Thành phần quyết định kích hoạt sẽ là provider port, thành phần có chức năng cần kích hoạt sẽ là receiver port.
+
+    . Lưu ý
+        . Giao diện sender receiver và client server sẽ là các giao diện chính được sử dụng trong phần mềm.
+        . Chú ý các biểu tượng độc đáo của mỗi giao diện cổng, sẽ sử dụng các biểu tượng này để biểu diễn cổng và giao diện của chúng trong các phần tiếp theo.
+
+10. Sender Receiver Interface
+
+
+11. Client Server Interface
+
+
+12. Port Interface (Example)
