@@ -1,0 +1,29 @@
+1.Introduction to the course
+    . Giới thiệu về Autosar:
+        . Autosar là một tiêu chuẩn quan trọng trong ngành công nghiệp ô tô, đã trở thành kiến thức cần biết hiện nay. Kiến trúc Autosar phức tạp và không dễ hiểu ban đầu, nhưng nếu được giải thích tốt, nó khá dễ dàng.
+
+    . Nội dung khóa học:
+        . Giảng viên: Prakash Kumar, với hơn 8 năm kinh nghiệm trong ngành ô tô, làm việc với Autosar trong 2 trong số 9 tổ chức cốt lõi của Autosar.
+        . Mục tiêu: Dành cho người mới bắt đầu và những người đã có kiến thức cơ bản về Autosar, nhằm làm rõ kiến trúc và cách áp dụng chúng.
+    . Cấu trúc khóa học:
+        . Phần lý thuyết (2 giờ):
+            . Giới thiệu về Autosar và lợi ích của nó.
+            . Các lớp trong Autosar:
+                . BSW Layer: Bắt đầu với lớp BSW.
+                . Application Layer: Nhìn chi tiết vào cấu hình như loại thành phần, cổng, runnables, sự kiện, kết nối, và nhiều hơn nữa.
+                . Sender Receiver Interface và Client Server Interface: Cách sử dụng chủ yếu trong phần mềm.
+                . Thiết kế và lựa chọn thành phần, cổng và giao diện với ví dụ thực tế.
+                . RTE Layer: Chi tiết cách RTE quản lý giao tiếp cổng và lập lịch.
+        . Phần demo (2.5 giờ):
+            . Thiết kế phần mềm Autosar từ lớp MCAL cơ bản đến lớp ứng dụng.
+            . Không sử dụng các công cụ chỉnh sửa Autosar thông thường vì giá cao và cấu hình tự động tạo ra là một hộp đen.
+            . Sử dụng các công cụ đơn giản như Notepad++ và trình chỉnh sửa XML để thực hiện demo.
+            . Viết mã C dựa trên cấu hình thiết kế.
+    . Kết quả khóa học:
+        . Hiểu rõ kiến trúc Autosar và các lớp khác nhau.
+        . Phát triển phần mềm Autosar từ đầu với các trình chỉnh sửa đơn giản.
+    . Đối tượng:
+        . Các nhà phát triển phần mềm nhúng trong ngành công nghiệp ô tô muốn sử dụng kiến trúc Autosar.
+        . Sinh viên và người tìm việc muốn học và làm việc trong lĩnh vực ô tô.
+    . Yêu cầu:
+        . Kiến thức cơ bản về phát triển phần mềm nhúng là lợi thế. Nếu hoàn toàn mới, các thuật ngữ và ví dụ thực tế có thể khó nắm bắt ban đầu, nên cần kiên nhẫn và sử dụng phần Hỏi & Đáp để giải đáp thắc mắc.
