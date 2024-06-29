@@ -52,8 +52,54 @@
         . Sự phân loại và cấu trúc này giúp tách biệt rõ ràng giữa phần mềm ứng dụng và phần mềm cơ bản, tối ưu hóa phát triển phần mềm ô tô.
 
 
+8. Software Components (Example)
+    . Yêu cầu Sử dụng
+        . Nhận tốc độ xe từ cảm biến tốc độ ngoài.
+        . Nếu tốc độ vượt quá giá trị cài đặt, thực hiện các hành động sau:
+        . Cắt nhiên liệu ngay lập tức và dừng xe.
+        . Ghi lỗi thông qua module chẩn đoán.
+        . Tính toán tốc độ tối đa của xe và lưu dữ liệu trong quá trình tắt máy.
+        . Khôi phục dữ liệu khi ECU khởi động lại trong chu kỳ lái xe tiếp theo.
 
+    . Thiết kế Giải pháp Autosar
+        . Nhận Dữ liệu từ Cảm biến Tốc độ
+            . Cảm biến tốc độ kết nối với ECU, đầu vào cảm biến có sẵn trên chân IO kỹ thuật số của bộ điều khiển.
+            . Thành phần trừu tượng hóa ECU (ECU abstraction software component) đọc chân IO tương ứng và tính toán thông tin xung nhịp từ cảm biến tốc độ.
 
+        . Xử lý Dữ liệu Cảm biến
+            . Thành phần phần mềm cảm biến/thiết bị chấp hành (sensor actuator software component) tương tác với lớp trừu tượng hóa ECU để nhận xung nhịp cảm biến.
+            . Tính toán tốc độ dựa trên đầu vào cảm biến và chuyển đổi đơn vị tốc độ như km/h, m/h.
+
+        . Logic Cắt Động cơ
+            . Thành phần phần mềm ứng dụng (application software component) thực hiện logic chính để cắt động cơ khi vượt quá tốc độ.
+            . Nhận tốc độ đã tính toán từ thành phần cảm biến/thiết bị chấp hành và xử lý tiếp.
+
+        . Tham số Hiệu chỉnh
+            . Thành phần phần mềm tham số (parameter software component) cung cấp tham số hiệu chỉnh để quyết định giá trị cắt tốc độ cao.
+            . Tham số này có thể điều chỉnh trong quá trình sản xuất.
+
+        . Cắt Nhiên liệu Ngay lập tức
+            . Trình điều khiển thiết bị phức tạp (Complex Device Driver - CDD) thực hiện lệnh cắt nhiên liệu từ ứng dụng và thiết lập chân IO của bộ điều khiển để cắt nhiên liệu ngay lập tức.
+
+        . Ghi Lỗi Chẩn đoán
+            . Thành phần phần mềm dịch vụ (BSW service software component) cho chẩn đoán để ghi lỗi.
+            . Thành phần ứng dụng kết nối với thành phần dịch vụ chẩn đoán, chuyển thông tin khi có sự kiện xảy ra.
+
+    . Lưu và Khôi phục Tốc độ Tối đa
+        . Thành phần phần mềm khối NV (NV Block software component) tạo NV Block cho ứng dụng để lưu tốc độ tối đa.
+        . NV Block truyền dữ liệu đến NVM manager của phần mềm cơ bản để lưu vào bộ nhớ không bay hơi.
+        . Trong quá trình khởi động lại, NVM manager khôi phục dữ liệu tốc độ từ bộ nhớ ngoài và chuyển xuống lớp ứng dụng thông qua NV Block.
+
+    . Tổng kết
+        . Thành phần phần mềm ứng dụng: Tính toán và xử lý logic chính.
+        . Thành phần phần mềm cảm biến/thiết bị chấp hành: Chuyển đổi và tính toán dữ liệu cảm biến.
+        . Thành phần phần mềm trừu tượng hóa ECU: Đọc chân IO và tính toán xung nhịp.
+        . Thành phần phần mềm tham số: Cung cấp tham số hiệu chỉnh.
+        . Trình điều khiển thiết bị phức tạp: Thực hiện các tác vụ thời gian quan trọng.
+        . Thành phần phần mềm dịch vụ: Ghi lỗi chẩn đoán.
+        . Thành phần phần mềm khối NV: Lưu và khôi phục dữ liệu không bay hơi.
+
+    . Trong quá trình đào tạo tiếp theo, sẽ sử dụng cùng ví dụ này để tìm hiểu sâu về các cơ chế giao tiếp mà Autosar cung cấp.
 
 
 
