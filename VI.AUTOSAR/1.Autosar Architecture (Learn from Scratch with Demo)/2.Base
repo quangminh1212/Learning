@@ -1,0 +1,43 @@
+5. Base Software Overview (BSW)
+    Giới thiệu về Kiến trúc Phân lớp
+        . Autosar cung cấp cơ chế cần thiết cho sự độc lập giữa phần mềm và phần cứng.
+        . Phân biệt ba lớp phần mềm chính chạy trên vi điều khiển: lớp ứng dụng (ASW), môi trường chạy thời gian (RTE) và phần mềm cơ bản (BSW).
+
+    Lớp Ứng dụng (ASW)
+        . Lớp phần mềm ứng dụng chủ yếu không phụ thuộc vào phần cứng.
+        . Tăng tính linh hoạt trong phát triển phần mềm qua trừu tượng hóa.
+        . Phần mềm ứng dụng có thể tái sử dụng trên các phương tiện khác nhau mà không cần thay đổi nhiều.
+
+    Môi trường Chạy Thời gian (RTE)
+        . RTE tạo ra sự phân tách rõ ràng giữa phần mềm ứng dụng độc lập phần cứng và phần mềm cơ bản hướng phần cứng.
+        . Phát triển các ứng dụng phần mềm không phụ thuộc vào phần cứng.
+
+    Phần mềm Cơ bản (BSW)
+        . BSW được chia thành ba lớp chính và các trình điều khiển phức tạp: lớp dịch vụ, lớp trừu tượng hóa ECU và lớp trừu tượng hóa vi điều khiển (MCAL).
+
+    Lớp Dịch vụ
+        . Bao gồm các dịch vụ giao tiếp, dịch vụ bộ nhớ và dịch vụ hệ thống.
+        . Cung cấp giao diện đồng nhất cho mạng phương tiện, quản lý bộ nhớ không bay hơi, và các dịch vụ cơ bản cho các mô-đun phần mềm.
+
+    Lớp Trừu tượng hóa ECU
+        . Cung cấp giao diện phần mềm cho các giá trị điện tử của bất kỳ ECU cụ thể nào.
+        . Được chia thành trừu tượng hóa phần cứng IO, trừu tượng hóa giao tiếp, trừu tượng hóa bộ nhớ và trừu tượng hóa thiết bị trên bo mạch.
+
+    Lớp Trừu tượng hóa Vi điều khiển (MCAL)
+        . Là lớp thấp nhất của phần mềm cơ bản.
+        . Chứa các trình điều khiển với quyền truy cập trực tiếp vào vi điều khiển, các thiết bị ngoại vi nội bộ và các thiết bị ngoại vi bộ nhớ được ánh xạ.
+        . Đảm bảo giao diện chuẩn cho phần mềm cơ bản và quản lý các thiết bị ngoại vi của vi điều khiển.
+
+    Trình điều khiển phức tạp
+        . Thực hiện kiểm soát cảm biến và thiết bị chấp hành phức tạp với quyền truy cập trực tiếp vào vi điều khiển.
+        . Được sử dụng khi có yêu cầu đặc biệt về chức năng và thời gian cho việc xử lý các cảm biến và thiết bị chấp hành phức tạp.
+
+    Lợi ích của Autosar
+        . Tăng tính linh hoạt và khả năng tái sử dụng phần mềm trên nhiều phần cứng khác nhau.
+        . Phát triển phần mềm có thể được phân phối giữa các nhà cung cấp, dẫn đến phát triển nhanh chóng và đưa ra thị trường nhanh.
+        . Cung cấp khả năng cắm và chạy phần mềm dễ dàng, cho phép khách hàng sử dụng phần mềm tốt nhất từ các nhà cung cấp khác nhau.
+
+    Tóm tắt
+        . Autosar cung cấp một kiến trúc phần mềm chuẩn hóa và linh hoạt cho ngành công nghiệp ô tô.
+        . Tạo ra sự tách biệt rõ ràng giữa phần mềm ứng dụng và phần mềm cơ bản, tăng khả năng tái sử dụng và linh hoạt trong phát triển phần mềm.
+        . Hỗ trợ phát triển song song và nhanh chóng đưa sản phẩm ra thị trường.
