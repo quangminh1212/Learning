@@ -1,0 +1,370 @@
+25. Use Case with Non-Autosar Software
+
+    . Yêu Cầu Hệ Thống
+        . Yêu cầu: ECU phải bật quạt làm mát khi nhiệt độ chất làm mát trong bộ tản nhiệt vượt quá 50 độ.
+        . Phần cứng:
+        . Cảm biến nhiệt độ: Kết nối với chân analog của bộ điều khiển.
+        . IC H-Bridge: Kết nối với chân digital của bộ điều khiển để điều khiển quạt làm mát.
+
+    . Triển Khai Phần Mềm Không Autosar
+        . Mã Cấu Hình Bộ Điều Khiển
+            . Cấu hình các chân bộ điều khiển ở mức độ thanh ghi và khởi tạo ADC.
+            . Cấu hình các chân IO để điều khiển H-Bridge và khởi tạo IC H-Bridge.
+
+        . Vòng Lặp Chính
+            . Khởi Tạo Vòng Lặp Vô Hạn
+            . Bắt đầu chuyển đổi ADC và tính toán nhiệt độ.
+            . Nếu nhiệt độ vượt quá 50 độ, thiết lập các chân IO của H-Bridge để bật quạt.
+            . Nếu nhiệt độ thấp hơn, tắt quạt.
+
+    . Vấn Đề Với Phần Mềm Không Autosar
+        . Thay Đổi Bộ Điều Khiển
+            . Vấn Đề: Nhà cung cấp thay đổi bộ điều khiển trong ECU.
+            . Hậu Quả:
+                . Phải sửa đổi mã phần mềm trực tiếp truy cập các thanh ghi điều khiển.
+                . Cần phải tái lập trình phần khởi tạo chân phần cứng và xử lý chuyển đổi ADC.
+
+        . Thay Đổi Quạt Làm Mát
+            . Vấn Đề: Thay đổi quạt làm mát để có công suất làm mát lớn hơn.
+            . Hậu Quả:
+                . Phải thay đổi IC H-Bridge với công suất lớn hơn.
+                . Cần sửa đổi mã phần mềm để phù hợp với IC H-Bridge mới.
+
+    . Tóm Tắt Phần Mềm Không Autosar
+        . Kết Nối Chặt Chẽ Giữa Phần Mềm Và Phần Cứng
+            . Bất kỳ thay đổi nhỏ nào trong phần cứng cũng dẫn đến chi phí tái phát triển phần mềm lớn.
+
+        . Khó Tái Sử Dụng Phần Mềm
+            . Không dễ dàng tái sử dụng phần mềm trên các ECU khác nhau do sự thay đổi phần cứng và cần tái lập trình.
+
+        . Phụ Thuộc Vào Nhà Cung Cấp Duy Nhất
+            . Khách hàng phụ thuộc hoàn toàn vào một nhà cung cấp phần cứng ECU duy nhất.
+            . Không dễ dàng thay đổi nhà cung cấp nếu chi phí tăng hoặc có sản phẩm tốt hơn trên thị trường.
+
+    . So Sánh Với Autosar
+        . Lợi Ích Của Autosar
+            . Tách Biệt Phần Mềm Và Phần Cứng
+            . Giảm chi phí tái phát triển phần mềm khi thay đổi phần cứng.
+            . Dễ dàng tái sử dụng phần mềm trên các ECU khác nhau.
+
+        . Tăng Tính Linh Hoạt
+            . Cho phép khách hàng dễ dàng thay đổi nhà cung cấp phần cứng mà không ảnh hưởng lớn đến phần mềm.
+
+        . Giảm Sự Phụ Thuộc
+            . Khách hàng không phụ thuộc hoàn toàn vào một nhà cung cấp duy nhất.
+            . Tăng khả năng lựa chọn phần cứng tối ưu từ các nhà cung cấp khác nhau.
+
+    . Triển Khai Phần Mềm Với Autosar
+        . Yêu cầu: Tương tự yêu cầu cho phần mềm không Autosar.
+
+    . Cấu Trúc Phần Mềm Autosar
+        . Lớp Cơ Bản Phần Mềm (BSW)
+            . Xử lý giao tiếp phần cứng, ADC, và IO.
+
+        . Lớp Ứng Dụng (ASW)
+            . Xử lý logic ứng dụng như tính toán nhiệt độ và điều khiển quạt.
+
+        . Môi Trường Thực Thi Thời Gian Chạy (RTE)
+            . Quản lý giao tiếp giữa các thành phần phần mềm và phần cứng.
+
+    . Ưu Điểm Của Autosar
+        . Giảm Chi Phí Phát Triển
+        . Dễ dàng cập nhật phần mềm khi thay đổi phần cứng.
+        . Giảm thời gian và chi phí tái phát triển.
+        . Tăng Khả Năng Tái Sử Dụng
+            . Phần mềm có thể được tái sử dụng trên nhiều ECU khác nhau.
+        . Tăng Tính Linh Hoạt Và Khả Năng Thay Đổi Nhà Cung Cấp
+            . Cho phép khách hàng dễ dàng thay đổi nhà cung cấp phần cứng mà không ảnh hưởng lớn đến phần mềm.
+
+    . Qua việc so sánh giữa phần mềm không Autosar và Autosar, có thể thấy rõ lợi ích của Autosar trong việc giảm chi phí, tăng tính linh hoạt và khả năng tái sử dụng, từ đó hiểu rõ hơn sự cần thiết của Autosar trong ngành công nghiệp ô tô hiện đại.
+
+
+26. Theory - MCAL Layer Development
+
+    . Yêu Cầu Hệ Thống
+        . Yêu cầu: ECU phải bật quạt làm mát khi nhiệt độ chất làm mát trong bộ tản nhiệt vượt quá 50 độ.
+        . Phần cứng:
+        . Cảm biến nhiệt độ: Kết nối với chân analog của bộ điều khiển.
+        . IC H-Bridge: Kết nối với chân digital của bộ điều khiển để điều khiển quạt làm mát.
+
+    . Triển Khai Phần Mềm Theo Autosar
+        . Phân Tầng Kiến Trúc
+            . Lớp Ứng Dụng (ASW):
+            . Thành phần phần mềm điều khiển quạt làm mát: Quyết định khi nào bật quạt dựa trên nhiệt độ.
+            . Lớp Trừu Tượng IO (IO Abstraction Layer):
+            . Trừu tượng cho cảm biến nhiệt độ: Đọc dữ liệu từ cảm biến.
+            . Trừu tượng cho H-Bridge IC: Điều khiển quạt làm mát.
+            . Lớp MCAL (MCAL Layer):
+            . Trình điều khiển DIO, Port và ADC: Truy cập vào các chân của vi điều khiển.
+
+        . Cấu Hình Trình Điều Khiển MCAL
+            . Trình Điều Khiển Port
+            . Cấu hình các chân ADC và IO.
+            . Chân ADC: Đặt trên Pin 10 của bộ điều khiển, hướng vào (PORT_PIN_IN), chế độ ADC.
+            . Chân IO: Đặt hướng ra (PORT_PIN_OUT), chế độ digital IO.
+
+        . Trình Điều Khiển DIO
+            . Đọc và Viết Chân IO
+            . Sử dụng các hàm chuẩn hóa từ tiêu chuẩn Autosar như DIO_ReadChannel và DIO_WriteChannel.
+            . Hàm Đọc Chân:
+            . Tên hàm: DIO_ReadChannel.
+            . Tham số: ChannelId.
+            . Trả về: STD_HIGH hoặc STD_LOW.
+            . Hàm Viết Chân:
+            . Tên hàm: DIO_WriteChannel.
+            . Tham số: ChannelId, VoltageLevel.
+
+        . Trình Điều Khiển ADC
+            . Kích Hoạt ADC và Đọc Dữ Liệu
+            . Sử dụng các hàm chuẩn hóa từ tiêu chuẩn Autosar như ADC_StartGroupConversion và ADC_ReadGroup.
+            . Hàm Kích Hoạt ADC:
+            . Tên hàm: ADC_StartGroupConversion.
+            . Hàm Đọc Dữ Liệu ADC:
+            . Tên hàm: ADC_ReadGroup.
+
+    . Tích Hợp Các Thành Phần Phần Mềm
+        . Thành Phần Ứng Dụng (Cooling Fan Software Component)
+            . Đọc dữ liệu nhiệt độ từ thành phần trừu tượng cảm biến.
+            . Quyết định khi nào bật quạt và gửi lệnh đến H-Bridge thông qua RTE.
+
+        . Thành Phần Trừu Tượng IO
+            . Trừu Tượng Cảm Biến Nhiệt Độ: Đọc dữ liệu từ trình điều khiển ADC và cung cấp cho thành phần ứng dụng.
+            . Trừu Tượng H-Bridge: Điều khiển chân IO thông qua trình điều khiển DIO.
+
+    . Tổng Quan Về Quy Trình Autosar
+        . Phát Triển Cấp Hệ Thống
+            . Phát triển các thành phần phần mềm cho toàn bộ hệ thống xe.
+            . Kết nối các thành phần thông qua VFB (Virtual Function Bus).
+
+        . Phân Bổ Thành Phần Phần Mềm Vào Các ECU
+            . Gán các thành phần phần mềm đã phát triển vào các ECU cụ thể.
+            . Thực hiện cấu hình và chiết xuất ECU (ECU Extract) cho từng ECU.
+
+        . Cấu Hình Cấp ECU
+            . Thực hiện cấu hình OS và ánh xạ sự kiện đến nhiệm vụ cho từng ECU.
+            . Gán các thành phần phần mềm vào các lõi hoặc phân vùng cụ thể trong ECU.
+
+        . Tạo Lớp RTE Cho Từng ECU
+            . Sử dụng công cụ tạo RTE để tạo mã RTE từ các cấu hình Autosar.
+            . Đảm bảo giao tiếp giữa các thành phần phần mềm và phần cứng.
+
+    . Lợi Ích Của Autosar
+        . Tách Biệt Phần Mềm Và Phần Cứng
+        . Giảm chi phí tái phát triển khi thay đổi phần cứng.
+        . Tăng khả năng tái sử dụng phần mềm trên nhiều ECU khác nhau.
+        . Tăng Tính Linh Hoạt
+        . Cho phép khách hàng dễ dàng thay đổi nhà cung cấp phần cứng mà không ảnh hưởng lớn đến phần mềm.
+        . Giảm Sự Phụ Thuộc
+        . Khách hàng không phụ thuộc hoàn toàn vào một nhà cung cấp duy nhất.
+        . Tăng khả năng lựa chọn phần cứng tối ưu từ các nhà cung cấp khác nhau.
+
+    . Qua việc so sánh giữa phần mềm không Autosar và Autosar, có thể thấy rõ lợi ích của Autosar trong việc giảm chi phí, tăng tính linh hoạt và khả năng tái sử dụng, từ đó hiểu rõ hơn sự cần thiết của Autosar trong ngành công nghiệp ô tô hiện đại.
+
+
+27. Demo - MCAL Layer Development
+
+    . Tải Về Và Tham Khảo Các Tài Liệu Autosar
+        . Tải về: Các tài liệu chuẩn từ autosar.org, đặc biệt là IO.zip chứa các thông số kỹ thuật của trình điều khiển IO trong MCAL.
+        . Tham khảo: Tài liệu chuẩn của Autosar để phát triển trình điều khiển PORT và DIO.
+
+    . Phát Triển Trình Điều Khiển DIO
+        . Tạo Dự Án
+        . Tạo thư mục MCAL và bên trong đó, tạo thư mục DIO Driver.
+        . Tạo file C: DIO.c và file header: DIO.h.
+
+    . Viết Mã Cho Hàm DIO_ReadChannel
+        . Lấy cú pháp hàm từ tiêu chuẩn Autosar và viết mã.
+        . Định nghĩa kiểu dữ liệu:
+        . DIO_LevelType: typedef uint8 DIO_LevelType; với giá trị STD_HIGH và STD_LOW.
+        . DIO_ChannelType: typedef uint8 DIO_ChannelType;.
+        . Viết hàm:
+        . Hàm kiểm tra ChannelId và đọc giá trị từ các thanh ghi của vi điều khiển.
+        . Sử dụng biến cục bộ để lưu trữ và so sánh giá trị.
+        . Trả về STD_HIGH hoặc STD_LOW dựa trên giá trị đọc được từ chân IO.
+
+            #include "DIO.h"
+
+            DIO_LevelType DIO_ReadChannel(DIO_ChannelType ChannelId) {
+                DIO_LevelType Level;
+                
+                if (ChannelId == 10) { // Assuming ChannelId 10 maps to Port 2.0
+                    // Read register value (example for Texas microcontroller)
+                    Level = (READ_REGISTER(PORT_2_0) == LOW) ? STD_LOW : STD_HIGH;
+                }
+                // Additional Channel IDs would be handled similarly
+
+                return Level;
+            }
+
+    . Viết Mã Cho Hàm DIO_WriteChannel
+        . Cú pháp hàm:
+            . Tên hàm: DIO_WriteChannel.
+            . Tham số: ChannelId và Level (DIO_ChannelType và DIO_LevelType).
+            . Viết hàm:
+            . Kiểm tra ChannelId và thiết lập giá trị cho chân IO dựa trên Level.
+            . Sử dụng điều kiện if để tránh giá trị không hợp lệ.
+
+        void DIO_WriteChannel(DIO_ChannelType ChannelId, DIO_LevelType Level) {
+        if (ChannelId == 10) { // Assuming ChannelId 10 maps to Port 2.0
+            if (Level == STD_LOW) {
+                // Write to register to set pin LOW
+                WRITE_REGISTER(PORT_2_0, LOW);
+            } else if (Level == STD_HIGH) {
+                // Write to register to set pin HIGH
+                WRITE_REGISTER(PORT_2_0, HIGH);
+            }
+        }
+        // Additional Channel IDs would be handled similarly
+        }
+
+    . Phát Triển Trình Điều Khiển ADC
+        . Tạo thư mục ADC Driver và các file ADC.c, ADC.h
+        . Định nghĩa kiểu dữ liệu:
+        . ADC_GroupType: typedef uint8 ADC_GroupType;.
+        . ADC_ValueGroupType: typedef uint16 ADC_ValueGroupType;.
+
+    . Viết Mã Cho Hàm ADC_StartGroupConversion
+        . Cú pháp hàm:
+            . Tên hàm: ADC_StartGroupConversion.
+            . Tham số: GroupId.
+            . Viết hàm:
+            . Kiểm tra GroupId và khởi động chuyển đổi ADC.
+
+        #include "ADC.h"
+
+        void ADC_StartGroupConversion(ADC_GroupType GroupId) {
+            if (GroupId == 1) { // Example GroupId
+                // Start ADC conversion (controller-specific code)
+                START_ADC_CONVERSION(GROUP_1);
+            }
+            // Additional Group IDs would be handled similarly
+        }
+
+    . Viết Mã Cho Hàm ADC_ReadGroup
+        . Cú pháp hàm:
+            . Tên hàm: ADC_ReadGroup.
+            . Tham số: GroupId và DataBufferPtr.
+            . Viết hàm:
+            . Đọc giá trị ADC cuối cùng đã hoàn thành và trả về trong DataBufferPtr.
+
+        Std_ReturnType ADC_ReadGroup(ADC_GroupType GroupId, ADC_ValueGroupType* DataBufferPtr) {
+            if (GroupId == 1) { // Example GroupId
+                *DataBufferPtr = READ_ADC_RESULT(GROUP_1);
+            }
+            // Additional Group IDs would be handled similarly
+
+            return E_OK;
+        }
+        
+    . Tổng Kết
+        . Phát triển MCAL Drivers: MCAL developers cần tuân thủ các tiêu chuẩn của Autosar, đọc kỹ tài liệu và triển khai mã hiệu quả cho các vi điều khiển khác nhau.
+        . Autosar: Giúp giảm chi phí phát triển và tăng tính linh hoạt, khả năng tái sử dụng của phần mềm trên nhiều ECU khác nhau.
+
+28. Theory - ECU Abstraction Layer Development
+
+    Mã Cấu Hình Và Cài Đặt Lớp Trừu Tượng Cảm Biến Nhiệt Độ
+        . Tạo thành phần trừu tượng cảm biến nhiệt độ:
+        . Chức năng: Đọc giá trị từ cảm biến nhiệt độ thông qua trình điều khiển ADC.
+        . Mã: Tạo các file TemperatureAbstraction.c và TemperatureAbstraction.h để thực hiện chức năng trừu tượng cảm biến nhiệt độ.
+
+            // TemperatureAbstraction.c
+            #include "TemperatureAbstraction.h"
+            #include "ADC.h"
+
+            void ReadTemperature(void) {
+                ADC_ValueGroupType result;
+                ADC_StartGroupConversion(1); // Khởi động chuyển đổi ADC cho nhóm 1
+                ADC_ReadGroup(1, &result);   // Đọc giá trị chuyển đổi ADC cho nhóm 1
+                // Thực hiện chuyển đổi tín hiệu từ raw value sang nhiệt độ (nếu cần thiết)
+                ProcessTemperature(result);
+            }
+
+            *************************************************************
+
+            // TemperatureAbstraction.h
+            #ifndef TEMPERATURE_ABSTRACTION_H
+            #define TEMPERATURE_ABSTRACTION_H
+
+            void ReadTemperature(void);
+
+            #endif // TEMPERATURE_ABSTRACTION_H
+
+    Mã Cấu Hình Và Cài Đặt Lớp Trừu Tượng H-Bridge
+        . Tạo thành phần trừu tượng H-Bridge:
+        . Chức năng: Điều khiển quạt làm mát dựa trên các chân IO.
+        . Mã:Tạo các file HBridgeAbstraction.c và HBridgeAbstraction.h để thực hiện chức năng trừu tượng H-Bridge.
+
+        // HBridgeAbstraction.c
+        #include "HBridgeAbstraction.h"
+        #include "DIO.h"
+
+        void StartMotor(void) {
+            DIO_WriteChannel(10, STD_HIGH); // Đặt chân IO để bật quạt làm mát
+        }
+
+        void StopMotor(void) {
+            DIO_WriteChannel(10, STD_LOW); // Đặt chân IO để tắt quạt làm mát
+        }
+
+        *************************************************************
+
+        // HBridgeAbstraction.h
+        #ifndef HBRIDGE_ABSTRACTION_H
+        #define HBRIDGE_ABSTRACTION_H
+
+        void StartMotor(void);
+        void StopMotor(void);
+
+        #endif // HBRIDGE_ABSTRACTION_H
+    Cấu Hình Lớp Trừu Tượng IO Trong ARXML
+        . Thành phần trừu tượng cảm biến nhiệt độ:
+        . Cấu hình:
+        . Tạo một ECU Abstraction Software Component với một cổng gửi cung cấp dữ liệu nhiệt độ thô qua giao diện sender-receiver.
+
+    <!-- TemperatureAbstraction.arxml -->
+    <ECU_Abstraction_SoftwareComponent>
+        <ShortName>TemperatureAbstraction</ShortName>
+        <Ports>
+            <SenderReceiverInterface>
+                <ProviderPort>
+                    <ShortName>TemperatureProvider</ShortName>
+                    <InterfaceRef>TemperatureInterface</InterfaceRef>
+                </ProviderPort>
+            </SenderReceiverInterface>
+        </Ports>
+    </ECU_Abstraction_SoftwareComponent>
+    . Thành phần trừu tượng H-Bridge:
+    . Cấu hình:
+    . Tạo một ECU Abstraction Software Component với hai cổng cung cấp dịch vụ client-server cho việc bật/tắt quạt làm mát.
+
+    xml
+    Sao chép mã
+    <!-- HBridgeAbstraction.arxml -->
+    <ECU_Abstraction_SoftwareComponent>
+        <ShortName>HBridgeAbstraction</ShortName>
+        <Ports>
+            <ClientServerInterface>
+                <ProviderPort>
+                    <ShortName>StartMotorProvider</ShortName>
+                    <InterfaceRef>StartMotorInterface</InterfaceRef>
+                </ProviderPort>
+                <ProviderPort>
+                    <ShortName>StopMotorProvider</ShortName>
+                    <InterfaceRef>StopMotorInterface</InterfaceRef>
+                </ProviderPort>
+            </ClientServerInterface>
+        </Ports>
+    </ECU_Abstraction_SoftwareComponent>
+    Tổng Kết Cấu Hình Thành Phần Trừu Tượng IO
+    . Thành phần trừu tượng cảm biến nhiệt độ:
+    . Mã C: Thực hiện chức năng đọc nhiệt độ từ ADC và xử lý tín hiệu thô.
+    . Cấu hình ARXML: Xác định một cổng cung cấp sender-receiver để truyền dữ liệu nhiệt độ thô.
+
+    . Thành phần trừu tượng H-Bridge:
+    . Mã C: Thực hiện chức năng bật/tắt quạt làm mát thông qua các chân IO.
+    . Cấu hình ARXML: Xác định hai cổng cung cấp client-server để bật/tắt quạt làm mát.
+
+    Hoàn Thành Việc Cấu Hình Và Phát Triển Phần Mềm
+    . Tổng hợp lại:
+    . Tất cả các thành phần trừu tượng và cổng cần thiết đã được cấu hình và mã hóa.
+    . Tiếp theo là cấu hình lớp ứng dụng và RTE để hoàn thành việc triển khai phần mềm Autosar.
