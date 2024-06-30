@@ -1,0 +1,436 @@
+17. Run Time Environment (RTE)
+
+    . Vai trò của RTE
+        . RTE là trung tâm của kiến trúc Autosar: Tất cả các giao diện giao tiếp giữa các thành phần ứng dụng hoặc giữa ứng dụng và phần mềm cơ bản đều phải thông qua RTE.
+        . Không có việc bỏ qua lớp RTE trong Autosar.
+
+    . Chức năng của RTE
+        . Trung tâm giao tiếp hệ thống: Trao đổi thông tin giữa các thành phần của cùng một ECU hoặc giữa các ECU.
+        . Đại diện thời gian chạy của VFB: VFB là Virtual Function Bus, biểu diễn ảo hóa của các giao tiếp phần mềm.
+
+    . Lợi ích và Tính linh hoạt của RTE
+        . Tính linh hoạt: Cho phép thành phần phần mềm được đặt trên bất kỳ ECU nào trong hệ thống xe.
+        . Giao tiếp nội bộ: Thành phần phát triển có thể được đặt trên các lõi hoặc phân vùng khác nhau một cách dễ dàng.
+        . Xử lý đa lõi hiệu quả: RTE hỗ trợ phân phối các thành phần phát triển trên các lõi để giảm thời gian chạy và tối ưu hóa giao tiếp lõi-lõi.
+
+    . Đảm bảo tính nhất quán và Lập lịch
+        . Tính nhất quán của thông điệp: RTE đảm bảo tính nhất quán của thông điệp khi truyền qua các giao diện ứng dụng, bất kể lõi nào hoặc độ ưu tiên nào.
+        . Lập lịch cho Runnables: RTE cũng chịu trách nhiệm lập lịch cho các runnables dựa trên các sự kiện đã cấu hình.
+
+    . Tóm tắt trách nhiệm của RTE
+        . Giao tiếp giữa các thành phần phần mềm: Đảm bảo thông điệp nhất quán.
+        . Lập lịch runnables: Dựa trên các sự kiện đã cấu hình.
+
+    . Tài liệu Tham khảo và Cấu hình RTE
+        . Tài liệu Tham khảo RTE
+            Truy cập tài liệu: Tài liệu chuẩn Autosar tại "autosar.org".
+            Tải xuống tài liệu: Điều hướng đến "standards/classic platform" và tải xuống "RTE.zip".
+        . Nội dung tài liệu
+            . RTE Overview: Tổng quan về RTE.
+            . RTE Generation Process: Quy trình tạo RTE.
+            . Schedulers: Hệ điều hành xử lý lập lịch.
+            . Data Consistency: RTE xử lý tính nhất quán dữ liệu.
+            . Communication Mechanisms: Cơ chế giao tiếp, bao gồm sender receiver và client server.
+            . RTE API Reference: Các API của RTE (Section 5.6).
+
+    . Tổng kết về RTE
+        . RTE là trung tâm giao tiếp và lập lịch của Autosar, đảm bảo tính linh hoạt, nhất quán thông điệp, và hiệu quả xử lý đa lõi.
+        . Tài liệu tiêu chuẩn Autosar cung cấp thông tin chi tiết và API cần thiết cho phát triển phần mềm.
+        . Các API chính: Giao tiếp sender receiver và client server, là những API chính được sử dụng trong phát triển phần mềm.
+
+    . Trong các phần tiếp theo, chúng ta sẽ xem chi tiết hơn về cách sử dụng các API của RTE trong phát triển phần mềm.
+
+
+18. RTE - Sender Receiver Interface
+
+    . Cấu hình Ví dụ
+        . Chúng ta sẽ sử dụng ví dụ cấu hình cũ với hai cổng, cổng cung cấp (provider) và cổng nhận (receiver), được định nghĩa và ánh xạ tới giao diện sender receiver.
+
+    . Sử dụng API RTE trong Phát triển Tệp C
+        . Cấu trúc Tên Hàm RTE
+            . RTE_Write API
+                . Trả về: Trạng thái của hoạt động.
+                . Tên hàm: Bắt đầu với RTE_Write, tiếp theo là tên của cổng và tên của variable data prototype từ giao diện sender receiver.
+                . Tham số bắt buộc: Dữ liệu cần ghi vào RTE.
+                . Ví dụ: Ghi Dữ liệu vào Cổng Cung cấp
+
+                    #include "RTE_SWC_1.h"
+
+                    // Hàm ghi tốc độ vào cổng cung cấp
+                    void Function_1(int speed) {
+                        Std_ReturnType status;
+                        status = RTE_Write_PP_Speed_Speed(speed);
+                        // Kiểm tra trạng thái và xử lý nếu cần
+                    }
+
+                    . Trong ví dụ trên:
+                        . RTE_Write_PP_Speed_Speed là tên hàm được tạo dựa trên cấu hình cổng PP_Speed và variable data prototype là Speed.
+                        . status là biến lưu trữ trạng thái trả về của hàm.
+            . RTE_Read API
+                . Trả về: Trạng thái của hoạt động.
+                . Tên hàm: Bắt đầu với RTE_Read, tiếp theo là tên của cổng và tên của variable data prototype.
+                . Tham số: Một con trỏ để RTE ghi dữ liệu vào đó.
+                Ví dụ: Đọc Dữ liệu từ Cổng Nhận
+
+                    #include "RTE_SWC_1.h"
+
+                    // Hàm đọc tốc độ từ cổng nhận
+                    void Function_2(void) {
+                        Std_ReturnType status;
+                        int speed;
+                        status = RTE_Read_RP_Speed_Speed(&speed);
+                        // Sử dụng biến speed cho các tính toán tiếp theo
+                    }
+
+                    . Trong ví dụ trên:
+                        . RTE_Read_RP_Speed_Speed là tên hàm được tạo dựa trên cấu hình cổng RP_Speed và variable data prototype là Speed.
+                        . status là biến lưu trữ trạng thái trả về của hàm.
+                        speed là biến để lưu trữ dữ liệu nhận được từ RTE.
+    . Tổng kết
+        . RTE_Write API
+            . Dùng để ghi dữ liệu vào cổng cung cấp.
+            . Tên hàm: RTE_Write_<Tên Cổng>_<Tên Variable Data Prototype>.
+            . Tham số: Dữ liệu cần ghi vào RTE.
+
+        . RTE_Read API
+            . Dùng để đọc dữ liệu từ cổng nhận.
+            . Tên hàm: RTE_Read_<Tên Cổng>_<Tên Variable Data Prototype>.
+            . Tham số: Một con trỏ để RTE ghi dữ liệu vào đó.
+
+    . Tài liệu Tham khảo Autosar
+        . Truy cập tài liệu: Tài liệu chuẩn Autosar tại "autosar.org".
+        . Tải xuống tài liệu: Điều hướng đến "standards/classic platform" và tải xuống "RTE.zip".
+        . Bằng cách sử dụng các RTE API, chúng ta có thể dễ dàng giao tiếp giữa các thành phần phần mềm trong Autosar, đảm bảo tính nhất quán và hiệu quả trong việc truyền dữ liệu và gọi hàm.
+
+
+19. RTE - Client Server Interface
+
+    . Tóm tắt về Giao diện Client Server
+        . Giao diện Client Server được sử dụng để gọi một hàm hoặc dịch vụ từ module khác.
+        . Ví dụ chúng ta sẽ xem xét có một giao diện Client Server với hàm "Sum".
+
+    . Cấu trúc Tên Hàm RTE_Call
+        . Tên Hàm
+            . Bắt đầu với tiền tố RTE_Call.
+            . Tiếp theo là tên của cổng nhận.
+            . Tiếp theo là tên của hoạt động client server trong giao diện client server.
+
+        . Tham số Hàm
+            . Tham số có thể có ba loại dựa trên hướng (IN, OUT, INOUT).
+            . Các tham số được cấu trúc dựa trên hướng này.
+
+    . Ví dụ Tệp C cho Client
+        . Cấu hình
+            . Giả sử hàm "Function_1" muốn gọi hàm "Sum" từ server.
+            . Định nghĩa hai tham số đầu vào X và Y và một tham số đầu ra Sum để nhận kết quả.
+
+        . Cách Đặt Tên Hàm
+            . Tên hàm bắt đầu với RTE_Call từ tiêu chuẩn.
+            . Tiếp theo là tên của cổng nhận từ phía client.
+            . Tiếp theo là tên của hoạt động client server "Sum".
+
+        . Tham số Hàm
+            . Tham số cho hướng "IN" có thể là giá trị.
+            . Tham số cho hướng "OUT" hoặc "INOUT" phải là con trỏ hoặc tham chiếu.
+
+    . Ví dụ Cụ thể
+
+        #include "RTE_SWC_1.h"
+
+        // Hàm gọi server từ phía client
+        void Function_1(void) {
+            int X = 5;
+            int Y = 10;
+            int Sum;
+            Std_ReturnType status;
+
+            // Gọi hàm Sum từ server thông qua RTE
+            status = RTE_Call_RP_Sum_Sum(X, Y, &Sum);
+
+            // Kiểm tra trạng thái và xử lý nếu cần
+            if (status == RTE_E_OK) {
+                // Sử dụng giá trị Sum nhận được
+            }
+        }
+        
+        . Trong ví dụ trên:
+            . RTE_Call_RP_Sum_Sum là tên hàm được tạo dựa trên cấu hình cổng nhận RP_Sum và hoạt động Sum.
+            . status lưu trữ trạng thái trả về của hàm.
+            . X và Y là các tham số đầu vào, Sum là tham số đầu ra được truyền dưới dạng con trỏ.
+
+    . Cách RTE Tạo Mã Code : RTE sẽ tạo mã từ phía server với hàm bao bọc xung quanh nó.
+
+        Std_ReturnType RTE_Call_RP_Sum_Sum(int X, int Y, int* Sum) {
+            // Gọi hàm thực tế từ server
+            *Sum = Sum(X, Y); // Hàm Sum thực tế
+            return RTE_E_OK;
+        }
+
+    . Tóm tắt
+        . API RTE_Call: Sử dụng để gọi hàm từ phía client tới server.
+        . Tên hàm: RTE_Call_<Tên Cổng Nhận>_<Tên Hoạt Động>.
+        . Tham số: Các tham số đầu vào, đầu ra và đầu vào/đầu ra được truyền dưới dạng giá trị hoặc con trỏ.
+
+    . Tổng kết
+        . RTE APIs cho phép giao tiếp giữa các thành phần trong Autosar, giúp gọi hàm từ phía client tới server.
+        . Bằng cách sử dụng các API này, chúng ta có thể đảm bảo tính nhất quán và hiệu quả trong việc truyền dữ liệu và gọi hàm trong hệ thống Autosar.
+
+20. RTE - Communication
+
+    . Ví dụ Minh Họa
+        . Giả sử chúng ta có hai thành phần phần mềm (SWC1 và SWC2) cần giao tiếp với nhau thông qua RTE:
+            . Component-1 (SWC1): Có một cổng cung cấp (provider) để ghi dữ liệu.
+            . Component-2 (SWC2): Có một cổng nhận (receiver) để đọc dữ liệu.
+
+    . Quy Trình Giao Tiếp Qua RTE
+        . Tệp C của SWC1
+            . Chứa một runnable hoặc một hàm để tính toán dữ liệu cần gửi và ghi dữ liệu đó vào RTE thông qua giao diện Autosar hoặc thông qua API RTE.
+            . Cú pháp: RTE_Write_<PortName>_<DataPrototypeName>.
+
+                void SWC1_Function(void) {
+                    int data = calculate_data();
+                    RTE_Write_PP_DataPort_Data(data);
+                }
+
+            . Từ Phía RTE
+                . RTE định nghĩa các API và triển khai chức năng cho API đó.
+                . RTE tạo một bản sao của giao diện từ phía SWC1 và quản lý nó.
+                . Lưu ý: Các giao diện do RTE tạo ra không nên được truy cập trực tiếp bởi các ứng dụng khác. Chỉ RTE mới nên truy cập trực tiếp vào giao diện này và các lớp khác nên sử dụng API RTE để lấy hoặc đặt giá trị của giao diện.
+        . Tệp C của SWC2
+            . Chứa một runnable hoặc một hàm để đọc dữ liệu từ RTE.
+            . Cú pháp: RTE_Read_<PortName>_<DataPrototypeName>.
+
+            void SWC2_Function(void) {
+                int received_data;
+                RTE_Read_RP_DataPort_Data(&received_data);
+                process_data(received_data);
+            }
+
+            . Cách RTE Xử Lý
+                . RTE triển khai API đọc để sao chép dữ liệu từ giao diện trung gian của nó vào con trỏ được truyền đến ứng dụng.
+                . RTE đóng vai trò là lớp trừu tượng, đảm bảo việc sao chép tin nhắn giữa các thành phần phần mềm.
+
+    . Lợi Ích Của RTE
+        . Tăng Tính Phức Tạp và Tính Quản Lý
+            . Khi số lượng thành phần phần mềm tăng lên trong ngành công nghiệp ô tô, việc quản lý giao tiếp trực tiếp giữa các module trở nên khó khăn. RTE giúp đơn giản hóa quá trình này.
+        . Tính Tương Thích và Khả Năng Tái Sử Dụng
+            . Ví dụ: Nếu một khách hàng không hài lòng với thành phần phần mềm của nhà cung cấp, họ có thể dễ dàng thay thế bằng thành phần mới từ nhà cung cấp khác mà không cần thay đổi cấu trúc hệ thống.
+            . Chỉ cần thay đổi thành phần mới vào và RTE sẽ tự điều chỉnh dựa trên cấu hình mới, đảm bảo giao tiếp liên tục.
+        . Khả Năng Cắm và Chạy (Plug and Play)
+            . Thành phần phần mềm có thể dễ dàng thay thế mà không cần điều chỉnh mã nguồn.
+            . Đảm bảo tính nhất quán của thông điệp và dễ dàng quản lý từ phía nhà phát triển ứng dụng.
+        . Nhanh Chóng Đưa Sản Phẩm Ra Thị Trường
+            . Thành phần phần mềm phát triển một lần có thể tái sử dụng trong các hệ thống khác nhau, đảm bảo tốc độ phát triển nhanh hơn.
+
+    . Tổng Kết
+        . RTE đảm bảo giao tiếp nhất quán và hiệu quả giữa các thành phần phần mềm.
+        . Lợi ích: Tăng tính quản lý, tính tương thích, khả năng tái sử dụng và khả năng cắm và chạy.
+        . Cách sử dụng RTE APIs: Ghi dữ liệu (RTE_Write) và đọc dữ liệu (RTE_Read) qua các cổng được cấu hình.
+
+    . Ví Dụ Cụ Thể
+
+        // SWC1: Ghi dữ liệu
+        void SWC1_Function(void) {
+            int data = calculate_data();
+            RTE_Write_PP_DataPort_Data(data);
+        }
+
+        // SWC2: Đọc dữ liệu
+        void SWC2_Function(void) {
+            int received_data;
+            RTE_Read_RP_DataPort_Data(&received_data);
+            process_data(received_data);
+        }
+        
+        . Qua ví dụ này, chúng ta có thể thấy cách RTE quản lý và xử lý giao tiếp giữa các thành phần phần mềm, đảm bảo tính nhất quán và hiệu quả trong hệ thống Autosar.
+
+21. RTE - Scheduling of Events
+
+    . Lập lịch
+        . RTE không chỉ xử lý giao tiếp giao diện mà còn quản lý lập lịch cho các runnables.
+        . Mỗi Runnable phải được ánh xạ tới một sự kiện (Event).
+
+    . Ví dụ Minh Họa
+        . Function_1 được ánh xạ tới một sự kiện thời gian (Timing Event).
+        . Function_2 được ánh xạ tới một sự kiện nhận dữ liệu (Data Received Event).
+
+    . Cấu Hình Lập Lịch
+        . Cấu hình Event to Task
+            . Event to Task Mapping: Liên kết các sự kiện tới các tác vụ cụ thể trong cấu hình RTE.
+            . OS Task Configuration: Cấu hình các container tác vụ trong cấu hình OS ECU.
+
+        . Ví dụ
+            . Tasks Configured: "CalcTask" và "ReadTask".
+            . Map:
+            . Timing Event từ Component-1 tới "CalcTask".
+            . Data Received Event từ Component-2 tới "ReadTask".
+
+    . Quá Trình Tạo Task của RTE
+        . RTE Tạo Task
+            . RTE tạo thân hàm cho từng task đã được cấu hình.
+            . RTE thêm tiền tố RTE_Task vào tên task từ cấu hình.
+            . Ví dụ:
+            . Task Name: "CalcTask".
+            . Final Task Name: RTE_Task_CalcTask.
+
+        . Task Bodies
+            . Mỗi task sẽ chứa runnable tương ứng, ví dụ Function_1.
+            . Task sẽ được gọi định kỳ dựa trên cấu hình sự kiện thời gian.
+
+                void RTE_Task_CalcTask(void) {
+                    Function_1(); // Gọi Function_1 định kỳ
+                }
+
+        . Xử lý sự kiện nhận dữ liệu (Data Received Event)
+            . Ánh xạ tới task mới gọi là "ReadTask".
+            . RTE tạo hàm task với tên RTE_Task_ReadTask.
+            . Cơ Chế Flagging:
+            . Trước khi gọi Function_2, RTE thêm một kiểm tra điều kiện ("if" condition).
+            . Flag này được thiết lập tại API RTE_Write.
+
+            . void RTE_Task_ReadTask(void) {
+                if (RTE_Flag_RP_DataReceived) {
+                    Function_2(); // Gọi Function_2 chỉ khi có dữ liệu mới
+                }
+            }
+
+    . Cơ Chế Đóng Gói
+        . RTE sử dụng cơ chế đóng gói tương tự cho các loại sự kiện khác, đảm bảo các runnables được gọi theo cách mong đợi dựa trên cấu hình sự kiện.
+        Quá Trình Tạo Mã RTE
+        . Nguồn Gốc Mã RTE: Được tạo từ cấu hình RTE cung cấp bởi người phát triển phần mềm.
+        . AI sẽ Tạo Mã RTE: RTE tự động tạo mã từ các cấu hình được cung cấp, bao gồm các hàm API, thân hàm task, và cơ chế flagging.
+
+    . Tóm tắt
+        . RTE Quản lý Lập Lịch: Xử lý việc gọi các runnables dựa trên cấu hình sự kiện.
+        . Cấu hình Event to Task: Liên kết các sự kiện tới các tác vụ cụ thể.
+        . Tạo Mã RTE: RTE tự động tạo mã dựa trên cấu hình, đảm bảo tính nhất quán và hiệu quả trong việc lập lịch và giao tiếp.
+
+    . Ví dụ Cụ Thể
+
+        // SWC1: Ghi dữ liệu
+        void SWC1_Function(void) {
+            int data = calculate_data();
+            RTE_Write_PP_DataPort_Data(data);
+        }
+
+        // SWC2: Đọc dữ liệu
+        void SWC2_Function(void) {
+            int received_data;
+            if (RTE_Read_RP_DataPort_Data(&received_data) == RTE_E_OK) {
+                process_data(received_data);
+            }
+        }
+
+        // RTE Tasks
+        void RTE_Task_CalcTask(void) {
+            SWC1_Function(); // Gọi định kỳ
+        }
+
+        void RTE_Task_ReadTask(void) {
+            if (RTE_Flag_RP_DataReceived) {
+                SWC2_Function(); // Gọi khi có dữ liệu mới
+            }
+        }
+
+        . Qua ví dụ này, bạn có thể thấy cách RTE quản lý và lập lịch các runnables dựa trên các sự kiện, đảm bảo tính linh hoạt và hiệu quả trong hệ thống Autosar.
+
+22. RTE Generator
+
+    . Tổng Quan
+        . Lớp RTE trong kiến trúc chủ yếu được tạo ra từ các cấu hình.
+        . Công cụ tạo RTE là các công cụ đặc biệt, có giấy phép và không dễ dàng mua được.
+
+    . Đầu Vào Của Trình Tạo RTE
+        . Mô tả thành phần phần mềm (Software Component Description)
+            . Các cấu hình từ việc phát triển thành phần phần mềm.
+
+        . Cấu hình trích xuất ECU (ECU Extract Configuration)
+            . Các cấu hình liên quan đến một ECU cụ thể.
+
+        . Cấu hình RTE và hệ điều hành ECU (RTE and OS ECU Configurations)
+            . Định nghĩa các container tác vụ của hệ điều hành và ánh xạ sự kiện tới các tác vụ.
+
+        . Cấu hình phiên bản ECU (ECU Instance Configuration)
+            . Mô tả của đơn vị điều khiển tương ứng.
+
+        . Cấu hình phần mềm cơ bản (Base Software Configurations)
+            . Các mô-đun phần mềm cơ bản của ECU.
+
+    . Đầu Ra Của Trình Tạo RTE
+        . Tệp C chính Rte.c
+            . Chứa mã đầy đủ cho giao tiếp giữa các thành phần phần mềm, định nghĩa giao diện RTE, v.v.
+
+        . Tệp tiêu đề cho mỗi thành phần phần mềm
+            . Định dạng: Rte_<Tên Thành Phần>.h.
+            . Bao gồm trong tệp nguồn để sử dụng API của RTE như RTE_Read, RTE_Write, v.v.
+
+    . Các Tệp Hỗ Trợ Khác
+        . Tệp ARXML liên quan đến OS
+            . Chứa thông tin lập lịch của các tác vụ đã tạo.
+            . Được xử lý thêm bởi các công cụ OS để lập lịch.
+
+        . Tệp IOC (Inter OS Communication)
+            . Chứa thông tin giao tiếp qua các lõi hoặc phân vùng.
+            . OS sử dụng thông tin này để tạo cơ chế khóa quay để truyền giao diện qua các lõi.
+
+        . Tệp hỗ trợ microcontroller (mcsupport)
+            . Chứa thông tin về đo lường và hiệu chỉnh.
+            . Sử dụng trong ngành công nghiệp ô tô để đo lường hoặc gỡ lỗi, xem hoặc sửa đổi các giao diện trong quá trình thử nghiệm.
+
+        . Tệp BSWMD
+            . Chứa thông tin về ánh xạ bộ nhớ cho các giao diện RTE đã tạo.
+
+    . Quy Trình Tạo Lớp RTE
+        . Các Cấu Hình Autosar
+            . Tất cả các cấu hình Autosar của ECU cụ thể được đưa vào trình tạo RTE để tạo ra lớp RTE.
+            . Trình tạo RTE phân tích các cấu hình Autosar và tạo ra API RTE, ví dụ như RTE_Read, RTE_Write, RTE_Tasks, v.v.
+        . Kết Quả
+            . RTE tạo mã từ các cấu hình được cung cấp, bao gồm các tệp API, thân hàm task và cơ chế flagging.
+
+    Ví Dụ Cụ Thể
+
+        // SWC1: Ghi dữ liệu
+        void SWC1_Function(void) {
+            int data = calculate_data();
+            RTE_Write_PP_DataPort_Data(data);
+        }
+
+        // SWC2: Đọc dữ liệu
+        void SWC2_Function(void) {
+            int received_data;
+            if (RTE_Read_RP_DataPort_Data(&received_data) == RTE_E_OK) {
+                process_data(received_data);
+            }
+        }
+
+        // RTE Tasks
+        void RTE_Task_CalcTask(void) {
+            SWC1_Function(); // Gọi định kỳ
+        }
+
+        void RTE_Task_ReadTask(void) {
+            if (RTE_Flag_RP_DataReceived) {
+                SWC2_Function(); // Gọi khi có dữ liệu mới
+            }
+        }
+
+    . Công Cụ Phát Triển Autosar
+        . Công Cụ Phát Triển BSW hoặc MCAL
+        . Các công cụ khác nhau dựa trên cấu hình được thực hiện từ các nhà cung cấp.
+
+    . Trình Tạo RTE
+        . Công cụ phức tạp nhất trong các công cụ Autosar.
+        . Tạo lớp RTE đầy đủ từ tất cả các cấu hình được thực hiện.
+
+    . Công Cụ Đơn Giản
+        . XML Editor
+        . Đối với những người không có điều kiện mua các công cụ đắt tiền, sử dụng trình soạn thảo XML đơn giản để hiểu và học.
+
+    Qua đây, bạn có thể thấy quy trình tạo lớp RTE trong kiến trúc Autosar từ các cấu hình đầu vào và các công cụ phát triển Autosar cần thiết cho việc này.
+
+
+
+
+
+
+
