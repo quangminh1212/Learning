@@ -1,0 +1,271 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4
+}
+
+\title{\textbf{Bài tập ôn tập lập trình C cơ bản - HW1}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Bài 1: Xâu ký tự và cấp phát bộ nhớ động}
+
+\subsection{Đề bài}
+Xây dựng và chạy minh họa hàm:
+\begin{verbatim}
+char* subStr(char* s1, int offset, int number);
+\end{verbatim}
+
+Hàm tách xâu con từ xâu s1 bắt đầu từ ký tự tại chỉ số offset (tính từ 0) và có độ dài number ký tự.
+
+\subsection{Yêu cầu}
+\begin{itemize}
+    \item Kiểm tra tính hợp lệ của các đối số
+    \item Nếu number lớn hơn độ dài phần còn lại của xâu s1 từ vị trí offset, trả về phần còn lại của s1 từ vị trí offset
+    \item Không dùng mảng ký tự tĩnh
+    \item Không sử dụng các hàm xử lý xâu có sẵn trong thư viện string.h
+\end{itemize}
+
+\subsection{Input/Output}
+\textbf{Input:}
+\begin{itemize}
+    \item Dòng thứ nhất: Hai số nguyên offset và number
+    \item Dòng thứ hai: Xâu str (tối đa 80 ký tự)
+\end{itemize}
+
+\textbf{Ví dụ:}
+\begin{verbatim}
+6 3
+hust.edu.vn
+\end{verbatim}
+
+\textbf{Output:}
+\begin{verbatim}
+-edu-
+\end{verbatim}
+
+\subsection{Thuật toán}
+\begin{enumerate}
+    \item Kiểm tra tính hợp lệ của offset và number:
+    \begin{itemize}
+        \item Nếu offset < 0 hoặc offset >= strlen(s1): trả về NULL
+        \item Nếu number <= 0: trả về NULL
+    \end{itemize}
+    \item Tính độ dài thực tế của xâu con:
+    \begin{itemize}
+        \item Nếu offset + number > strlen(s1): length = strlen(s1) - offset
+        \item Ngược lại: length = number
+    \end{itemize}
+    \item Cấp phát bộ nhớ động cho xâu con (length + 1 ký tự cho '\textbackslash0')
+    \item Copy từng ký tự từ s1[offset] đến xâu con
+    \item Thêm ký tự '\textbackslash0' vào cuối xâu con
+    \item Trả về xâu con
+\end{enumerate}
+
+\subsection{Code C}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+int my_strlen(char* s) {
+    int len = 0;
+    while (s[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+
+char* subStr(char* s1, int offset, int number) {
+    // Kiểm tra tính hợp lệ
+    if (s1 == NULL || offset < 0 || number <= 0) {
+        return NULL;
+    }
+    
+    int len = my_strlen(s1);
+    if (offset >= len) {
+        return NULL;
+    }
+    
+    // Tính độ dài thực tế
+    int actual_length;
+    if (offset + number > len) {
+        actual_length = len - offset;
+    } else {
+        actual_length = number;
+    }
+    
+    // Cấp phát bộ nhớ động
+    char* result = (char*)malloc((actual_length + 1) * sizeof(char));
+    if (result == NULL) {
+        return NULL;
+    }
+    
+    // Copy ký tự
+    for (int i = 0; i < actual_length; i++) {
+        result[i] = s1[offset + i];
+    }
+    result[actual_length] = '\0';
+    
+    return result;
+}
+
+int main() {
+    int offset, number;
+    char str[81];
+    
+    printf("Nhap offset va number: ");
+    scanf("%d %d", &offset, &number);
+    getchar(); // Xóa ký tự newline
+    
+    printf("Nhap xau str: ");
+    fgets(str, 81, stdin);
+    
+    // Xóa ký tự newline nếu có
+    int len = my_strlen(str);
+    if (str[len - 1] == '\n') {
+        str[len - 1] = '\0';
+    }
+    
+    char* sub = subStr(str, offset, number);
+    if (sub != NULL) {
+        printf("-%s-\n", sub);
+        free(sub);
+    } else {
+        printf("Invalid input\n");
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+
+\newpage
+
+\section{Bài 2: Cấu trúc}
+
+\subsection{Đề bài}
+Cho hai cấu trúc:
+\begin{verbatim}
+typedef struct point {
+    double x;
+    double y;
+} point_t;
+
+typedef struct circle {
+    point_t center;
+    double radius;
+} circle_t;
+\end{verbatim}
+
+Viết hàm \texttt{is\_in\_circle} trả về 1 nếu điểm p nằm trong đường tròn c.
+
+\subsection{Hàm cần viết}
+\begin{verbatim}
+int is_in_circle(point_t *p, circle_t *c);
+\end{verbatim}
+
+\subsection{Input/Output}
+\textbf{Input:}
+\begin{itemize}
+    \item Dòng thứ nhất: 3 số thực biểu diễn tọa độ x, y và bán kính của tâm đường tròn
+    \item Dòng thứ hai: 2 số thực biểu diễn tọa độ x, y của điểm p
+\end{itemize}
+
+\textbf{Ví dụ:}
+\begin{verbatim}
+0 0 5.5
+2.3 -3.1
+\end{verbatim}
+
+\textbf{Output:}
+\begin{itemize}
+    \item YES nếu p nằm trong đường tròn
+    \item NO nếu p không nằm trong đường tròn (p nằm trên hoặc nằm ngoài đường tròn)
+\end{itemize}
+
+\subsection{Thuật toán}
+Điểm p nằm trong đường tròn c khi khoảng cách từ p đến tâm đường tròn nhỏ hơn bán kính:
+\begin{equation}
+\sqrt{(p.x - c.center.x)^2 + (p.y - c.center.y)^2} < c.radius
+\end{equation}
+
+Để tránh tính căn bậc hai, ta so sánh bình phương:
+\begin{equation}
+(p.x - c.center.x)^2 + (p.y - c.center.y)^2 < c.radius^2
+\end{equation}
+
+\subsection{Code C}
+\begin{lstlisting}
+#include <stdio.h>
+#include <math.h>
+
+typedef struct point {
+    double x;
+    double y;
+} point_t;
+
+typedef struct circle {
+    point_t center;
+    double radius;
+} circle_t;
+
+int is_in_circle(point_t *p, circle_t *c) {
+    double dx = p->x - c->center.x;
+    double dy = p->y - c->center.y;
+    double distance_squared = dx * dx + dy * dy;
+    double radius_squared = c->radius * c->radius;
+    
+    if (distance_squared < radius_squared) {
+        return 1; // Nằm trong đường tròn
+    } else {
+        return 0; // Nằm trên hoặc ngoài đường tròn
+    }
+}
+
+int main() {
+    circle_t c;
+    point_t p;
+    
+    printf("Nhap toa do tam (x y) va ban kinh: ");
+    scanf("%lf %lf %lf", &c.center.x, &c.center.y, &c.radius);
+    
+    printf("Nhap toa do diem p (x y): ");
+    scanf("%lf %lf", &p.x, &p.y);
+    
+    if (is_in_circle(&p, &c)) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+
+\end{document}
