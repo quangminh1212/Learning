@@ -3,18 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #pragma comment(lib, "ws2_32.lib")
-#else
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <netdb.h>
-    #include <unistd.h>
-#endif
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "ws2_32.lib")
 
 #define MAX_LINE 1024
 #define LOG_FILE "resolver.log"
@@ -352,13 +343,11 @@ void batch_mode(const char *filename) {
 }
 
 int main(int argc, char *argv[]) {
-#ifdef _WIN32
     WSADATA wsa_data;
     if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
         printf("WSAStartup failed\n");
         return 1;
     }
-#endif
 
     open_log();
     
@@ -398,15 +387,11 @@ int main(int argc, char *argv[]) {
     } else {
         printf("Usage: %s [domain_or_ip | batch_file]\n", argv[0]);
         close_log();
-#ifdef _WIN32
         WSACleanup();
-#endif
         return 1;
     }
     
     close_log();
-#ifdef _WIN32
     WSACleanup();
-#endif
     return 0;
 }

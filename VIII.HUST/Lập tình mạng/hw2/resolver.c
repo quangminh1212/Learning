@@ -2,18 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #pragma comment(lib, "ws2_32.lib")
-#else
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <netdb.h>
-    #include <unistd.h>
-#endif
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "ws2_32.lib")
 
 // Kiểm tra xem chuỗi có phải là địa chỉ IP hợp lệ không
 int is_valid_ip(const char *str) {
@@ -133,19 +124,15 @@ void resolve_hostname_to_ip(const char *hostname) {
 }
 
 int main(int argc, char *argv[]) {
-#ifdef _WIN32
     WSADATA wsa_data;
     if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
         printf("WSAStartup failed\n");
         return 1;
     }
-#endif
 
     if (argc != 2) {
         printf("Usage: %s <domain_or_ip>\n", argv[0]);
-#ifdef _WIN32
         WSACleanup();
-#endif
         return 1;
     }
     
@@ -159,8 +146,6 @@ int main(int argc, char *argv[]) {
         resolve_hostname_to_ip(parameter);
     }
     
-#ifdef _WIN32
     WSACleanup();
-#endif
     return 0;
 }
