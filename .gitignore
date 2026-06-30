@@ -1,0 +1,14 @@
+# LaTeX generated files
+*.log
+*.pdf
+*.aux
+*.out
+*.toc
+*.synctex.gz
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated diagrams
+VIII.HUST/Phân tích và thiết kế hệ thống/*.png
