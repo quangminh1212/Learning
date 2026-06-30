@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,9pt]{article}
 \usepackage[utf8]{vietnam}
 \usepackage{geometry}
 \usepackage{enumitem}
@@ -6,23 +6,42 @@
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{booktabs}
+\usepackage{setspace}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{graphicx}
+\usepackage{caption}
 \usetikzlibrary{shapes,arrows,positioning,fit,calc,backgrounds}
 \pgfplotsset{compat=1.18}
 
 \geometry{
-    left=2.5cm,
-    right=2.5cm,
-    top=2.5cm,
-    bottom=2.5cm
+    left=1.8cm,
+    right=1.8cm,
+    top=1.8cm,
+    bottom=1.8cm
 }
+\setstretch{0.85}
+
+\hfuzz=50pt
+\tolerance=1000
+\emergencystretch=3em
 
 \titleformat{\section}
-{\normalfont\Large\bfseries}{\thesection}{1em}{}
+{\normalfont\small\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}
-{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+{\normalfont\footnotesize\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{4pt}{1pt}
+\titlespacing*{\subsection}{0pt}{2pt}{1pt}
+\captionsetup{font=small,skip=2pt}
+\setlength{\textfloatsep}{0.2cm}
+\setlength{\floatsep}{0.2cm}
+\setlength{\intextsep}{0.2cm}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{2pt}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{itemsep=0pt,parsep=0pt,topsep=2pt}
+\setlist[enumerate]{itemsep=0pt,parsep=0pt,topsep=2pt}
 
 \begin{document}
 
@@ -52,66 +71,11 @@
 
 % Sơ đồ Use Case
 \section{Sơ đồ Use Case}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2cm, auto]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2.5cm, text centered, rounded corners, minimum height=1cm]
-    \tikzstyle{usecase} = [ellipse, draw, fill=green!20, text width=3cm, text centered, minimum height=1cm]
-    \tikzstyle{system} = [rectangle, draw, dashed, inner sep=10pt]
-    \tikzstyle{line} = [draw, -latex']
-    
-    % Actors
-    \node [actor] (admin) {Quản trị viên};
-    \node [actor, below of=admin, node distance=3cm] (manager) {Quản lý kho};
-    \node [actor, below of=manager, node distance=3cm] (staff) {Nhân viên kho};
-    
-    % System boundary
-    \node [system, right of=admin, node distance=5cm, minimum width=8cm, minimum height=10cm] (system) {};
-    \node [above of=system, node distance=5.5cm] at (system.north) {\textbf{Hệ thống Quản lý Kho}};
-    
-    % Use Cases for Supplier Management
-    \node [usecase, right of=admin, node distance=6cm] (uc3_1) {Thêm nhà cung cấp};
-    \node [usecase, below of=uc3_1, node distance=1.8cm] (uc3_2) {Sửa nhà cung cấp};
-    \node [usecase, below of=uc3_2, node distance=1.8cm] (uc3_3) {Tìm kiếm nhà cung cấp};
-    \node [usecase, below of=uc3_3, node distance=1.8cm] (uc3_4) {Xóa nhà cung cấp};
-    
-    % Use Cases for Warehouse Management
-    \node [usecase, below of=uc3_4, node distance=1.8cm] (uc4_1) {Thêm kho};
-    \node [usecase, below of=uc4_1, node distance=1.8cm] (uc4_2) {Sửa thông tin kho};
-    \node [usecase, below of=uc4_2, node distance=1.8cm] (uc4_3) {Quản lý trạng thái kho};
-    \node [usecase, below of=uc4_3, node distance=1.8cm] (uc4_4) {Xóa kho};
-    \node [usecase, below of=uc4_4, node distance=1.8cm] (uc4_5) {Xem chi tiết kho};
-    
-    % Connections - Admin
-    \path [line] (admin) -- (uc3_1);
-    \path [line] (admin) -- (uc3_2);
-    \path [line] (admin) -- (uc3_3);
-    \path [line] (admin) -- (uc3_4);
-    \path [line] (admin) -- (uc4_1);
-    \path [line] (admin) -- (uc4_2);
-    \path [line] (admin) -- (uc4_3);
-    \path [line] (admin) -- (uc4_4);
-    \path [line] (admin) -- (uc4_5);
-    
-    % Connections - Manager
-    \path [line] (manager) -- (uc3_3);
-    \path [line] (manager) -- (uc4_2);
-    \path [line] (manager) -- (uc4_3);
-    \path [line] (manager) -- (uc4_5);
-    
-    % Connections - Staff
-    \path [line] (staff) -- (uc3_3);
-    \path [line] (staff) -- (uc4_5);
-    
-    % Include relationships
-    \path [line, dashed] (uc3_2) -- (uc3_3);
-    \path [line, dashed] (uc4_2) -- (uc4_5);
-\end{tikzpicture}
+\includegraphics[width=0.8\textwidth]{use_case_diagram.png}
 \caption{Sơ đồ Use Case cho nghiệp vụ Quản lý nhà cung cấp và Quản lý kho}
 \end{figure}
-
-\newpage
 
 % Use Case 3: Quản lý nhà cung cấp
 \section{Use Case 3: Quản lý nhà cung cấp}
@@ -144,7 +108,7 @@ Use case này cho phép người dùng lưu trữ và quản lý thông tin các
 % Bảng chi tiết UC3.1
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -173,39 +137,10 @@ Use case này cho phép người dùng lưu trữ và quản lý thông tin các
 \caption{Luồng chính UC3.1: Thêm nhà cung cấp mới}
 \end{table}
 
-\textbf{UC3.1: Thêm nhà cung cấp mới}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý nhà cung cấp" từ menu chính
-    \item Hệ thống hiển thị danh sách các nhà cung cấp hiện có
-    \item Người dùng nhấn nút "Thêm nhà cung cấp mới"
-    \item Hệ thống hiển thị form nhập thông tin nhà cung cấp với các trường:
-    \begin{itemize}
-        \item Mã nhà cung cấp (tự động hoặc nhập thủ công)
-        \item Tên nhà cung cấp
-        \item Địa chỉ
-        \item Số điện thoại
-        \item Email
-        \item Người liên hệ
-        \item Ghi chú
-    \end{itemize}
-    \item Người dùng nhập thông tin vào các trường
-    \item Người dùng nhấn nút "Lưu"
-    \item Hệ thống kiểm tra tính hợp lệ của dữ liệu:
-    \begin{itemize}
-        \item Kiểm tra các trường bắt buộc đã được nhập
-        \item Kiểm tra định dạng email đúng
-        \item Kiểm tra số điện thoại đúng định dạng
-        \item Kiểm tra mã nhà cung cấp không trùng lặp
-    \end{itemize}
-    \item Nếu dữ liệu hợp lệ, hệ thống lưu thông tin vào cơ sở dữ liệu
-    \item Hệ thống hiển thị thông báo "Thêm nhà cung cấp thành công"
-    \item Hệ thống cập nhật danh sách nhà cung cấp và quay lại màn hình danh sách
-\end{enumerate}
-
 % Bảng chi tiết UC3.2
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -234,24 +169,10 @@ Use case này cho phép người dùng lưu trữ và quản lý thông tin các
 \caption{Luồng chính UC3.2: Sửa thông tin nhà cung cấp}
 \end{table}
 
-\textbf{UC3.2: Sửa thông tin nhà cung cấp}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý nhà cung cấp" từ menu chính
-    \item Hệ thống hiển thị danh sách các nhà cung cấp hiện có
-    \item Người dùng chọn nhà cung cấp cần sửa từ danh sách
-    \item Hệ thống hiển thị form chỉnh sửa thông tin nhà cung cấp với dữ liệu hiện tại
-    \item Người dùng chỉnh sửa các thông tin cần thay đổi
-    \item Người dùng nhấn nút "Cập nhật"
-    \item Hệ thống kiểm tra tính hợp lệ của dữ liệu
-    \item Nếu dữ liệu hợp lệ, hệ thống cập nhật thông tin trong cơ sở dữ liệu
-    \item Hệ thống hiển thị thông báo "Cập nhật thông tin thành công"
-    \item Hệ thống cập nhật danh sách nhà cung cấp và quay lại màn hình danh sách
-\end{enumerate}
-
 % Bảng chi tiết UC3.3
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -276,28 +197,10 @@ Use case này cho phép người dùng lưu trữ và quản lý thông tin các
 \caption{Luồng chính UC3.3: Tìm kiếm nhà cung cấp}
 \end{table}
 
-\textbf{UC3.3: Tìm kiếm nhà cung cấp}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý nhà cung cấp" từ menu chính
-    \item Hệ thống hiển thị danh sách các nhà cung cấp hiện có
-    \item Người dùng nhập từ khóa tìm kiếm vào ô tìm kiếm
-    \item Người dùng có thể chọn tiêu chí tìm kiếm:
-    \begin{itemize}
-        \item Theo mã nhà cung cấp
-        \item Theo tên nhà cung cấp
-        \item Theo địa chỉ
-        \item Theo số điện thoại
-    \end{itemize}
-    \item Người dùng nhấn nút "Tìm kiếm"
-    \item Hệ thống tìm kiếm trong cơ sở dữ liệu theo tiêu chí đã chọn
-    \item Hệ thống hiển thị danh sách kết quả tìm kiếm
-    \item Nếu không tìm thấy kết quả, hệ thống hiển thị thông báo "Không tìm thấy nhà cung cấp phù hợp"
-\end{enumerate}
-
 % Bảng chi tiết UC3.4
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -321,21 +224,6 @@ Use case này cho phép người dùng lưu trữ và quản lý thông tin các
 \end{tabular}
 \caption{Luồng chính UC3.4: Xóa nhà cung cấp}
 \end{table}
-
-\textbf{UC3.4: Xóa nhà cung cấp}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý nhà cung cấp" từ menu chính
-    \item Hệ thống hiển thị danh sách các nhà cung cấp hiện có
-    \item Người dùng chọn nhà cung cấp cần xóa từ danh sách
-    \item Hệ thống hiển thị thông báo xác nhận "Bạn có chắc chắn muốn xóa nhà cung cấp này?"
-    \item Nếu người dùng chọn "Có":
-    \begin{itemize}
-        \item Hệ thống kiểm tra xem nhà cung cấp có đang được sử dụng trong các phiếu nhập hàng không
-        \item Nếu không, hệ thống xóa nhà cung cấp khỏi cơ sở dữ liệu
-        \item Hệ thống hiển thị thông báo "Xóa nhà cung cấp thành công"
-    \end{itemize}
-    \item Nếu người dùng chọn "Không", hệ thống quay lại màn hình danh sách
-\end{enumerate}
 
 \subsection{Luồng thay thế (Alternative Flows)}
 
@@ -397,7 +285,7 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 % Bảng chi tiết UC4.1
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -428,41 +316,10 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 \caption{Luồng chính UC4.1: Thêm kho mới}
 \end{table}
 
-\textbf{UC4.1: Thêm kho mới}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý kho" từ menu chính
-    \item Hệ thống hiển thị danh sách các kho hiện có
-    \item Người dùng nhấn nút "Thêm kho mới"
-    \item Hệ thống hiển thị form nhập thông tin kho với các trường:
-    \begin{itemize}
-        \item Mã kho (tự động hoặc nhập thủ công)
-        \item Tên kho
-        \item Địa chỉ kho
-        \item Diện tích kho
-        \item Sức chứa tối đa
-        \item Loại kho (kho nguyên liệu, kho thành phẩm, kho bán thành phẩm)
-        \item Người phụ trách
-        \item Số điện thoại liên hệ
-        \item Ghi chú
-    \end{itemize}
-    \item Người dùng nhập thông tin vào các trường
-    \item Người dùng nhấn nút "Lưu"
-    \item Hệ thống kiểm tra tính hợp lệ của dữ liệu:
-    \begin{itemize}
-        \item Kiểm tra các trường bắt buộc đã được nhập
-        \item Kiểm tra mã kho không trùng lặp
-        \item Kiểm tra diện tích và sức chứa là số dương
-    \end{itemize}
-    \item Nếu dữ liệu hợp lệ, hệ thống lưu thông tin vào cơ sở dữ liệu
-    \item Hệ thống thiết lập trạng thái mặc định cho kho là "Hoạt động"
-    \item Hệ thống hiển thị thông báo "Thêm kho thành công"
-    \item Hệ thống cập nhật danh sách kho và quay lại màn hình danh sách
-\end{enumerate}
-
 % Bảng chi tiết UC4.2
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -491,24 +348,10 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 \caption{Luồng chính UC4.2: Sửa thông tin kho}
 \end{table}
 
-\textbf{UC4.2: Sửa thông tin kho}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý kho" từ menu chính
-    \item Hệ thống hiển thị danh sách các kho hiện có
-    \item Người dùng chọn kho cần sửa từ danh sách
-    \item Hệ thống hiển thị form chỉnh sửa thông tin kho với dữ liệu hiện tại
-    \item Người dùng chỉnh sửa các thông tin cần thay đổi
-    \item Người dùng nhấn nút "Cập nhật"
-    \item Hệ thống kiểm tra tính hợp lệ của dữ liệu
-    \item Nếu dữ liệu hợp lệ, hệ thống cập nhật thông tin trong cơ sở dữ liệu
-    \item Hệ thống hiển thị thông báo "Cập nhật thông tin thành công"
-    \item Hệ thống cập nhật danh sách kho và quay lại màn hình danh sách
-\end{enumerate}
-
 % Bảng chi tiết UC4.3
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -535,33 +378,10 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 \caption{Luồng chính UC4.3: Quản lý trạng thái kho}
 \end{table}
 
-\textbf{UC4.3: Quản lý trạng thái kho}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý kho" từ menu chính
-    \item Hệ thống hiển thị danh sách các kho hiện có với trạng thái
-    \item Người dùng chọn kho cần thay đổi trạng thái
-    \item Người dùng chọn trạng thái mới từ danh sách:
-    \begin{itemize}
-        \item Hoạt động
-        \item Tạm dừng
-        \item Đóng cửa
-        \item Bảo trì
-    \end{itemize}
-    \item Người dùng nhấn nút "Cập nhật trạng thái"
-    \item Nếu trạng thái mới là "Đóng cửa" hoặc "Tạm dừng":
-    \begin{itemize}
-        \item Hệ thống kiểm tra xem kho có hàng hóa đang lưu trữ không
-        \item Nếu có, hệ thống yêu cầu người dùng xác nhận chuyển hàng sang kho khác
-    \end{itemize}
-    \item Hệ thống cập nhật trạng thái kho trong cơ sở dữ liệu
-    \item Hệ thống hiển thị thông báo "Cập nhật trạng thái thành công"
-    \item Hệ thống cập nhật danh sách kho
-\end{enumerate}
-
 % Bảng chi tiết UC4.4
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -586,26 +406,10 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 \caption{Luồng chính UC4.4: Xóa kho}
 \end{table}
 
-\textbf{UC4.4: Xóa kho}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý kho" từ menu chính
-    \item Hệ thống hiển thị danh sách các kho hiện có
-    \item Người dùng chọn kho cần xóa từ danh sách
-    \item Hệ thống hiển thị thông báo xác nhận "Bạn có chắc chắn muốn xóa kho này?"
-    \item Nếu người dùng chọn "Có":
-    \begin{itemize}
-        \item Hệ thống kiểm tra xem kho có hàng hóa đang lưu trữ không
-        \item Hệ thống kiểm tra xem kho có đang được sử dụng trong các phiếu nhập/xuất không
-        \item Nếu không, hệ thống xóa kho khỏi cơ sở dữ liệu
-        \item Hệ thống hiển thị thông báo "Xóa kho thành công"
-    \end{itemize}
-    \item Nếu người dùng chọn "Không", hệ thống quay lại màn hình danh sách
-\end{enumerate}
-
 % Bảng chi tiết UC4.5
 \begin{table}[h]
 \centering
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.85}
 \begin{tabular}{|p{1.5cm}|p{10cm}|}
 \hline
 \textbf{Bước} & \textbf{Mô tả} \\
@@ -623,23 +427,6 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 \end{tabular}
 \caption{Luồng chính UC4.5: Xem chi tiết kho}
 \end{table}
-
-\textbf{UC4.5: Xem chi tiết kho}
-\begin{enumerate}
-    \item Người dùng chọn chức năng "Quản lý kho" từ menu chính
-    \item Hệ thống hiển thị danh sách các kho hiện có
-    \item Người dùng chọn kho cần xem chi tiết
-    \item Hệ thống hiển thị thông tin chi tiết của kho bao gồm:
-    \begin{itemize}
-        \item Thông tin cơ bản (mã, tên, địa chỉ, diện tích, sức chứa)
-        \item Trạng thái hiện tại
-        \item Số lượng hàng hóa đang lưu trữ
-        \item Sức chứa còn lại
-        \item Danh sách các khu vực trong kho
-        \item Lịch sử hoạt động gần đây
-    \end{itemize}
-    \item Người dùng có thể chọn xem danh sách hàng hóa trong kho
-\end{enumerate}
 
 \subsection{Luồng thay thế (Alternative Flows)}
 
@@ -674,485 +461,56 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
     \item Hệ thống quay lại màn hình danh sách
 \end{itemize}
 
-\newpage
-
 % Sequence Diagram cho Ghi nhận hàng lỗi
 \section{Sơ đồ trình tự (Sequence Diagram)}
 
+\vspace{-0.3cm}
 \subsection{Sequence Diagram: Ghi nhận hàng lỗi}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    \tikzstyle{altbox} = [draw, rectangle, fill=yellow!10, text width=12cm, minimum height=1cm]
-    
-    % Actors
-    \node [actor] (nhanvien) {Nhân viên kho};
-    \node [actor, right of=nhanvien, node distance=3.5cm] (giao_dien) {Giao diện quản lý hàng lỗi};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {HangLoiController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (nhanvien.south) -- ++(0,-10);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-10);
-    \draw [lifeline] (controller.south) -- ++(0,-10);
-    \draw [lifeline] (database.south) -- ++(0,-10);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Chọn "Ghi nhận hàng lỗi"};
-    \draw [message] (nhanvien.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {ghiNhanHangLoi()};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -1.5) {Lấy danh sách hàng hóa};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -2) {Danh sách hàng hóa};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -2.5) {Danh sách hàng hóa};
-    \draw [returnmsg] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -3) {Hiển thị danh sách};
-    \draw [message] (giao_dien.west) -- (nhanvien.east);
-    
-    \node [text width=4cm, align=center] at (2.5, -3.8) {Chọn hàng hóa, nhập SL lỗi, chọn nguyên nhân};
-    \draw [message] (nhanvien.east) -- (giao_dien.west);
-    
-    \node [text width=4cm, align=center] at (6, -4.3) {ghiNhanHangLoi(Hàng hóa, SL lỗi, nguyên nhân)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    % Alt box 1
-    \draw [altbox] (3.5, -4.8) rectangle (11.5, -5.8);
-    \node [text width=8cm, align=center] at (7.5, -5.3) {\textbf{alt} [Chưa chọn nguyên nhân]};
-    \node [text width=3cm, align=center] at (6, -5.5) {"Vui lòng chọn nguyên nhân"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt box 2
-    \draw [altbox] (3.5, -5.9) rectangle (11.5, -9.5);
-    \node [text width=8cm, align=center] at (7.5, -6.3) {\textbf{alt} [Đã chọn nguyên nhân]};
-    
-    \node [text width=3cm, align=center] at (9.5, -6.8) {Kiểm tra số lượng tồn};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -7.3) {Số lượng tồn};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    % Nested alt 2.1
-    \draw [altbox, fill=red!10] (5, -7.6) rectangle (10, -8.3);
-    \node [text width=4cm, align=center] at (7.5, -7.9) {[SL lỗi > SL tồn]};
-    \node [text width=3cm, align=center] at (6, -8) {"Số lượng vượt quá tồn kho"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Nested alt 2.2
-    \draw [altbox, fill=green!10] (5, -8.4) rectangle (10, -9.3);
-    \node [text width=4cm, align=center] at (7.5, -8.7) {[Số lượng hợp lệ]};
-    
-    \node [text width=3cm, align=center] at (9.5, -8.9) {Giảm tồn kho, chuyển sang khu vực lỗi, lưu phiếu};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -9.1) {Lưu thành công};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -9.2) {"Thông báo thành công"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_ghi_nhan_hang_loi.png}
 \caption{Sequence Diagram: Ghi nhận hàng lỗi}
 \end{figure}
 
+\vspace{-0.3cm}
 \subsection{Sequence Diagram: Xử lý hàng lỗi}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    \tikzstyle{altbox} = [draw, rectangle, fill=yellow!10, text width=12cm, minimum height=1cm]
-    
-    % Actors
-    \node [actor] (quanly) {Quản lý kho};
-    \node [actor, right of=quanly, node distance=3.5cm] (giao_dien) {Giao diện quản lý hàng lỗi};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {HangLoiController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (quanly.south) -- ++(0,-12);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-12);
-    \draw [lifeline] (controller.south) -- ++(0,-12);
-    \draw [lifeline] (database.south) -- ++(0,-12);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Mở phiếu hàng lỗi};
-    \draw [message] (quanly.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {Yêu cầu mở phiếu (Mã phiếu)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -1.5) {Lấy thông tin phiếu hàng lỗi};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -2) {Thông tin phiếu};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -2.5) {Thông tin phiếu};
-    \draw [returnmsg] (controller.west) -- (giao_dien.east);
-    
-    % Alt box 1
-    \draw [altbox] (3.5, -2.8) rectangle (11.5, -5.5);
-    \node [text width=8cm, align=center] at (7.5, -3.2) {\textbf{alt}};
-    
-    % Alt 1.1
-    \draw [altbox, fill=red!10] (4, -3.4) rectangle (11, -4.2);
-    \node [text width=6cm, align=center] at (7.5, -3.7) {[Phiếu đã xử lý]};
-    \node [text width=4cm, align=center] at (6, -3.9) {"Phiếu đã được xử lý, không thể xử lý lại"};
-    \draw [message] (giao_dien.west) -- (quanly.east);
-    
-    % Alt 1.2
-    \draw [altbox, fill=green!10] (4, -4.3) rectangle (11, -5.3);
-    \node [text width=6cm, align=center] at (7.5, -4.6) {[Phiếu chưa xử lý]};
-    
-    \node [text width=3cm, align=center] at (2.5, -4.8) {Hiển thị thông tin phiếu};
-    \draw [message] (giao_dien.west) -- (quanly.east);
-    
-    \node [text width=4cm, align=center] at (6, -5) {Hiển thị phương án xử lý (Trả nhà cung cấp, Tiêu hủy, Sửa chữa)};
-    \draw [message] (giao_dien.west) -- (quanly.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -5.8) {Chọn phương án xử lý};
-    \draw [message] (quanly.east) -- (giao_dien.west);
-    
-    % Alt box 2
-    \draw [altbox] (3.5, -6) rectangle (11.5, -8.5);
-    \node [text width=8cm, align=center] at (7.5, -6.4) {\textbf{alt}};
-    
-    % Alt 2.1
-    \draw [altbox, fill=red!10] (4, -6.6) rectangle (11, -7.2);
-    \node [text width=6cm, align=center] at (7.5, -6.8) {[Chưa chọn phương án xử lý]};
-    \node [text width=4cm, align=center] at (6, -7) {"Vui lòng chọn phương án xử lý"};
-    \draw [message] (giao_dien.west) -- (quanly.east);
-    
-    % Alt 2.2
-    \draw [altbox, fill=green!10] (4, -7.3) rectangle (11, -8.3);
-    \node [text width=6cm, align=center] at (7.5, -7.6) {[Đã chọn phương án xử lý]};
-    
-    \node [text width=3cm, align=center] at (2.5, -7.8) {Xác nhận xử lý};
-    \draw [message] (quanly.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -8) {Xử lý hàng lỗi (phương án)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -8.2) {Cập nhật tồn kho hàng lỗi};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -8.4) {Lưu lịch sử xử lý};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -8.6) {Cập nhật trạng thái phiếu = Đã xử lý};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -8.8) {Cập nhật thành công};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -9) {Thông báo xử lý thành công};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -9.2) {Thông báo xử lý thành công};
-    \draw [message] (giao_dien.west) -- (quanly.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_xu_ly_hang_loi.png}
 \caption{Sequence Diagram: Xử lý hàng lỗi}
 \end{figure}
 
-\newpage
-
+\vspace{-0.3cm}
 % Sequence Diagram cho Quản lý nhà cung cấp
 \subsection{Sequence Diagram: Thêm nhà cung cấp}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    \tikzstyle{altbox} = [draw, rectangle, fill=yellow!10, text width=12cm, minimum height=1cm]
-    
-    % Actors
-    \node [actor] (nguoidung) {Người dùng};
-    \node [actor, right of=nguoidung, node distance=3.5cm] (giao_dien) {Giao diện quản lý NCC};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {NhaCungCapController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (nguoidung.south) -- ++(0,-8);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-8);
-    \draw [lifeline] (controller.south) -- ++(0,-8);
-    \draw [lifeline] (database.south) -- ++(0,-8);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Chọn "Thêm NCC"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {Hiển thị form thêm NCC};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-    \node [text width=4cm, align=center] at (2.5, -1.8) {Nhập thông tin NCC};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (2.5, -2.5) {Nhấn "Lưu"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=4cm, align=center] at (6, -3) {themNhaCungCap(thông tin)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    % Alt box
-    \draw [altbox] (3.5, -3.3) rectangle (11.5, -7.5);
-    \node [text width=8cm, align=center] at (7.5, -3.7) {\textbf{alt}};
-    
-    % Alt 1: Dữ liệu không hợp lệ
-    \draw [altbox, fill=red!10] (4, -3.9) rectangle (11, -4.7);
-    \node [text width=6cm, align=center] at (7.5, -4.2) {[Dữ liệu không hợp lệ]};
-    \node [text width=4cm, align=center] at (6, -4.4) {"Thông báo lỗi cụ thể"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt 2: Mã trùng lặp
-    \draw [altbox, fill=red!10] (4, -4.8) rectangle (11, -5.6);
-    \node [text width=6cm, align=center] at (7.5, -5.1) {[Mã NCC trùng lặp]};
-    \node [text width=4cm, align=center] at (6, -5.3) {"Mã NCC đã tồn tại"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt 3: Dữ liệu hợp lệ
-    \draw [altbox, fill=green!10] (4, -5.7) rectangle (11, -7.3);
-    \node [text width=6cm, align=center] at (7.5, -6) {[Dữ liệu hợp lệ]};
-    
-    \node [text width=3cm, align=center] at (9.5, -6.3) {Lưu thông tin NCC};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -6.6) {Lưu thành công};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -6.9) {"Thêm NCC thành công"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -7.1) {"Thêm NCC thành công"};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_them_nha_cung_cap.png}
 \caption{Sequence Diagram: Thêm nhà cung cấp}
 \end{figure}
 
+\vspace{-0.3cm}
 \subsection{Sequence Diagram: Tìm kiếm nhà cung cấp}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    
-    % Actors
-    \node [actor] (nguoidung) {Người dùng};
-    \node [actor, right of=nguoidung, node distance=3.5cm] (giao_dien) {Giao diện quản lý NCC};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {NhaCungCapController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (nguoidung.south) -- ++(0,-5);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-5);
-    \draw [lifeline] (controller.south) -- ++(0,-5);
-    \draw [lifeline] (database.south) -- ++(0,-5);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Chọn "Tìm kiếm NCC"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {Hiển thị ô tìm kiếm};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-    \node [text width=4cm, align=center] at (2.5, -1.8) {Nhập từ khóa, chọn tiêu chí};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (2.5, -2.5) {Nhấn "Tìm kiếm"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=4cm, align=center] at (6, -3) {timKiemNhaCungCap(từ khóa, tiêu chí)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -3.5) {Tìm kiếm theo tiêu chí};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -4) {Kết quả tìm kiếm};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -4.5) {Kết quả tìm kiếm};
-    \draw [returnmsg] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -4.8) {Hiển thị kết quả};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_tim_kiem_nha_cung_cap.png}
 \caption{Sequence Diagram: Tìm kiếm nhà cung cấp}
 \end{figure}
 
-\newpage
-
+\vspace{-0.3cm}
 % Sequence Diagram cho Quản lý các kho
 \subsection{Sequence Diagram: Thêm kho}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    \tikzstyle{altbox} = [draw, rectangle, fill=yellow!10, text width=12cm, minimum height=1cm]
-    
-    % Actors
-    \node [actor] (nguoidung) {Người dùng};
-    \node [actor, right of=nguoidung, node distance=3.5cm] (giao_dien) {Giao diện quản lý kho};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {KhoController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (nguoidung.south) -- ++(0,-8);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-8);
-    \draw [lifeline] (controller.south) -- ++(0,-8);
-    \draw [lifeline] (database.south) -- ++(0,-8);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Chọn "Thêm kho"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {Hiển thị form thêm kho};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-    \node [text width=4cm, align=center] at (2.5, -1.8) {Nhập thông tin kho};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (2.5, -2.5) {Nhấn "Lưu"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=4cm, align=center] at (6, -3) {themKho(thông tin)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    % Alt box
-    \draw [altbox] (3.5, -3.3) rectangle (11.5, -7.5);
-    \node [text width=8cm, align=center] at (7.5, -3.7) {\textbf{alt}};
-    
-    % Alt 1: Dữ liệu không hợp lệ
-    \draw [altbox, fill=red!10] (4, -3.9) rectangle (11, -4.7);
-    \node [text width=6cm, align=center] at (7.5, -4.2) {[Dữ liệu không hợp lệ]};
-    \node [text width=4cm, align=center] at (6, -4.4) {"Thông báo lỗi cụ thể"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt 2: Mã trùng lặp
-    \draw [altbox, fill=red!10] (4, -4.8) rectangle (11, -5.6);
-    \node [text width=6cm, align=center] at (7.5, -5.1) {[Mã kho trùng lặp]};
-    \node [text width=4cm, align=center] at (6, -5.3) {"Mã kho đã tồn tại"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt 3: Dữ liệu hợp lệ
-    \draw [altbox, fill=green!10] (4, -5.7) rectangle (11, -7.3);
-    \node [text width=6cm, align=center] at (7.5, -6) {[Dữ liệu hợp lệ]};
-    
-    \node [text width=3cm, align=center] at (9.5, -6.3) {Lưu thông tin kho, trạng thái = Hoạt động};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -6.6) {Lưu thành công};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -6.9) {"Thêm kho thành công"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -7.1) {"Thêm kho thành công"};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_them_kho.png}
 \caption{Sequence Diagram: Thêm kho}
 \end{figure}
 
+\vspace{-0.3cm}
 \subsection{Sequence Diagram: Quản lý trạng thái kho}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\begin{tikzpicture}[node distance=2.5cm, auto, >=stealth]
-    % Define styles
-    \tikzstyle{actor} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
-    \tikzstyle{lifeline} = [draw, dashed]
-    \tikzstyle{message} = [draw, ->, thick]
-    \tikzstyle{returnmsg} = [draw, ->, dashed, thick]
-    \tikzstyle{altbox} = [draw, rectangle, fill=yellow!10, text width=12cm, minimum height=1cm]
-    
-    % Actors
-    \node [actor] (nguoidung) {Người dùng};
-    \node [actor, right of=nguoidung, node distance=3.5cm] (giao_dien) {Giao diện quản lý kho};
-    \node [actor, right of=giao_dien, node distance=3.5cm] (controller) {KhoController};
-    \node [actor, right of=controller, node distance=3.5cm] (database) {Database};
-    
-    % Lifelines
-    \draw [lifeline] (nguoidung.south) -- ++(0,-8);
-    \draw [lifeline] (giao_dien.south) -- ++(0,-8);
-    \draw [lifeline] (controller.south) -- ++(0,-8);
-    \draw [lifeline] (database.south) -- ++(0,-8);
-    
-    % Messages
-    \node [text width=3cm, align=center] at (2.5, -0.5) {Chọn kho cần thay đổi};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (6, -1) {Hiển thị trạng thái hiện tại};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -1.8) {Chọn trạng thái mới};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=3cm, align=center] at (2.5, -2.5) {Nhấn "Cập nhật trạng thái"};
-    \draw [message] (nguoidung.east) -- (giao_dien.west);
-    
-    \node [text width=4cm, align=center] at (6, -3) {capNhatTrangThaiKho(mã kho, trạng thái)};
-    \draw [message] (giao_dien.east) -- (controller.west);
-    
-    % Alt box
-    \draw [altbox] (3.5, -3.3) rectangle (11.5, -7.5);
-    \node [text width=8cm, align=center] at (7.5, -3.7) {\textbf{alt}};
-    
-    % Alt 1: Đóng cửa/Tạm dừng có hàng hóa
-    \draw [altbox, fill=red!10] (4, -3.9) rectangle (11, -5.2);
-    \node [text width=6cm, align=center] at (7.5, -4.2) {[Đóng cửa/Tạm dừng có hàng hóa]};
-    
-    \node [text width=3cm, align=center] at (9.5, -4.5) {Kiểm tra hàng hóa trong kho};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -4.8) {Có hàng hóa};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=4cm, align=center] at (6, -5) {"Kho có hàng hóa, vui lòng chuyển hàng"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    % Alt 2: Cập nhật thành công
-    \draw [altbox, fill=green!10] (4, -5.3) rectangle (11, -7.3);
-    \node [text width=6cm, align=center] at (7.5, -5.6) {[Cập nhật thành công]};
-    
-    \node [text width=3cm, align=center] at (9.5, -5.9) {Cập nhật trạng thái kho};
-    \draw [message] (controller.east) -- (database.west);
-    
-    \node [text width=3cm, align=center] at (9.5, -6.2) {Cập nhật thành công};
-    \draw [returnmsg] (database.west) -- (controller.east);
-    
-    \node [text width=3cm, align=center] at (6, -6.5) {"Cập nhật trạng thái thành công"};
-    \draw [message] (controller.west) -- (giao_dien.east);
-    
-    \node [text width=3cm, align=center] at (2.5, -6.8) {"Cập nhật trạng thái thành công"};
-    \draw [message] (giao_dien.west) -- (nguoidung.east);
-    
-\end{tikzpicture}
+\includegraphics[width=0.75\textwidth]{sequence_quan_ly_trang_thai_kho.png}
 \caption{Sequence Diagram: Quản lý trạng thái kho}
 \end{figure}
 
