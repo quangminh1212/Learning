@@ -1,4 +1,4 @@
-\documentclass[a4paper,9pt]{article}
+\documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{vietnam}
 \usepackage{geometry}
 \usepackage{enumitem}
@@ -11,37 +11,38 @@
 \usepackage{pgfplots}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{pdflscape}
 \usetikzlibrary{shapes,arrows,positioning,fit,calc,backgrounds}
 \pgfplotsset{compat=1.18}
 
 \geometry{
-    left=1.8cm,
-    right=1.8cm,
-    top=1.8cm,
-    bottom=1.8cm
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
 }
-\setstretch{0.85}
+\setstretch{1.0}
 
 \hfuzz=50pt
 \tolerance=1000
 \emergencystretch=3em
 
 \titleformat{\section}
-{\normalfont\small\bfseries}{\thesection}{1em}{}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}
-{\normalfont\footnotesize\bfseries}{\thesubsection}{1em}{}
-\titlespacing*{\section}{0pt}{4pt}{1pt}
-\titlespacing*{\subsection}{0pt}{2pt}{1pt}
+{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
 \captionsetup{font=small,skip=2pt}
-\setlength{\textfloatsep}{0.2cm}
-\setlength{\floatsep}{0.2cm}
-\setlength{\intextsep}{0.2cm}
-\setlength{\abovecaptionskip}{2pt}
-\setlength{\belowcaptionskip}{2pt}
-\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{0.5cm}
+\setlength{\floatsep}{0.5cm}
+\setlength{\intextsep}{0.5cm}
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{6pt}
+\setlength{\parskip}{3pt}
 \setlength{\parindent}{0pt}
-\setlist[itemize]{itemsep=0pt,parsep=0pt,topsep=2pt}
-\setlist[enumerate]{itemsep=0pt,parsep=0pt,topsep=2pt}
+\setlist[itemize]{itemsep=2pt,parsep=2pt,topsep=4pt}
+\setlist[enumerate]{itemsep=2pt,parsep=2pt,topsep=4pt}
 
 \begin{document}
 
@@ -73,7 +74,7 @@
 \section{Sơ đồ Use Case}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{use_case_diagram.png}
+\includegraphics[width=0.95\textwidth]{use_case_diagram.png}
 \caption{Sơ đồ Use Case cho nghiệp vụ Quản lý nhà cung cấp và Quản lý kho}
 \end{figure}
 
@@ -464,54 +465,46 @@ Use case này cho phép người dùng quản lý thông tin các kho hoặc khu
 % Sequence Diagram cho Ghi nhận hàng lỗi
 \section{Sơ đồ trình tự (Sequence Diagram)}
 
-\vspace{-0.3cm}
+\begin{landscape}
 \subsection{Sequence Diagram: Ghi nhận hàng lỗi}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_ghi_nhan_hang_loi.png}
-\caption{Sequence Diagram: Ghi nhận hàng lỗi}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_ghi_nhan_hang_loi.png}
+\captionof{figure}{Sequence Diagram: Ghi nhận hàng lỗi}
+\end{landscape}
 
-\vspace{-0.3cm}
+\begin{landscape}
 \subsection{Sequence Diagram: Xử lý hàng lỗi}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_xu_ly_hang_loi.png}
-\caption{Sequence Diagram: Xử lý hàng lỗi}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_xu_ly_hang_loi.png}
+\captionof{figure}{Sequence Diagram: Xử lý hàng lỗi}
+\end{landscape}
 
-\vspace{-0.3cm}
-% Sequence Diagram cho Quản lý nhà cung cấp
+\begin{landscape}
 \subsection{Sequence Diagram: Thêm nhà cung cấp}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_them_nha_cung_cap.png}
-\caption{Sequence Diagram: Thêm nhà cung cấp}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_them_nha_cung_cap.png}
+\captionof{figure}{Sequence Diagram: Thêm nhà cung cấp}
+\end{landscape}
 
-\vspace{-0.3cm}
+\begin{landscape}
 \subsection{Sequence Diagram: Tìm kiếm nhà cung cấp}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_tim_kiem_nha_cung_cap.png}
-\caption{Sequence Diagram: Tìm kiếm nhà cung cấp}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_tim_kiem_nha_cung_cap.png}
+\captionof{figure}{Sequence Diagram: Tìm kiếm nhà cung cấp}
+\end{landscape}
 
-\vspace{-0.3cm}
-% Sequence Diagram cho Quản lý các kho
+\begin{landscape}
 \subsection{Sequence Diagram: Thêm kho}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_them_kho.png}
-\caption{Sequence Diagram: Thêm kho}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_them_kho.png}
+\captionof{figure}{Sequence Diagram: Thêm kho}
+\end{landscape}
 
-\vspace{-0.3cm}
+\begin{landscape}
 \subsection{Sequence Diagram: Quản lý trạng thái kho}
-\begin{figure}[ht]
 \centering
-\includegraphics[width=0.75\textwidth]{sequence_quan_ly_trang_thai_kho.png}
-\caption{Sequence Diagram: Quản lý trạng thái kho}
-\end{figure}
+\includegraphics[width=\linewidth]{sequence_quan_ly_trang_thai_kho.png}
+\captionof{figure}{Sequence Diagram: Quản lý trạng thái kho}
+\end{landscape}
 
 \end{document}
