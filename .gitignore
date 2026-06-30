@@ -12,3 +12,6 @@ __pycache__/
 
 # Generated diagrams
 VIII.HUST/Phân tích và thiết kế hệ thống/*.png
+
+# IDE metadata
+.devin/
