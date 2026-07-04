@@ -1,16 +1,17 @@
 /*
- * Task1_Server.c - Server ma hoa/giai ma Caesar (da luong)
+ * Task2_Server.c - Server ma hoa/giai ma Caesar (da luong) - POSIX/Linux
  * Cu phap: server -p <PortNumber>
  * Nhan yeu cau (encrypt/decrypt + key) -> nhan file -> ma hoa/giai ma -> gui ket qua ve client
+ * Compile tren Ubuntu: gcc -o server Task2_Server.c -pthread
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <process.h>
-#include <windows.h>
-#pragma comment(lib, "ws2_32.lib")
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <pthread.h>
 
 #define BUFFER_SIZE 8192   /* Kich thuoc buffer xu ly file */
 #define OPCODE_ENCRYPT 0   /* Opcode: yeu cau ma hoa */
@@ -18,19 +19,19 @@
 #define OPCODE_DATA    2   /* Opcode: gui/nhan du lieu file */
 #define OPCODE_ERROR   3   /* Opcode: bao loi */
 
-/* Header cua moi message: opcode + do dai payload */
-typedef struct {
+/* Header cua moi message: opcode (1 byte) + length (2 byte), khong padding */
+typedef struct __attribute__((packed)) {
     unsigned char opcode;
     unsigned short length;
 } MessageHeader;
 
 /* Cau truc tham so truyen cho moi thread client */
 typedef struct {
-    SOCKET socket;
+    int socket;
 } ClientArg;
 
 /* Nhan du lieu day du (dam bao nhan het len bytes) */
-int recv_all(SOCKET sock, char *buf, int len) {
+int recv_all(int sock, char *buf, int len) {
     int total = 0;
     while (total < len) {
         int n = recv(sock, buf + total, len - total, 0);
@@ -41,18 +42,18 @@ int recv_all(SOCKET sock, char *buf, int len) {
 }
 
 /* Gui du lieu day du (dam bao gui het len bytes) */
-int send_all(SOCKET sock, const char *buf, int len) {
+int send_all(int sock, const char *buf, int len) {
     int total = 0;
     while (total < len) {
         int n = send(sock, buf + total, len - total, 0);
-        if (n == SOCKET_ERROR) return -1;
+        if (n < 0) return -1;
         total += n;
     }
     return total;
 }
 
 /* Gui message co header (opcode + length) va payload */
-void send_message(SOCKET sock, unsigned char opcode, const char *payload, unsigned short length) {
+void send_message(int sock, unsigned char opcode, const char *payload, unsigned short length) {
     MessageHeader hdr;
     hdr.opcode = opcode;
     hdr.length = htons(length);
@@ -63,16 +64,20 @@ void send_message(SOCKET sock, unsigned char opcode, const char *payload, unsign
 }
 
 /* Ham xu ly cho moi client - chay trong thread rieng */
-unsigned __stdcall client_handler(void *arg) {
+void *client_handler(void *arg) {
     ClientArg *ca = (ClientArg *)arg;
-    SOCKET client_socket = ca->socket;
+    int client_socket = ca->socket;
     free(ca);
+
+    char *buffer = NULL;
+    char temp_path[] = "/tmp/caesar_temp_XXXXXX";
+    char result_path[sizeof(temp_path) + 8];
 
     /* Nhan header yeu cau (opcode + do dai key) */
     MessageHeader hdr;
     if (recv_all(client_socket, (char *)&hdr, sizeof(hdr)) < 0) {
-        closesocket(client_socket);
-        return 0;
+        close(client_socket);
+        return NULL;
     }
     hdr.length = ntohs(hdr.length);
 
@@ -80,42 +85,44 @@ unsigned __stdcall client_handler(void *arg) {
     unsigned char opcode_request = hdr.opcode;
     if (opcode_request != OPCODE_ENCRYPT && opcode_request != OPCODE_DECRYPT) {
         send_message(client_socket, OPCODE_ERROR, NULL, 0);
-        closesocket(client_socket);
-        return 0;
+        close(client_socket);
+        return NULL;
     }
 
     /* Nhan key ma hoa (1 byte) */
     char key_buf[4];
     if (recv_all(client_socket, key_buf, hdr.length) < 0) {
-        closesocket(client_socket);
-        return 0;
+        close(client_socket);
+        return NULL;
     }
     unsigned char key = (unsigned char)key_buf[0];
 
     /* Tao file tam de luu du lieu nhan tu client */
-    char *temp_path = _tempnam(NULL, "caesar_temp_");
-    char *result_path = (char *)malloc(strlen(temp_path) + 8);
-    strcpy(result_path, temp_path);
-    strcat(result_path, ".res");
+    snprintf(result_path, sizeof(result_path), "%s.res", temp_path);
 
-    FILE *temp_fp = fopen(temp_path, "wb");
-    if (temp_fp == NULL) {
+    int temp_fd = mkstemp(temp_path);
+    if (temp_fd < 0) {
         send_message(client_socket, OPCODE_ERROR, NULL, 0);
-        free(temp_path);
-        free(result_path);
-        closesocket(client_socket);
-        return 0;
+        close(client_socket);
+        return NULL;
     }
 
-    char *buffer = (char *)malloc(BUFFER_SIZE);
+    FILE *temp_fp = fdopen(temp_fd, "wb");
+    if (temp_fp == NULL) {
+        close(temp_fd);
+        remove(temp_path);
+        send_message(client_socket, OPCODE_ERROR, NULL, 0);
+        close(client_socket);
+        return NULL;
+    }
+
+    buffer = (char *)malloc(BUFFER_SIZE);
     if (buffer == NULL) {
         send_message(client_socket, OPCODE_ERROR, NULL, 0);
         fclose(temp_fp);
         remove(temp_path);
-        free(temp_path);
-        free(result_path);
-        closesocket(client_socket);
-        return 0;
+        close(client_socket);
+        return NULL;
     }
 
     /* Nhan du lieu file tu client va ghi vao file tam */
@@ -225,41 +232,33 @@ unsigned __stdcall client_handler(void *arg) {
 cleanup:
     /* Don dep tai nguyen */
     free(buffer);
-    free(temp_path);
-    free(result_path);
-    closesocket(client_socket);
-    return 0;
+    close(client_socket);
+    return NULL;
 }
 
 int main(int argc, char *argv[]) {
-    /* Khoi tao Winsock */
-    WSADATA wsa_data;
-    if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
-        printf("WSAStartup failed\n");
-        return 1;
-    }
-
     /* Kiem tra tham so dong lenh: -p <Port> */
     if (argc != 3 || strcmp(argv[1], "-p") != 0) {
         printf("Usage: %s -p <PortNumber>\n", argv[0]);
-        WSACleanup();
         return 1;
     }
 
     int port = atoi(argv[2]);
     if (port <= 0 || port > 65535) {
         printf("Invalid port number\n");
-        WSACleanup();
         return 1;
     }
 
     /* Tao socket TCP server */
-    SOCKET server_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_socket == INVALID_SOCKET) {
+    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_socket < 0) {
         printf("Socket creation failed\n");
-        WSACleanup();
         return 1;
     }
+
+    /* Cho phep reuse dia chi port */
+    int opt = 1;
+    setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
     /* Bind socket vao port */
     struct sockaddr_in server_addr;
@@ -267,18 +266,16 @@ int main(int argc, char *argv[]) {
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(port);
 
-    if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
+    if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         printf("Bind failed\n");
-        closesocket(server_socket);
-        WSACleanup();
+        close(server_socket);
         return 1;
     }
 
     /* Lang nghe ket noi, hang doi toi da 5 */
-    if (listen(server_socket, 5) == SOCKET_ERROR) {
+    if (listen(server_socket, 5) < 0) {
         printf("Listen failed\n");
-        closesocket(server_socket);
-        WSACleanup();
+        close(server_socket);
         return 1;
     }
 
@@ -287,9 +284,9 @@ int main(int argc, char *argv[]) {
     /* Vong lap chap nhan ket noi - moi client tao 1 thread rieng */
     while (1) {
         struct sockaddr_in client_addr;
-        int client_addr_len = sizeof(client_addr);
-        SOCKET client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_addr_len);
-        if (client_socket == INVALID_SOCKET) {
+        socklen_t client_addr_len = sizeof(client_addr);
+        int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_addr_len);
+        if (client_socket < 0) {
             printf("Accept failed\n");
             continue;
         }
@@ -300,19 +297,23 @@ int main(int argc, char *argv[]) {
 
         /* Tao thread moi cho client nay */
         ClientArg *ca = (ClientArg *)malloc(sizeof(ClientArg));
+        if (ca == NULL) {
+            printf("Failed to allocate client arg\n");
+            close(client_socket);
+            continue;
+        }
         ca->socket = client_socket;
 
-        HANDLE hThread = (HANDLE)_beginthreadex(NULL, 0, client_handler, ca, 0, NULL);
-        if (hThread == NULL) {
+        pthread_t thread;
+        if (pthread_create(&thread, NULL, client_handler, ca) != 0) {
             printf("Failed to create thread\n");
-            closesocket(client_socket);
+            close(client_socket);
             free(ca);
         } else {
-            CloseHandle(hThread);
+            pthread_detach(thread);
         }
     }
 
-    closesocket(server_socket);
-    WSACleanup();
+    close(server_socket);
     return 0;
 }

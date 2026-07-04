@@ -1,14 +1,16 @@
 /*
- * Task2_Client.c - Client ma hoa/giai ma Caesar
+ * Task2_Client.c - Client ma hoa/giai ma Caesar - POSIX/Linux
  * Cu phap: client -a <IPAddress> -p <PortNumber>
  * Client chon encrypt/decrypt + key -> gui file -> nhan ket qua -> luu file output
+ * Compile tren Ubuntu: gcc -o client Task2_Client.c
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#pragma comment(lib, "ws2_32.lib")
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 #define BUFFER_SIZE 8192   /* Kich thuoc buffer doc/ghi file */
 #define OPCODE_ENCRYPT 0   /* Opcode: yeu cau ma hoa */
@@ -16,14 +18,14 @@
 #define OPCODE_DATA    2   /* Opcode: gui/nhan du lieu file */
 #define OPCODE_ERROR   3   /* Opcode: bao loi */
 
-/* Header cua moi message: opcode + do dai payload */
-typedef struct {
+/* Header cua moi message: opcode (1 byte) + length (2 byte), khong padding */
+typedef struct __attribute__((packed)) {
     unsigned char opcode;
     unsigned short length;
 } MessageHeader;
 
 /* Nhan du lieu day du (dam bao nhan het len bytes) */
-int recv_all(SOCKET sock, char *buf, int len) {
+int recv_all(int sock, char *buf, int len) {
     int total = 0;
     while (total < len) {
         int n = recv(sock, buf + total, len - total, 0);
@@ -34,18 +36,18 @@ int recv_all(SOCKET sock, char *buf, int len) {
 }
 
 /* Gui du lieu day du (dam bao gui het len bytes) */
-int send_all(SOCKET sock, const char *buf, int len) {
+int send_all(int sock, const char *buf, int len) {
     int total = 0;
     while (total < len) {
         int n = send(sock, buf + total, len - total, 0);
-        if (n == SOCKET_ERROR) return -1;
+        if (n < 0) return -1;
         total += n;
     }
     return total;
 }
 
 /* Gui message co header (opcode + length) va payload */
-void send_message(SOCKET sock, unsigned char opcode, const char *payload, unsigned short length) {
+void send_message(int sock, unsigned char opcode, const char *payload, unsigned short length) {
     MessageHeader hdr;
     hdr.opcode = opcode;
     hdr.length = htons(length);
@@ -56,13 +58,6 @@ void send_message(SOCKET sock, unsigned char opcode, const char *payload, unsign
 }
 
 int main(int argc, char *argv[]) {
-    /* Khoi tao Winsock */
-    WSADATA wsa_data;
-    if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
-        printf("WSAStartup failed\n");
-        return 1;
-    }
-
     /* Parse tham so dong lenh: -a <IP> -p <Port> */
     char server_ip[64] = "";
     int port = 0;
@@ -78,15 +73,13 @@ int main(int argc, char *argv[]) {
     /* Kiem tra tham so hop le */
     if (strlen(server_ip) == 0 || port <= 0 || port > 65535) {
         printf("Usage: %s -a <IPAddress> -p <PortNumber>\n", argv[0]);
-        WSACleanup();
         return 1;
     }
 
     /* Tao socket TCP */
-    SOCKET client_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (client_socket == INVALID_SOCKET) {
+    int client_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (client_socket < 0) {
         printf("Socket creation failed\n");
-        WSACleanup();
         return 1;
     }
 
@@ -94,12 +87,15 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
-    inet_pton(AF_INET, server_ip, &server_addr.sin_addr);
+    if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
+        printf("Invalid IP address: %s\n", server_ip);
+        close(client_socket);
+        return 1;
+    }
 
-    if (connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
+    if (connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         printf("Connection failed\n");
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
 
@@ -113,8 +109,7 @@ int main(int argc, char *argv[]) {
     printf("Enter choice: ");
     if (scanf("%d", &choice) != 1 || (choice != 0 && choice != 1)) {
         printf("Invalid choice\n");
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
 
@@ -123,8 +118,7 @@ int main(int argc, char *argv[]) {
     printf("Enter key (0-255): ");
     if (scanf("%u", &key) != 1 || key > 255) {
         printf("Invalid key\n");
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
     getchar();  /* Doc ky tu newline con lai sau scanf */
@@ -133,16 +127,14 @@ int main(int argc, char *argv[]) {
     char filepath[512];
     printf("Enter file path: ");
     if (fgets(filepath, sizeof(filepath), stdin) == NULL) {
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 0;
     }
     filepath[strcspn(filepath, "\n")] = '\0';  /* Xoa ky tu xuong dong */
 
     if (strlen(filepath) == 0) {
         printf("No file specified\n");
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 0;
     }
 
@@ -150,8 +142,7 @@ int main(int argc, char *argv[]) {
     FILE *fp = fopen(filepath, "rb");
     if (fp == NULL) {
         printf("Cannot open file: %s\n", filepath);
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
 
@@ -164,8 +155,7 @@ int main(int argc, char *argv[]) {
     if (buffer == NULL) {
         printf("Memory allocation failed\n");
         fclose(fp);
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
 
@@ -184,10 +174,6 @@ int main(int argc, char *argv[]) {
     /* Tao ten file output: encrypt -> .enc, decrypt -> .dec */
     char output_path[512];
     const char *ext = strrchr(filepath, '.');
-    const char *base = strrchr(filepath, '\\');
-    if (base == NULL) base = strrchr(filepath, '/');
-    if (base == NULL) base = filepath;
-    else base++;
 
     if (choice == 0) {
         snprintf(output_path, sizeof(output_path), "%s.enc", filepath);
@@ -205,8 +191,7 @@ int main(int argc, char *argv[]) {
     if (out_fp == NULL) {
         printf("Cannot create output file: %s\n", output_path);
         free(buffer);
-        closesocket(client_socket);
-        WSACleanup();
+        close(client_socket);
         return 1;
     }
 
@@ -275,7 +260,6 @@ int main(int argc, char *argv[]) {
     }
 
     /* Don dep tai nguyen */
-    closesocket(client_socket);
-    WSACleanup();
+    close(client_socket);
     return 0;
 }
