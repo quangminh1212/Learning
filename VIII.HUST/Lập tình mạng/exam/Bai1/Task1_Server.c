@@ -8,6 +8,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdint.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 #define BUFFER_SIZE 8192    /* Kich thuoc buffer nhan file */
 #define SHARED_DIR "shared" /* Thu muc luu file upload */
@@ -32,6 +34,101 @@ ssize_t recv_all(int sock, char *buf, size_t len) {
         total += r;
     }
     return (ssize_t)total;
+}
+
+/* Xu ly tin hieu SIGCHLD de thu hai tien trinh con da ket thuc, tranh zombie */
+void sigchld_handler(int sig) {
+    (void)sig;
+    while (waitpid(-1, NULL, WNOHANG) > 0) {}
+}
+
+/* Ham xu ly cho moi client - chay trong tien trinh con */
+void handle_client(int client_socket) {
+    /* Buoc 1: Nhan do dai ten file (4 bytes) */
+    uint32_t filename_len_net;
+    if (recv_all(client_socket, (char *)&filename_len_net, sizeof(filename_len_net)) != sizeof(filename_len_net)) {
+        close(client_socket);
+        return;
+    }
+    uint32_t filename_len = ntohl(filename_len_net);
+    if (filename_len == 0 || filename_len >= 1024) {
+        close(client_socket);
+        return;
+    }
+
+    /* Nhan ten file */
+    char *filename = (char *)malloc(filename_len + 1);
+    if (filename == NULL || recv_all(client_socket, filename, filename_len) != (ssize_t)filename_len) {
+        free(filename);
+        close(client_socket);
+        return;
+    }
+    filename[filename_len] = '\0';
+
+    /* Tao duong dan day du trong thu muc shared */
+    char filepath[1024];
+    snprintf(filepath, sizeof(filepath), "%s/%s", SHARED_DIR, filename);
+
+    /* Kiem tra file da ton tai chua -> bao loi neu trung */
+    if (access(filepath, F_OK) == 0) {
+        char *err = "ERROR: File already exists";
+        send_all(client_socket, err, strlen(err));
+        free(filename);
+        close(client_socket);
+        return;
+    }
+
+    /* Gui phan hoi OK cho phep upload */
+    if (send_all(client_socket, "OK", 2) < 0) {
+        free(filename);
+        close(client_socket);
+        return;
+    }
+
+    /* Buoc 2: Nhan kich thuoc file (8 bytes) */
+    long long filesize;
+    if (recv_all(client_socket, (char *)&filesize, sizeof(filesize)) != sizeof(filesize)) {
+        free(filename);
+        close(client_socket);
+        return;
+    }
+
+    /* Mo file de ghi nhi phan */
+    FILE *fp = fopen(filepath, "wb");
+    if (fp == NULL) {
+        char *err = "ERROR: Cannot create file";
+        send_all(client_socket, err, strlen(err));
+        free(filename);
+        close(client_socket);
+        return;
+    }
+
+    /* Buoc 3: Nhan noi dung file va ghi vao dia */
+    char *buffer = (char *)malloc(BUFFER_SIZE);
+    ssize_t bytes_received;
+    long long received = 0;
+    while (received < filesize) {
+        int to_read = (filesize - received < BUFFER_SIZE) ? (int)(filesize - received) : BUFFER_SIZE;
+        bytes_received = recv_all(client_socket, buffer, to_read);
+        if (bytes_received <= 0) break;
+        fwrite(buffer, 1, bytes_received, fp);
+        received += bytes_received;
+    }
+
+    fclose(fp);
+    free(buffer);
+
+    /* Buoc 4: Kiem tra va thong bao ket qua */
+    if (received == filesize) {
+        send_all(client_socket, "SUCCESS", 7);
+        printf("Received: %s (%lld bytes)\n", filename, filesize);
+    } else {
+        send_all(client_socket, "ERROR: Transfer incomplete", 25);
+        remove(filepath); /* Xoa file bi loi */
+    }
+
+    free(filename);
+    close(client_socket);
 }
 
 int main(int argc, char *argv[]) {
@@ -79,6 +176,9 @@ int main(int argc, char *argv[]) {
 
     printf("Server running on port %d\n", port);
 
+    /* Dang ky xu ly tin hieu SIGCHLD de tranh zombie process */
+    signal(SIGCHLD, sigchld_handler);
+
     /* Vong lap vo han: chap nhan va xu ly tung client */
     while (1) {
         struct sockaddr_in client_addr;
@@ -89,91 +189,21 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-        /* Buoc 1: Nhan do dai ten file (4 bytes) */
-        uint32_t filename_len_net;
-        if (recv_all(client_socket, (char *)&filename_len_net, sizeof(filename_len_net)) != sizeof(filename_len_net)) {
+        pid_t pid = fork();
+        if (pid < 0) {
+            printf("Fork failed\n");
             close(client_socket);
             continue;
         }
-        uint32_t filename_len = ntohl(filename_len_net);
-        if (filename_len == 0 || filename_len >= 1024) {
-            close(client_socket);
-            continue;
-        }
-
-        /* Nhan ten file */
-        char *filename = (char *)malloc(filename_len + 1);
-        if (filename == NULL || recv_all(client_socket, filename, filename_len) != (ssize_t)filename_len) {
-            free(filename);
-            close(client_socket);
-            continue;
-        }
-        filename[filename_len] = '\0';
-
-        /* Tao duong dan day du trong thu muc shared */
-        char filepath[1024];
-        snprintf(filepath, sizeof(filepath), "%s/%s", SHARED_DIR, filename);
-
-        /* Kiem tra file da ton tai chua -> bao loi neu trung */
-        if (access(filepath, F_OK) == 0) {
-            char *err = "ERROR: File already exists";
-            send_all(client_socket, err, strlen(err));
-            free(filename);
+        if (pid > 0) {
             close(client_socket);
             continue;
         }
 
-        /* Gui phan hoi OK cho phep upload */
-        if (send_all(client_socket, "OK", 2) < 0) {
-            free(filename);
-            close(client_socket);
-            continue;
-        }
-
-        /* Buoc 2: Nhan kich thuoc file (8 bytes) */
-        long long filesize;
-        if (recv_all(client_socket, (char *)&filesize, sizeof(filesize)) != sizeof(filesize)) {
-            free(filename);
-            close(client_socket);
-            continue;
-        }
-
-        /* Mo file de ghi nhi phan */
-        FILE *fp = fopen(filepath, "wb");
-        if (fp == NULL) {
-            char *err = "ERROR: Cannot create file";
-            send_all(client_socket, err, strlen(err));
-            free(filename);
-            close(client_socket);
-            continue;
-        }
-
-        /* Buoc 3: Nhan noi dung file va ghi vao dia */
-        char *buffer = (char *)malloc(BUFFER_SIZE);
-        ssize_t bytes_received;
-        long long received = 0;
-        while (received < filesize) {
-            int to_read = (filesize - received < BUFFER_SIZE) ? (int)(filesize - received) : BUFFER_SIZE;
-            bytes_received = recv_all(client_socket, buffer, to_read);
-            if (bytes_received <= 0) break;
-            fwrite(buffer, 1, bytes_received, fp);
-            received += bytes_received;
-        }
-
-        fclose(fp);
-        free(buffer);
-
-        /* Buoc 4: Kiem tra va thong bao ket qua */
-        if (received == filesize) {
-            send_all(client_socket, "SUCCESS", 7);
-            printf("Received: %s (%lld bytes)\n", filename, filesize);
-        } else {
-            send_all(client_socket, "ERROR: Transfer incomplete", 25);
-            remove(filepath); /* Xoa file bi loi */
-        }
-
-        free(filename);
-        close(client_socket);
+        /* Tien trinh con: xu ly client */
+        close(server_socket);
+        handle_client(client_socket);
+        _exit(0);
     }
 
     close(server_socket);

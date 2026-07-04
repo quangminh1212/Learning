@@ -71,7 +71,8 @@ void *client_handler(void *arg) {
 
     char *buffer = NULL;
     char temp_path[] = "/tmp/caesar_temp_XXXXXX";
-    char result_path[sizeof(temp_path) + 8];
+    char result_path[sizeof(temp_path) + 8] = {0};
+    int temp_created = 0;
 
     /* Nhan header yeu cau (opcode + do dai key) */
     MessageHeader hdr;
@@ -98,14 +99,15 @@ void *client_handler(void *arg) {
     unsigned char key = (unsigned char)key_buf[0];
 
     /* Tao file tam de luu du lieu nhan tu client */
-    snprintf(result_path, sizeof(result_path), "%s.res", temp_path);
-
     int temp_fd = mkstemp(temp_path);
     if (temp_fd < 0) {
         send_message(client_socket, OPCODE_ERROR, NULL, 0);
         close(client_socket);
         return NULL;
     }
+    temp_created = 1;
+
+    snprintf(result_path, sizeof(result_path), "%s.res", temp_path);
 
     FILE *temp_fp = fdopen(temp_fd, "wb");
     if (temp_fp == NULL) {
@@ -232,6 +234,10 @@ void *client_handler(void *arg) {
 cleanup:
     /* Don dep tai nguyen */
     free(buffer);
+    if (temp_created) {
+        remove(temp_path);
+        remove(result_path);
+    }
     close(client_socket);
     return NULL;
 }
