@@ -11,7 +11,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-#define BUFFER_SIZE 8192    /* Kich thuoc buffer nhan file */
+#define BUFFER_SIZE 65536   /* Kich thuoc buffer nhan file */
 #define SHARED_DIR "shared" /* Thu muc luu file upload */
 
 /* Gui du so byte qua socket (send co the gui khong het 1 lan) */

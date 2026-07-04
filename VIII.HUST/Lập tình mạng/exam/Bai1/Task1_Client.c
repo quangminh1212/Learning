@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
-#define BUFFER_SIZE 8192   /* Kich thuoc buffer doc file */
+#define BUFFER_SIZE 65536  /* Kich thuoc buffer doc file */
 
 /* Gui du so byte qua socket (send co the gui khong het 1 lan) */
 ssize_t send_all(int sock, const char *buf, size_t len) {
