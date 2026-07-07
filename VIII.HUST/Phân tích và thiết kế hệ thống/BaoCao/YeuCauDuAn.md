@@ -152,6 +152,8 @@ BaoCao/
 │   └── chapter7_thiet_ke_csdl_va_giao_dien.tex  # Thiết kế CSDL và giao diện
 └── diagrams/
     ├── bfd.tex                 # Sơ đồ phân cấp chức năng (BFD)
+    ├── dfd_context.tex         # DFD cấp 0 (Context Diagram)
+    ├── dfd_level1.tex          # DFD cấp 1
     ├── usecase.tex             # Use case tổng quát
     ├── activity_nhapkho.tex
     ├── activity_xuatkho.tex
