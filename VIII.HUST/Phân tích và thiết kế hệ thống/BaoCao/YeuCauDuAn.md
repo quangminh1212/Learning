@@ -178,7 +178,8 @@ BaoCao/
 
 Báo cáo được xuất sang định dạng Word để nộp và chỉnh sửa thuận tiện:
 
-- `BaoCao_QuanLyKhoHang_Editable.docx` – File Word từ nội dung LaTeX, đã định dạng theo chuẩn: font Times New Roman, cỡ chữ 14, giãn dòng 1.5, lề trái 3 cm, lề phải/trên/dưới 2 cm. Văn bản rõ ràng, dễ chỉnh sửa (chưa bao gồm các hình vẽ TikZ).
+- `BaoCao_QuanLyKhoHang.docx` – File Word tổng hợp duy nhất: phần đầu là văn bản đã định dạng chuẩn (Times New Roman, 14pt, dòng 1.5, lề chuẩn), phần cuối là các hình ảnh minh họa từ PDF (24 trang nội dung chính).
+- `BaoCao_QuanLyKhoHang_Editable.docx` – File Word chỉ văn bản, đã định dạng theo chuẩn: font Times New Roman, cỡ chữ 14, giãn dòng 1.5, lề trái 3 cm, lề phải/trên/dưới 2 cm. Dễ chỉnh sửa (chưa bao gồm các hình vẽ TikZ).
 - `BaoCao_QuanLyKhoHang_Full.docx` – File Word chuyển từ PDF, đầy đủ văn bản và hình ảnh/biểu đồ (do chuyển từ PDF nên văn bản có thể bị dính ký tự, phù hợp để xem và in).
 
 ---
