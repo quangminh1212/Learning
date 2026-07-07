@@ -151,19 +151,23 @@ BaoCao/
 │   ├── chapter6_thiet_ke_lop_chi_tiet.tex         # Thiết kế các lớp chi tiết
 │   └── chapter7_thiet_ke_csdl_va_giao_dien.tex  # Thiết kế CSDL và giao diện
 └── diagrams/
-    ├── usecase.tex         # Use case tổng quát
+    ├── bfd.tex                 # Sơ đồ phân cấp chức năng (BFD)
+    ├── usecase.tex             # Use case tổng quát
     ├── activity_nhapkho.tex
     ├── activity_xuatkho.tex
     ├── activity_kiemke.tex
-    ├── classdiagram.tex    # Class diagram tổng thể
-    ├── class_uc05.tex      # Class diagram trong ca sử dụng UC05
-    ├── class_uc09.tex      # Class diagram trong ca sử dụng UC09
-    ├── class_uc10.tex      # Class diagram trong ca sử dụng UC10
-    ├── sequence_uc05.tex   # Sequence quản lý hàng hóa
-    ├── sequence_uc09.tex   # Sequence nhập kho
-    ├── sequence_uc10.tex   # Sequence xuất kho
-    ├── sequence_uc06.tex   # Sequence tìm kiếm hàng hóa
-    └── erd.tex             # Sơ đồ ERD
+    ├── classdiagram.tex        # Class diagram tổng thể
+    ├── class_uc05.tex          # Class diagram trong ca sử dụng UC05
+    ├── class_uc09.tex          # Class diagram trong ca sử dụng UC09
+    ├── class_uc10.tex          # Class diagram trong ca sử dụng UC10
+    ├── sequence_uc05.tex       # Sequence quản lý hàng hóa
+    ├── sequence_uc09.tex       # Sequence nhập kho
+    ├── sequence_uc10.tex       # Sequence xuất kho
+    ├── sequence_uc06.tex       # Sequence tìm kiếm hàng hóa
+    ├── state_phieu_nhap.tex      # State Machine phiếu nhập kho
+    ├── state_phieu_xuat.tex      # State Machine phiếu xuất kho
+    ├── component.tex            # Component Diagram
+    └── erd.tex                  # Sơ đồ ERD
 ```
 
 ---
