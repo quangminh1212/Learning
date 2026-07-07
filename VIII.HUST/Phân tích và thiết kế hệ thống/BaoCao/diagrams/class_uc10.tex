@@ -1,0 +1,62 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7, transform shape]
+
+\begin{class}[text width=3.5cm]{NguoiDung}{-7,0}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\operation{+ LapPhieuXuat(): void}
+\end{class}
+
+\begin{class}[text width=4.5cm]{PhieuXuatKho}{-3,0}
+\attribute{+ MaPhieuXuat: String}
+\attribute{+ MaKhachHang: String}
+\attribute{+ MaKho: String}
+\attribute{+ NgayXuat: DateTime}
+\attribute{+ TongTien: Decimal}
+\operation{+ LapPhieuXuat(): void}
+\operation{+ DuyetPhieuXuat(): void}
+\end{class}
+
+\begin{class}[text width=4.5cm]{ChiTietPhieuXuat}{1,0}
+\attribute{+ MaPhieuXuat: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuong: Integer}
+\attribute{+ DonGia: Decimal}
+\end{class}
+
+\begin{class}[text width=3.5cm]{KhachHang}{-3,3}
+\attribute{+ MaKhachHang: String}
+\attribute{+ TenKhachHang: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{Kho}{1,3}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{HangHoa}{5,0}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\end{class}
+
+\begin{class}[text width=4cm]{TonKho}{5,3}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\operation{+ CapNhatTonKho(): void}
+\operation{+ KiemTraTonKho(): Boolean}
+\end{class}
+
+\draw (NguoiDung) -- (PhieuXuatKho) node[midway, above, font=\scriptsize] {1..*};
+\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\scriptsize] {1..*};
+\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\scriptsize] {n..1};
+\draw (PhieuXuatKho) -- (Kho) node[midway, left, font=\scriptsize] {n..1};
+\draw (ChiTietPhieuXuat) -- (HangHoa) node[midway, above, font=\scriptsize] {n..1};
+\draw (TonKho) -- (Kho) node[midway, right, font=\scriptsize] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, right, font=\scriptsize] {1..1};
+
+\end{tikzpicture}
+\caption{Biểu đồ lớp trong ca sử dụng UC10 -- Lập phiếu xuất kho}
+\label{fig:class-uc10}
+\end{figure}

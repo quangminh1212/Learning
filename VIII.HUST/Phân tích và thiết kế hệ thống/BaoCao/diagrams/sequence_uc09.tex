@@ -1,0 +1,35 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{nv}{Nhân viên kho}
+\newinst[2]{gd}{Giao diện nhập kho}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{nv}{1. Chọn lập phiếu nhập}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{nv}{2. Nhập thông tin phiếu nhập}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin phiếu nhập}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra dữ liệu}{ht}{}
+  \end{call}
+  \begin{call}{ht}{5. Lưu phiếu nhập}{db}{Xác nhận}
+  \end{call}
+  \begin{call}{ht}{6. Cập nhật tồn kho}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{7. Trả kết quả}{gd}{Thông báo thành công}
+\end{call}
+
+\begin{call}{gd}{8. Hiển thị phiếu nhập}{nv}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC09 -- Lập phiếu nhập kho}
+\label{fig:sequence-uc09}
+\end{figure}

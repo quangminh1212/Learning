@@ -1,0 +1,42 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.75, transform shape,
+    entity/.style={rectangle, draw, fill=blue!10, minimum width=2.5cm, minimum height=0.8cm, font=\small},
+    relation/.style={diamond, draw, fill=green!10, aspect=2, minimum width=1.5cm, font=\scriptsize},
+    attr/.style={rectangle, draw, fill=yellow!10, minimum width=2cm, minimum height=0.6cm, font=\scriptsize}
+]
+
+% Entities
+\node[entity] (NguoiDung) at (0,4) {NguoiDung};
+\node[entity] (NhaCungCap) at (-3,2) {NhaCungCap};
+\node[entity] (KhachHang) at (3,2) {KhachHang};
+\node[entity] (Kho) at (0,0) {Kho};
+\node[entity] (HangHoa) at (-6,0) {HangHoa};
+\node[entity] (PhieuNhap) at (-3,-2) {PhieuNhapKho};
+\node[entity] (PhieuXuat) at (3,-2) {PhieuXuatKho};
+\node[entity] (TonKho) at (-6,-2) {TonKho};
+\node[entity] (NhomHang) at (-9,0) {NhomHangHoa};
+
+% Relations
+\node[relation] (lap1) at (-1.5,2.5) {lập};
+\node[relation] (lap2) at (1.5,2.5) {lập};
+\node[relation] (co1) at (-1.5,-1) {thuộc};
+\node[relation] (co2) at (1.5,-1) {thuộc};
+\node[relation] (chitiet1) at (-4.5,-1) {có};
+\node[relation] (chitiet2) at (4.5,-1) {có};
+\node[relation] (ton) at (-3,-3.5) {tồn};
+\node[relation] (phanloai) at (-7.5,-0.8) {phân loại};
+
+\draw (NguoiDung) -- (lap1) -- (PhieuNhap);
+\draw (NguoiDung) -- (lap2) -- (PhieuXuat);
+\draw (NhaCungCap) -- (co1) -- (PhieuNhap);
+\draw (KhachHang) -- (co2) -- (PhieuXuat);
+\draw (Kho) -- (chitiet1) -- (PhieuNhap);
+\draw (Kho) -- (chitiet2) -- (PhieuXuat);
+\draw (HangHoa) -- (ton) -- (TonKho);
+\draw (HangHoa) -- (phanloai) -- (NhomHang);
+
+\end{tikzpicture}
+\caption{Sơ đồ quan hệ thực thể (ERD) hệ thống quản lý kho hàng}
+\label{fig:erd}
+\end{figure}

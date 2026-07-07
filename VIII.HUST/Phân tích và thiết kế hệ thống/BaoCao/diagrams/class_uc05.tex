@@ -1,0 +1,47 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, transform shape]
+
+\begin{class}[text width=3.5cm]{NguoiDung}{-6,0}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\operation{+ DangNhap(): Boolean}
+\end{class}
+
+\begin{class}[text width=4cm]{HangHoa}{-2,0}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\attribute{+ MaNhomHang: String}
+\attribute{+ MaDonViTinh: String}
+\attribute{+ GiaNhap: Decimal}
+\attribute{+ GiaXuat: Decimal}
+\operation{+ CapNhatThongTin(): void}
+\operation{+ TimKiem(): List}
+\end{class}
+
+\begin{class}[text width=3.5cm]{NhomHangHoa}{2,2}
+\attribute{+ MaNhomHang: String}
+\attribute{+ TenNhomHang: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{DonViTinh}{2,-2}
+\attribute{+ MaDonViTinh: String}
+\attribute{+ TenDonViTinh: String}
+\end{class}
+
+\begin{class}[text width=4cm]{TonKho}{6,0}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\operation{+ CapNhatTonKho(): void}
+\end{class}
+
+\draw (NguoiDung) -- (HangHoa) node[midway, above, font=\scriptsize] {1..*};
+\draw (HangHoa) -- (NhomHangHoa) node[midway, above, font=\scriptsize] {n..1};
+\draw (HangHoa) -- (DonViTinh) node[midway, below, font=\scriptsize] {n..1};
+\draw (HangHoa) -- (TonKho) node[midway, above, font=\scriptsize] {1..*};
+
+\end{tikzpicture}
+\caption{Biểu đồ lớp trong ca sử dụng UC05 -- Quản lý hàng hóa}
+\label{fig:class-uc05}
+\end{figure}
