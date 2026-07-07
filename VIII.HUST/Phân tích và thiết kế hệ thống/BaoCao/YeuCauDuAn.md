@@ -174,7 +174,16 @@ BaoCao/
 
 ---
 
-## 11. Tham khảo
+## 11. Xuất file Word
+
+Báo cáo được xuất sang định dạng Word để nộp và chỉnh sửa thuận tiện:
+
+- `BaoCao_QuanLyKhoHang_Editable.docx` – File Word từ nội dung LaTeX, văn bản rõ ràng, dễ chỉnh sửa (chưa bao gồm các hình vẽ TikZ).
+- `BaoCao_QuanLyKhoHang_Full.docx` – File Word chuyển từ PDF, đầy đủ văn bản và hình ảnh/biểu đồ (do chuyển từ PDF nên văn bản có thể bị dính ký tự, phù hợp để xem và in).
+
+---
+
+## 12. Tham khảo
 
 - Các ảnh mục lục trong `request/image/` – mục lục báo cáo tham khảo từ đề tài tương tự.
 - `request/PTTKHT.docx` – Bài tập lớn mẫu về quản lý du lịch.
