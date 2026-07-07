@@ -1,0 +1,48 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7, transform shape,
+    level 1/.style={sibling distance=2.8cm, level distance=2.5cm},
+    level 2/.style={sibling distance=2.2cm, level distance=2.2cm},
+    every node/.style={rectangle, draw, rounded corners, align=center, font=\small,
+        minimum width=2.2cm, minimum height=0.9cm, fill=blue!8},
+    edge from parent/.style={draw, -{Stealth[scale=0.8]}, thick}
+]
+
+\node[fill=blue!20, minimum width=4cm] {Hệ thống\\quản lý kho hàng}
+    child { node {Quản lý\\người dùng}
+        child { node {Phân\\quyền} }
+        child { node {Đăng nhập/\\Đăng xuất} }
+    }
+    child { node {Quản lý\\danh mục}
+        child { node {Hàng hóa} }
+        child { node {Nhà cung cấp} }
+        child { node {Khách hàng} }
+        child { node {Kho} }
+    }
+    child { node {Quản lý\\nhập kho}
+        child { node {Lập phiếu} }
+        child { node {Duyệt phiếu} }
+        child { node {Cập nhật\\tồn kho} }
+    }
+    child { node {Quản lý\\xuất kho}
+        child { node {Lập phiếu} }
+        child { node {Duyệt phiếu} }
+        child { node {Giảm\\tồn kho} }
+    }
+    child { node {Tồn kho\\và kiểm kê}
+        child { node {Kiểm kê} }
+        child { node {Cảnh báo} }
+    }
+    child { node {Đơn hàng\\và thanh toán}
+        child { node {Đơn đặt hàng} }
+        child { node {Thanh toán} }
+    }
+    child { node {Báo cáo\\thống kê}
+        child { node {Nhập xuất\\tồn} }
+        child { node {Hàng bán\\chạy} }
+    };
+
+\end{tikzpicture}
+\caption{Sơ đồ phân cấp chức năng (BFD) hệ thống quản lý kho hàng}
+\label{fig:bfd}
+\end{figure}

@@ -28,6 +28,18 @@ Nhân viên kho lập phiếu xuất, hệ thống kiểm tra tồn kho đủ đ
 
 \input{diagrams/sequence_uc10}
 
+\section{Biểu đồ trạng thái (State Machine Diagram)}
+
+Biểu đồ trạng thái mô tả các trạng thái và chuyển tiếp của phiếu nhập kho và phiếu xuất kho trong quá trình xử lý. Các trạng thái chính bao gồm: Mới tạo, Chờ duyệt, Đã duyệt, Đã nhập/xuất kho và Hủy.
+
+\subsection{Trạng thái phiếu nhập kho}
+
+\input{diagrams/state_phieu_nhap}
+
+\subsection{Trạng thái phiếu xuất kho}
+
+\input{diagrams/state_phieu_xuat}
+
 \section{Kết luận chương}
 
-Chương 5 đã trình bày các biểu đồ trình tự cho các ca sử dụng chính. Các luồng tương tác này thể hiện rõ vai trò của từng đối tượng và thứ tự xử lý, làm cơ sở cho thiết kế chi tiết các lớp và cơ sở dữ liệu trong Chương 6 và Chương 7.
+Chương 5 đã trình bày các biểu đồ trình tự cho các ca sử dụng chính và biểu đồ trạng thái cho phiếu nhập/xuất kho. Các luồng tương tác và chuyển đổi trạng thái này làm cơ sở cho thiết kế chi tiết các lớp và cơ sở dữ liệu trong Chương 6 và Chương 7.
