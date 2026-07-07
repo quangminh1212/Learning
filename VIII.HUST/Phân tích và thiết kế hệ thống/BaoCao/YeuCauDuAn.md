@@ -178,9 +178,9 @@ BaoCao/
 
 Báo cáo được xuất sang định dạng Word để nộp và chỉnh sửa thuận tiện:
 
-- `BaoCao_QuanLyKhoHang.docx` – File Word tổng hợp duy nhất: phần đầu là văn bản đã định dạng chuẩn (Times New Roman, 14pt, dòng 1.5, lề chuẩn), phần cuối là các hình ảnh minh họa từ PDF (24 trang nội dung chính).
-- `BaoCao_QuanLyKhoHang_Editable.docx` – File Word chỉ văn bản, đã định dạng theo chuẩn: font Times New Roman, cỡ chữ 14, giãn dòng 1.5, lề trái 3 cm, lề phải/trên/dưới 2 cm. Dễ chỉnh sửa (chưa bao gồm các hình vẽ TikZ).
-- `BaoCao_QuanLyKhoHang_Full.docx` – File Word chuyển từ PDF, đầy đủ văn bản và hình ảnh/biểu đồ (do chuyển từ PDF nên văn bản có thể bị dính ký tự, phù hợp để xem và in).
+- `BaoCao_QuanLyKhoHang.docx` – **File Word chính (khuyến dùng)**: xây dựng lại hoàn chỉnh bằng python-docx, gồm trang bìa, mục lục tự động (TOC), 7 chương đánh số mục (1.1, 1.2...), 19 hình ảnh chèn đúng vị trí trong nội dung, 7 bảng dữ liệu, header/footer với số trang. Định dạng chuẩn: Times New Roman, 14pt, giãn dòng 1.5, lề trái 3 cm, lề phải/trên/dưới 2 cm.
+- `BaoCao_QuanLyKhoHang_Editable.docx` – File Word chỉ văn bản từ pandoc, định dạng chuẩn, dễ chỉnh sửa (không có hình vẽ).
+- `BaoCao_QuanLyKhoHang_Full.docx` – File Word chuyển từ PDF, đầy đủ hình ảnh nhưng văn bản bị dính ký tự.
 
 ---
 
