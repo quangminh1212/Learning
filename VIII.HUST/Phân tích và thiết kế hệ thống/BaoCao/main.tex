@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{report}
+
+% Mã hóa và ngôn ngữ tiếng Việt
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+\usepackage[vietnamese]{babel}
+
+% Các gói hỗ trợ định dạng
+\usepackage{geometry}
+\geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{float}
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{6pt}
+
+% TikZ và UML
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+\usepackage{pgf-umlcd}
+\usepackage{pgf-umlsd}
+
+% Định dạng chapter/section
+\titleformat{\chapter}[hang]{\normalfont\bfseries\Large}{CHƯƠNG \thechapter:}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{-20pt}{30pt}
+\titleformat{\section}{\normalfont\bfseries\large}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+
+% Header/footer
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[C]{\small Phân tích và thiết kế hệ thống quản lý kho hàng}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Tiêu đề tài liệu
+\title{\textbf{BÀI TẬP LỚN} \\ \vspace{0.5cm} \textbf{PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG} \\ \vspace{0.5cm} \textbf{QUẢN LÝ KHO HÀNG}}
+\author{Nhóm thực hiện}
+\date{Hà Nội, tháng 7 năm 2026}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
+
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+
+\end{document}

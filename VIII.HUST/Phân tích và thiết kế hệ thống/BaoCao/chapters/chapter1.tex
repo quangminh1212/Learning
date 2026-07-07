@@ -1,0 +1,63 @@
+\chapter{TỔNG QUAN ĐỀ TÀI}
+
+\section{Bối cảnh và lý do chọn đề tài}
+
+Trong bối cảnh kinh doanh hiện đại, hoạt động quản lý kho hàng đóng vai trò then chốt đối với hầu hết các doanh nghiệp thương mại, sản xuất và logistics. Việc kiểm soát tồn kho, nhập xuất hàng hóa và theo dõi luân chuyển hàng tồn kho ảnh hưởng trực tiếp đến chi phí vận hành, khả năng đáp ứng đơn hàng và hiệu quả kinh doanh chung.
+
+Tuy nhiên, tại nhiều doanh nghiệp vừa và nhỏ, công tác quản lý kho vẫn phụ thuộc nhiều vào phương pháp thủ công như ghi chép sổ sách, lưu trữ bằng bảng tính Excel hoặc các phần mềm đơn lẻ không liên kết. Cách làm này dễ dẫn đến các vấn đề: dữ liệu phân tán, sai sót trong quá trình nhập xuất, khó khăn tra cứu tồn kho, thiếu thông tin báo cáo kịp thời và khó kiểm soát lịch sử biến động hàng hóa.
+
+Xuất phát từ thực tế đó, đề tài \textbf{``Phân tích và thiết kế hệ thống quản lý kho hàng''} được lựa chọn nhằm xây dựng một giải pháp phần mềm tập trung, hỗ trợ doanh nghiệp quản lý hàng hóa, nhập xuất kho, kiểm kê và báo cáo một cách hiệu quả, chính xác và minh bạch.
+
+\section{Mục tiêu đề tài}
+
+Mục tiêu của đề tài là phân tích, thiết kế và đề xuất một hệ thống thông tin quản lý kho hàng đáp ứng các yêu cầu sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item Số hóa toàn bộ quy trình quản lý hàng hóa, nhập kho, xuất kho và kiểm kê.
+    \item Cung cấp khả năng tra cứu, tìm kiếm và cập nhật thông tin hàng tồn kho nhanh chóng.
+    \item Hỗ trợ quản lý nhiều kho, nhiều loại hàng hóa và nhiều nhà cung cấp/khách hàng.
+    \item Tự động hóa việc tính toán tồn kho, cảnh báo hết hàng hoặc tồn kho quá mức.
+    \item Tạo báo cáo thống kê về nhập xuất tồn, hàng hóa bán chạy, hàng tồn lâu ngày.
+\end{itemize}
+
+\section{Phạm vi nghiên cứu}
+
+\subsection{Phạm vi nghiệp vụ}
+
+Hệ thống tập trung vào các nghiệp vụ cốt lõi của quản lý kho hàng:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item Quản lý danh mục hàng hóa, đơn vị tính, nhóm hàng và thông tin nhà cung cấp.
+    \item Quản lý nhập kho từ nhà cung cấp và điều chuyển giữa các kho.
+    \item Quản lý xuất kho cho khách hàng hoặc sản xuất nội bộ.
+    \item Quản lý tồn kho, kiểm kê định kỳ và điều chỉnh chênh lệch.
+    \item Quản lý người dùng, phân quyền và theo dõi lịch sử thao tác.
+\end{itemize}
+
+\subsection{Phạm vi đối tượng sử dụng}
+
+Hệ thống phục vụ bốn nhóm tác nhân chính:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Quản trị viên}: quản lý tài khoản, cấu hình hệ thống và phân quyền.
+    \item \textbf{Quản lý kho}: giám sát tồn kho, phê duyệt phiếu nhập/xuất và xem báo cáo.
+    \item \textbf{Nhân viên kho}: thực hiện nhập kho, xuất kho, kiểm kê và cập nhật trạng thái.
+    \item \textbf{Khách hàng/Nhà cung cấp}: tra cứu đơn hàng, xem lịch sử giao dịch (nếu được cấp quyền).
+\end{itemize}
+
+\section{Lựa chọn công nghệ và công cụ}
+
+\subsection{Lựa chọn công nghệ triển khai}
+
+Hệ thống được đề xuất triển khai theo mô hình ứng dụng web (Web Application) với các công nghệ sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Ngôn ngữ lập trình}: Python / Java / C\# (tùy theo định hướng nhóm).
+    \item \textbf{Framework}: Django / Spring Boot / ASP.NET Core.
+    \item \textbf{Cơ sở dữ liệu}: PostgreSQL / MySQL / SQL Server.
+    \item \textbf{Giao diện}: HTML5, CSS3, JavaScript kết hợp các thư viện UI hiện đại.
+\end{itemize}
+
+\subsection{Lựa chọn công cụ biểu diễn UML}
+
+Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm: Use Case Diagram, Class Diagram, Sequence Diagram và Activity Diagram.

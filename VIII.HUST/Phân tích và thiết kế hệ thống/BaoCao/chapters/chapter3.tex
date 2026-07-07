@@ -1,0 +1,135 @@
+\chapter{THIẾT KẾ HỆ THỐNG}
+
+\section{Sơ đồ lớp (Class Diagram)}
+
+Dựa trên các thực thể nghiệp vụ đã phân tích, hệ thống được thiết kế với các lớp chính sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{NguoiDung}: lưu thông tin tài khoản, quyền hạn.
+    \item \textbf{HangHoa}: lưu thông tin hàng hóa, nhóm hàng, đơn vị tính.
+    \item \textbf{NhaCungCap}: lưu thông tin nhà cung cấp.
+    \item \textbf{KhachHang}: lưu thông tin khách hàng.
+    \item \textbf{Kho}: lưu thông tin kho hàng.
+    \item \textbf{PhieuNhapKho}: lưu thông tin phiếu nhập kho.
+    \item \textbf{ChiTietPhieuNhap}: lưu chi tiết hàng hóa trong phiếu nhập.
+    \item \textbf{PhieuXuatKho}: lưu thông tin phiếu xuất kho.
+    \item \textbf{ChiTietPhieuXuat}: lưu chi tiết hàng hóa trong phiếu xuất.
+    \item \textbf{PhieuKiemKe}: lưu thông tin phiếu kiểm kê.
+    \item \textbf{ChiTietKiemKe}: lưu chi tiết kiểm kê từng hàng hóa.
+    \item \textbf{TonKho}: lưu số lượng tồn kho của từng hàng hóa tại từng kho.
+\end{itemize}
+
+\input{diagrams/classdiagram}
+
+\section{Sơ đồ trình tự (Sequence Diagram)}
+
+\subsection{Sequence diagram ``Nhập kho''}
+
+\input{diagrams/sequence_nhapkho}
+
+\subsection{Sequence diagram ``Xuất kho''}
+
+\input{diagrams/sequence_xuatkho}
+
+\section{Thiết kế cơ sở dữ liệu}
+
+\subsection{Mô hình quan hệ tổng thể}
+
+Cơ sở dữ liệu của hệ thống bao gồm các bảng chính sau:
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Bảng} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Bảng} & \textbf{Mô tả} \\
+\hline
+\endhead
+NguoiDung & Lưu thông tin tài khoản người dùng: mã, tên đăng nhập, mật khẩu, vai trò, trạng thái. \\
+\hline
+HangHoa & Lưu thông tin hàng hóa: mã, tên, mã nhóm, đơn vị tính, giá nhập, giá xuất, mô tả. \\
+\hline
+NhomHangHoa & Lưu thông tin nhóm hàng hóa: mã, tên, mô tả. \\
+\hline
+DonViTinh & Lưu đơn vị tính: mã, tên. \\
+\hline
+NhaCungCap & Lưu thông tin nhà cung cấp: mã, tên, địa chỉ, số điện thoại, email. \\
+\hline
+KhachHang & Lưu thông tin khách hàng: mã, tên, địa chỉ, số điện thoại, email. \\
+\hline
+Kho & Lưu thông tin kho: mã, tên, địa chỉ, người phụ trách. \\
+\hline
+PhieuNhapKho & Lưu phiếu nhập kho: mã, mã nhà cung cấp, mã kho, ngày nhập, người lập, trạng thái, tổng tiền. \\
+\hline
+ChiTietPhieuNhap & Lưu chi tiết nhập: mã phiếu nhập, mã hàng hóa, số lượng, đơn giá, thành tiền. \\
+\hline
+PhieuXuatKho & Lưu phiếu xuất kho: mã, mã khách hàng, mã kho, ngày xuất, người lập, trạng thái, tổng tiền. \\
+\hline
+ChiTietPhieuXuat & Lưu chi tiết xuất: mã phiếu xuất, mã hàng hóa, số lượng, đơn giá, thành tiền. \\
+\hline
+PhieuKiemKe & Lưu phiếu kiểm kê: mã, mã kho, ngày kiểm, người kiểm, trạng thái. \\
+\hline
+ChiTietKiemKe & Lưu chi tiết kiểm kê: mã phiếu kiểm, mã hàng hóa, số lượng thực tế, số lượng sổ sách, chênh lệch. \\
+\hline
+TonKho & Lưu tồn kho: mã kho, mã hàng hóa, số lượng tồn, ngày cập nhật. \\
+\hline
+LichSuThaoTac & Lưu log thao tác: mã, người dùng, hành động, thời gian, đối tượng. \\
+\hline
+\end{longtable}
+
+\subsection{Mô tả một số bảng quan trọng}
+
+\subsubsection{Bảng HangHoa}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{5.5cm}|}
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endhead
+MaHangHoa & VARCHAR(20) & Khóa chính, mã hàng hóa. \\
+\hline
+TenHangHoa & NVARCHAR(255) & Tên hàng hóa. \\
+\hline
+MaNhomHang & VARCHAR(20) & Khóa ngoại đến bảng NhomHangHoa. \\
+\hline
+MaDonViTinh & VARCHAR(20) & Khóa ngoại đến bảng DonViTinh. \\
+\hline
+GiaNhap & DECIMAL(18,2) & Giá nhập trung bình. \\
+\hline
+GiaXuat & DECIMAL(18,2) & Giá xuất bán. \\
+\hline
+MoTa & NVARCHAR(500) & Mô tả chi tiết. \\
+\hline
+TrangThai & BIT & Trạng thái còn sử dụng. \\
+\hline
+\end{longtable}
+
+\subsubsection{Bảng TonKho}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{5.5cm}|}
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endhead
+MaKho & VARCHAR(20) & Khóa ngoại đến bảng Kho. \\
+\hline
+MaHangHoa & VARCHAR(20) & Khóa ngoại đến bảng HangHoa. \\
+\hline
+SoLuongTon & INT & Số lượng tồn kho hiện tại. \\
+\hline
+NgayCapNhat & DATETIME & Thời gian cập nhật gần nhất. \\
+\hline
+\end{longtable}
+
+\section{Kết luận chương}
+
+Chương 3 đã trình bày thiết kế hệ thống ở mức độ chi tiết hơn, bao gồm sơ đồ lớp, sơ đồ trình tự cho các nghiệp vụ nhập kho và xuất kho, cùng với thiết kế cơ sở dữ liệu. Các thiết kế này là cơ sở để triển khai phần mềm quản lý kho hàng trong giai đoạn tiếp theo.
