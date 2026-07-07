@@ -1,14 +1,24 @@
-\chapter{TỔNG QUAN ĐỀ TÀI}
+\chapter{KHẢO SÁT HIỆN TRẠNG}
 
-\section{Bối cảnh và lý do chọn đề tài}
+\section{Giới thiệu doanh nghiệp}
+
+Đề tài được thực hiện trong bối cảnh một doanh nghiệp thương mại – sản xuất có hoạt động nhập, xuất và lưu trữ hàng hóa thường xuyên. Doanh nghiệp có nhiều kho hàng, nhiều nhóm hàng hóa và thực hiện giao dịch với nhiều nhà cung cấp, khách hàng. Công tác quản lý kho hiện đang đóng vai trò then chốt trong việc đảm bảo đủ hàng để bán, giảm thiểu tồn kho dư thừa và kiểm soát dòng tiền.
+
+\section{Thực trạng quy trình quản lý hiện tại và các hạn chế}
 
 Trong bối cảnh kinh doanh hiện đại, hoạt động quản lý kho hàng đóng vai trò then chốt đối với hầu hết các doanh nghiệp thương mại, sản xuất và logistics. Việc kiểm soát tồn kho, nhập xuất hàng hóa và theo dõi luân chuyển hàng tồn kho ảnh hưởng trực tiếp đến chi phí vận hành, khả năng đáp ứng đơn hàng và hiệu quả kinh doanh chung.
 
-Tuy nhiên, tại nhiều doanh nghiệp vừa và nhỏ, công tác quản lý kho vẫn phụ thuộc nhiều vào phương pháp thủ công như ghi chép sổ sách, lưu trữ bằng bảng tính Excel hoặc các phần mềm đơn lẻ không liên kết. Cách làm này dễ dẫn đến các vấn đề: dữ liệu phân tán, sai sót trong quá trình nhập xuất, khó khăn tra cứu tồn kho, thiếu thông tin báo cáo kịp thời và khó kiểm soát lịch sử biến động hàng hóa.
+Tuy nhiên, tại nhiều doanh nghiệp vừa và nhỏ, công tác quản lý kho vẫn phụ thuộc nhiều vào phương pháp thủ công như ghi chép sổ sách, lưu trữ bằng bảng tính Excel hoặc các phần mềm đơn lẻ không liên kết. Cách làm này dễ dẫn đến các vấn đề:
 
-Xuất phát từ thực tế đó, đề tài \textbf{``Phân tích và thiết kế hệ thống quản lý kho hàng''} được lựa chọn nhằm xây dựng một giải pháp phần mềm tập trung, hỗ trợ doanh nghiệp quản lý hàng hóa, nhập xuất kho, kiểm kê và báo cáo một cách hiệu quả, chính xác và minh bạch.
+\begin{itemize}[leftmargin=1.5cm]
+    \item Dữ liệu phân tán, khó tổng hợp và đối chiếu.
+    \item Thiếu cơ chế kiểm soát số lượng tồn kho theo thời gian thực.
+    \item Khó truy vết lịch sử nhập xuất và người thực hiện thao tác.
+    \item Báo cáo chậm, không hỗ trợ ra quyết định kịp thời.
+    \item Sai sót trong quá trình nhập xuất, khó kiểm soát chênh lệch.
+\end{itemize}
 
-\section{Mục tiêu đề tài}
+\section{Mục tiêu của hệ thống}
 
 Mục tiêu của đề tài là phân tích, thiết kế và đề xuất một hệ thống thông tin quản lý kho hàng đáp ứng các yêu cầu sau:
 
@@ -18,31 +28,6 @@ Mục tiêu của đề tài là phân tích, thiết kế và đề xuất mộ
     \item Hỗ trợ quản lý nhiều kho, nhiều loại hàng hóa và nhiều nhà cung cấp/khách hàng.
     \item Tự động hóa việc tính toán tồn kho, cảnh báo hết hàng hoặc tồn kho quá mức.
     \item Tạo báo cáo thống kê về nhập xuất tồn, hàng hóa bán chạy, hàng tồn lâu ngày.
-\end{itemize}
-
-\section{Phạm vi nghiên cứu}
-
-\subsection{Phạm vi nghiệp vụ}
-
-Hệ thống tập trung vào các nghiệp vụ cốt lõi của quản lý kho hàng:
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item Quản lý danh mục hàng hóa, đơn vị tính, nhóm hàng và thông tin nhà cung cấp.
-    \item Quản lý nhập kho từ nhà cung cấp và điều chuyển giữa các kho.
-    \item Quản lý xuất kho cho khách hàng hoặc sản xuất nội bộ.
-    \item Quản lý tồn kho, kiểm kê định kỳ và điều chỉnh chênh lệch.
-    \item Quản lý người dùng, phân quyền và theo dõi lịch sử thao tác.
-\end{itemize}
-
-\subsection{Phạm vi đối tượng sử dụng}
-
-Hệ thống phục vụ bốn nhóm tác nhân chính:
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Quản trị viên}: quản lý tài khoản, cấu hình hệ thống và phân quyền.
-    \item \textbf{Quản lý kho}: giám sát tồn kho, phê duyệt phiếu nhập/xuất và xem báo cáo.
-    \item \textbf{Nhân viên kho}: thực hiện nhập kho, xuất kho, kiểm kê và cập nhật trạng thái.
-    \item \textbf{Khách hàng/Nhà cung cấp}: tra cứu đơn hàng, xem lịch sử giao dịch (nếu được cấp quyền).
 \end{itemize}
 
 \section{Lựa chọn công nghệ và công cụ}
@@ -60,4 +45,4 @@ Hệ thống được đề xuất triển khai theo mô hình ứng dụng web 
 
 \subsection{Lựa chọn công cụ biểu diễn UML}
 
-Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm: Use Case Diagram, Class Diagram, Sequence Diagram và Activity Diagram.
+Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm: Use Case Diagram, Class Diagram, Sequence Diagram, Activity Diagram và ERD.

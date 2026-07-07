@@ -1,6 +1,6 @@
-\chapter{PHÂN TÍCH HỆ THỐNG}
+\chapter{MÔ TẢ NGHIỆP VỤ}
 
-\section{Mô tả nghiệp vụ}
+\section{Tổng quan các nghiệp vụ}
 
 Hệ thống quản lý kho hàng đảm nhận việc kiểm soát toàn bộ vòng đời của hàng hóa từ khi nhập vào kho cho đến khi xuất ra khỏi kho. Các nghiệp vụ chính bao gồm:
 
@@ -9,171 +9,77 @@ Hệ thống quản lý kho hàng đảm nhận việc kiểm soát toàn bộ v
     \item \textbf{Xuất kho}: Lập phiếu xuất kho cho khách hàng hoặc sản xuất, cập nhật số lượng tồn kho.
     \item \textbf{Kiểm kê}: Định kỳ kiểm tra thực tế hàng tồn kho so với sổ sách, điều chỉnh chênh lệch nếu có.
     \item \textbf{Quản lý hàng hóa}: Cập nhật thông tin hàng hóa, nhóm hàng, đơn vị tính, giá nhập/xuất.
+    \item \textbf{Quản lý nhà cung cấp và khách hàng}: Lưu trữ, tra cứu và cập nhật thông tin đối tác.
+    \item \textbf{Quản lý kho}: Tạo kho, cập nhật thông tin kho, phân bổ hàng hóa giữa các kho.
     \item \textbf{Báo cáo}: Tổng hợp số liệu nhập xuất tồn, hàng tồn lâu ngày, hàng sắp hết.
 \end{itemize}
 
-\section{Phân tích nghiệp vụ hiện trạng (As-Is)}
+\section{Nghiệp vụ 1: Quản lý tài khoản người dùng (UC01)}
 
-Hiện tại, nhiều doanh nghiệp vẫn quản lý kho bằng các phương pháp thủ công. Quy trình điển hình như sau:
+Quản trị viên tạo và quản lý tài khoản người dùng, phân quyền truy cập theo vai trò. Nghiệp vụ đảm bảo chỉ người dùng được ủy quyền mới thực hiện các thao tác trên hệ thống.
 
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Nhân viên kho nhận hàng, đối chiếu với chứng từ giấy từ nhà cung cấp.
-    \item Số liệu được ghi vào sổ nhập/xuất hoặc nhập tay vào file Excel.
-    \item Quản lý kho tổng hợp số liệu cuối ngày/tuần/tháng để tính tồn kho.
-    \item Báo cáo được lập thủ công, dễ sai sót và không cập nhật theo thời gian thực.
-\end{enumerate}
+\section{Nghiệp vụ 2: Đăng nhập / Đăng xuất (UC02)}
 
-Nhược điểm của hiện trạng:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Dữ liệu phân tán, khó tổng hợp và đối chiếu.
-    \item Thiếu cơ chế kiểm soát số lượng tồn kho theo thời gian thực.
-    \item Khó truy vết lịch sử nhập xuất và người thực hiện thao tác.
-    \item Báo cáo chậm, không hỗ trợ ra quyết định kịp thời.
-\end{itemize}
+Người dùng truy cập hệ thống bằng tên đăng nhập và mật khẩu. Hệ thống kiểm tra thông tin, xác thực và chuyển hướng đến giao diện phù hợp với quyền hạn.
 
-\section{Các yêu cầu chức năng}
+\section{Nghiệp vụ 3: Quản lý nhà cung cấp (UC03)}
 
-Dựa trên phân tích nghiệp vụ, hệ thống cần đáp ứng các yêu cầu chức năng sau:
+Nhân viên kho hoặc quản lý kho thêm, cập nhật và tra cứu thông tin nhà cung cấp (tên, địa chỉ, liên hệ). Thông tin này được sử dụng khi lập phiếu nhập kho.
 
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Quản lý danh mục hàng hóa, nhóm hàng, đơn vị tính, nhà cung cấp, khách hàng.
-    \item Quản lý phiếu nhập kho và chi tiết nhập kho.
-    \item Quản lý phiếu xuất kho và chi tiết xuất kho.
-    \item Quản lý điều chuyển kho nội bộ.
-    \item Quản lý tồn kho theo từng kho, từng sản phẩm.
-    \item Kiểm kê định kỳ và điều chỉnh tồn kho.
-    \item Cảnh báo tồn kho thấp, tồn kho cao, hàng hết hạn.
-    \item Quản lý người dùng và phân quyền.
-    \item Báo cáo nhập xuất tồn, báo cáo hàng hóa, báo cáo tài chính tồn kho.
-\end{enumerate}
+\section{Nghiệp vụ 4: Quản lý khách hàng (UC04)}
 
-\section{Các yêu cầu phi chức năng}
+Tương tự như quản lý nhà cung cấp, nghiệp vụ này lưu trữ thông tin khách hàng để phục vụ lập phiếu xuất kho và theo dõi giao dịch.
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Hiệu năng}: Hệ thống phản hồi các thao tác tra cứu và cập nhật trong vòng vài giây.
-    \item \textbf{Bảo mật}: Phân quyền rõ ràng, mã hóa mật khẩu, ghi log thao tác.
-    \item \textbf{Khả dụng}: Hệ thống hoạt động ổn định, sao lưu dữ liệu định kỳ.
-    \item \textbf{Khả mở rộng}: Dễ dàng bổ sung thêm kho, chi nhánh, loại hàng hóa.
-    \item \textbf{Giao diện}: Thân thiện, dễ sử dụng, hỗ trợ tiếng Việt.
-\end{itemize}
+\section{Nghiệp vụ 5: Quản lý hàng hóa (UC05)}
 
-\section{Xác định tác nhân}
+Nhân viên kho nhập thông tin hàng hóa (mã, tên, nhóm hàng, đơn vị tính, giá), phân loại hàng hóa và cập nhật trạng thái sử dụng.
 
-\begin{longtable}{|p{3.5cm}|p{9cm}|}
-\hline
-\textbf{Tác nhân} & \textbf{Mô tả} \\
-\hline
-\endfirsthead
-\hline
-\textbf{Tác nhân} & \textbf{Mô tả} \\
-\hline
-\endhead
-Quản trị viên & Quản lý tài khoản, cấu hình hệ thống, phân quyền, sao lưu dữ liệu. \\
-\hline
-Quản lý kho & Giám sát tồn kho, phê duyệt phiếu nhập/xuất, xem báo cáo. \\
-\hline
-Nhân viên kho & Thực hiện nhập kho, xuất kho, kiểm kê, điều chỉnh tồn kho. \\
-\hline
-Khách hàng & Tra cứu đơn hàng, lịch sử giao dịch (nếu được cấp quyền). \\
-\hline
-Nhà cung cấp & Cung cấp thông tin đơn hàng, theo dõi trạng thái nhập kho. \\
-\hline
-\end{longtable}
+\section{Nghiệp vụ 6: Tìm kiếm hàng hóa (UC06)}
 
-\section{Danh sách use case}
+Người dùng tìm kiếm hàng hóa theo mã, tên, nhóm hàng hoặc kho. Hệ thống trả về thông tin hàng hóa và số lượng tồn kho hiện tại.
 
-Các use case chính của hệ thống được nhóm theo module:
+\section{Nghiệp vụ 7: Quản lý kho (UC07)}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Module Quản lý hàng hóa}: Thêm hàng hóa, cập nhật hàng hóa, xóa hàng hóa, tìm kiếm hàng hóa.
-    \item \textbf{Module Quản lý nhập kho}: Lập phiếu nhập kho, duyệt phiếu nhập, nhập hàng vào kho, in phiếu nhập.
-    \item \textbf{Module Quản lý xuất kho}: Lập phiếu xuất kho, duyệt phiếu xuất, xuất hàng khỏi kho, in phiếu xuất.
-    \item \textbf{Module Quản lý tồn kho}: Xem tồn kho, kiểm kê, điều chỉnh tồn kho, cảnh báo tồn kho.
-    \item \textbf{Module Quản lý người dùng}: Đăng nhập, đăng xuất, phân quyền, quản lý tài khoản.
-    \item \textbf{Module Báo cáo}: Báo cáo nhập xuất tồn, báo cáo tồn kho, báo cáo hàng hóa.
-\end{itemize}
+Quản lý kho tạo và cập nhật thông tin kho (mã kho, tên kho, địa điểm, người phụ trách). Một hệ thống có thể có nhiều kho khác nhau.
 
-\section{Sơ đồ use case tổng quát}
+\section{Nghiệp vụ 8: Tìm kiếm kho (UC08)}
 
-\input{diagrams/usecase}
+Người dùng tra cứu thông tin kho, danh sách hàng hóa trong kho hoặc tồn kho theo từng kho.
 
-\section{Sơ đồ use case phân rã}
+\section{Nghiệp vụ 9: Lập phiếu nhập kho (UC09)}
 
-Các use case phân rã sẽ được trình bày chi tiết trong phần thiết kế. Các nhóm use case chính bao gồm:
+Nhân viên kho lập phiếu nhập khi hàng hóa được chuyển đến từ nhà cung cấp. Phiếu nhập bao gồm thông tin nhà cung cấp, kho nhập, ngày nhập và danh sách hàng hóa nhập. Sau khi được duyệt, hệ thống tự động cập nhật tồn kho.
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item Phân rã use case Quản lý nhập kho.
-    \item Phân rã use case Quản lý xuất kho.
-    \item Phân rã use case Quản lý tồn kho.
-    \item Phân rã use case Quản lý hàng hóa.
-\end{itemize}
+\section{Nghiệp vụ 10: Lập phiếu xuất kho (UC10)}
 
-\section{Đặc tả use case}
+Nhân viên kho lập phiếu xuất khi có yêu cầu xuất hàng cho khách hàng hoặc sản xuất nội bộ. Hệ thống kiểm tra tồn kho trước khi cho phép xuất và cập nhật số lượng tồn sau khi duyệt.
 
-\subsection{Đặc tả use case ``Đăng nhập''}
+\section{Nghiệp vụ 11: Quản lý đơn đặt hàng (UC11)}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Quản trị viên, Quản lý kho, Nhân viên kho.
-    \item \textbf{Mục đích}: Xác thực người dùng trước khi truy cập hệ thống.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Người dùng truy cập giao diện đăng nhập.
-        \item Người dùng nhập tên đăng nhập và mật khẩu.
-        \item Hệ thống kiểm tra thông tin.
-        \item Hệ thống chuyển người dùng đến trang chủ phù hợp với quyền hạn.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Nếu thông tin sai, hệ thống thông báo lỗi và yêu cầu nhập lại.
-\end{itemize}
+Khách hàng hoặc bộ phận bán hàng tạo đơn đặt hàng. Hệ thống theo dõi trạng thái đơn hàng và tạo phiếu xuất kho khi đơn được duyệt.
 
-\subsection{Đặc tả use case ``Nhập kho''}
+\section{Nghiệp vụ 12: Quản lý thanh toán (UC12)}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Ghi nhận hàng hóa nhập vào kho.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Nhân viên kho chọn chức năng lập phiếu nhập kho.
-        \item Hệ thống hiển thị form nhập liệu.
-        \item Nhân viên kho chọn nhà cung cấp, kho nhập, ngày nhập.
-        \item Nhân viên kho thêm các dòng chi tiết hàng hóa nhập.
-        \item Hệ thống kiểm tra số lượng tồn kho cho phép và tính hợp lệ.
-        \item Nhân viên kho gửi phiếu nhập để quản lý kho duyệt.
-        \item Sau khi duyệt, hệ thống cập nhật tồn kho.
-    \end{enumerate}
-\end{itemize}
+Ghi nhận các khoản thanh toán liên quan đến phiếu nhập/xuất, cập nhật công nợ và tạo báo cáo tài chính tồn kho.
 
-\subsection{Đặc tả use case ``Xuất kho''}
+\section{Nghiệp vụ 13: Xem báo cáo thống kê (UC13)}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Ghi nhận hàng hóa xuất ra khỏi kho.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Nhân viên kho chọn chức năng lập phiếu xuất kho.
-        \item Hệ thống hiển thị form nhập liệu.
-        \item Nhân viên kho chọn khách hàng, kho xuất, ngày xuất.
-        \item Nhân viên kho thêm các dòng chi tiết hàng hóa xuất.
-        \item Hệ thống kiểm tra số lượng tồn kho đủ để xuất.
-        \item Nhân viên kho gửi phiếu xuất để quản lý kho duyệt.
-        \item Sau khi duyệt, hệ thống giảm tồn kho tương ứng.
-    \end{enumerate}
-\end{itemize}
+Quản lý kho và quản trị viên xem các báo cáo: nhập xuất tồn theo thời gian, hàng bán chạy, hàng tồn lâu ngày, giá trị tồn kho, cảnh báo tồn kho thấp/cao.
 
-\subsection{Đặc tả use case ``Kiểm kê tồn kho''}
+\section{Sơ đồ hoạt động (Activity Diagram)}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Đối chiếu tồn kho thực tế với sổ sách và điều chỉnh chênh lệch.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Nhân viên kho chọn kho và danh sách hàng cần kiểm kê.
-        \item Nhân viên kho nhập số lượng thực tế cho từng hàng hóa.
-        \item Hệ thống tính chênh lệch so với sổ sách.
-        \item Quản lý kho duyệt phiếu kiểm kê.
-        \item Hệ thống cập nhật tồn kho theo số lượng thực tế.
-    \end{enumerate}
-\end{itemize}
+\subsection{Quy trình nhập kho}
 
-\section{Sơ đồ hoạt động}
+\input{diagrams/activity_nhapkho}
 
-\input{diagrams/activity}
+\subsection{Quy trình xuất kho}
+
+\input{diagrams/activity_xuatkho}
+
+\subsection{Quy trình kiểm kê tồn kho}
+
+\input{diagrams/activity_kiemke}
+
+\section{Kết luận chương}
+
+Chương 2 đã mô tả chi tiết 13 nghiệp vụ chính, đồng thời trình bày các sơ đồ hoạt động cho quy trình nhập kho, xuất kho và kiểm kê. Các nghiệp vụ và quy trình này là cơ sở để xác định tác nhân, use case và thiết kế các sơ đồ UML trong các chương tiếp theo.
