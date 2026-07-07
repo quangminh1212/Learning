@@ -126,6 +126,68 @@ TrangThai & VARCHAR(20) & Trạng thái (Chờ duyệt, Đã duyệt, Hủy). \\
 \hline
 \end{longtable}
 
+\section{Thiết kế báo cáo thống kê chi tiết}
+
+Hệ thống cung cấp các báo cáo thống kê đa dạng phục vụ công tác quản trị kho, điều phối nhập xuất và ra quyết định kinh doanh. Các báo cáo được xây dựng dựa trên dữ liệu từ các bảng \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho} và \texttt{HangHoa}.
+
+\subsection{Báo cáo nhập xuất tồn}
+
+Báo cáo tổng hợp số lượng và giá trị nhập, xuất và tồn kho của từng hàng hóa trong khoảng thời gian.
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Đầu vào}: Mã kho, mã hàng hóa (tùy chọn), ngày bắt đầu, ngày kết thúc.
+    \item \textbf{Công thức}: Tồn đầu kỳ + Nhập trong kỳ - Xuất trong kỳ = Tồn cuối kỳ.
+    \item \textbf{Đầu ra}: Bảng gồm mã hàng, tên hàng, đơn vị tính, tồn đầu, nhập, xuất, tồn cuối, giá trị tồn (tồn cuối × giá nhập).
+\end{itemize}
+
+\subsection{Báo cáo hàng tồn kho thấp}
+
+Báo cáo cảnh báo các hàng hóa có số lượng tồn kho dưới ngưỡng tối thiểu cho phép.
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Đầu vào}: Mã kho, ngưỡng cảnh báo (mặc định hoặc cấu hình theo hàng hóa).
+    \item \textbf{Điều kiện}: \texttt{SoLuongTon <= NguongCanhBao}.
+    \item \textbf{Đầu ra}: Danh sách hàng cần nhập bổ sung, đề xuất số lượng nhập và nhà cung cấp gần nhất.
+\end{itemize}
+
+\subsection{Báo cáo hàng bán chạy / xuất nhiều}
+
+Báo cáo thống kê các hàng hóa có lượng xuất kho cao nhất trong khoảng thời gian, hỗ trợ dự báo nhu cầu.
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Đầu vào}: Khoảng thời gian, số lượng top N (ví dụ top 10, 20).
+    \item \textbf{Đầu ra}: Bảng xếp hạng gồm mã hàng, tên hàng, tổng số lượng xuất, tổng giá trị xuất, tỷ trọng.
+\end{itemize}
+
+\subsection{Báo cáo doanh thu và công nợ theo khách hàng}
+
+Báo cáo tổng giá trị xuất kho và tổng tiền thanh toán theo từng khách hàng.
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Đầu vào}: Mã khách hàng (tùy chọn), khoảng thời gian.
+    \item \textbf{Công thức}: Công nợ = Tổng giá trị phiếu xuất - Tổng tiền đã thanh toán.
+    \item \textbf{Đầu ra}: Bảng gồm mã khách, tên khách, tổng xuất, đã thanh toán, còn nợ.
+\end{itemize}
+
+\subsection{Báo cáo mua hàng theo nhà cung cấp}
+
+Báo cáo tổng giá trị nhập kho từ từng nhà cung cấp trong khoảng thời gian.
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Đầu vào}: Mã nhà cung cấp (tùy chọn), khoảng thời gian.
+    \item \textbf{Đầu ra}: Bảng gồm mã NCC, tên NCC, số phiếu nhập, tổng số lượng, tổng giá trị nhập.
+\end{itemize}
+
+\subsection{Định dạng xuất báo cáo}
+
+Các báo cáo hỗ trợ xuất dưới dạng:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Trên giao diện web}: Bảng dữ liệu có phân trang, sắp xếp, tìm kiếm và biểu đồ cột/đường/tròn.
+    \item \textbf{Xuất file}: PDF, Excel (CSV) để lưu trữ hoặc gửi email.
+    \item \textbf{In trực tiếp}: Mẫu in chuẩn A4 với tiêu đề, ngày lập, người lập và chữ ký.
+\end{itemize}
+
 \section{Thiết kế giao diện}
 
 Hệ thống được thiết kế theo mô hình ứng dụng web với giao diện thân thiện, hỗ trợ tiếng Việt. Các màn hình chính bao gồm:
