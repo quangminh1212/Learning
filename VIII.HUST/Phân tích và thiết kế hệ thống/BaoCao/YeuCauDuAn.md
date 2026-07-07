@@ -62,53 +62,23 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 
 ---
 
-## 5. Các use case chính
+## 5. Các use case chính (theo mục lục tham khảo)
 
-### 5.1. Module Quản lý hàng hóa
-
-- Thêm hàng hóa mới.
-- Cập nhật thông tin hàng hóa.
-- Xóa hàng hóa (logic hoặc vật lý).
-- Tìm kiếm và lọc hàng hóa.
-- Quản lý nhóm hàng và đơn vị tính.
-
-### 5.2. Module Quản lý nhập kho
-
-- Lập phiếu nhập kho.
-- Duyệt phiếu nhập kho.
-- Nhập hàng vào kho (cập nhật tồn).
-- In phiếu nhập kho.
-- Tra cứu lịch sử nhập kho.
-
-### 5.3. Module Quản lý xuất kho
-
-- Lập phiếu xuất kho.
-- Duyệt phiếu xuất kho.
-- Xuất hàng khỏi kho (giảm tồn).
-- In phiếu xuất kho.
-- Tra cứu lịch sử xuất kho.
-
-### 5.4. Module Quản lý tồn kho
-
-- Xem tồn kho theo kho và theo hàng hóa.
-- Kiểm kê định kỳ.
-- Điều chỉnh tồn kho sau kiểm kê.
-- Cảnh báo tồn kho thấp/cao.
-- Theo dõi hàng sắp hết hạn.
-
-### 5.5. Module Quản lý người dùng
-
-- Đăng nhập / đăng xuất.
-- Quản lý tài khoản.
-- Phân quyền theo vai trò.
-- Ghi log thao tác.
-
-### 5.6. Module Báo cáo
-
-- Báo cáo nhập xuất tồn theo thời gian.
-- Báo cáo hàng hóa tồn kho.
-- Báo cáo hàng bán chạy / hàng tồn lâu ngày.
-- Báo cáo giá trị tồn kho.
+| Mã | Tên use case | Mô tả ngắn |
+|----|--------------|------------|
+| UC01 | Quản lý tài khoản người dùng | Tạo, chỉnh sửa, khóa/mở tài khoản và phân quyền. |
+| UC02 | Đăng nhập / Đăng xuất | Xác thực người dùng vào hệ thống. |
+| UC03 | Quản lý nhà cung cấp | Thêm, sửa, xóa, tìm kiếm nhà cung cấp. |
+| UC04 | Quản lý khách hàng | Thêm, sửa, xóa, tìm kiếm khách hàng. |
+| UC05 | Quản lý hàng hóa | Thêm, cập nhật, tìm kiếm, phân loại hàng hóa. |
+| UC06 | Tìm kiếm hàng hóa | Tra cứu hàng hóa theo nhiều tiêu chí. |
+| UC07 | Quản lý kho | Tạo, cập nhật, tìm kiếm kho/thông tin kho. |
+| UC08 | Tìm kiếm kho | Tra cứu thông tin kho. |
+| UC09 | Lập phiếu nhập kho | Tạo phiếu nhập và cập nhật tồn kho. |
+| UC10 | Lập phiếu xuất kho | Tạo phiếu xuất và giảm tồn kho. |
+| UC11 | Quản lý đơn đặt hàng | Tạo, duyệt, theo dõi đơn đặt hàng từ khách hàng. |
+| UC12 | Quản lý thanh toán | Ghi nhận, cập nhật chi phí/thanh toán liên quan. |
+| UC13 | Xem báo cáo thống kê | Xem các báo cáo nhập xuất tồn, hàng bán chạy, tồn lâu. |
 
 ---
 
@@ -127,14 +97,15 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 
 ## 7. Các sơ đồ UML cần thiết kế
 
-Theo yêu cầu môn học, báo cáo cần bao gồm các sơ đồ sau:
+Theo yêu cầu môn học và mục lục tham khảo, báo cáo cần bao gồm các sơ đồ sau:
 
 1. **Sơ đồ use case tổng quát** và sơ đồ use case phân rã.
-2. **Đặc tả use case** cho các use case chính: Đăng nhập, Nhập kho, Xuất kho, Kiểm kê.
-3. **Sơ đồ hoạt động (Activity Diagram)** cho quy trình nhập kho và xuất kho.
-4. **Sơ đồ lớp (Class Diagram)** mô tả các lớp và quan hệ.
-5. **Sơ đồ trình tự (Sequence Diagram)** cho các luồng nhập kho, xuất kho.
+2. **Đặc tả use case** cho các use case chính (UC01–UC13).
+3. **Sơ đồ hoạt động (Activity Diagram)** cho các quy trình nhập kho, xuất kho, kiểm kê.
+4. **Sơ đồ lớp (Class Diagram)** tổng thể và biểu đồ lớp trong ca sử dụng cho các UC chính.
+5. **Sơ đồ trình tự (Sequence Diagram)** cho các luồng nhập kho, xuất kho, tìm kiếm hàng, quản lý tài khoản, ...
 6. **Sơ đồ quan hệ thực thể (ERD)** / thiết kế cơ sở dữ liệu.
+7. **Thiết kế giao diện (UI mockup)** cho các màn hình chính.
 
 ---
 
@@ -151,28 +122,55 @@ Theo yêu cầu môn học, báo cáo cần bao gồm các sơ đồ sau:
 
 ---
 
-## 9. Cấu trúc báo cáo LaTeX dự kiến
+## 9. Mục lục báo cáo LaTeX theo ảnh tham khảo
+
+| Chương | Nội dung |
+|--------|----------|
+| **Chương 1** | Khảo sát hiện trạng: Giới thiệu doanh nghiệp; Thực trạng quy trình quản lý hiện tại và các hạn chế; Mục tiêu của hệ thống. |
+| **Chương 2** | Mô tả nghiệp vụ: Các nghiệp vụ nhập kho, xuất kho, kiểm kê, điều chuyển, quản lý hàng hóa, nhà cung cấp, khách hàng, báo cáo. |
+| **Chương 3** | Phân tích chức năng: Use case tổng quát, use case phân rã, đặc tả use case. |
+| **Chương 4** | Phân tích hành vi: Biểu đồ lớp tổng thể và biểu đồ lớp trong ca sử dụng cho các UC chính. |
+| **Chương 5** | Phân tích tương tác: Biểu đồ trình tự (sequence) cho các ca sử dụng chính. |
+| **Chương 6** | Thiết kế các lớp chi tiết: Bảng mô tả các lớp; Bảng mô tả quan hệ. |
+| **Chương 7** | Thiết kế cơ sở dữ liệu: Mô hình quan hệ tổng thể; Đặc tả các bảng; Thiết kế giao diện. |
+
+---
+
+## 10. Cấu trúc thư mục LaTeX dự kiến
 
 ```
 BaoCao/
-├── main.tex              # File chính, điều phối các chương
-├── YeuCauDuAn.md         # Tài liệu yêu cầu dự án (file này)
+├── main.tex                # File chính, điều phối các chương
+├── YeuCauDuAn.md           # Tài liệu yêu cầu dự án (file này)
 ├── chapters/
-│   ├── chapter1.tex      # Tổng quan đề tài
-│   ├── chapter2.tex      # Phân tích hệ thống
-│   └── chapter3.tex      # Thiết kế hệ thống
+│   ├── chapter1.tex        # Khảo sát hiện trạng
+│   ├── chapter2.tex        # Mô tả nghiệp vụ
+│   ├── chapter3.tex        # Phân tích chức năng
+│   ├── chapter4.tex        # Phân tích hành vi (class diagrams)
+│   ├── chapter5.tex        # Phân tích tương tác (sequence diagrams)
+│   ├── chapter6.tex        # Thiết kế các lớp chi tiết
+│   └── chapter7.tex        # Thiết kế CSDL và giao diện
 └── diagrams/
-    ├── usecase.tex       # Sơ đồ use case tổng quát
-    ├── activity.tex      # Sơ đồ hoạt động
-    ├── classdiagram.tex  # Sơ đồ lớp
-    ├── sequence_nhapkho.tex
-    └── sequence_xuatkho.tex
+    ├── usecase.tex         # Use case tổng quát
+    ├── activity_nhapkho.tex
+    ├── activity_xuatkho.tex
+    ├── activity_kiemke.tex
+    ├── classdiagram.tex    # Class diagram tổng thể
+    ├── class_uc05.tex      # Class diagram trong ca sử dụng UC05
+    ├── class_uc09.tex      # Class diagram trong ca sử dụng UC09
+    ├── class_uc10.tex      # Class diagram trong ca sử dụng UC10
+    ├── sequence_uc05.tex   # Sequence quản lý hàng hóa
+    ├── sequence_uc09.tex   # Sequence nhập kho
+    ├── sequence_uc10.tex   # Sequence xuất kho
+    ├── sequence_uc06.tex   # Sequence tìm kiếm hàng hóa
+    └── erd.tex             # Sơ đồ ERD
 ```
 
 ---
 
-## 10. Tham khảo
+## 11. Tham khảo
 
+- Các ảnh mục lục trong `request/image/` – mục lục báo cáo tham khảo từ đề tài tương tự.
 - `request/PTTKHT.docx` – Bài tập lớn mẫu về quản lý du lịch.
 - `request/Bai Tap Lon/IT3120-Phan-Tich-Thiet-Ke-He-Thong.xlsx` – Danh sách nhóm và đề tài.
 - `request/TaiLieuMau/phanTichYeuCau_IT4421_V3.docx` – Mẫu tài liệu phân tích yêu cầu.
