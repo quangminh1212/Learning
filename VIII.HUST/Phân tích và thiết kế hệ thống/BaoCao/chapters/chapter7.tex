@@ -1,0 +1,145 @@
+\chapter{THIẾT KẾ CƠ SỞ DỮ LIỆU VÀ GIAO DIỆN}
+
+\section{Mô hình quan hệ tổng thể}
+
+Cơ sở dữ liệu của hệ thống bao gồm các bảng chính sau:
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Bảng} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Bảng} & \textbf{Mô tả} \\
+\hline
+\endhead
+NguoiDung & Lưu thông tin tài khoản người dùng: mã, tên đăng nhập, mật khẩu, vai trò, trạng thái. \\
+\hline
+HangHoa & Lưu thông tin hàng hóa: mã, tên, mã nhóm, đơn vị tính, giá nhập, giá xuất, mô tả. \\
+\hline
+NhomHangHoa & Lưu thông tin nhóm hàng hóa: mã, tên, mô tả. \\
+\hline
+DonViTinh & Lưu đơn vị tính: mã, tên. \\
+\hline
+NhaCungCap & Lưu thông tin nhà cung cấp: mã, tên, địa chỉ, số điện thoại, email. \\
+\hline
+KhachHang & Lưu thông tin khách hàng: mã, tên, địa chỉ, số điện thoại, email. \\
+\hline
+Kho & Lưu thông tin kho: mã, tên, địa chỉ, người phụ trách. \\
+\hline
+PhieuNhapKho & Lưu phiếu nhập kho: mã, mã nhà cung cấp, mã kho, người lập, ngày nhập, trạng thái, tổng tiền. \\
+\hline
+ChiTietPhieuNhap & Lưu chi tiết nhập: mã phiếu nhập, mã hàng hóa, số lượng, đơn giá, thành tiền. \\
+\hline
+PhieuXuatKho & Lưu phiếu xuất kho: mã, mã khách hàng, mã kho, người lập, ngày xuất, trạng thái, tổng tiền. \\
+\hline
+ChiTietPhieuXuat & Lưu chi tiết xuất: mã phiếu xuất, mã hàng hóa, số lượng, đơn giá, thành tiền. \\
+\hline
+PhieuKiemKe & Lưu phiếu kiểm kê: mã, mã kho, người kiểm, ngày kiểm, trạng thái. \\
+\hline
+ChiTietKiemKe & Lưu chi tiết kiểm kê: mã phiếu kiểm, mã hàng hóa, số lượng thực tế, số lượng sổ sách, chênh lệch. \\
+\hline
+TonKho & Lưu tồn kho: mã kho, mã hàng hóa, số lượng tồn, ngày cập nhật. \\
+\hline
+LichSuThaoTac & Lưu log thao tác: mã, người dùng, hành động, thời gian, đối tượng. \\
+\hline
+\end{longtable}
+
+\input{diagrams/erd}
+
+\section{Đặc tả một số bảng quan trọng}
+
+\subsection{Bảng HangHoa}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{5.5cm}|}
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endhead
+MaHangHoa & VARCHAR(20) & Khóa chính, mã hàng hóa. \\
+\hline
+TenHangHoa & NVARCHAR(255) & Tên hàng hóa. \\
+\hline
+MaNhomHang & VARCHAR(20) & Khóa ngoại đến bảng NhomHangHoa. \\
+\hline
+MaDonViTinh & VARCHAR(20) & Khóa ngoại đến bảng DonViTinh. \\
+\hline
+GiaNhap & DECIMAL(18,2) & Giá nhập trung bình. \\
+\hline
+GiaXuat & DECIMAL(18,2) & Giá xuất bán. \\
+\hline
+MoTa & NVARCHAR(500) & Mô tả chi tiết. \\
+\hline
+TrangThai & BIT & Trạng thái còn sử dụng. \\
+\hline
+\end{longtable}
+
+\subsection{Bảng TonKho}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{5.5cm}|}
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endhead
+MaKho & VARCHAR(20) & Khóa ngoại đến bảng Kho. \\
+\hline
+MaHangHoa & VARCHAR(20) & Khóa ngoại đến bảng HangHoa. \\
+\hline
+SoLuongTon & INT & Số lượng tồn kho hiện tại. \\
+\hline
+NgayCapNhat & DATETIME & Thời gian cập nhật gần nhất. \\
+\hline
+\end{longtable}
+
+\subsection{Bảng PhieuNhapKho}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{5.5cm}|}
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+\hline
+\endhead
+MaPhieuNhap & VARCHAR(20) & Khóa chính. \\
+\hline
+MaNhaCungCap & VARCHAR(20) & Khóa ngoại đến NhaCungCap. \\
+\hline
+MaKho & VARCHAR(20) & Khóa ngoại đến Kho. \\
+\hline
+MaNguoiDung & VARCHAR(20) & Khóa ngoại đến NguoiDung. \\
+\hline
+NgayNhap & DATETIME & Ngày lập phiếu nhập. \\
+\hline
+TongTien & DECIMAL(18,2) & Tổng giá trị phiếu nhập. \\
+\hline
+TrangThai & VARCHAR(20) & Trạng thái (Chờ duyệt, Đã duyệt, Hủy). \\
+\hline
+\end{longtable}
+
+\section{Thiết kế giao diện}
+
+Hệ thống được thiết kế theo mô hình ứng dụng web với giao diện thân thiện, hỗ trợ tiếng Việt. Các màn hình chính bao gồm:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Màn hình đăng nhập}: Nhập tên đăng nhập, mật khẩu, chuyển hướng theo vai trò.
+    \item \textbf{Trang chủ / Dashboard}: Hiển thị tổng quan tồn kho, phiếu nhập/xuất chờ duyệt, cảnh báo tồn kho.
+    \item \textbf{Quản lý hàng hóa}: Danh sách hàng hóa, form thêm/sửa, tìm kiếm và lọc.
+    \item \textbf{Quản lý nhập kho}: Danh sách phiếu nhập, form lập phiếu, chi tiết phiếu nhập.
+    \item \textbf{Quản lý xuất kho}: Danh sách phiếu xuất, form lập phiếu, kiểm tra tồn kho trước khi xuất.
+    \item \textbf{Quản lý tồn kho}: Bảng tồn kho theo kho, chức năng kiểm kê và điều chỉnh.
+    \item \textbf{Báo cáo}: Các biểu đồ và bảng thống kê nhập xuất tồn, hàng bán chạy, tồn lâu.
+\end{itemize}
+
+\section{Kết luận chương}
+
+Chương 7 đã trình bày thiết kế cơ sở dữ liệu với mô hình quan hệ tổng thể, đặc tả các bảng quan trọng và thiết kế giao diện người dùng. Kết hợp với các chương trước, báo cáo đã hoàn thiện phân tích và thiết kế hệ thống quản lý kho hàng theo đúng mục lục tham khảo.

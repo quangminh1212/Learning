@@ -1,0 +1,89 @@
+\chapter{THIẾT KẾ CÁC LỚP CHI TIẾT}
+
+\section{Bảng mô tả các lớp}
+
+\begin{longtable}{|p{3cm}|p{3cm}|p{6.5cm}|}
+\hline
+\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
+\hline
+\endhead
+NguoiDung & MaNguoiDung, TenDangNhap, MatKhau, VaiTro, TrangThai & Lưu thông tin tài khoản và phân quyền. \\
+\hline
+HangHoa & MaHangHoa, TenHangHoa, MaNhomHang, MaDonViTinh, GiaNhap, GiaXuat, MoTa, TrangThai & Lưu thông tin hàng hóa. \\
+\hline
+NhomHangHoa & MaNhomHang, TenNhomHang, MoTa & Phân loại hàng hóa. \\
+\hline
+DonViTinh & MaDonViTinh, TenDonViTinh & Đơn vị đo lường hàng hóa. \\
+\hline
+NhaCungCap & MaNhaCungCap, TenNhaCungCap, DiaChi, SoDienThoai, Email & Thông tin nhà cung cấp. \\
+\hline
+KhachHang & MaKhachHang, TenKhachHang, DiaChi, SoDienThoai, Email & Thông tin khách hàng. \\
+\hline
+Kho & MaKho, TenKho, DiaChi, NguoiPhuTrach & Thông tin kho hàng. \\
+\hline
+PhieuNhapKho & MaPhieuNhap, MaNhaCungCap, MaKho, MaNguoiDung, NgayNhap, TongTien, TrangThai & Thông tin phiếu nhập kho. \\
+\hline
+ChiTietPhieuNhap & MaChiTiet, MaPhieuNhap, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu nhập. \\
+\hline
+PhieuXuatKho & MaPhieuXuat, MaKhachHang, MaKho, MaNguoiDung, NgayXuat, TongTien, TrangThai & Thông tin phiếu xuất kho. \\
+\hline
+ChiTietPhieuXuat & MaChiTiet, MaPhieuXuat, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu xuất. \\
+\hline
+PhieuKiemKe & MaPhieuKiemKe, MaKho, MaNguoiDung, NgayKiemKe, TrangThai & Thông tin phiếu kiểm kê. \\
+\hline
+ChiTietKiemKe & MaChiTiet, MaPhieuKiemKe, MaHangHoa, SoLuongThucTe, SoLuongSoSach, ChenhLech & Chi tiết kiểm kê. \\
+\hline
+TonKho & MaKho, MaHangHoa, SoLuongTon, NgayCapNhat & Số lượng tồn kho của từng hàng tại từng kho. \\
+\hline
+LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong & Lưu lịch sử thao tác của người dùng. \\
+\hline
+\end{longtable}
+
+\section{Bảng mô tả quan hệ giữa các lớp}
+
+\begin{longtable}{|p{4cm}|p{4cm}|p{4.5cm}|}
+\hline
+\textbf{Lớp nguồn} & \textbf{Lớp đích} & \textbf{Loại quan hệ} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Lớp nguồn} & \textbf{Lớp đích} & \textbf{Loại quan hệ} \\
+\hline
+\endhead
+NguoiDung -- PhieuNhapKho & 1..n & Một người dùng lập nhiều phiếu nhập. \\
+\hline
+NguoiDung -- PhieuXuatKho & 1..n & Một người dùng lập nhiều phiếu xuất. \\
+\hline
+NhaCungCap -- PhieuNhapKho & 1..n & Một nhà cung cấp có nhiều phiếu nhập. \\
+\hline
+KhachHang -- PhieuXuatKho & 1..n & Một khách hàng có nhiều phiếu xuất. \\
+\hline
+Kho -- PhieuNhapKho & 1..n & Một kho nhận nhiều phiếu nhập. \\
+\hline
+Kho -- PhieuXuatKho & 1..n & Một kho xuất nhiều phiếu xuất. \\
+\hline
+Kho -- TonKho & 1..n & Một kho có nhiều bản ghi tồn kho. \\
+\hline
+HangHoa -- TonKho & 1..n & Một hàng hóa có tồn kho tại nhiều kho. \\
+\hline
+HangHoa -- ChiTietPhieuNhap & 1..n & Một hàng hóa xuất hiện trong nhiều chi tiết nhập. \\
+\hline
+HangHoa -- ChiTietPhieuXuat & 1..n & Một hàng hóa xuất hiện trong nhiều chi tiết xuất. \\
+\hline
+PhieuNhapKho -- ChiTietPhieuNhap & 1..n & Một phiếu nhập có nhiều dòng chi tiết. \\
+\hline
+PhieuXuatKho -- ChiTietPhieuXuat & 1..n & Một phiếu xuất có nhiều dòng chi tiết. \\
+\hline
+NhomHangHoa -- HangHoa & 1..n & Một nhóm hàng có nhiều hàng hóa. \\
+\hline
+DonViTinh -- HangHoa & 1..n & Một đơn vị tính được dùng cho nhiều hàng hóa. \\
+\hline
+\end{longtable}
+
+\section{Kết luận chương}
+
+Chương 6 đã mô tả chi tiết các lớp trong hệ thống và các quan hệ giữa chúng. Các thiết kế này là nền tảng để xây dựng mô hình cơ sở dữ liệu và triển khai phần mềm trong Chương 7.

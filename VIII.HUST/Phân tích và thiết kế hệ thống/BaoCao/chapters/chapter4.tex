@@ -1,0 +1,44 @@
+\chapter{PHÂN TÍCH HÀNH VI}
+
+\section{Sơ đồ lớp tổng thể}
+
+Dựa trên các thực thể nghiệp vụ đã phân tích, hệ thống được thiết kế với các lớp chính sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{NguoiDung}: lưu thông tin tài khoản, quyền hạn.
+    \item \textbf{HangHoa}: lưu thông tin hàng hóa, nhóm hàng, đơn vị tính.
+    \item \textbf{NhaCungCap}: lưu thông tin nhà cung cấp.
+    \item \textbf{KhachHang}: lưu thông tin khách hàng.
+    \item \textbf{Kho}: lưu thông tin kho hàng.
+    \item \textbf{PhieuNhapKho}: lưu thông tin phiếu nhập kho.
+    \item \textbf{ChiTietPhieuNhap}: lưu chi tiết hàng hóa trong phiếu nhập.
+    \item \textbf{PhieuXuatKho}: lưu thông tin phiếu xuất kho.
+    \item \textbf{ChiTietPhieuXuat}: lưu chi tiết hàng hóa trong phiếu xuất.
+    \item \textbf{TonKho}: lưu số lượng tồn kho của từng hàng hóa tại từng kho.
+\end{itemize}
+
+\input{diagrams/classdiagram}
+
+\section{Biểu đồ lớp trong ca sử dụng}
+
+\subsection{UC05 -- Quản lý hàng hóa}
+
+Các lớp tham gia trong ca sử dụng quản lý hàng hóa bao gồm: \texttt{NguoiDung}, \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh} và \texttt{TonKho}. Lớp \texttt{HangHoa} liên kết với \texttt{NhomHangHoa} và \texttt{DonViTinh} để phân loại; liên kết với \texttt{TonKho} để theo dõi số lượng tồn tại các kho.
+
+\input{diagrams/class_uc05}
+
+\subsection{UC09 -- Lập phiếu nhập kho}
+
+Các lớp tham gia trong ca sử dụng lập phiếu nhập kho bao gồm: \texttt{NguoiDung}, \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa} và \texttt{TonKho}. Sau khi phiếu nhập được duyệt, lớp \texttt{TonKho} được cập nhật để phản ánh số lượng hàng mới nhập.
+
+\input{diagrams/class_uc09}
+
+\subsection{UC10 -- Lập phiếu xuất kho}
+
+Các lớp tham gia trong ca sử dụng lập phiếu xuất kho bao gồm: \texttt{NguoiDung}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa} và \texttt{TonKho}. Hệ thống kiểm tra \texttt{TonKho} trước khi cho phép xuất và giảm tồn kho sau khi duyệt.
+
+\input{diagrams/class_uc10}
+
+\section{Kết luận chương}
+
+Chương 4 đã trình bày sơ đồ lớp tổng thể và các biểu đồ lớp trong ca sử dụng cho các nghiệp vụ chính. Các lớp và quan hệ được xác định là cơ sở để thiết kế tương tác (Sequence Diagram) trong Chương 5 và thiết kế chi tiết trong Chương 6, 7.

@@ -1,0 +1,33 @@
+\chapter{PHÂN TÍCH TƯƠNG TÁC}
+
+\section{Giới thiệu}
+
+Biểu đồ trình tự (Sequence Diagram) mô tả luồng tương tác giữa các đối tượng theo thời gian trong từng ca sử dụng. Chương này trình bày các sequence diagram cho các use case chính của hệ thống quản lý kho hàng.
+
+\section{UC05 -- Quản lý hàng hóa}
+
+Luồng tương tác bao gồm: nhân viên kho nhập thông tin hàng hóa, hệ thống kiểm tra dữ liệu, lưu hàng hóa và khởi tạo tồn kho ban đầu tại các kho.
+
+\input{diagrams/sequence_uc05}
+
+\section{UC06 -- Tìm kiếm hàng hóa}
+
+Người dùng nhập từ khóa, hệ thống truy vấn cơ sở dữ liệu và trả về danh sách hàng hóa kèm theo số lượng tồn kho tại các kho.
+
+\input{diagrams/sequence_uc06}
+
+\section{UC09 -- Lập phiếu nhập kho}
+
+Nhân viên kho lập phiếu nhập, hệ thống kiểm tra dữ liệu, lưu phiếu nhập và chi tiết, sau đó cập nhật tồn kho tương ứng.
+
+\input{diagrams/sequence_uc09}
+
+\section{UC10 -- Lập phiếu xuất kho}
+
+Nhân viên kho lập phiếu xuất, hệ thống kiểm tra tồn kho đủ để xuất, lưu phiếu xuất và giảm tồn kho sau khi hoàn tất.
+
+\input{diagrams/sequence_uc10}
+
+\section{Kết luận chương}
+
+Chương 5 đã trình bày các biểu đồ trình tự cho các ca sử dụng chính. Các luồng tương tác này thể hiện rõ vai trò của từng đối tượng và thứ tự xử lý, làm cơ sở cho thiết kế chi tiết các lớp và cơ sở dữ liệu trong Chương 6 và Chương 7.
