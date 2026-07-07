@@ -1,0 +1,89 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, transform shape]
+
+\begin{class}[text width=4cm]{NguoiDung}{-6,2}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ TenDangNhap: String}
+\attribute{+ MatKhau: String}
+\attribute{+ VaiTro: String}
+\attribute{+ TrangThai: Boolean}
+\operation{+ DangNhap(): Boolean}
+\operation{+ DangXuat(): void}
+\end{class}
+
+\begin{class}[text width=4cm]{HangHoa}{-2,2}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\attribute{+ MaNhomHang: String}
+\attribute{+ MaDonViTinh: String}
+\attribute{+ GiaNhap: Decimal}
+\attribute{+ GiaXuat: Decimal}
+\operation{+ CapNhatThongTin(): void}
+\end{class}
+
+\begin{class}[text width=4cm]{Kho}{2,2}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\attribute{+ DiaChi: String}
+\attribute{+ NguoiPhuTrach: String}
+\end{class}
+
+\begin{class}[text width=4.5cm]{PhieuNhapKho}{-6,-2}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ MaKho: String}
+\attribute{+ NgayNhap: DateTime}
+\attribute{+ TongTien: Decimal}
+\operation{+ LapPhieuNhap(): void}
+\operation{+ DuyetPhieuNhap(): void}
+\end{class}
+
+\begin{class}[text width=4.5cm]{ChiTietPhieuNhap}{-2,-2}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuong: Integer}
+\attribute{+ DonGia: Decimal}
+\attribute{+ ThanhTien: Decimal}
+\end{class}
+
+\begin{class}[text width=4.5cm]{PhieuXuatKho}{2,-2}
+\attribute{+ MaPhieuXuat: String}
+\attribute{+ MaKhachHang: String}
+\attribute{+ MaKho: String}
+\attribute{+ NgayXuat: DateTime}
+\attribute{+ TongTien: Decimal}
+\operation{+ LapPhieuXuat(): void}
+\operation{+ DuyetPhieuXuat(): void}
+\end{class}
+
+\begin{class}[text width=4.5cm]{ChiTietPhieuXuat}{6,-2}
+\attribute{+ MaPhieuXuat: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuong: Integer}
+\attribute{+ DonGia: Decimal}
+\end{class}
+
+\begin{class}[text width=4cm]{TonKho}{6,2}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\attribute{+ NgayCapNhat: DateTime}
+\operation{+ CapNhatTonKho(): void}
+\end{class}
+
+% Quan hệ
+\draw (NguoiDung) -- (PhieuNhapKho) node[midway, left, font=\scriptsize] {1..*};
+\draw (HangHoa) -- (ChiTietPhieuNhap) node[midway, left, font=\scriptsize] {1..*};
+\draw (HangHoa) -- (ChiTietPhieuXuat) node[midway, right, font=\scriptsize] {1..*};
+\draw (Kho) -- (TonKho) node[midway, right, font=\scriptsize] {1..*};
+\draw (PhieuNhapKho) -- (ChiTietPhieuNhap) node[midway, below, font=\scriptsize] {1..*};
+\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, below, font=\scriptsize] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, above, font=\scriptsize] {1..1};
+\draw (Kho) -- (PhieuNhapKho) node[midway, right, font=\scriptsize] {1..*};
+\draw (Kho) -- (PhieuXuatKho) node[midway, left, font=\scriptsize] {1..*};
+
+\end{tikzpicture}
+\caption{Sơ đồ lớp hệ thống quản lý kho hàng}
+\label{fig:class-diagram}
+\end{figure}

@@ -1,0 +1,43 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={circle, draw, minimum size=1cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=1cm, font=\small, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=10pt}
+]
+
+% Hệ thống
+\node[system, minimum width=10cm, minimum height=9cm] (system) at (0,0) {};
+\node[font=\bfseries] at (0,4.2) {Hệ thống quản lý kho hàng};
+
+% Các use case
+\node[usecase] (uc1) at (-2,2.5) {Quản lý\\hàng hóa};
+\node[usecase] (uc2) at (2,2.5) {Quản lý\\nhập kho};
+\node[usecase] (uc3) at (-2,0.5) {Quản lý\\xuất kho};
+\node[usecase] (uc4) at (2,0.5) {Quản lý\\tồn kho};
+\node[usecase] (uc5) at (-2,-1.5) {Quản lý\\người dùng};
+\node[usecase] (uc6) at (2,-1.5) {Báo cáo\\thống kê};
+
+% Các tác nhân
+\node[actor, label=below:\small Nhân viên kho] (actor1) at (-6,1) {};
+\node[actor, label=below:\small Quản lý kho] (actor2) at (6,2) {};
+\node[actor, label=below:\small Quản trị viên] (actor3) at (6,-1) {};
+\node[actor, label=below:\small Khách hàng] (actor4) at (-6,-2) {};
+
+% Liên kết
+\draw (actor1) -- (uc1);
+\draw (actor1) -- (uc2);
+\draw (actor1) -- (uc3);
+\draw (actor1) -- (uc4);
+\draw (actor2) -- (uc2);
+\draw (actor2) -- (uc3);
+\draw (actor2) -- (uc4);
+\draw (actor2) -- (uc6);
+\draw (actor3) -- (uc5);
+\draw (actor3) -- (uc6);
+\draw (actor4) -- (uc3);
+
+\end{tikzpicture}
+\caption{Sơ đồ use case tổng quát của hệ thống quản lý kho hàng}
+\label{fig:usecase-tongquat}
+\end{figure}

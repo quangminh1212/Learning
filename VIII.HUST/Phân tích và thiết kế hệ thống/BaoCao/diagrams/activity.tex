@@ -1,0 +1,44 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    startstop/.style={rectangle, rounded corners, draw, fill=red!15, minimum width=3cm, minimum height=0.8cm, font=\small, align=center},
+    process/.style={rectangle, draw, fill=blue!10, minimum width=4cm, minimum height=0.8cm, font=\small, align=center},
+    decision/.style={diamond, draw, fill=yellow!15, aspect=2, font=\small, align=center},
+    arrow/.style={-{Stealth[scale=0.8]}, thick}
+]
+
+% Các bước
+\node[startstop] (start) at (0,6) {Bắt đầu};
+\node[process] (step1) at (0,4.8) {Nhân viên kho lập phiếu nhập kho};
+\node[process] (step2) at (0,3.6) {Nhập thông tin nhà cung cấp, kho, ngày nhập};
+\node[process] (step3) at (0,2.4) {Thêm chi tiết hàng hóa nhập};
+\node[decision] (dec1) at (0,1) {Dữ liệu\\hợp lệ?};
+\node[process] (step4) at (0,-0.5) {Gửi phiếu nhập để duyệt};
+\node[decision] (dec2) at (0,-2) {Quản lý\\duyệt?};
+\node[process] (step5) at (0,-3.5) {Cập nhật tồn kho};
+\node[process] (step6) at (0,-4.7) {In phiếu nhập};
+\node[startstop] (end) at (0,-5.9) {Kết thúc};
+
+% Nhánh sai
+\node[process] (err1) at (4,1) {Thông báo lỗi\\yêu cầu nhập lại};
+\node[process] (err2) at (4,-2) {Thông báo từ chối\\trả về nhân viên};
+
+% Mũi tên
+\draw[arrow] (start) -- (step1);
+\draw[arrow] (step1) -- (step2);
+\draw[arrow] (step2) -- (step3);
+\draw[arrow] (step3) -- (dec1);
+\draw[arrow] (dec1) -- node[right, font=\scriptsize] {Có} (step4);
+\draw[arrow] (dec1) -- node[above, font=\scriptsize] {Không} (err1);
+\draw[arrow] (err1) |- (step2);
+\draw[arrow] (step4) -- (dec2);
+\draw[arrow] (dec2) -- node[right, font=\scriptsize] {Có} (step5);
+\draw[arrow] (dec2) -- node[above, font=\scriptsize] {Không} (err2);
+\draw[arrow] (err2) |- (step1);
+\draw[arrow] (step5) -- (step6);
+\draw[arrow] (step6) -- (end);
+
+\end{tikzpicture}
+\caption{Sơ đồ hoạt động quy trình nhập kho}
+\label{fig:activity-nhapkho}
+\end{figure}
