@@ -1,0 +1,68 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, transform shape,
+    entity/.style={ellipse, draw, fill=blue!10, minimum width=1.8cm, minimum height=0.8cm, font=\scriptsize, align=center},
+    process/.style={rectangle, draw, fill=green!15, minimum width=2.2cm, minimum height=0.9cm, font=\scriptsize, align=center},
+    store/.style={rectangle, draw, fill=yellow!10, minimum width=1.6cm, minimum height=0.6cm, font=\scriptsize, align=center},
+    flow/.style={-{Stealth[scale=0.7]}, thick},
+    label/.style={font=\tiny, fill=white, inner sep=0.5pt}
+]
+
+\node[entity] (ql) at (-5,3) {Quản lý kho};
+\node[entity] (nv) at (0,5) {Nhân viên kho};
+\node[entity] (kh) at (5,3) {Khách hàng};
+\node[entity] (ncc) at (5,-3) {Nhà cung cấp};
+\node[entity] (admin) at (-5,-3) {Quản trị viên};
+
+\node[process] (p1) at (-5,0) {1.0 Quản lý\\người dùng};
+\node[process] (p2) at (-2,3) {2.0 Quản lý\\danh mục};
+\node[process] (p3) at (2,3) {3.0 Quản lý\\nhập kho};
+\node[process] (p4) at (5,0) {4.0 Quản lý\\xuất kho};
+\node[process] (p5) at (2,-3) {5.0 Quản lý\\tồn kho};
+\node[process] (p6) at (-2,-3) {6.0 Báo cáo\\thống kê};
+
+\node[store] (d1) at (-7,0) {D1\\Users};
+\node[store] (d2) at (-2,5.5) {D2\\HangHoa};
+\node[store] (d3) at (2,5.5) {D3\\NCC};
+\node[store] (d4) at (7,0) {D4\\KH};
+\node[store] (d5) at (2,-5.5) {D5\\Kho};
+\node[store] (d6) at (5,2) {D6\\PNK};
+\node[store] (d7) at (5,-2) {D7\\PXK};
+\node[store] (d8) at (0,-1) {D8\\TonKho};
+\node[store] (d9) at (-2,-5.5) {D9\\KiemKe};
+\node[store] (d10) at (-7,-2) {D10\\Log};
+
+\draw[flow] (admin) -- (p1) node[label, midway, right] {Cấu hình};
+\draw[flow] (p1) -- (d1) node[label, midway, above] {};
+\draw[flow] (p1) -- (d10) node[label, midway, left] {};
+
+\draw[flow] (nv) -- (p2) node[label, midway, right] {QL danh mục};
+\draw[flow] (p2) -- (d2) node[label, midway, right] {};
+
+\draw[flow] (nv) -- (p3) node[label, midway, left] {Lập phiếu nhập};
+\draw[flow] (ql) -- (p3) node[label, midway, below, pos=0.7] {Duyệt};
+\draw[flow] (ncc) -- (p3) node[label, midway, below left] {Giao hàng};
+\draw[flow] (p3) -- (d6) node[label, midway, right] {};
+\draw[flow] (p3) -- (d8) node[label, midway, above, pos=0.6] {Tăng tồn};
+
+\draw[flow] (nv) -- (p4) node[label, midway, left] {Lập phiếu xuất};
+\draw[flow] (ql) -- (p4) node[label, midway, above, pos=0.7] {Duyệt};
+\draw[flow] (kh) -- (p4) node[label, midway, left] {Đơn hàng};
+\draw[flow] (p4) -- (d7) node[label, midway, right] {};
+\draw[flow] (p4) -- (d8) node[label, midway, below, pos=0.6] {Giảm tồn};
+
+\draw[flow] (nv) -- (p5) node[label, midway, right] {Kiểm kê};
+\draw[flow] (p5) -- (d8) node[label, midway, above] {};
+\draw[flow] (p5) -- (d5) node[label, midway, right] {};
+\draw[flow] (p5) -- (d9) node[label, midway, left] {};
+
+\draw[flow] (ql) -- (p6) node[label, midway, left] {Yêu cầu BC};
+\draw[flow] (p6) -- (d6) node[label, midway, below, pos=0.3] {};
+\draw[flow] (p6) -- (d7) node[label, midway, above, pos=0.3] {};
+\draw[flow] (p6) -- (d8) node[label, midway, right] {};
+\draw[flow] (p6) -- (ql) node[label, midway, above] {Báo cáo};
+
+\end{tikzpicture}
+\caption{DFD cấp 1 – Phân rã các luồng dữ liệu trong hệ thống quản lý kho hàng}
+\label{fig:dfd-level1}
+\end{figure}
