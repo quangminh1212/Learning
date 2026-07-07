@@ -143,13 +143,13 @@ BaoCao/
 ├── main.tex                # File chính, điều phối các chương
 ├── YeuCauDuAn.md           # Tài liệu yêu cầu dự án (file này)
 ├── chapters/
-│   ├── chapter1.tex        # Khảo sát hiện trạng
-│   ├── chapter2.tex        # Mô tả nghiệp vụ
-│   ├── chapter3.tex        # Phân tích chức năng
-│   ├── chapter4.tex        # Phân tích hành vi (class diagrams)
-│   ├── chapter5.tex        # Phân tích tương tác (sequence diagrams)
-│   ├── chapter6.tex        # Thiết kế các lớp chi tiết
-│   └── chapter7.tex        # Thiết kế CSDL và giao diện
+│   ├── chapter1_khao_sat_hien_trang.tex          # Khảo sát hiện trạng
+│   ├── chapter2_mo_ta_nghiep_vu.tex              # Mô tả nghiệp vụ
+│   ├── chapter3_phan_tich_chuc_nang.tex         # Phân tích chức năng
+│   ├── chapter4_phan_tich_hanh_vi.tex            # Phân tích hành vi (class diagrams)
+│   ├── chapter5_phan_tich_tuong_tac.tex           # Phân tích tương tác (sequence diagrams)
+│   ├── chapter6_thiet_ke_lop_chi_tiet.tex         # Thiết kế các lớp chi tiết
+│   └── chapter7_thiet_ke_csdl_va_giao_dien.tex  # Thiết kế CSDL và giao diện
 └── diagrams/
     ├── usecase.tex         # Use case tổng quát
     ├── activity_nhapkho.tex
