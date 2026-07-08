@@ -49,7 +49,12 @@ LichSuThaoTac & Lưu log thao tác: mã, người dùng, hành động, thời g
 \hline
 \end{longtable}
 
-Sơ đồ quan hệ thực thể (ERD) mô tả các bảng, thuộc tính và quan hệ giữa chúng:
+Sơ đồ quan hệ thực thể (ERD) được trình bày thành hai sơ đồ con để tránh chồng chéo và dễ quan sát:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{ERD danh mục (Master Data)}: mô tả các bảng dữ liệu nền tảng bao gồm \texttt{NguoiDung}, \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{NhaCungCap}, \texttt{KhachHang}, \texttt{Kho}, \texttt{TonKho}.
+    \item \textbf{ERD nghiệp vụ (Transaction)}: mô tả các bảng giao dịch bao gồm \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{DonDatHang}, \texttt{ChiTietDonHang}, \texttt{ThanhToan}, \texttt{LichSuThaoTac}.
+\end{itemize}
 
 \input{diagrams/erd}
 
