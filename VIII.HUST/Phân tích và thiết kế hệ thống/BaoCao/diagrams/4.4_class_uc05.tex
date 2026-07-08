@@ -1,13 +1,7 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.72, transform shape, every class/.style={text width=5.5cm}]
-
-\begin{class}{NguoiDung}{-10,0}
-\attribute{+ MaNguoiDung: String}
-\attribute{+ VaiTro: String}
-\operation{+ DangNhap(): Boolean}
-\end{class}
+\begin{tikzpicture}[scale=0.9, transform shape, every class/.style={text width=6.5cm}]
 
 \begin{class}{HangHoa}{0,0}
 \attribute{+ MaHangHoa: String}
@@ -20,27 +14,33 @@
 \operation{+ TimKiem(): List}
 \end{class}
 
-\begin{class}{NhomHangHoa}{0,4.5}
+\begin{class}{NhomHangHoa}{-6,4}
 \attribute{+ MaNhomHang: String}
 \attribute{+ TenNhomHang: String}
 \end{class}
 
-\begin{class}{DonViTinh}{0,-4.5}
+\begin{class}{DonViTinh}{6,4}
 \attribute{+ MaDonViTinh: String}
 \attribute{+ TenDonViTinh: String}
 \end{class}
 
-\begin{class}{TonKho}{10,0}
+\begin{class}{TonKho}{6,-4}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
 \operation{+ CapNhatTonKho(): void}
 \end{class}
 
-\draw (NguoiDung) -- (HangHoa) node[midway, above, font=\scriptsize] {1..*};
-\draw (HangHoa) -- (NhomHangHoa) node[midway, right, font=\scriptsize] {n..1};
-\draw (HangHoa) -- (DonViTinh) node[midway, right, font=\scriptsize] {n..1};
-\draw (HangHoa) -- (TonKho) node[midway, above, font=\scriptsize] {1..*};
+\begin{class}{NguoiDung}{-6,-4}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\operation{+ DangNhap(): Boolean}
+\end{class}
+
+\draw (HangHoa) -- (NhomHangHoa) node[midway, above, font=\small] {n..1};
+\draw (HangHoa) -- (DonViTinh) node[midway, above, font=\small] {n..1};
+\draw (HangHoa) -- (TonKho) node[midway, right, font=\small] {1..*};
+\draw (HangHoa) -- (NguoiDung) node[midway, left, font=\small] {1..*};
 
 \end{tikzpicture}
 }
