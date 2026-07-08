@@ -1,15 +1,15 @@
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.7, transform shape]
+\begin{tikzpicture}[scale=0.55, transform shape]
 
 % Sử dụng pgf-umlcd để vẽ class diagram
-\begin{class}[text width=3cm]{NhomHangHoa}{-9,4.5}
+\begin{class}[text width=2.8cm]{NhomHangHoa}{-10,5}
 \attribute{+ MaNhomHang: String}
 \attribute{+ TenNhomHang: String}
 \attribute{+ MoTa: String}
 \end{class}
 
-\begin{class}[text width=3.5cm]{HangHoa}{-4.5,4.5}
+\begin{class}[text width=3.2cm]{HangHoa}{-5,5}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \attribute{+ MaNhomHang: String}
@@ -20,12 +20,12 @@
 \operation{+ CapNhatThongTin(): void}
 \end{class}
 
-\begin{class}[text width=3cm]{DonViTinh}{0,4.5}
+\begin{class}[text width=2.8cm]{DonViTinh}{0,5}
 \attribute{+ MaDonViTinh: String}
 \attribute{+ TenDonViTinh: String}
 \end{class}
 
-\begin{class}[text width=3cm]{Kho}{4.5,4.5}
+\begin{class}[text width=2.8cm]{Kho}{5,5}
 \attribute{+ MaKho: String}
 \attribute{+ TenKho: String}
 \attribute{+ DiaChi: String}
@@ -34,7 +34,7 @@
 \attribute{+ TrangThai: Boolean}
 \end{class}
 
-\begin{class}[text width=3.5cm]{NguoiDung}{-9,1.5}
+\begin{class}[text width=3.2cm]{NguoiDung}{-10,1.5}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ TenDangNhap: String}
 \attribute{+ MatKhau: String}
@@ -45,7 +45,7 @@
 \operation{+ DangXuat(): void}
 \end{class}
 
-\begin{class}[text width=3.5cm]{NhaCungCap}{-4.5,1.5}
+\begin{class}[text width=3.2cm]{NhaCungCap}{-5,1.5}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ TenNhaCungCap: String}
 \attribute{+ DiaChi: String}
@@ -54,7 +54,7 @@
 \attribute{+ NguoiLienHe: String}
 \end{class}
 
-\begin{class}[text width=3.5cm]{KhachHang}{0,1.5}
+\begin{class}[text width=3.2cm]{KhachHang}{0,1.5}
 \attribute{+ MaKhachHang: String}
 \attribute{+ TenKhachHang: String}
 \attribute{+ DiaChi: String}
@@ -64,7 +64,7 @@
 \attribute{+ NguoiLienHe: String}
 \end{class}
 
-\begin{class}[text width=3cm]{TonKho}{4.5,1.5}
+\begin{class}[text width=2.8cm]{TonKho}{5,1.5}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
@@ -72,7 +72,7 @@
 \operation{+ CapNhatTonKho(): void}
 \end{class}
 
-\begin{class}[text width=3.5cm]{PhieuNhapKho}{-9,-1.5}
+\begin{class}[text width=3.2cm]{PhieuNhapKho}{-10,-2}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ MaKho: String}
@@ -84,7 +84,7 @@
 \operation{+ DuyetPhieuNhap(): void}
 \end{class}
 
-\begin{class}[text width=3.5cm]{ChiTietPhieuNhap}{-4.5,-1.5}
+\begin{class}[text width=3.2cm]{ChiTietPhieuNhap}{-5,-2}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaHangHoa: String}
@@ -93,7 +93,7 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-\begin{class}[text width=3.5cm]{PhieuXuatKho}{0,-1.5}
+\begin{class}[text width=3.2cm]{PhieuXuatKho}{0,-2}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ MaKho: String}
@@ -105,7 +105,7 @@
 \operation{+ DuyetPhieuXuat(): void}
 \end{class}
 
-\begin{class}[text width=3.5cm]{ChiTietPhieuXuat}{4.5,-1.5}
+\begin{class}[text width=3.2cm]{ChiTietPhieuXuat}{5,-2}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaHangHoa: String}
@@ -114,7 +114,7 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-\begin{class}[text width=3cm]{PhieuKiemKe}{-9,-4.5}
+\begin{class}[text width=2.8cm]{PhieuKiemKe}{-10,-5.5}
 \attribute{+ MaPhieuKiemKe: String}
 \attribute{+ MaKho: String}
 \attribute{+ MaNguoiDung: String}
@@ -122,7 +122,7 @@
 \attribute{+ TrangThai: String}
 \end{class}
 
-\begin{class}[text width=3.5cm]{ChiTietKiemKe}{-4.5,-4.5}
+\begin{class}[text width=3.2cm]{ChiTietKiemKe}{-5,-5.5}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuKiemKe: String}
 \attribute{+ MaHangHoa: String}
@@ -131,7 +131,7 @@
 \attribute{+ ChenhLech: Integer}
 \end{class}
 
-\begin{class}[text width=3cm]{DonDatHang}{0,-4.5}
+\begin{class}[text width=2.8cm]{DonDatHang}{0,-5.5}
 \attribute{+ MaDonHang: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ NgayDat: DateTime}
@@ -139,7 +139,7 @@
 \attribute{+ TrangThai: String}
 \end{class}
 
-\begin{class}[text width=3.5cm]{ChiTietDonHang}{4.5,-4.5}
+\begin{class}[text width=3.2cm]{ChiTietDonHang}{5,-5.5}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaDonHang: String}
 \attribute{+ MaHangHoa: String}
@@ -148,7 +148,7 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-\begin{class}[text width=3.5cm]{ThanhToan}{-4.5,-7.5}
+\begin{class}[text width=3.2cm]{ThanhToan}{-5,-9}
 \attribute{+ MaThanhToan: String}
 \attribute{+ MaPhieu: String}
 \attribute{+ LoaiPhieu: String}
@@ -157,7 +157,7 @@
 \attribute{+ PhuongThuc: String}
 \end{class}
 
-\begin{class}[text width=3.5cm]{LichSuThaoTac}{0,-7.5}
+\begin{class}[text width=3.2cm]{LichSuThaoTac}{0,-9}
 \attribute{+ MaLog: String}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ HanhDong: String}
@@ -166,7 +166,7 @@
 \attribute{+ MoTa: String}
 \end{class}
 
-% Quan hệ
+% Quan hệ - chỉ vẽ các quan hệ chính
 \draw (NhomHangHoa) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
 \draw (DonViTinh) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
 \draw (HangHoa) -- (TonKho) node[midway, above, font=\tiny] {1..*};

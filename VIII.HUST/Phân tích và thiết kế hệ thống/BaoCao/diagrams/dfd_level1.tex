@@ -1,36 +1,36 @@
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.85, transform shape,
-    entity/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2cm, minimum height=0.9cm, font=\scriptsize\bfseries, align=center},
-    process/.style={rectangle, draw=green!70!black, fill=green!5, line width=0.8pt, minimum width=2.4cm, minimum height=1cm, font=\scriptsize, align=center, rounded corners=2pt},
-    store/.style={rectangle, draw=orange!70!black, fill=orange!5, line width=0.8pt, minimum width=1.8cm, minimum height=0.7cm, font=\scriptsize, align=center, rounded corners=2pt},
+\begin{tikzpicture}[scale=0.8, transform shape,
+    entity/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.2cm, minimum height=1cm, font=\scriptsize\bfseries, align=center},
+    process/.style={rectangle, draw=green!70!black, fill=green!5, line width=0.8pt, minimum width=2.6cm, minimum height=1.1cm, font=\scriptsize, align=center, rounded corners=2pt},
+    store/.style={rectangle, draw=orange!70!black, fill=orange!5, line width=0.8pt, minimum width=2cm, minimum height=0.8cm, font=\scriptsize, align=center, rounded corners=2pt},
     flow/.style={-{Stealth[scale=0.7]}, line width=0.6pt},
     label/.style={font=\tiny, fill=white, inner sep=0.5pt}
 ]
 
-\node[entity] (ql) at (-5,3) {Quản lý kho};
-\node[entity] (nv) at (0,5) {Nhân viên kho};
-\node[entity] (kh) at (5,3) {Khách hàng};
-\node[entity] (ncc) at (5,-3) {Nhà cung cấp};
-\node[entity] (admin) at (-5,-3) {Quản trị viên};
+\node[entity] (ql) at (-5.5,3) {Quản lý kho};
+\node[entity] (nv) at (0,5.5) {Nhân viên kho};
+\node[entity] (kh) at (5.5,3) {Khách hàng};
+\node[entity] (ncc) at (5.5,-3) {Nhà cung cấp};
+\node[entity] (admin) at (-5.5,-3) {Quản trị viên};
 
-\node[process] (p1) at (-5,0) {1.0 Quản lý\\người dùng};
-\node[process] (p2) at (-2,3) {2.0 Quản lý\\danh mục};
-\node[process] (p3) at (2,3) {3.0 Quản lý\\nhập kho};
-\node[process] (p4) at (5,0) {4.0 Quản lý\\xuất kho};
-\node[process] (p5) at (2,-3) {5.0 Quản lý\\tồn kho};
-\node[process] (p6) at (-2,-3) {6.0 Báo cáo\\thống kê};
+\node[process] (p1) at (-5.5,0) {1.0 Quản lý\\người dùng};
+\node[process] (p2) at (-2.2,3) {2.0 Quản lý\\danh mục};
+\node[process] (p3) at (2.2,3) {3.0 Quản lý\\nhập kho};
+\node[process] (p4) at (5.5,0) {4.0 Quản lý\\xuất kho};
+\node[process] (p5) at (2.2,-3) {5.0 Quản lý\\tồn kho};
+\node[process] (p6) at (-2.2,-3) {6.0 Báo cáo\\thống kê};
 
-\node[store] (d1) at (-7,0) {D1\\Users};
-\node[store] (d2) at (-2,5.5) {D2\\HangHoa};
-\node[store] (d3) at (2,5.5) {D3\\NCC};
-\node[store] (d4) at (7,0) {D4\\KH};
-\node[store] (d5) at (2,-5.5) {D5\\Kho};
-\node[store] (d6) at (5,2) {D6\\PNK};
-\node[store] (d7) at (5,-2) {D7\\PXK};
+\node[store] (d1) at (-7.5,0) {D1\\Users};
+\node[store] (d2) at (-2.2,6) {D2\\HangHoa};
+\node[store] (d3) at (2.2,6) {D3\\NCC};
+\node[store] (d4) at (7.5,0) {D4\\KH};
+\node[store] (d5) at (2.2,-6) {D5\\Kho};
+\node[store] (d6) at (5.5,2.2) {D6\\PNK};
+\node[store] (d7) at (5.5,-2.2) {D7\\PXK};
 \node[store] (d8) at (0,-1) {D8\\TonKho};
-\node[store] (d9) at (-2,-5.5) {D9\\KiemKe};
-\node[store] (d10) at (-7,-2) {D10\\Log};
+\node[store] (d9) at (-2.2,-6) {D9\\KiemKe};
+\node[store] (d10) at (-7.5,-2) {D10\\Log};
 
 \draw[flow] (admin) -- (p1) node[label, midway, right] {Cấu hình};
 \draw[flow] (p1) -- (d1) node[label, midway, above] {};
