@@ -3,19 +3,19 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=3.4cm, minimum height=0.8cm, font=\footnotesize, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=10pt, rounded corners=4pt}
 ]
 
-\node[system, minimum width=9cm, minimum height=6cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,2.8) {Quản lý người dùng};
+\node[system, minimum width=10cm, minimum height=6.5cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3) {Quản lý người dùng};
 
 \node[usecase] (uc01) at (0,1.2) {UC01: Quản lý tài khoản};
-\node[usecase] (uc02) at (0,-0.3) {UC02: Đăng nhập / Đăng xuất};
+\node[usecase] (uc02) at (0,-0.6) {UC02: Đăng nhập / Đăng xuất};
 
-\node[actor, label=below:{\tiny\bfseries Quản trị viên}] (admin) at (-3.5,0.5) {};
-\node[actor, label=below:{\tiny\bfseries Người dùng}] (user) at (3.5,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-4,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Người dùng}] (user) at (4,0.5) {};
 
 \draw[line width=0.5pt] (admin) -- (uc01);
 \draw[line width=0.5pt] (admin) -- (uc02);

@@ -3,21 +3,21 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=3.4cm, minimum height=0.8cm, font=\footnotesize, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=10pt, rounded corners=4pt}
 ]
 
-\node[system, minimum width=9cm, minimum height=6.5cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3) {Quản lý đối tác};
+\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3.2) {Quản lý đối tác};
 
-\node[usecase] (uc03) at (-1.5,1.2) {UC03: Quản lý nhà cung cấp};
-\node[usecase] (uc04) at (1.5,1.2) {UC04: Quản lý khách hàng};
+\node[usecase] (uc03) at (-1.8,1.2) {UC03: Quản lý nhà cung cấp};
+\node[usecase] (uc04) at (1.8,1.2) {UC04: Quản lý khách hàng};
 
-\node[actor, label=below:{\tiny\bfseries Nhân viên kho}] (nvk) at (-3.5,0.5) {};
-\node[actor, label=below:{\tiny\bfseries Quản lý kho}] (qlk) at (3.5,0.5) {};
-\node[actor, label=below:{\tiny\bfseries Nhà cung cấp}] (ncc) at (-3.5,-2) {};
-\node[actor, label=below:{\tiny\bfseries Khách hàng}] (kh) at (3.5,-2) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-4,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (4,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (-4,-2.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (4,-2.2) {};
 
 \draw[line width=0.5pt] (nvk) -- (uc03);
 \draw[line width=0.5pt] (nvk) -- (uc04);
