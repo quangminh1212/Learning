@@ -8,7 +8,7 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
 DIAGRAMS_DIR = os.path.join(BASE_DIR, "diagrams")
-OUTPUT_DIR = os.path.join(BASE_DIR, "output", "diagrams")
+OUTPUT_DIR = os.path.join(BASE_DIR, "diagrams", "pdf")
 
 WRAPPER_TEMPLATE = r"""\documentclass[12pt]{{article}}
 \usepackage{{fontspec}}
