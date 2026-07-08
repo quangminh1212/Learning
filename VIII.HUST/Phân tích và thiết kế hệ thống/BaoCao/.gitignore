@@ -24,3 +24,7 @@ output/diagrams/*.pdf
 output/*.docx
 
 log/*.log
+__pycache__/
+*.pyc
+scripts/__pycache__/
+
