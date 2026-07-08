@@ -1,0 +1,83 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, transform shape]
+
+\begin{class}[text width=2.8cm]{NhomHangHoa}{-6,3}
+\attribute{+ MaNhomHang: String}
+\attribute{+ TenNhomHang: String}
+\attribute{+ MoTa: String}
+\end{class}
+
+\begin{class}[text width=3.2cm]{HangHoa}{-1,3}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\attribute{+ MaNhomHang: String}
+\attribute{+ MaDonViTinh: String}
+\attribute{+ GiaNhap: Decimal}
+\attribute{+ GiaXuat: Decimal}
+\attribute{+ TrangThai: Boolean}
+\operation{+ CapNhatThongTin(): void}
+\end{class}
+
+\begin{class}[text width=2.8cm]{DonViTinh}{4,3}
+\attribute{+ MaDonViTinh: String}
+\attribute{+ TenDonViTinh: String}
+\end{class}
+
+\begin{class}[text width=2.8cm]{Kho}{-6,-1}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\attribute{+ DiaChi: String}
+\attribute{+ NguoiPhuTrach: String}
+\attribute{+ DienTich: Decimal}
+\attribute{+ TrangThai: Boolean}
+\end{class}
+
+\begin{class}[text width=3.2cm]{NguoiDung}{-1,-1}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ TenDangNhap: String}
+\attribute{+ MatKhau: String}
+\attribute{+ HoTen: String}
+\attribute{+ VaiTro: String}
+\attribute{+ TrangThai: Boolean}
+\operation{+ DangNhap(): Boolean}
+\operation{+ DangXuat(): void}
+\end{class}
+
+\begin{class}[text width=3.2cm]{NhaCungCap}{4,-1}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ TenNhaCungCap: String}
+\attribute{+ DiaChi: String}
+\attribute{+ SoDienThoai: String}
+\attribute{+ Email: String}
+\attribute{+ NguoiLienHe: String}
+\end{class}
+
+\begin{class}[text width=3.2cm]{KhachHang}{-6,-5}
+\attribute{+ MaKhachHang: String}
+\attribute{+ TenKhachHang: String}
+\attribute{+ DiaChi: String}
+\attribute{+ SoDienThoai: String}
+\attribute{+ Email: String}
+\attribute{+ MaSoThue: String}
+\attribute{+ NguoiLienHe: String}
+\end{class}
+
+\begin{class}[text width=2.8cm]{TonKho}{-1,-5}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\attribute{+ NgayCapNhat: DateTime}
+\operation{+ CapNhatTonKho(): void}
+\end{class}
+
+% Quan hệ
+\draw (NhomHangHoa) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
+\draw (DonViTinh) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
+\draw (HangHoa) -- (TonKho) node[midway, right, font=\tiny] {1..*};
+\draw (Kho) -- (TonKho) node[midway, above, font=\tiny] {1..*};
+
+\end{tikzpicture}
+\caption{Sơ đồ lớp danh mục (Master Data)}
+\label{fig:class-diagram-master}
+\end{figure}
