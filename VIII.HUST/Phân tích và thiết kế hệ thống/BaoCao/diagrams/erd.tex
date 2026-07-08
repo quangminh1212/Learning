@@ -1,112 +1,112 @@
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.7, transform shape,
-    entity/.style={rectangle, draw, fill=blue!10, minimum width=2.2cm, minimum height=0.7cm, font=\scriptsize, align=center},
-    relation/.style={diamond, draw, fill=green!10, aspect=2, minimum width=1.2cm, font=\tiny, align=center},
-    arrow/.style={-{Stealth[scale=0.6]}, thick}
+\begin{tikzpicture}[scale=0.65, transform shape,
+    entity/.style={rectangle, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.4cm, minimum height=0.8cm, font=\scriptsize\bfseries, align=center, rounded corners=2pt},
+    relation/.style={diamond, draw=green!70!black, fill=green!5, line width=0.6pt, aspect=2, minimum width=1.4cm, font=\tiny, align=center},
+    arrow/.style={-{Stealth[scale=0.7]}, line width=0.6pt}
 ]
 
-% ===== Hàng 1 (y=4): NhomHangHoa, HangHoa, DonViTinh =====
-\node[entity] (NhomHang) at (-8,4) {NhomHangHoa};
-\node[entity] (HangHoa) at (-4,4) {HangHoa};
-\node[entity] (DonVi) at (0,4) {DonViTinh};
+% ===== Hàng 1 (y=4.5): NhomHangHoa, HangHoa, DonViTinh =====
+\node[entity] (NhomHang) at (-8,4.5) {NhomHangHoa};
+\node[entity] (HangHoa) at (-4,4.5) {HangHoa};
+\node[entity] (DonVi) at (0,4.5) {DonViTinh};
 
-\node[relation] (r1) at (-6,4) {phân loại};
-\node[relation] (r2) at (-2,4) {đo lường};
-\draw (NhomHang) -- (r1) -- (HangHoa);
-\draw (HangHoa) -- (r2) -- (DonVi);
+\node[relation] (r1) at (-6,4.5) {phân loại};
+\node[relation] (r2) at (-2,4.5) {đo lường};
+\draw[arrow] (NhomHang) -- (r1) -- (HangHoa);
+\draw[arrow] (HangHoa) -- (r2) -- (DonVi);
 
-% ===== Hàng 2 (y=2): NhaCungCap, Kho, KhachHang =====
-\node[entity] (NCC) at (-8,2) {NhaCungCap};
-\node[entity] (Kho) at (-4,2) {Kho};
-\node[entity] (KH) at (0,2) {KhachHang};
+% ===== Hàng 2 (y=2.5): NhaCungCap, Kho, KhachHang =====
+\node[entity] (NCC) at (-8,2.5) {NhaCungCap};
+\node[entity] (Kho) at (-4,2.5) {Kho};
+\node[entity] (KH) at (0,2.5) {KhachHang};
 
-% ===== Hàng 3 (y=0): NguoiDung, TonKho =====
-\node[entity] (NguoiDung) at (-8,0) {NguoiDung};
-\node[entity] (TonKho) at (-4,0) {TonKho};
+% ===== Hàng 3 (y=0.5): NguoiDung, TonKho =====
+\node[entity] (NguoiDung) at (-8,0.5) {NguoiDung};
+\node[entity] (TonKho) at (-4,0.5) {TonKho};
 
-\node[relation] (r3) at (-6,1) {lưu trữ};
-\draw (Kho) -- (r3) -- (TonKho);
+\node[relation] (r3) at (-6,1.5) {lưu trữ};
+\draw[arrow] (Kho) -- (r3) -- (TonKho);
 
-\node[relation] (r4) at (-4,2) {tồn tại};
-\draw (HangHoa) -- (r4) -- (TonKho);
+\node[relation] (r4) at (-4,2.5) {tồn tại};
+\draw[arrow] (HangHoa) -- (r4) -- (TonKho);
 
-% ===== Hàng 4 (y=-2): PhieuNhapKho, ChiTietPhieuNhap, PhieuXuatKho, ChiTietPhieuXuat =====
-\node[entity] (PNK) at (-8,-2) {PhieuNhapKho};
-\node[entity] (CTPN) at (-4,-2) {ChiTietPhieuNhap};
-\node[entity] (PXK) at (0,-2) {PhieuXuatKho};
-\node[entity] (CTPX) at (4,-2) {ChiTietPhieuXuat};
+% ===== Hàng 4 (y=-1.5): PhieuNhapKho, ChiTietPhieuNhap, PhieuXuatKho, ChiTietPhieuXuat =====
+\node[entity] (PNK) at (-8,-1.5) {PhieuNhapKho};
+\node[entity] (CTPN) at (-4,-1.5) {ChiTietPhieuNhap};
+\node[entity] (PXK) at (0,-1.5) {PhieuXuatKho};
+\node[entity] (CTPX) at (4,-1.5) {ChiTietPhieuXuat};
 
-\node[relation] (r5) at (-6,-2) {có chi tiết};
-\node[relation] (r6) at (2,-2) {có chi tiết};
-\draw (PNK) -- (r5) -- (CTPN);
-\draw (PXK) -- (r6) -- (CTPX);
+\node[relation] (r5) at (-6,-1.5) {có chi tiết};
+\node[relation] (r6) at (2,-1.5) {có chi tiết};
+\draw[arrow] (PNK) -- (r5) -- (CTPN);
+\draw[arrow] (PXK) -- (r6) -- (CTPX);
 
 % Liên kết NCC, Kho, KH với phiếu
-\node[relation] (r7) at (-8,0) {cung cấp};
-\draw (NCC) -- (r7) -- (PNK);
+\node[relation] (r7) at (-8,0.5) {cung cấp};
+\draw[arrow] (NCC) -- (r7) -- (PNK);
 
-\node[relation] (r8) at (-6,0) {nhập vào};
-\draw (Kho) -- (r8) -- (PNK);
+\node[relation] (r8) at (-6,0.5) {nhập vào};
+\draw[arrow] (Kho) -- (r8) -- (PNK);
 
-\node[relation] (r9) at (-2,0) {xuất từ};
-\draw (Kho) -- (r9) -- (PXK);
+\node[relation] (r9) at (-2,0.5) {xuất từ};
+\draw[arrow] (Kho) -- (r9) -- (PXK);
 
-\node[relation] (r10) at (0,0) {nhận hàng};
-\draw (KH) -- (r10) -- (PXK);
+\node[relation] (r10) at (0,0.5) {nhận hàng};
+\draw[arrow] (KH) -- (r10) -- (PXK);
 
 % Liên kết NguoiDung với phiếu
-\node[relation] (r11) at (-8,-1) {lập};
-\draw (NguoiDung) -- (r11) -- (PNK);
+\node[relation] (r11) at (-8,-0.5) {lập};
+\draw[arrow] (NguoiDung) -- (r11) -- (PNK);
 
-\node[relation] (r12) at (-4,-1) {lập};
-\draw (NguoiDung) -- (r12) -- (PXK);
+\node[relation] (r12) at (-4,-0.5) {lập};
+\draw[arrow] (NguoiDung) -- (r12) -- (PXK);
 
 % Liên kết HangHoa với chi tiết phiếu
-\node[relation] (r13) at (-4,1) {tham chiếu};
-\draw (HangHoa) -- (r13) -- (CTPN);
+\node[relation] (r13) at (-4,1.5) {tham chiếu};
+\draw[arrow] (HangHoa) -- (r13) -- (CTPN);
 
-\node[relation] (r14) at (2,1) {tham chiếu};
-\draw (HangHoa) -- (r14) -- (CTPX);
+\node[relation] (r14) at (2,1.5) {tham chiếu};
+\draw[arrow] (HangHoa) -- (r14) -- (CTPX);
 
-% ===== Hàng 5 (y=-4): PhieuKiemKe, ChiTietKiemKe, DonDatHang, ChiTietDonHang =====
-\node[entity] (PKK) at (-8,-4) {PhieuKiemKe};
-\node[entity] (CTKK) at (-4,-4) {ChiTietKiemKe};
-\node[entity] (DDH) at (0,-4) {DonDatHang};
-\node[entity] (CTDH) at (4,-4) {ChiTietDonHang};
+% ===== Hàng 5 (y=-3.5): PhieuKiemKe, ChiTietKiemKe, DonDatHang, ChiTietDonHang =====
+\node[entity] (PKK) at (-8,-3.5) {PhieuKiemKe};
+\node[entity] (CTKK) at (-4,-3.5) {ChiTietKiemKe};
+\node[entity] (DDH) at (0,-3.5) {DonDatHang};
+\node[entity] (CTDH) at (4,-3.5) {ChiTietDonHang};
 
-\node[relation] (r15) at (-6,-4) {có chi tiết};
-\node[relation] (r16) at (2,-4) {có chi tiết};
-\draw (PKK) -- (r15) -- (CTKK);
-\draw (DDH) -- (r16) -- (CTDH);
+\node[relation] (r15) at (-6,-3.5) {có chi tiết};
+\node[relation] (r16) at (2,-3.5) {có chi tiết};
+\draw[arrow] (PKK) -- (r15) -- (CTKK);
+\draw[arrow] (DDH) -- (r16) -- (CTDH);
 
-\node[relation] (r17) at (-8,-3) {kiểm kê};
-\draw (Kho) -- (r17) -- (PKK);
+\node[relation] (r17) at (-8,-2.5) {kiểm kê};
+\draw[arrow] (Kho) -- (r17) -- (PKK);
 
-\node[relation] (r18) at (-4,-3) {tham chiếu};
-\draw (HangHoa) -- (r18) -- (CTKK);
+\node[relation] (r18) at (-4,-2.5) {tham chiếu};
+\draw[arrow] (HangHoa) -- (r18) -- (CTKK);
 
-\node[relation] (r19) at (0,-3) {đặt bởi};
-\draw (KH) -- (r19) -- (DDH);
+\node[relation] (r19) at (0,-2.5) {đặt bởi};
+\draw[arrow] (KH) -- (r19) -- (DDH);
 
-\node[relation] (r20) at (4,-3) {tham chiếu};
-\draw (HangHoa) -- (r20) -- (CTDH);
+\node[relation] (r20) at (4,-2.5) {tham chiếu};
+\draw[arrow] (HangHoa) -- (r20) -- (CTDH);
 
-% ===== Hàng 6 (y=-6): ThanhToan, LichSuThaoTac =====
-\node[entity] (TT) at (-4,-6) {ThanhToan};
-\node[entity] (LST) at (0,-6) {LichSuThaoTac};
+% ===== Hàng 6 (y=-5.5): ThanhToan, LichSuThaoTac =====
+\node[entity] (TT) at (-4,-5.5) {ThanhToan};
+\node[entity] (LST) at (0,-5.5) {LichSuThaoTac};
 
-\node[relation] (r21) at (-2,-6) {ghi nhận};
-\draw (TT) -- (r21) -- (LST);
+\node[relation] (r21) at (-2,-5.5) {ghi nhận};
+\draw[arrow] (TT) -- (r21) -- (LST);
 
-\node[relation] (r22) at (-6,-6) {thanh toán};
-\draw (PNK) -- (r22) -- (TT);
+\node[relation] (r22) at (-6,-4.5) {thanh toán};
+\draw[arrow] (PNK) -- (r22) -- (TT);
 
-\node[relation] (r23) at (-4,-4) {thanh toán};
-\draw (PXK) -- (r23) -- (TT);
+\node[relation] (r23) at (-4,-4.5) {thanh toán};
+\draw[arrow] (PXK) -- (r23) -- (TT);
 
-\node[relation] (r24) at (-8,-3) {ghi log};
-\draw (NguoiDung) -- (r24) -- (LST);
+\node[relation] (r24) at (-8,-3.5) {ghi log};
+\draw[arrow] (NguoiDung) -- (r24) -- (LST);
 
 \end{tikzpicture}
 \caption{Sơ đồ quan hệ thực thể (ERD) hệ thống quản lý kho hàng (16 bảng)}
