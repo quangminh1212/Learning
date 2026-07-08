@@ -2,34 +2,34 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    entity/.style={ellipse, draw=black, fill=white, line width=0.8pt, minimum width=2.6cm, minimum height=1.0cm, font=\small\bfseries, align=center},
-    process/.style={circle, draw=black, fill=gray!10, line width=0.8pt, minimum size=2.8cm, font=\bfseries\small, align=center},
-    flow/.style={-{Stealth[scale=0.8]}, line width=0.6pt},
-    label/.style={font=\scriptsize, fill=white, inner sep=1.5pt}
+    entity/.style={ellipse, draw=black, fill=white, line width=1.0pt, minimum width=3.0cm, minimum height=1.2cm, font=\normalsize\bfseries, align=center},
+    process/.style={circle, draw=black, fill=gray!10, line width=1.0pt, minimum size=3.2cm, font=\bfseries\normalsize, align=center},
+    flow/.style={-{Stealth[scale=0.9]}, line width=0.8pt},
+    label/.style={font=\small, fill=white, inner sep=2pt}
 ]
 
 \node[process] (sys) at (0,0) {0\\Quản lý kho};
 
-\node[entity] (ql) at (-6.2,3.2) {Quản lý\\kho};
-\node[entity] (nv) at (0,5.8) {Nhân viên\\kho};
-\node[entity] (kh) at (6.2,3.2) {Khách\\hàng};
-\node[entity] (ncc) at (6.2,-3.2) {Nhà cung\\cấp};
-\node[entity] (admin) at (-6.2,-3.2) {Quản trị\\viên};
+\node[entity] (ql) at (-7,3.5) {Quản lý\\kho};
+\node[entity] (nv) at (0,6.5) {Nhân viên\\kho};
+\node[entity] (kh) at (7,3.5) {Khách\\hàng};
+\node[entity] (ncc) at (7,-3.5) {Nhà cung\\cấp};
+\node[entity] (admin) at (-7,-3.5) {Quản trị\\viên};
 
-\draw[flow] (ql) -- (sys) node[label, pos=0.72, above left, sloped, align=center] {Yêu cầu\\duyệt, báo cáo};
-\draw[flow] (sys) -- (ql) node[label, pos=0.32, below right, sloped, align=center] {Kết quả\\duyệt, báo cáo};
+\draw[flow] (ql) -- (sys) node[label, pos=0.65, above left, sloped, align=center] {Yêu cầu\\duyệt, báo cáo};
+\draw[flow] (sys) -- (ql) node[label, pos=0.35, below right, sloped, align=center] {Kết quả\\duyệt, báo cáo};
 
-\draw[flow] (nv) -- (sys) node[label, pos=0.72, above right, align=center] {Dữ liệu\\nhập/xuất/kiểm kê};
-\draw[flow] (sys) -- (nv) node[label, pos=0.28, above left, align=center] {Phiếu, cảnh\\báo tồn kho};
+\draw[flow] (nv) -- (sys) node[label, pos=0.65, above right, align=center] {Dữ liệu\\nhập/xuất/kiểm kê};
+\draw[flow] (sys) -- (nv) node[label, pos=0.35, above left, align=center] {Phiếu, cảnh\\báo tồn kho};
 
-\draw[flow] (kh) -- (sys) node[label, pos=0.72, above right, sloped, align=center] {Đơn hàng,\\thanh toán};
-\draw[flow] (sys) -- (kh) node[label, pos=0.32, below left, sloped, align=center] {Trạng thái,\\hóa đơn};
+\draw[flow] (kh) -- (sys) node[label, pos=0.65, above right, sloped, align=center] {Đơn hàng,\\thanh toán};
+\draw[flow] (sys) -- (kh) node[label, pos=0.35, below left, sloped, align=center] {Trạng thái,\\hóa đơn};
 
-\draw[flow] (ncc) -- (sys) node[label, pos=0.72, above left, sloped, align=center] {Giao hàng,\\hóa đơn};
-\draw[flow] (sys) -- (ncc) node[label, pos=0.32, below right, sloped, align=center] {Đơn đặt hàng,\\xác nhận};
+\draw[flow] (ncc) -- (sys) node[label, pos=0.65, above left, sloped, align=center] {Giao hàng,\\hóa đơn};
+\draw[flow] (sys) -- (ncc) node[label, pos=0.35, below right, sloped, align=center] {Đơn đặt hàng,\\xác nhận};
 
-\draw[flow] (admin) -- (sys) node[label, pos=0.72, above right, sloped, align=center] {Cấu hình,\\phân quyền};
-\draw[flow] (sys) -- (admin) node[label, pos=0.32, below left, sloped, align=center] {Log, trạng thái\\hệ thống};
+\draw[flow] (admin) -- (sys) node[label, pos=0.65, above right, sloped, align=center] {Cấu hình,\\phân quyền};
+\draw[flow] (sys) -- (admin) node[label, pos=0.35, below left, sloped, align=center] {Log, trạng thái\\hệ thống};
 
 \end{tikzpicture}
 }
