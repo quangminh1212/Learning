@@ -25,11 +25,12 @@ Dựa trên các thực thể nghiệp vụ đã phân tích ở Chương 2 và 
     \item \textbf{LichSuThaoTac}: Lưu log thao tác: mã, người dùng, hành động, thời gian, đối tượng.
 \end{itemize}
 
-Sơ đồ lớp tổng thể được trình bày thành hai sơ đồ con để dễ quan sát và tránh chồng chéo:
+Sơ đồ lớp tổng thể được trình bày thành ba sơ đồ con để dễ quan sát, tránh chồng chéo và đảm bảo chữ hiển thị rõ ràng:
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Sơ đồ lớp danh mục (Master Data)}: bao gồm các lớp lưu thông tin cơ bản, ít thay đổi của hệ thống: \texttt{NguoiDung}, \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{NhaCungCap}, \texttt{KhachHang}, \texttt{Kho}, \texttt{TonKho}.
-    \item \textbf{Sơ đồ lớp nghiệp vụ (Transaction)}: bao gồm các lớp lưu thông tin giao dịch, thay đổi thường xuyên: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{DonDatHang}, \texttt{ChiTietDonHang}, \texttt{ThanhToan}, \texttt{LichSuThaoTac}.
+    \item \textbf{Sơ đồ lớp nghiệp vụ nhập xuất}: bao gồm các lớp liên quan đến phiếu nhập kho và phiếu xuất kho: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}.
+    \item \textbf{Sơ đồ lớp kiểm kê, đơn hàng và thanh toán}: bao gồm các lớp liên quan đến kiểm kê, đơn đặt hàng, thanh toán và log thao tác: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{DonDatHang}, \texttt{ChiTietDonHang}, \texttt{ThanhToan}, \texttt{LichSuThaoTac}.
 \end{itemize}
 
 \input{diagrams/classdiagram}
