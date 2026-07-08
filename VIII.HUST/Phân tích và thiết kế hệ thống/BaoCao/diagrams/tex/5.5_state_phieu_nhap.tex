@@ -2,16 +2,16 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    state/.style={rectangle, rounded corners, draw=black, fill=white, minimum width=2.5cm, minimum height=1cm, font=\small, align=center},
-    arrow/.style={-{Stealth[scale=0.8]}, thick},
-    label/.style={font=\scriptsize, fill=white, inner sep=2pt}
+    state/.style={rectangle, rounded corners, draw=black, fill=white, minimum width=3.0cm, minimum height=1.2cm, font=\normalsize, align=center},
+    arrow/.style={-{Stealth[scale=1.0]}, thick},
+    label/.style={font=\small, fill=white, inner sep=3pt}
 ]
 
 \node[state] (new) at (0,0) {Mới tạo};
-\node[state] (wait) at (3.5,0) {Chờ duyệt};
-\node[state] (approved) at (7,0) {Đã duyệt};
-\node[state] (done) at (10.5,0) {Đã nhập kho};
-\node[state] (cancel) at (7,-2.5) {Hủy};
+\node[state] (wait) at (5,0) {Chờ duyệt};
+\node[state] (approved) at (10,0) {Đã duyệt};
+\node[state] (done) at (15,0) {Đã nhập kho};
+\node[state] (cancel) at (10,-3.5) {Hủy};
 
 \draw[arrow] (new) -- (wait) node[label, midway, above] {Gửi duyệt};
 \draw[arrow] (wait) -- (approved) node[label, midway, above] {Quản lý duyệt};
