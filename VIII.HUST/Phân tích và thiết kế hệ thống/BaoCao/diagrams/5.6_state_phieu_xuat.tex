@@ -3,20 +3,21 @@
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
     state/.style={rectangle, rounded corners, draw, fill=green!10, minimum width=2.5cm, minimum height=1cm, font=\small, align=center},
-    arrow/.style={-{Stealth[scale=0.8]}, thick}
+    arrow/.style={-{Stealth[scale=0.8]}, thick},
+    label/.style={font=\scriptsize, fill=white, inner sep=2pt}
 ]
 
 \node[state] (new) at (0,0) {Mới tạo};
-\node[state] (wait) at (3,0) {Chờ duyệt};
-\node[state] (approved) at (6,0) {Đã duyệt};
-\node[state] (done) at (9,0) {Đã xuất kho};
-\node[state] (cancel) at (6,-2) {Hủy};
+\node[state] (wait) at (3.5,0) {Chờ duyệt};
+\node[state] (approved) at (7,0) {Đã duyệt};
+\node[state] (done) at (10.5,0) {Đã xuất kho};
+\node[state] (cancel) at (7,-2.5) {Hủy};
 
-\draw[arrow] (new) -- (wait) node[midway, above, font=\scriptsize] {Gửi duyệt};
-\draw[arrow] (wait) -- (approved) node[midway, above, font=\scriptsize] {Quản lý duyệt};
-\draw[arrow] (approved) -- (done) node[midway, above, font=\scriptsize] {Xuất hàng};
-\draw[arrow] (wait) -- (cancel) node[midway, left, font=\scriptsize] {Từ chối};
-\draw[arrow] (approved) -- (cancel) node[midway, right, font=\scriptsize] {Hủy phiếu};
+\draw[arrow] (new) -- (wait) node[label, midway, above] {Gửi duyệt};
+\draw[arrow] (wait) -- (approved) node[label, midway, above] {Quản lý duyệt};
+\draw[arrow] (approved) -- (done) node[label, midway, above] {Xuất hàng};
+\draw[arrow] (wait) -- (cancel) node[label, midway, left] {Từ chối};
+\draw[arrow] (approved) -- (cancel) node[label, midway, right] {Hủy phiếu};
 
 \end{tikzpicture}
 }

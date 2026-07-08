@@ -9,16 +9,16 @@
     system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=10pt, rounded corners=4pt}
 ]
 
-\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3.2) {Quản lý đối tác};
+\node[system, minimum width=12cm, minimum height=8cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3.6) {Quản lý đối tác};
 
-\node[usecase] (uc03) at (-1.8,1.2) {UC03: Quản lý nhà cung cấp};
-\node[usecase] (uc04) at (1.8,1.2) {UC04: Quản lý khách hàng};
+\node[usecase] (uc03) at (-3.5,1.2) {UC03: Quản lý\\nhà cung cấp};
+\node[usecase] (uc04) at (3.5,1.2) {UC04: Quản lý\\khách hàng};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-4,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (4,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (-4,-2.2) {};
-\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (4,-2.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6.5,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6.5,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (-6.5,-2.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (6.5,-2.2) {};
 
 \draw[line width=0.5pt] (nvk) -- (uc03);
 \draw[line width=0.5pt] (nvk) -- (uc04);

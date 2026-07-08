@@ -3,28 +3,29 @@
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[scale=0.9, transform shape,
     component/.style={rectangle, draw, fill=yellow!15, minimum width=3cm, minimum height=1.2cm, font=\small, align=center},
-    database/.style={cylinder, shape border rotate=90, draw, fill=gray!15, minimum width=2cm, minimum height=1.2cm, font=\small, align=center},
-    arrow/.style={-{Stealth[scale=0.8]}, thick}
+    database/.style={cylinder, shape border rotate=90, draw, fill=gray!15, minimum width=1.6cm, minimum height=1cm, font=\scriptsize, align=center, aspect=0.3},
+    arrow/.style={-{Stealth[scale=0.8]}, thick},
+    label/.style={font=\scriptsize, fill=white, inner sep=1pt}
 ]
 
 \node[component] (ui) at (0,2) {Giao diện người dùng\\(UI / Web Browser)};
 \node[component] (controller) at (0,0) {Controller Layer\\(API / Routing)};
 \node[component] (service) at (0,-2) {Service Layer\\(Business Logic)};
 \node[component] (repository) at (0,-4) {Repository Layer\\(Data Access)};
-\node[database] (db) at (0,-6) {Cơ sở dữ liệu\\(Database)};
+\node[database] (db) at (0,-6.5) {Cơ sở dữ liệu\\(Database)};
 
-\draw[arrow] (ui) -- (controller) node[midway, right, font=\scriptsize] {HTTP/HTTPS};
-\draw[arrow] (controller) -- (service) node[midway, right, font=\scriptsize] {Gọi dịch vụ};
-\draw[arrow] (service) -- (repository) node[midway, right, font=\scriptsize] {Truy vấn dữ liệu};
-\draw[arrow] (repository) -- (db) node[midway, right, font=\scriptsize] {SQL};
+\draw[arrow] (ui) -- (controller) node[label, midway, right] {HTTP/HTTPS};
+\draw[arrow] (controller) -- (service) node[label, midway, right] {Gọi dịch vụ};
+\draw[arrow] (service) -- (repository) node[label, midway, right] {Truy vấn dữ liệu};
+\draw[arrow] (repository) -- (db) node[label, midway, right] {SQL};
 
-\node[component] (auth) at (4.5,0) {Authentication\\Service};
-\node[component] (report) at (4.5,-2) {Report Service\\(Báo cáo)};
-\node[component] (inventory) at (4.5,-4) {Inventory Service\\(Tồn kho)};
+\node[component] (auth) at (5.5,0) {Authentication\\Service};
+\node[component] (report) at (5.5,-2) {Report Service\\(Báo cáo)};
+\node[component] (inventory) at (5.5,-4) {Inventory Service\\(Tồn kho)};
 
-\draw[arrow] (controller) -- (auth) node[midway, above, font=\scriptsize] {Xác thực};
-\draw[arrow] (service) -- (report) node[midway, above, font=\scriptsize] {Tạo báo cáo};
-\draw[arrow] (service) -- (inventory) node[midway, above, font=\scriptsize] {Tính tồn kho};
+\draw[arrow] (controller) -- (auth) node[label, midway, above] {Xác thực};
+\draw[arrow] (service) -- (report) node[label, midway, above] {Tạo báo cáo};
+\draw[arrow] (service) -- (inventory) node[label, midway, above] {Tính tồn kho};
 
 \end{tikzpicture}
 }
