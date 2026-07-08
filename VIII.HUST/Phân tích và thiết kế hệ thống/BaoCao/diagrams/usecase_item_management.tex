@@ -1,0 +1,38 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={circle, draw, minimum size=0.8cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=0.7cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=8pt}
+]
+
+% Hệ thống
+\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.2) {Quản lý hàng hóa và kho};
+
+% Các use case
+\node[usecase] (uc05) at (-2,2) {UC05: Quản lý\\hàng hóa};
+\node[usecase] (uc06) at (2,2) {UC06: Tìm kiếm\\hàng hóa};
+\node[usecase] (uc07) at (-2,0.5) {UC07: Quản lý kho};
+\node[usecase] (uc08) at (2,0.5) {UC08: Tìm kiếm kho};
+
+% Các tác nhân
+\node[actor, label=below:\scriptsize Nhân viên kho] (nvk) at (-5,1.25) {};
+\node[actor, label=below:\scriptsize Quản lý kho] (qlk) at (5,1.25) {};
+\node[actor, label=below:\scriptsize Quản trị viên] (admin) at (5,-1.5) {};
+
+% Liên kết
+\draw (nvk) -- (uc05);
+\draw (nvk) -- (uc06);
+\draw (nvk) -- (uc07);
+\draw (nvk) -- (uc08);
+\draw (qlk) -- (uc05);
+\draw (qlk) -- (uc06);
+\draw (qlk) -- (uc07);
+\draw (qlk) -- (uc08);
+\draw (admin) -- (uc07);
+
+\end{tikzpicture}
+\caption{Sơ đồ use case phân rã -- Quản lý hàng hóa và kho}
+\label{fig:usecase-item-management}
+\end{figure}

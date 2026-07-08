@@ -1,0 +1,29 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={circle, draw, minimum size=0.8cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=0.7cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=8pt}
+]
+
+% Hệ thống
+\node[system, minimum width=9cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,2.8) {Quản lý người dùng};
+
+% Các use case
+\node[usecase] (uc01) at (0,1.5) {UC01: Quản lý\\tài khoản};
+\node[usecase] (uc02) at (0,0) {UC02: Đăng nhập\\/Đăng xuất};
+
+% Các tác nhân
+\node[actor, label=below:\scriptsize Quản trị viên] (admin) at (-4,0.75) {};
+\node[actor, label=below:\scriptsize Người dùng] (user) at (4,0.75) {};
+
+% Liên kết
+\draw (admin) -- (uc01);
+\draw (admin) -- (uc02);
+\draw (user) -- (uc02);
+
+\end{tikzpicture}
+\caption{Sơ đồ use case phân rã -- Quản lý người dùng}
+\label{fig:usecase-user-management}
+\end{figure}

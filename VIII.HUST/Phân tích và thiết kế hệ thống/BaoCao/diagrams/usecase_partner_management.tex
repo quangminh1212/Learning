@@ -1,0 +1,34 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={circle, draw, minimum size=0.8cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=0.7cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=8pt}
+]
+
+% Hệ thống
+\node[system, minimum width=9cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,2.8) {Quản lý đối tác};
+
+% Các use case
+\node[usecase] (uc03) at (-1.5,1.5) {UC03: Quản lý\\nhà cung cấp};
+\node[usecase] (uc04) at (1.5,1.5) {UC04: Quản lý\\khách hàng};
+
+% Các tác nhân
+\node[actor, label=below:\scriptsize Nhân viên kho] (nvk) at (-4,0.75) {};
+\node[actor, label=below:\scriptsize Quản lý kho] (qlk) at (4,0.75) {};
+\node[actor, label=below:\scriptsize Nhà cung cấp] (ncc) at (-4,-1.5) {};
+\node[actor, label=below:\scriptsize Khách hàng] (kh) at (4,-1.5) {};
+
+% Liên kết
+\draw (nvk) -- (uc03);
+\draw (nvk) -- (uc04);
+\draw (qlk) -- (uc03);
+\draw (qlk) -- (uc04);
+\draw (ncc) -- (uc03);
+\draw (kh) -- (uc04);
+
+\end{tikzpicture}
+\caption{Sơ đồ use case phân rã -- Quản lý đối tác}
+\label{fig:usecase-partner-management}
+\end{figure}

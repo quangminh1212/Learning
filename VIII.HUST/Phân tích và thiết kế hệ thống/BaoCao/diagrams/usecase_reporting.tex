@@ -1,0 +1,36 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={circle, draw, minimum size=0.8cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=0.7cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=8pt}
+]
+
+% Hệ thống
+\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.2) {Đơn hàng, thanh toán và báo cáo};
+
+% Các use case
+\node[usecase] (uc11) at (-2,2) {UC11: Quản lý\\đơn đặt hàng};
+\node[usecase] (uc12) at (2,2) {UC12: Quản lý\\thanh toán};
+\node[usecase] (uc13) at (0,0.5) {UC13: Xem báo cáo\\thống kê};
+
+% Các tác nhân
+\node[actor, label=below:\scriptsize Khách hàng] (kh) at (-5,1.25) {};
+\node[actor, label=below:\scriptsize Nhân viên kho] (nvk) at (-5,-1.5) {};
+\node[actor, label=below:\scriptsize Quản lý kho] (qlk) at (5,1.25) {};
+\node[actor, label=below:\scriptsize Quản trị viên] (admin) at (5,-1.5) {};
+
+% Liên kết
+\draw (kh) -- (uc11);
+\draw (nvk) -- (uc11);
+\draw (qlk) -- (uc11);
+\draw (qlk) -- (uc12);
+\draw (qlk) -- (uc13);
+\draw (admin) -- (uc12);
+\draw (admin) -- (uc13);
+
+\end{tikzpicture}
+\caption{Sơ đồ use case phân rã -- Đơn hàng, thanh toán và báo cáo}
+\label{fig:usecase-reporting}
+\end{figure}
