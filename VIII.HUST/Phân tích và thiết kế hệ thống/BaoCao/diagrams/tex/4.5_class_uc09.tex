@@ -1,0 +1,63 @@
+\begin{figure}[H]
+\centering
+\makebox[\textwidth][c]{%
+\begin{tikzpicture}[scale=0.85, transform shape, every class/.style={text width=6.5cm}]
+
+\begin{class}{PhieuNhapKho}{0,0}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ MaKho: String}
+\attribute{+ NgayNhap: DateTime}
+\attribute{+ TongTien: Decimal}
+\operation{+ LapPhieuNhap(): void}
+\operation{+ DuyetPhieuNhap(): void}
+\end{class}
+
+\begin{class}{ChiTietPhieuNhap}{6,0}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuong: Integer}
+\attribute{+ DonGia: Decimal}
+\end{class}
+
+\begin{class}{HangHoa}{12,0}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\end{class}
+
+\begin{class}{NhaCungCap}{-6,4}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ TenNhaCungCap: String}
+\end{class}
+
+\begin{class}{Kho}{6,4}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\end{class}
+
+\begin{class}{TonKho}{12,4}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\operation{+ CapNhatTonKho(): void}
+\end{class}
+
+\begin{class}{NguoiDung}{-6,-4}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\operation{+ LapPhieuNhap(): void}
+\end{class}
+
+\draw (PhieuNhapKho) -- (ChiTietPhieuNhap) node[midway, above, font=\small] {1..*};
+\draw (ChiTietPhieuNhap) -- (HangHoa) node[midway, above, font=\small] {n..1};
+\draw (PhieuNhapKho) -- (NhaCungCap) node[midway, left, font=\small] {n..1};
+\draw (PhieuNhapKho) -- (Kho) node[midway, right, font=\small] {n..1};
+\draw (TonKho) -- (Kho) node[midway, above, font=\small] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, right, font=\small] {1..1};
+\draw (PhieuNhapKho) -- (NguoiDung) node[midway, left, font=\small] {1..*};
+
+\end{tikzpicture}
+}
+\caption{Biểu đồ lớp trong ca sử dụng UC09 -- Lập phiếu nhập kho}
+\label{fig:class-uc09}
+\end{figure}

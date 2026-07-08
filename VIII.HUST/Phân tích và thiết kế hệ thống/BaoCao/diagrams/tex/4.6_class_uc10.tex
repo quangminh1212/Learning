@@ -1,15 +1,9 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.68, transform shape, every class/.style={text width=5.5cm}]
+\begin{tikzpicture}[scale=0.85, transform shape, every class/.style={text width=6.5cm}]
 
-\begin{class}{NguoiDung}{-10,-3}
-\attribute{+ MaNguoiDung: String}
-\attribute{+ VaiTro: String}
-\operation{+ LapPhieuXuat(): void}
-\end{class}
-
-\begin{class}{PhieuXuatKho}{0,-3}
+\begin{class}{PhieuXuatKho}{0,0}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ MaKho: String}
@@ -19,29 +13,29 @@
 \operation{+ DuyetPhieuXuat(): void}
 \end{class}
 
-\begin{class}{ChiTietPhieuXuat}{8,-3}
+\begin{class}{ChiTietPhieuXuat}{6,0}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuong: Integer}
 \attribute{+ DonGia: Decimal}
 \end{class}
 
-\begin{class}{HangHoa}{14,-3}
+\begin{class}{HangHoa}{12,0}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \end{class}
 
-\begin{class}{KhachHang}{-5,4}
+\begin{class}{KhachHang}{-6,4}
 \attribute{+ MaKhachHang: String}
 \attribute{+ TenKhachHang: String}
 \end{class}
 
-\begin{class}{Kho}{3,4}
+\begin{class}{Kho}{6,4}
 \attribute{+ MaKho: String}
 \attribute{+ TenKho: String}
 \end{class}
 
-\begin{class}{TonKho}{10,4}
+\begin{class}{TonKho}{12,4}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
@@ -49,13 +43,19 @@
 \operation{+ KiemTraTonKho(): Boolean}
 \end{class}
 
-\draw (NguoiDung) -- (PhieuXuatKho) node[midway, above, font=\scriptsize] {1..*};
-\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\scriptsize] {1..*};
-\draw (ChiTietPhieuXuat) -- (HangHoa) node[midway, above, font=\scriptsize] {n..1};
-\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\scriptsize] {n..1};
-\draw (PhieuXuatKho) -- (Kho) node[midway, right, font=\scriptsize] {n..1};
-\draw (TonKho) -- (Kho) node[midway, above, font=\scriptsize] {1..*};
-\draw (TonKho) -- (HangHoa) node[midway, above right, font=\scriptsize] {1..1};
+\begin{class}{NguoiDung}{-6,-4}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\operation{+ LapPhieuXuat(): void}
+\end{class}
+
+\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\small] {1..*};
+\draw (ChiTietPhieuXuat) -- (HangHoa) node[midway, above, font=\small] {n..1};
+\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\small] {n..1};
+\draw (PhieuXuatKho) -- (Kho) node[midway, right, font=\small] {n..1};
+\draw (TonKho) -- (Kho) node[midway, above, font=\small] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, right, font=\small] {1..1};
+\draw (PhieuXuatKho) -- (NguoiDung) node[midway, left, font=\small] {1..*};
 
 \end{tikzpicture}
 }
