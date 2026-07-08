@@ -20,6 +20,7 @@ output/*.synctex.gz
 output/*.fls
 output/*.fdb_latexmk
 output/main.pdf
+output/diagrams/*.pdf
 output/*.docx
 
 log/*.log
