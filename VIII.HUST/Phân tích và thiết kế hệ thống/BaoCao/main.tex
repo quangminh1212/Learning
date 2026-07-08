@@ -16,6 +16,7 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \setstretch{1.3}
+\usepackage{amsmath}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 \usepackage{bookmark}
 \usepackage{fancyhdr}
@@ -37,6 +38,9 @@
 \titlespacing*{\chapter}{0pt}{-20pt}{30pt}
 \titleformat{\section}{\normalfont\bfseries\large}{\thesection}{1em}{}
 \titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+
+% Đánh số hình theo chương
+\numberwithin{figure}{chapter}
 
 % Header/footer
 \pagestyle{fancy}
