@@ -1,0 +1,21 @@
+BLACK-WHITE DIAGRAMS VERIFICATION
+==================================
+
+Total paragraphs: 621
+Total characters: 30319
+Total images: 68
+
+SECTIONS:
+BLACK WHITE DIAGRAMS: PRESENT
+ACTIVITY DIAGRAMS: PRESENT
+USECASE DIAGRAMS: PRESENT
+CLASS DIAGRAMS: PRESENT
+SEQUENCE DIAGRAMS: PRESENT
+SAMPLE DIAGRAMS: PRESENT
+
+DIAGRAM TYPES:
+Activity diagrams: 3
+Usecase diagrams: 18
+Class diagrams: 7
+
+SAMPLE CONTENT (Last 15 lines):
