@@ -1,19 +1,19 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    entity/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.4cm, minimum height=1cm, font=\scriptsize\bfseries, align=center},
-    process/.style={circle, draw=green!70!black, fill=green!5, line width=0.8pt, minimum size=2.2cm, font=\bfseries\small, align=center},
+    entity/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.8cm, minimum height=1.1cm, font=\small\bfseries, align=center},
+    process/.style={circle, draw=green!70!black, fill=green!5, line width=0.8pt, minimum size=2.4cm, font=\bfseries\small, align=center},
     flow/.style={-{Stealth[scale=0.8]}, line width=0.6pt},
-    label/.style={font=\tiny, fill=white, inner sep=1pt}
+    label/.style={font=\scriptsize, fill=white, inner sep=1pt}
 ]
 
 \node[process] (sys) at (0,0) {0\\QL Kho};
 
-\node[entity] (ql) at (-4,2) {Quản lý\\kho};
-\node[entity] (nv) at (0,3.5) {Nhân viên\\kho};
-\node[entity] (kh) at (4,2) {Khách\\hàng};
-\node[entity] (ncc) at (4,-2) {Nhà cung\\cấp};
-\node[entity] (admin) at (-4,-2) {Quản trị\\viên};
+\node[entity] (ql) at (-4.5,2.2) {Quản lý\\kho};
+\node[entity] (nv) at (0,4) {Nhân viên\\kho};
+\node[entity] (kh) at (4.5,2.2) {Khách\\hàng};
+\node[entity] (ncc) at (4.5,-2.2) {Nhà cung\\cấp};
+\node[entity] (admin) at (-4.5,-2.2) {Quản trị\\viên};
 
 \draw[flow] (ql) -- (sys) node[label, midway, above left, sloped] {Yêu cầu duyệt, báo cáo};
 \draw[flow] (sys) -- (ql) node[label, midway, below right, sloped] {Kết quả duyệt, báo cáo};
