@@ -1,0 +1,298 @@
+PHÂN CÔNG CÔNG VIỆC
+
+
+
+Khảo sát hiện trạng
+Giới thiệu doanh nghiệp
+Trung tâm tư vấn du học FlyHigh là một đơn vị hoạt động trong lĩnh vực tư vấn và hỗ trợ du học sinh, chuyên cung cấp các dịch vụ: tư vấn lộ trình, xử lý hồ sơ nhập học, xin visa, săn học bổng và hỗ trợ sinh viên trong suốt quá trình học tập tại nước ngoài (Hàn Quốc, Nhật Bản, Mỹ, Úc, châu Âu...).
+Với số lượng học viên ngày càng tăng, khối lượng thông tin cần quản lý (hồ sơ cá nhân, tiến độ visa, tài chính, thông tin trường đối tác) trở nên cực kỳ lớn và phức tạp. Việc chuyển đổi từ quản lý truyền thống sang một hệ thống phần mềm chuyên biệt là nhu cầu cấp thiết để tối ưu hóa vận hành.Trung tâm tư vấn du học FlyHigh là một đơn vị hoạt động trong lĩnh vực tư vấn và hỗ trợ du học sinh. Trung tâm chuyên cung cấp các dịch vụ tư vấn du học, hỗ trợ hồ sơ nhập học, xin visa, tìm kiếm học bổng và hỗ trợ sinh viên trong suốt quá trình học tập tại nước ngoài.
+Thực trạng quy trình quản lý hiện tại và các hạn chế
+Hiện nay, trung tâm FlyHigh vẫn đang vận hành và quản lý dữ liệu du học sinh chủ yếu thông qua các công cụ văn phòng rời rạc như Google Sheets, Excel kết hợp với việc lưu trữ hồ sơ giấy tại văn phòng. Thực trạng này đang dẫn đến nhiều bất cập cụ thể như sau:
+Quản lý thông tin học viên phân tán: Mỗi tư vấn viên (Sale/Tư vấn) tự quản lý một file Excel riêng về danh sách khách hàng của mình. Khi học viên chuyển sang giai đoạn xử lý hồ sơ (Bộ phận Hồ sơ) hoặc theo dõi visa, dữ liệu lại được copy thủ công sang một file khác. Điều này dẫn đến tình trạng tam sao thất bản, sai lệch thông tin (sai số điện thoại, viết sai tên tiếng Anh, nhầm ngày sinh).
+Khó khăn trong việc theo dõi hạn chót: Các thông tin có tính chất thời hạn như hạn nộp hồ sơ trường (Application Deadline), hạn đóng học phí, ngày hết hạn visa, hạn bảo hiểm hiện đang được theo dõi thủ công bằng lịch cá nhân hoặc trí nhớ của nhân viên. Trung tâm đã từng gặp sự cố chậm trễ tiến độ nộp hồ sơ của học viên do không có hệ thống cảnh báo tự động.
+Theo dõi tài chính nhập nhằng: Việc quản lý các khoản phí (phí dịch vụ trung tâm, học phí đặt cọc cho trường, phí bảo hiểm, phí visa) được ghi nhận thủ công trên Excel và đối chiếu với kế toán qua biên lai giấy. Khi học viên hoặc phụ huynh hỏi về công nợ hoặc tiến độ thanh toán, nhân viên mất nhiều thời gian để tra cứu và phản hồi.
+Mất kết nối thông tin sau khi bay: Sau khi học viên xuất cảnh, thông tin về tình trạng học tập, gia hạn visa tại nước ngoài hoặc tình hình nhận học bổng các kỳ tiếp theo hầu như không được cập nhật tập trung. Trung tâm chỉ liên lạc qua Zalo/Facebook khi có sự cố phát sinh, gây khó khăn cho việc duy trì mạng lưới cựu du học sinh.
+Công tác báo cáo, thống kê chậm trễ: Ban giám đốc không có cái nhìn tổng quan theo thời gian thực (Real-time) về: Tỷ lệ đỗ visa tháng này là bao nhiêu? Doanh thu dự kiến từ kỳ nhập học tới là bao nhiêu? Quốc gia nào đang có lượng học sinh đăng ký nhiều nhất? Mọi báo cáo đều phải chờ nhân viên tổng hợp thủ công từ các file Excel, mất từ 1 - 2 ngày và dễ sai sót.
+Mục tiêu của hệ thống
+Hệ thống quản lý du học sinh của trung tâm FlyHigh được xây dựng nhằm hỗ trợ việc quản lý thông tin sinh viên một cách khoa học và hiệu quả. Hệ thống giúp lưu trữ, quản lý và xử lý các dữ liệu liên quan đến du học sinh trong suốt quá trình học tập tại nước ngoài.
+Mục tiêu chính của hệ thống bao gồm:
+Tập trung hóa dữ liệu: Xóa bỏ hoàn toàn các file Excel rời rạc. Toàn bộ thông tin từ lúc học viên tư vấn, làm hồ sơ, xin visa, đóng phí cho đến khi học tập tại nước ngoài đều được lưu trữ trên một cơ sở dữ liệu duy nhất, phân quyền rõ ràng cho từng bộ phận.
+Số hóa hồ sơ tài chính & Học thuật: Quản lý chi tiết từng khoản thu/chi của học viên, theo dõi học bổng theo từng kỳ học, và lưu trữ lịch sử học tập (Trường, ngành, bảng điểm nếu có) một cách khoa học.
+Báo cáo thông minh (Smart Reporting): Cung cấp hệ thống Dashboard trực quan cho Ban quản lý, xuất báo cáo thống kê tự động về tỷ lệ đỗ visa, doanh thu, số lượng học sinh theo từng quốc gia chỉ bằng một cú click chuột.
+Nâng cao năng suất & Bảo mật: Giảm 80% thời gian nhập liệu trùng lặp giữa các phòng ban, bảo mật thông tin cá nhân của học viên và người thân theo đúng quy định.
+Thông qua hệ thống này, trung tâm FlyHigh có thể quản lý thông tin du học sinh một cách tập trung, giảm thiểu sai sót trong quá trình quản lý dữ liệu và nâng cao hiệu quả làm việc của nhân viên.
+
+Mô tả nghiệp vụ
+Nghiệp vụ 1: Tiếp nhận và đăng ký hồ sơ du học sinh
+Mô tả: Thu thập thông tin cá nhân, tạo mã số sinh viên, thiết lập hồ sơ ban đầu
+Người thực hiện: Nhân viên tuyển sinh/tiếp nhận
+Quy trình chi tiết:
+Tiếp nhận yêu cầu từ sinh viên (trực tiếp/điện thoại/email)
+Yêu cầu cung cấp: họ tên, ngày sinh, giới tính, SĐT, email, địa chỉ
+Xác minh tính hợp lệ của thông tin
+Tạo MSSV (mã số sinh viên) duy nhất
+Nhập dữ liệu sinh viên vào hệ thống (lưu vào bảng SinhVien_03)
+Tạo tài khoản truy cập trong hệ thống
+Thời gian: 15-30 phút/sinh viên
+Kết quả: Hồ sơ sinh viên được tạo, MSSV được cấp, tài khoản được thiết lập
+
+Nghiệp vụ 2: Tư vấn chuyên ngành và lựa chọn trường
+Mô tả: Tư vấn ngành học, quốc gia du học, trường đại học phù hợp
+Người thực hiện: Nhân viên tuyển sinh/tiếp nhận
+Quy trình chi tiết:
+Đánh giá hồ sơ học tập và năng lực của sinh viên
+Tìm hiểu mục tiêu, đam mê, định hướng nghề nghiệp
+Giới thiệu các quốc gia du học có sẵn (Hàn, Nhật, Mỹ, Úc, Châu Âu)
+Giới thiệu danh sách trường top được hỗ trợ (trích từ bảng Truong_03)
+Phân tích từng lựa chọn về chi phí, chất lượng, điều kiện nhập học
+Giúp sinh viên lựa chọn phù hợp nhất
+Tạo hồ sơ học thuật (lưu vào bảng HocThuat_03)
+Thời gian: 1-2 giờ/sinh viên
+Kết quả: Xác định ngành học, quốc gia, trường đại học; Tạo hồ sơ học thuật
+
+Nghiệp vụ 3: Xin visa và quản lý hồ sơ pháp lý
+Mô tả: Hỗ trợ chuẩn bị, theo dõi, quản lý tình trạng visa của sinh viên
+Người thực hiện: Nhân viên quản lý sinh viên
+Quy trình chi tiết:
+Kiểm tra yêu cầu visa của quốc gia đích
+Hỗ trợ chuẩn bị tài liệu: hộ chiếu, letter of acceptance, tài chính
+Ghi nhận thông tin hộ chiếu, loại visa của sinh viên (lưu vào bảng Visa_03)
+Theo dõi quá trình xin visa (nộp, phỏng vấn, cấp)
+Cập nhật trạng thái visa (đang xử lý, đậu, rớt, hết hạn)
+Nhắc nhở gia hạn khi sắp hết hạn
+Lưu trữ scan tài liệu visa
+Thời gian: Liên tục suốt quá trình du học (1-3 tháng xử lý)
+Kết quả: Hồ sơ visa hoàn chỉnh, trạng thái cập nhật, nhắc nhở gia hạn
+
+Nghiệp vụ 4: Tìm kiếm và hỗ trợ xin học bổng
+Mô tả: Tìm kiếm cơ hội học bổng, hỗ trợ sinh viên xin học bổng
+Người thực hiện: Nhân viên quản lý sinh viên
+Quy trình chi tiết:
+Duy trì danh sách học bổng có sẵn trong bảng HocBong_03
+Xác định sinh viên đủ điều kiện cho từng loại học bổng
+Cung cấp thông tin chi tiết: tên học bổng, giá trị, yêu cầu
+Hỗ trợ chuẩn bị: CV, motivation letter, transcript
+Theo dõi lịch trình nộp, phỏng vấn, kết quả
+Cập nhật thông tin học bổng được nhận trong bảng HocBong_03
+Thông báo cho sinh viên kết quả và lịch trình nhận tiền
+Thời gian: 2-6 tháng trước khi bắt đầu học
+Kết quả: Xác định được học bổng, tài liệu chuẩn bị, kết quả được cập nhật
+
+Nghiệp vụ 5: Quản lý thông tin tài chính
+Mô tả: Ghi nhận thông tin hóa đơn (Invoice) từ trường đối tác gửi về và đối chiếu biên lai đóng tiền trực tiếp của sinh viên để phục vụ luồng hồ sơ visa và đối soát hoa hồng liên kết. 
+Người thực hiện: Nhân viên quản lý sinh viên.
+Quy trình chi tiết:
+Tiếp nhận Thông báo học phí (Invoice) chi tiết của sinh viên do Trường đại học đối tác phát hành gửi về trung tâm. 
+Số hóa thông tin Invoice vào hệ thống (lưu vào bảng TaiChinh_03)
+Nhập tổng số tiền cuối cùng sinh viên cần thanh toán cho trường vào ô Tổng chi phí (TongChiPhi_03) và đặt mặc định trạng thái TinhTrangTC_03 là "Chưa thanh toán". 
+Gửi thông tin Invoice kèm hướng dẫn cho Sinh viên/Phụ huynh tự thực hiện chuyển khoản trực tiếp sang tài khoản của Trường đối tác ngoài hệ thống. 
+Tiếp nhận Biên lai xác nhận đóng học phí (Tuition Receipt) từ sinh viên sau khi họ hoàn thành giao dịch trực tiếp với trường. 
+Kiểm tra, đối chiếu Biên lai thực tế: Nếu khớp với số liệu Invoice, tiến hành chuyển trạng thái tài chính trên hệ thống sang "Đã thanh toán". 
+Trạng thái "Đã thanh toán" học phí kỳ đầu tiên là tín hiệu xanh bắt buộc để kích hoạt luồng hồ sơ nộp xin Visa (Nghiệp vụ 3). 
+Kết xuất dữ liệu các trường hợp "Đã thanh toán" vào cuối kỳ để làm căn cứ đối soát và yêu cầu trường đối tác chi trả hoa hồng tuyển sinh (Commission) cho trung tâm. 
+Thời gian: Thực hiện theo từng học kỳ/năm học dựa trên lịch phát hành biểu phí của trường đối tác. 
+Kết quả: Dữ liệu công nợ học phí được số hóa rõ ràng, minh chứng đóng tiền của sinh viên được xác thực, đảm bảo tiến độ làm hồ sơ visa và kiểm soát nguồn thu hoa hồng đại lý. 
+
+Nghiệp vụ 6: Cập nhật kết quả học tập (GPA)
+Mô tả: Tiếp nhận, cập nhật, lưu trữ kết quả học tập hàng kỳ
+Người thực hiện: Nhân viên quản lý sinh viên
+Quy trình chi tiết:
+Tiếp nhận điểm GPA từ trường đại học cuối mỗi kỳ
+Xác minh thông tin: sinh viên, kỳ học, năm học
+Tính xếp loại: Xuất sắc (≥3.8), Giỏi (3.5-3.8), Khá (3.0-3.5)
+Tính tổng tín chỉ đã hoàn thành
+Nhập dữ liệu kết quả học tập của sinh viên (lưu vào bảng GPA_03)
+Ghi ngày cập nhật
+Lưu trữ bảng điểm chính thức
+Thời gian: Vài ngày sau khi nhận từ trường (khoảng 1-2 tháng/lần)
+
+Kết quả: Dữ liệu GPA chính xác, sinh viên được thông báo, lịch sử học tập rõ ràng
+Nghiệp vụ 7: Quản lý thông tin người thân (liên hệ khẩn cấp)
+Mô tả: Lưu trữ, duy trì thông tin người thân để liên hệ trong khẩn cấp
+Người thực hiện: Nhân viên quản lý sinh viên
+Quy trình chi tiết:
+Yêu cầu sinh viên cung cấp thông tin người thân: cha, mẹ, anh chị em
+Ghi nhận: tên, giới tính, SĐT, địa chỉ, mối quan hệ
+Ghi nhận nghề nghiệp và tình trạng (ở Việt Nam/ở nước du học)
+Nhập vào bảng NguoiThan_03
+Cập nhật khi thay đổi liên hệ
+Sử dụng để liên hệ trong trường hợp khẩn cấp
+Thời gian: Cập nhật khi cần
+Kết quả: Danh sách liên hệ khẩn cấp hoàn chỉnh, dễ truy cập khi cần
+
+Nghiệp vụ 8: Hỗ trợ sinh viên trong quá trình học tập
+Mô tả: Tiếp nhận yêu cầu, tư vấn hướng dẫn và kết nối phối hợp với các bên liên quan để giải quyết khó khăn của sinh viên về học tập, đời sống, pháp lý và tài chính tại nước ngoài. 
+Người thực hiện: Nhân viên quản lý sinh viên.
+Quy trình chi tiết:
+Tiếp nhận các yêu cầu cần hỗ trợ từ phía du học sinh thông qua các kênh tương tác của trung tâm (email/tin nhắn trên SNS/số điện thoại) 
+Thực hiện tra cứu nhanh hồ sơ tổng quan của sinh viên trên hệ thống để nắm thông tin nền (Trường học, ngành học, tình trạng visa, tình trạng học phí). 
+Phân loại chi tiết nội dung yêu cầu hỗ trợ để đưa ra phương án xử lý phù hợp: 
+Hỗ trợ học tập
+Hỗ trợ sinh hoạt 
+Hỗ trợ tài chính 
+Hỗ trợ sức khỏe & Pháp lý 
+Cung cấp các tài liệu tham khảo, biểu mẫu hoặc hướng dẫn trực tiếp cho sinh viên ngoài hệ thống. 
+Chủ động đại diện trung tâm liên lạc, làm việc với Trường đại học đối tác hoặc cơ quan chức năng nước sở tại nếu vấn đề vượt quá thẩm quyền tự xử lý của sinh viên. 
+Theo dõi và cập nhật tiến độ liên tục cho đến khi vấn đề của du học sinh được giải quyết dứt điểm. 
+Thời gian: Diễn ra liên tục và linh hoạt suốt toàn bộ vòng đời du học của sinh viên 
+Kết quả: Các khó khăn của du học sinh được tháo gỡ kịp thời, đảm bảo sinh viên luôn nhận được sự đồng hành toàn diện từ trung tâm, duy trì trạng thái học tập ổn định.
+
+Nghiệp vụ 9: Thực hiện báo cáo và thống kê
+Mô tả: Tạo báo cáo định kỳ, phân tích dữ liệu, thống kê hiệu quả
+Người thực hiện: Nhân viên phân tích dữ liệu / Quản lý
+Quy trình chi tiết:
+Xác định báo cáo cần thiết: hàng tháng/quý/năm
+Truy vấn dữ liệu từ các bảng:
+Tổng số sinh viên, phân theo quốc gia, ngành
+Tỷ lệ visa thành công
+Tổng học bổng được cấp
+GPA trung bình theo chương trình
+Tỷ lệ hoàn thành, tốt nghiệp
+Tạo biểu đồ, phân tích xu hướng
+Xác định điểm mạnh, điểm yếu
+Đề xuất cải thiện
+Báo cáo cho lãnh đạo
+Thời gian: Báo cáo hàng tháng
+Kết quả: Báo cáo chi tiết, sơ đồ, đề xuất cải thiện
+
+Nghiệp vụ 10: Quản lý thông tin trường đại học
+Mô tả: Duy trì, cập nhật danh sách trường đối tác, thông tin liên hệ
+Người thực hiện: Nhân viên quan hệ đối tác
+Quy trình chi tiết:
+Duy trì danh sách trường đối tác trong bảng Truong_03
+Ghi nhận thông tin: tên trường, quốc gia, xếp hạng, website
+Cập nhật email, SĐT, địa chỉ liên hệ của trường
+Theo dõi thay đổi về chính sách nhập học, học phí
+Liên lạc định kỳ với trường để duy trì quan hệ
+Cập nhật danh sách ngành học mới được mở
+Tìm kiếm, xem xét trường đối tác mới
+Cấu hình biểu mẫu liên lạc, yêu cầu tuyển sinh
+Thời gian: 5-10 giờ/tháng cho duy trì
+Kết quả: Danh sách trường hiện đại, thông tin liên hệ chính xác, quan hệ tốt
+
+Phân tích chức năng
+Biểu đồ usecase tổng quát
+
+Biểu đồ usecase phân rã
+
+Đặc tả usecase
+UC01: Quản lý account nhân viên
+UC02: Đăng nhập
+UC03: Tạo/Chỉnh sửa account sinh viên 
+UC04: Tạo/Cập nhật thông tin người thân
+UC05: Cập nhật thông tin visa
+UC06: Tìm kiếm sinh viên
+UC07: Tạo/Cập nhật trường học
+UC08: Tìm kiếm trường học
+UC09: Tạo/Cập nhật hồ sơ học tập
+UC10: Cập nhật kết quả GPA hàng kỳ 
+UC11: Tạo/Cập nhật học bổng
+UC12: Cập nhật chi phí tài chính từng kỳ
+UC13: Xem thống kê
+Phân tích cấu trúc
+Biểu đồ lớp trong ca sử dụng UC01: Quản lý account nhân viên
+
+Biểu đồ lớp trong ca sử dụng UC02: Đăng nhập
+
+Biểu đồ lớp trong ca sử dụng UC03: Tạo/cập nhật account sinh viên
+
+Biểu đồ lớp trong ca sử dụng UC04: Tạo/cập nhập thông tin người thân
+
+Biểu đồ lớp trong ca sử dụng UC05: Cập nhật thông tin visa
+
+Biểu đồ lớp trong ca sử dụng UC06: Tìm kiếm sinh viên
+
+Biểu đồ lớp trong ca sử dụng UC07: Tạo/Cập nhật trường học
+
+Biểu đồ lớp trong ca sử dụng UC08: Tìm kiếm trường học
+
+
+Biểu đồ lớp trong ca sử dụng UC09: Tạo/Cập nhật hồ sơ học tập
+
+Biểu đồ lớp trong ca sử dụng UC10: Cập nhật kết quả GPA hàng kỳ
+
+Biểu đồ lớp trong ca sử dụng UC11: Tạo/Cập nhật học bổng
+
+Biểu đồ lớp trong ca sử dụng UC12: Cập nhật chi phí tài chính hàng kỳ
+
+Biểu đồ lớp trong ca sử dụng UC13: Xem thống kê
+
+Phân tích hành vi
+Biểu đồ trình tự cho ca sử dụng UC01: Quản lý account nhân viên
+Tạo account:
+
+Cập nhập account:
+
+Biểu đồ trình tự cho ca sử dụng UC02: Đăng nhập
+
+Biểu đồ trình tự cho ca sử dụng UC03: Tạo/Chỉnh sửa account sinh viên
+Tạo account:
+
+Cập nhập account:
+
+Biểu đồ trình tự cho ca sử dụng UC04: Tạo/Cập nhật thông tin người thân
+
+Biểu đồ trình tự cho ca sử dụng UC05: Cập nhật thông tin visa
+
+Biểu đồ trình tự cho ca sử dụng UC06: Tìm kiếm sinh viên
+
+Biểu đồ trình tự cho ca sử dụng UC07: Tạo/Cập nhật trường học
+Thêm trường:
+
+Cập nhật trường:
+
+Biểu đồ trình tự cho ca sử dụng UC08: Tìm kiếm trường học
+
+Biểu đồ trình tự cho ca sử dụng UC09: Tạo/Cập nhật hồ sơ học tập
+Tạo hồ sơ học tập:
+
+Cập nhật hồ sơ học tập:
+
+Biểu đồ trình tự cho ca sử dụng UC10: Cập nhật kết quả GPA hàng kỳ	
+
+Biểu đồ trình tự cho ca sử dụng UC11: Tạo/Cập nhật học bổng
+Tạo mới học bổng:
+
+Cập nhật học bổng:
+
+Biểu đồ trình tự cho ca sử dụng UC12: Cập nhật chi phí tài chính từng kỳ
+
+Biểu đồ trình tự cho ca sử dụng UC013: Xem thống kê
+
+Thiết kế các lớp chi tiết
+	
+Bảng mô tả các lớp
+Bảng mô tả quan hệ
+
+
+Quan hệ giữa SinhVien và HoSoHocTap là 1-1, nghĩa là mỗi sinh viên chỉ có một hồ sơ học tập duy nhất và mỗi hồ sơ học tập chỉ thuộc về một sinh viên. Quan hệ giữa SinhVien và HocBong là 1-n, nghĩa là một sinh viên có thể nhận nhiều học bổng trong quá trình học tập.
+Biểu đồ lớp đã mô hình hóa đầy đủ các thực thể và mối quan hệ trong hệ thống quản lý du học sinh FlyHigh. Kết quả phân tích là cơ sở để xây dựng cơ sở dữ liệu, thiết kế các chức năng nghiệp vụ và triển khai hệ thống trong giai đoạn phát triển tiếp theo.
+Thiết kế cơ sở dữ liệu
+Mô hình quan hệ tổng thể giữa các bảng trong cơ sở dữ liệu
+
+Đặc tả các bảng
+SinhVien_03 
+Bảng SinhVien_03 lưu trữ thông tin cá nhân cơ bản của du học sinh như mã sinh viên, họ tên, ngày sinh, giới tính, số điện thoại, email và địa chỉ.
+NguoiThan_03
+Bảng NguoiThan_03 lưu trữ thông tin về người thân của du học sinh như tên, giới tính, số điện thoại, địa chỉ và mối quan hệ với sinh viên (cha, mẹ, anh chị…).
+HocThuat_03
+Bảng HocThuat_03 chứa các thông tin liên quan đến quá trình học tập của sinh viên như trường đang theo học, quốc gia du học, ngành học, năm bắt đầu và năm kết thúc dự kiến.
+GPA_03
+Bảng GPA_03 lưu trữ kết quả học tập của sinh viên theo từng học kỳ và năm học. Bảng này giúp theo dõi và đánh giá kết quả học tập của sinh viên trong suốt quá trình du học.
+Visa_03
+Bảng Visa_03 quản lý thông tin visa của du học sinh như số hộ chiếu, loại visa, ngày cấp, ngày hết hạn và tình trạng visa, giúp trung tâm theo dõi tình trạng pháp lý của sinh viên tại nước ngoài.
+Truong_03
+Bảng Truong_03 lưu trữ thông tin về các trường đại học hoặc tổ chức giáo dục mà sinh viên đang theo học.
+HocBong_03
+Bảng HocBong_03 lưu trữ thông tin về các học bổng mà sinh viên nhận được.
+TaiChinh_03
+Bảng TaiChinh_03 giúp trung tâm theo dõi tình trạng thanh toán và chi phí du học của sinh viên theo từng học kỳ hoặc năm học
+TaiKhoan_03
+Lưu trữ thông tin tài khoản đăng nhập, bảo mật mật khẩu và phân quyền truy cập cho toàn bộ nhân viên và sinh viên trong hệ thống FlyHigh.
+NhanVien_03
+Lưu trữ thông tin cá nhân và hồ sơ nhân sự của các nhân viên thuộc trung tâm tư vấn du học FlyHigh, đồng thời liên kết với tài khoản đăng nhập hệ thống
+Thiết kế giao diện
+UC06: Tìm kiếm sinh viên 
+
+UC08: Tìm kiếm trường học
+
