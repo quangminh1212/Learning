@@ -1,0 +1,64 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+
+\begin{class}[text width=3.5cm]{PhieuKiemKe}{-6,2}
+\attribute{+ MaPhieuKiemKe: String}
+\attribute{+ MaKho: String}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ NgayKiemKe: DateTime}
+\attribute{+ TrangThai: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{ChiTietKiemKe}{-1,2}
+\attribute{+ MaChiTiet: String}
+\attribute{+ MaPhieuKiemKe: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongThucTe: Integer}
+\attribute{+ SoLuongSoSach: Integer}
+\attribute{+ ChenhLech: Integer}
+\end{class}
+
+\begin{class}[text width=3.5cm]{DonDatHang}{4,2}
+\attribute{+ MaDonHang: String}
+\attribute{+ MaKhachHang: String}
+\attribute{+ NgayDat: DateTime}
+\attribute{+ NgayGiao: DateTime}
+\attribute{+ TrangThai: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{ChiTietDonHang}{-1,-2}
+\attribute{+ MaChiTiet: String}
+\attribute{+ MaDonHang: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuong: Integer}
+\attribute{+ DonGia: Decimal}
+\attribute{+ ThanhTien: Decimal}
+\end{class}
+
+\begin{class}[text width=3.5cm]{ThanhToan}{4,-2}
+\attribute{+ MaThanhToan: String}
+\attribute{+ MaPhieu: String}
+\attribute{+ LoaiPhieu: String}
+\attribute{+ SoTien: Decimal}
+\attribute{+ NgayThanhToan: DateTime}
+\attribute{+ PhuongThuc: String}
+\end{class}
+
+\begin{class}[text width=3.5cm]{LichSuThaoTac}{-1,-6}
+\attribute{+ MaLog: String}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ HanhDong: String}
+\attribute{+ ThoiGian: DateTime}
+\attribute{+ DoiTuong: String}
+\attribute{+ MoTa: String}
+\end{class}
+
+% Quan hệ
+\draw (PhieuKiemKe) -- (ChiTietKiemKe) node[midway, above, font=\tiny] {1..*};
+\draw (DonDatHang) -- (ChiTietDonHang) node[midway, right, font=\tiny] {1..*};
+
+\end{tikzpicture}
+\caption{Sơ đồ lớp kiểm kê, đơn hàng và thanh toán}
+\label{fig:class-diagram-kiemke-donhang}
+\end{figure}
