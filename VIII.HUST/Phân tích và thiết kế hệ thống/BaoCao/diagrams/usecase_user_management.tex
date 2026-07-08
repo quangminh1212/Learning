@@ -1,27 +1,25 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    actor/.style={circle, draw=black!70, fill=white, line width=1pt, minimum size=0.9cm, font=\small\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=3cm, minimum height=0.8cm, font=\scriptsize, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.5pt, inner sep=10pt, rounded corners=5pt}
+    scale=0.9,
+    transform shape,
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
 ]
 
-% Hệ thống
-\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3.3) {Quản lý người dùng};
+\node[system, minimum width=9cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,2.8) {Quản lý người dùng};
 
-% Các use case
-\node[usecase] (uc01) at (0,1.5) {UC01: Quản lý\\tài khoản};
-\node[usecase] (uc02) at (0,0) {UC02: Đăng nhập\\/Đăng xuất};
+\node[usecase] (uc01) at (0,1.2) {UC01: Quản lý tài khoản};
+\node[usecase] (uc02) at (0,-0.3) {UC02: Đăng nhập / Đăng xuất};
 
-% Các tác nhân
-\node[actor, label=below:\scriptsize\bfseries Quản trị viên] (admin) at (-4,0.75) {};
-\node[actor, label=below:\scriptsize\bfseries Người dùng] (user) at (4,0.75) {};
+\node[actor, label=below:{\tiny\bfseries Quản trị viên}] (admin) at (-3.5,0.5) {};
+\node[actor, label=below:{\tiny\bfseries Người dùng}] (user) at (3.5,0.5) {};
 
-% Liên kết
-\draw[line width=0.6pt] (admin) -- (uc01);
-\draw[line width=0.6pt] (admin) -- (uc02);
-\draw[line width=0.6pt] (user) -- (uc02);
+\draw[line width=0.5pt] (admin) -- (uc01);
+\draw[line width=0.5pt] (admin) -- (uc02);
+\draw[line width=0.5pt] (user) -- (uc02);
 
 \end{tikzpicture}
 \caption{Sơ đồ use case phân rã -- Quản lý người dùng}

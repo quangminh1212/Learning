@@ -1,34 +1,32 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    actor/.style={circle, draw=black!70, fill=white, line width=1pt, minimum size=0.9cm, font=\small\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=3cm, minimum height=0.8cm, font=\scriptsize, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.5pt, inner sep=10pt, rounded corners=5pt}
+    scale=0.9,
+    transform shape,
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
 ]
 
-% Hệ thống
-\node[system, minimum width=11cm, minimum height=8cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3.8) {Đơn hàng, thanh toán và báo cáo};
+\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3.3) {Đơn hàng, thanh toán và báo cáo};
 
-% Các use case
-\node[usecase] (uc11) at (-2,2) {UC11: Quản lý\\đơn đặt hàng};
-\node[usecase] (uc12) at (2,2) {UC12: Quản lý\\thanh toán};
-\node[usecase] (uc13) at (0,0.5) {UC13: Xem báo cáo\\thống kê};
+\node[usecase] (uc11) at (-2,1.5) {UC11: Quản lý đơn đặt hàng};
+\node[usecase] (uc12) at (2,1.5) {UC12: Quản lý thanh toán};
+\node[usecase] (uc13) at (0,0) {UC13: Xem báo cáo thống kê};
 
-% Các tác nhân
-\node[actor, label=below:\scriptsize\bfseries Khách hàng] (kh) at (-5,1.25) {};
-\node[actor, label=below:\scriptsize\bfseries Nhân viên kho] (nvk) at (-5,-1.5) {};
-\node[actor, label=below:\scriptsize\bfseries Quản lý kho] (qlk) at (5,1.25) {};
-\node[actor, label=below:\scriptsize\bfseries Quản trị viên] (admin) at (5,-1.5) {};
+\node[actor, label=below:{\tiny\bfseries Khách hàng}] (kh) at (-4.5,0.8) {};
+\node[actor, label=below:{\tiny\bfseries Nhân viên kho}] (nvk) at (-4.5,-2) {};
+\node[actor, label=below:{\tiny\bfseries Quản lý kho}] (qlk) at (4.5,0.8) {};
+\node[actor, label=below:{\tiny\bfseries Quản trị viên}] (admin) at (4.5,-2) {};
 
-% Liên kết
-\draw[line width=0.6pt] (kh) -- (uc11);
-\draw[line width=0.6pt] (nvk) -- (uc11);
-\draw[line width=0.6pt] (qlk) -- (uc11);
-\draw[line width=0.6pt] (qlk) -- (uc12);
-\draw[line width=0.6pt] (qlk) -- (uc13);
-\draw[line width=0.6pt] (admin) -- (uc12);
-\draw[line width=0.6pt] (admin) -- (uc13);
+\draw[line width=0.5pt] (kh) -- (uc11);
+\draw[line width=0.5pt] (nvk) -- (uc11);
+\draw[line width=0.5pt] (qlk) -- (uc11);
+\draw[line width=0.5pt] (qlk) -- (uc12);
+\draw[line width=0.5pt] (qlk) -- (uc13);
+\draw[line width=0.5pt] (admin) -- (uc12);
+\draw[line width=0.5pt] (admin) -- (uc13);
 
 \end{tikzpicture}
 \caption{Sơ đồ use case phân rã -- Đơn hàng, thanh toán và báo cáo}

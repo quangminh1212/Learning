@@ -1,32 +1,30 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    actor/.style={circle, draw=black!70, fill=white, line width=1pt, minimum size=0.9cm, font=\small\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=3cm, minimum height=0.8cm, font=\scriptsize, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.5pt, inner sep=10pt, rounded corners=5pt}
+    scale=0.9,
+    transform shape,
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
 ]
 
-% Hệ thống
-\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3.3) {Quản lý nhập xuất};
+\node[system, minimum width=9cm, minimum height=6.5cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3) {Quản lý nhập xuất};
 
-% Các use case
-\node[usecase] (uc09) at (-1.5,1.5) {UC09: Lập phiếu\\nhập kho};
-\node[usecase] (uc10) at (1.5,1.5) {UC10: Lập phiếu\\xuất kho};
+\node[usecase] (uc09) at (-1.5,1.2) {UC09: Lập phiếu nhập kho};
+\node[usecase] (uc10) at (1.5,1.2) {UC10: Lập phiếu xuất kho};
 
-% Các tác nhân
-\node[actor, label=below:\scriptsize\bfseries Nhân viên kho] (nvk) at (-4,0.75) {};
-\node[actor, label=below:\scriptsize\bfseries Quản lý kho] (qlk) at (4,0.75) {};
-\node[actor, label=below:\scriptsize\bfseries Nhà cung cấp] (ncc) at (-4,-1.5) {};
-\node[actor, label=below:\scriptsize\bfseries Khách hàng] (kh) at (4,-1.5) {};
+\node[actor, label=below:{\tiny\bfseries Nhân viên kho}] (nvk) at (-3.5,0.5) {};
+\node[actor, label=below:{\tiny\bfseries Quản lý kho}] (qlk) at (3.5,0.5) {};
+\node[actor, label=below:{\tiny\bfseries Nhà cung cấp}] (ncc) at (-3.5,-2) {};
+\node[actor, label=below:{\tiny\bfseries Khách hàng}] (kh) at (3.5,-2) {};
 
-% Liên kết
-\draw[line width=0.6pt] (nvk) -- (uc09);
-\draw[line width=0.6pt] (nvk) -- (uc10);
-\draw[line width=0.6pt] (qlk) -- (uc09);
-\draw[line width=0.6pt] (qlk) -- (uc10);
-\draw[line width=0.6pt] (ncc) -- (uc09);
-\draw[line width=0.6pt] (kh) -- (uc10);
+\draw[line width=0.5pt] (nvk) -- (uc09);
+\draw[line width=0.5pt] (nvk) -- (uc10);
+\draw[line width=0.5pt] (qlk) -- (uc09);
+\draw[line width=0.5pt] (qlk) -- (uc10);
+\draw[line width=0.5pt] (ncc) -- (uc09);
+\draw[line width=0.5pt] (kh) -- (uc10);
 
 \end{tikzpicture}
 \caption{Sơ đồ use case phân rã -- Quản lý nhập xuất}

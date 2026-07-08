@@ -1,36 +1,34 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    actor/.style={circle, draw=black!70, fill=white, line width=1pt, minimum size=0.9cm, font=\small\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=3cm, minimum height=0.8cm, font=\scriptsize, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.5pt, inner sep=10pt, rounded corners=5pt}
+    scale=0.9,
+    transform shape,
+    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.7cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=2.8cm, minimum height=0.6cm, font=\tiny, align=center},
+    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
 ]
 
-% Hệ thống
-\node[system, minimum width=11cm, minimum height=8cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,3.8) {Quản lý hàng hóa và kho};
+\node[system, minimum width=10cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small, text=blue!70!black] at (0,3.3) {Quản lý hàng hóa và kho};
 
-% Các use case
-\node[usecase] (uc05) at (-2,2) {UC05: Quản lý\\hàng hóa};
-\node[usecase] (uc06) at (2,2) {UC06: Tìm kiếm\\hàng hóa};
-\node[usecase] (uc07) at (-2,0.5) {UC07: Quản lý kho};
-\node[usecase] (uc08) at (2,0.5) {UC08: Tìm kiếm kho};
+\node[usecase] (uc05) at (-2,1.5) {UC05: Quản lý hàng hóa};
+\node[usecase] (uc06) at (2,1.5) {UC06: Tìm kiếm hàng hóa};
+\node[usecase] (uc07) at (-2,0) {UC07: Quản lý kho};
+\node[usecase] (uc08) at (2,0) {UC08: Tìm kiếm kho};
 
-% Các tác nhân
-\node[actor, label=below:\scriptsize\bfseries Nhân viên kho] (nvk) at (-5,1.25) {};
-\node[actor, label=below:\scriptsize\bfseries Quản lý kho] (qlk) at (5,1.25) {};
-\node[actor, label=below:\scriptsize\bfseries Quản trị viên] (admin) at (5,-1.5) {};
+\node[actor, label=below:{\tiny\bfseries Nhân viên kho}] (nvk) at (-4.5,0.8) {};
+\node[actor, label=below:{\tiny\bfseries Quản lý kho}] (qlk) at (4.5,0.8) {};
+\node[actor, label=below:{\tiny\bfseries Quản trị viên}] (admin) at (4.5,-2) {};
 
-% Liên kết
-\draw[line width=0.6pt] (nvk) -- (uc05);
-\draw[line width=0.6pt] (nvk) -- (uc06);
-\draw[line width=0.6pt] (nvk) -- (uc07);
-\draw[line width=0.6pt] (nvk) -- (uc08);
-\draw[line width=0.6pt] (qlk) -- (uc05);
-\draw[line width=0.6pt] (qlk) -- (uc06);
-\draw[line width=0.6pt] (qlk) -- (uc07);
-\draw[line width=0.6pt] (qlk) -- (uc08);
-\draw[line width=0.6pt] (admin) -- (uc07);
+\draw[line width=0.5pt] (nvk) -- (uc05);
+\draw[line width=0.5pt] (nvk) -- (uc06);
+\draw[line width=0.5pt] (nvk) -- (uc07);
+\draw[line width=0.5pt] (nvk) -- (uc08);
+\draw[line width=0.5pt] (qlk) -- (uc05);
+\draw[line width=0.5pt] (qlk) -- (uc06);
+\draw[line width=0.5pt] (qlk) -- (uc07);
+\draw[line width=0.5pt] (qlk) -- (uc08);
+\draw[line width=0.5pt] (admin) -- (uc07);
 
 \end{tikzpicture}
 \caption{Sơ đồ use case phân rã -- Quản lý hàng hóa và kho}
