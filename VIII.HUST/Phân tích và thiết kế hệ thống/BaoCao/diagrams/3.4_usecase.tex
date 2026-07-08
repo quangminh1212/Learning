@@ -4,14 +4,14 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black!70, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
-    usecase/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.6pt, minimum width=3.2cm, minimum height=0.8cm, font=\footnotesize, align=center},
-    system/.style={rectangle, draw=gray!50, dashed, fill=gray!2, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.6pt, minimum width=3.2cm, minimum height=0.8cm, font=\footnotesize, align=center},
+    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=4pt}
 ]
 
 % Hệ thống
 \node[system, minimum width=12cm, minimum height=13cm] (system) at (0,-0.2) {};
-\node[font=\bfseries\small, text=blue!70!black] at (0,6) {Hệ thống quản lý kho hàng};
+\node[font=\bfseries\small, text=black] at (0,6) {Hệ thống quản lý kho hàng};
 
 % Các use case (UC01-UC13) - bố trí thưa hơn
 \node[usecase] (uc01) at (-3.5,5) {UC01: Quản lý tài khoản};
