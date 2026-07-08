@@ -1,0 +1,55 @@
+COMPLETE DOCUMENT VERIFICATION
+================================
+
+Total paragraphs: 346
+Total characters: 20760
+Images in paragraphs: 48
+Total relationships: 56
+Image relationships: 48
+
+IMPORTANT SECTIONS:
+PHAN CONG CONG VIEC: PRESENT
+KHAO SAT HIEN TRANG: PRESENT
+THUC TRANG QUY TRINH: PRESENT
+MUC TIEU HE THONG: PRESENT
+PHAN 1 TONG QUAN: PRESENT
+PHAN 2 PHAN TICH YEU CAU: PRESENT
+PHAN 3 THIET KE HE THONG: PRESENT
+USECASE: PRESENT
+CLASS DIAGRAM: PRESENT
+SEQUENCE DIAGRAM: PRESENT
+UC01: PRESENT
+UC13: PRESENT
+HE THONG QUAN LY DU HOC SINH: PRESENT
+
+ALL SECTIONS PRESENT: True
+
+CONTENT SAMPLE (First 30 lines):
+1: PHÂN TÍCH & THIẾT KẾ
+2: HỆ THỐNG QUẢN LÝ DU HỌC SINH BẬC ĐẠI HỌC CỦA TRUNG TÂM TƯ VẤN DU HỌC FLYHIGH
+3: Nhóm 3
+5: PHÂN CÔNG CÔNG VIỆC
+6: PHÂN CÔNG CÔNG VIỆC
+7: Khảo sát hiện trạng
+8: Giới thiệu doanh nghiệp
+9: Trung tâm tư vấn du học FlyHigh là một đơn vị hoạt động trong lĩnh vực tư vấn và
+10: Với số lượng học viên ngày càng tăng, khối lượng thông tin cần quản lý (hồ sơ cá
+11: Thực trạng quy trình quản lý hiện tại và các hạn chế
+12: Hiện nay, trung tâm FlyHigh vẫn đang vận hành và quản lý dữ liệu du học sinh chủ
+13: Quản lý thông tin học viên phân tán: Mỗi tư vấn viên (Sale/Tư vấn) tự quản lý mộ
+14: Khó khăn trong việc theo dõi hạn chót: Các thông tin có tính chất thời hạn như h
+15: Theo dõi tài chính nhập nhằng: Việc quản lý các khoản phí (phí dịch vụ trung tâm
+16: Mất kết nối thông tin sau khi bay: Sau khi học viên xuất cảnh, thông tin về tình
+17: Công tác báo cáo, thống kê chậm trễ: Ban giám đốc không có cái nhìn tổng quan th
+18: Mục tiêu của hệ thống
+19: Hệ thống quản lý du học sinh của trung tâm FlyHigh được xây dựng nhằm hỗ trợ việ
+20: Mục tiêu chính của hệ thống bao gồm:
+21: Tập trung hóa dữ liệu: Xóa bỏ hoàn toàn các file Excel rời rạc. Toàn bộ thông ti
+22: Số hóa hồ sơ tài chính & Học thuật: Quản lý chi tiết từng khoản thu/chi của học 
+23: Báo cáo thông minh (Smart Reporting): Cung cấp hệ thống Dashboard trực quan cho 
+24: Nâng cao năng suất & Bảo mật: Giảm 80% thời gian nhập liệu trùng lặp giữa các ph
+25: Thông qua hệ thống này, trung tâm FlyHigh có thể quản lý thông tin du học sinh m
+27: PHẦN 1: TỔNG QUAN
+28: Nhóm 3
+29: PHẦN 1: TỔNG QUAN
+30: Giới thiệu về hệ thống
