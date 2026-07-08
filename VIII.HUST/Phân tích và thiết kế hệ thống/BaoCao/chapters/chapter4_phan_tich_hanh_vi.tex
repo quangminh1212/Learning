@@ -33,7 +33,11 @@ Sơ đồ lớp tổng thể được trình bày thành ba sơ đồ con để 
     \item \textbf{Sơ đồ lớp kiểm kê, đơn hàng và thanh toán}: bao gồm các lớp liên quan đến kiểm kê, đơn đặt hàng, thanh toán và log thao tác: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{DonDatHang}, \texttt{ChiTietDonHang}, \texttt{ThanhToan}, \texttt{LichSuThaoTac}.
 \end{itemize}
 
-\input{diagrams/classdiagram}
+\input{diagrams/4.1_classdiagram_master}
+
+\input{diagrams/4.2_classdiagram_nhapxuat}
+
+\input{diagrams/4.3_classdiagram_kiemke_donhang}
 
 \section{Biểu đồ lớp trong ca sử dụng}
 
@@ -51,7 +55,7 @@ Ca sử dụng quản lý hàng hóa liên quan đến các lớp: \texttt{Nguoi
 
 Khi thêm hàng hóa mới, hệ thống tự động tạo bản ghi \texttt{TonKho} bằng 0 tại tất cả các kho đang hoạt động. Khi cập nhật giá hoặc thông tin, chỉ bảng \texttt{HangHoa} thay đổi.
 
-\input{diagrams/class_uc05}
+\input{diagrams/4.4_class_uc05}
 
 \subsection{UC09 -- Lập phiếu nhập kho}
 
@@ -69,7 +73,7 @@ Ca sử dụng lập phiếu nhập kho liên quan đến các lớp: \texttt{Ng
 
 Sau khi phiếu nhập được duyệt, lớp \texttt{TonKho} được cập nhật để phản ánh số lượng hàng mới nhập. Nếu bản ghi tồn kho chưa có, hệ thống tạo mới; nếu đã có, hệ thống cộng thêm số lượng.
 
-\input{diagrams/class_uc09}
+\input{diagrams/4.5_class_uc09}
 
 \subsection{UC10 -- Lập phiếu xuất kho}
 
@@ -87,7 +91,7 @@ Ca sử dụng lập phiếu xuất kho liên quan đến các lớp: \texttt{Ng
 
 Hệ thống kiểm tra \texttt{TonKho} trước khi cho phép xuất: nếu số lượng tồn tại kho không đủ, hệ thống từ chối thêm dòng hàng đó. Sau khi duyệt, tồn kho được giảm tương ứng.
 
-\input{diagrams/class_uc10}
+\input{diagrams/4.6_class_uc10}
 
 \section{Kết luận chương}
 
