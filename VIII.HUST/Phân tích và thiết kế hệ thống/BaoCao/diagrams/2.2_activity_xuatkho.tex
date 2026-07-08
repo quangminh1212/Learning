@@ -2,27 +2,28 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[scale=0.85, transform shape,
-    startstop/.style={rectangle, rounded corners=5pt, draw=red!70!black, fill=red!5, line width=0.8pt, minimum width=3.6cm, minimum height=1cm, font=\small\bfseries, align=center},
-    process/.style={rectangle, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=4.8cm, minimum height=1cm, font=\small, align=center, rounded corners=2pt},
-    decision/.style={diamond, draw=orange!70!black, fill=orange!5, line width=0.8pt, aspect=2.5, minimum width=2.2cm, minimum height=1.2cm, font=\small, align=center},
+    node distance=0.8cm and 2.2cm,
+    startstop/.style={rectangle, rounded corners=5pt, draw=black, fill=gray!20, line width=0.8pt, minimum width=3.6cm, minimum height=1cm, font=\small\bfseries, align=center},
+    process/.style={rectangle, draw=black, fill=white, line width=0.8pt, minimum width=4.8cm, minimum height=1cm, font=\small, align=center, rounded corners=2pt},
+    decision/.style={diamond, draw=black, fill=gray!10, line width=0.8pt, aspect=2.5, minimum width=2.2cm, minimum height=1.2cm, font=\small, align=center},
     arrow/.style={-{Stealth[scale=0.8]}, line width=0.6pt}
 ]
 
 % Các bước
-\node[startstop] (start) at (0,6) {Bắt đầu};
-\node[process] (step1) at (0,4.8) {Nhân viên kho lập phiếu xuất kho};
-\node[process] (step2) at (0,3.6) {Nhập thông tin khách hàng, kho, ngày xuất};
-\node[process] (step3) at (0,2.4) {Thêm chi tiết hàng hóa xuất};
-\node[decision] (dec1) at (0,1) {Tồn kho\\đủ?};
-\node[process] (step4) at (0,-0.5) {Gửi phiếu xuất để duyệt};
-\node[decision] (dec2) at (0,-2) {Quản lý\\duyệt?};
-\node[process] (step5) at (0,-3.5) {Giảm tồn kho};
-\node[process] (step6) at (0,-4.7) {In phiếu xuất};
-\node[startstop] (end) at (0,-5.9) {Kết thúc};
+\node[startstop] (start) {Bắt đầu};
+\node[process, below=of start] (step1) {Nhân viên kho lập phiếu xuất kho};
+\node[process, below=of step1] (step2) {Nhập thông tin khách hàng, kho, ngày xuất};
+\node[process, below=of step2] (step3) {Thêm chi tiết hàng hóa xuất};
+\node[decision, below=of step3] (dec1) {Tồn kho\\đủ?};
+\node[process, below=of dec1] (step4) {Gửi phiếu xuất để duyệt};
+\node[decision, below=of step4] (dec2) {Quản lý\\duyệt?};
+\node[process, below=of dec2] (step5) {Giảm tồn kho};
+\node[process, below=of step5] (step6) {In phiếu xuất};
+\node[startstop, below=of step6] (end) {Kết thúc};
 
 % Nhánh sai
-\node[process] (err1) at (4,1) {Thông báo lỗi\\tồn không đủ};
-\node[process] (err2) at (4,-2) {Thông báo từ chối\\trả về nhân viên};
+\node[process, right=of dec1] (err1) {Thông báo lỗi\\tồn không đủ};
+\node[process, right=of dec2] (err2) {Thông báo từ chối\\trả về nhân viên};
 
 % Mũi tên
 \draw[arrow] (start) -- (step1);
