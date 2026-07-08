@@ -20,8 +20,8 @@ output/*.synctex.gz
 output/*.fls
 output/*.fdb_latexmk
 output/main.pdf
-output/diagrams/*.pdf
 output/*.docx
+diagrams/pdf/*.pdf
 
 log/*.log
 __pycache__/
