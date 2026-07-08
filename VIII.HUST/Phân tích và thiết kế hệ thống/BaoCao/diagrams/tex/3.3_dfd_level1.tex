@@ -1,107 +1,125 @@
 \begin{figure}[H]
 \centering
-\makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.72, transform shape,
-    entity/.style={ellipse, draw=black, fill=white, line width=1.0pt,
-        minimum width=2.6cm, minimum height=1.05cm, font=\small\bfseries, align=center},
-    process/.style={rectangle, draw=black, fill=gray!12, line width=1.0pt,
-        minimum width=2.6cm, minimum height=1.15cm, font=\small, align=center, rounded corners=2pt},
-    store/.style={rectangle, draw=black, fill=white, line width=0.9pt,
-        minimum width=1.7cm, minimum height=0.75cm, font=\footnotesize, align=center, rounded corners=1pt},
-    flow/.style={-{Stealth[scale=0.75]}, line width=0.75pt},
-    label/.style={font=\scriptsize, fill=white, inner sep=1pt, align=center}
+% Giới hạn theo chiều rộng A4; bố cục 2 cột nên chiều cao vừa một trang
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[
+    entity/.style={
+        ellipse, draw=black, fill=white, line width=0.85pt,
+        minimum width=1.9cm, minimum height=0.72cm,
+        font=\scriptsize\bfseries, align=center, inner sep=0.8pt
+    },
+    process/.style={
+        rectangle, draw=black, fill=gray!15, line width=0.95pt,
+        minimum width=2.9cm, minimum height=0.9cm,
+        font=\footnotesize\bfseries, align=center, rounded corners=2pt, inner sep=1.5pt
+    },
+    store/.style={
+        rectangle, draw=black, fill=white, line width=0.8pt,
+        minimum width=1.55cm, minimum height=0.52cm,
+        font=\scriptsize, align=center, inner sep=0.8pt
+    },
+    flow/.style={-{Stealth[scale=0.55]}, line width=0.65pt},
+    elabel/.style={font=\tiny, fill=white, inner sep=0.8pt, align=center},
+    coltitle/.style={font=\scriptsize\bfseries, text=black!65}
 ]
 
-% ========== EXTERNAL ENTITIES ==========
-\node[entity] (admin) at (-8.2, 3.2) {Quản trị\\viên};
-\node[entity] (nv)    at (0, 7.0)    {Nhân viên kho};
-\node[entity] (ql)    at (8.2, 3.2)  {Quản lý\\kho};
-\node[entity] (kh)    at (-8.2,-3.2) {Khách\\hàng};
-\node[entity] (ncc)   at (8.2,-3.2)  {Nhà cung\\cấp};
+%======================================================================
+% DFD cấp 1 – 2 CỘT × 3 HÀNG (vừa A4 dọc, không chồng chéo)
+% Mỗi khối: Thực thể → Tiến trình → Kho DL
+%======================================================================
 
-% ========== PROCESSES (2x3 grid) ==========
-\node[process] (p1) at (-4.5, 2.4) {1.0 Quản lý\\người dùng};
-\node[process] (p2) at (0.0,  2.4) {2.0 Quản lý\\danh mục};
-\node[process] (p3) at (4.5,  2.4) {3.0 Quản lý\\nhập kho};
+%========== CỘT TRÁI: 1.0 – 2.0 – 3.0 ==========
+\node[coltitle] at (3.2, 9.6) {Nhóm chức năng cốt lõi};
 
-\node[process] (p6) at (-4.5,-2.4) {6.0 Báo cáo\\thống kê};
-\node[process] (p5) at (0.0, -2.4) {5.0 Quản lý\\tồn kho};
-\node[process] (p4) at (4.5, -2.4) {4.0 Quản lý\\xuất kho};
+%--- 1.0 ---
+\node[entity]  (e1)  at (0.0, 8.5) {Quản trị viên};
+\node[process] (p1)  at (3.5, 8.5) {1.0 Quản lý người dùng};
+\node[store]   (d1)  at (6.6, 8.85) {D1 Users};
+\node[store]   (d10) at (6.6, 8.15) {D10 Log};
+\draw[flow] (e1) -- (p1) node[elabel, midway, above] {Cấu hình};
+\draw[flow] (p1.east) -- ++(0.25,0) |- (d1.west);
+\draw[flow] (p1.east) -- ++(0.25,0) |- (d10.west);
 
-% ========== DATA STORES (near related processes) ==========
-% P1 stores
-\node[store] (d1)  at (-6.6, 3.6) {D1\\Users};
-\node[store] (d10) at (-6.6, 1.2) {D10\\Log};
+%--- 2.0 ---
+\node[entity]  (e2) at (0.0, 6.5) {Nhân viên kho};
+\node[process] (p2) at (3.5, 6.5) {2.0 Quản lý danh mục};
+\node[store]   (d2) at (6.6, 6.85) {D2 HangHoa};
+\node[store]   (d3) at (6.6, 6.15) {D3 NCC};
+\draw[flow] (e2) -- (p2) node[elabel, midway, above] {QL danh mục};
+\draw[flow] (p2.east) -- ++(0.25,0) |- (d2.west);
+\draw[flow] (p2.east) -- ++(0.25,0) |- (d3.west);
 
-% P2 stores (above P2)
-\node[store] (d2) at (-1.4, 4.2) {D2\\HangHoa};
-\node[store] (d3) at (1.4,  4.2) {D3\\NCC};
+%--- 3.0 ---
+\node[entity]  (e3a) at (0.0, 4.7) {Nhân viên kho};
+\node[entity]  (e3b) at (0.0, 3.9) {Quản lý kho};
+\node[entity]  (e3c) at (0.0, 3.1) {Nhà cung cấp};
+\node[process] (p3)  at (3.5, 3.9) {3.0 Quản lý nhập kho};
+\node[store]   (d6)  at (6.6, 4.25) {D6 PNK};
+\node[store]   (d8a) at (6.6, 3.55) {D8 TonKho};
+\draw[flow] (e3a) -- (p3.west) node[elabel, pos=0.55, above] {Lập phiếu nhập};
+\draw[flow] (e3b) -- (p3)        node[elabel, midway, above] {Duyệt};
+\draw[flow] (e3c) -- (p3.west)   node[elabel, pos=0.55, below] {Giao hàng};
+\draw[flow] (p3.east) -- ++(0.25,0) |- (d6.west);
+\draw[flow] (p3.east) -- ++(0.25,0) |- (d8a.west)
+    node[elabel, pos=0.7, below] {Tăng tồn};
 
-% P3/P4 stores (right column)
-\node[store] (d4) at (6.8,  0.0) {D4\\KH};
-\node[store] (d6) at (6.8,  2.4) {D6\\PNK};
-\node[store] (d7) at (6.8, -2.4) {D7\\PXK};
+%========== CỘT PHẢI: 4.0 – 5.0 – 6.0 ==========
+\node[coltitle] at (12.0, 9.6) {Xuất kho / Tồn kho / Báo cáo};
 
-% Central inventory
-\node[store] (d8) at (0.0, 0.0) {D8\\TonKho};
+%--- 4.0 ---
+\node[entity]  (e4a) at (8.8, 8.5) {Nhân viên kho};
+\node[entity]  (e4b) at (8.8, 7.7) {Quản lý kho};
+\node[entity]  (e4c) at (8.8, 6.9) {Khách hàng};
+\node[process] (p4)  at (12.3, 7.7) {4.0 Quản lý xuất kho};
+\node[store]   (d7)  at (15.4, 8.15) {D7 PXK};
+\node[store]   (d4)  at (15.4, 7.55) {D4 KH};
+\node[store]   (d8b) at (15.4, 6.95) {D8 TonKho};
+\draw[flow] (e4a) -- (p4.west) node[elabel, pos=0.55, above] {Lập phiếu xuất};
+\draw[flow] (e4b) -- (p4)       node[elabel, midway, above] {Duyệt};
+\draw[flow] (e4c) -- (p4.west)  node[elabel, pos=0.55, below] {Đơn hàng};
+\draw[flow] (p4.east) -- ++(0.25,0) |- (d7.west);
+\draw[flow] (p4.east) -- ++(0.25,0) |- (d4.west);
+\draw[flow] (p4.east) -- ++(0.25,0) |- (d8b.west)
+    node[elabel, pos=0.7, below] {Giảm tồn};
 
-% P5 stores (below P5)
-\node[store] (d9) at (-1.4,-4.2) {D9\\KiemKe};
-\node[store] (d5) at (1.4, -4.2) {D5\\Kho};
+%--- 5.0 ---
+\node[entity]  (e5) at (8.8, 5.1) {Nhân viên kho};
+\node[process] (p5) at (12.3, 5.1) {5.0 Quản lý tồn kho};
+\node[store]   (d9) at (15.4, 5.50) {D9 KiemKe};
+\node[store]   (d5) at (15.4, 4.90) {D5 Kho};
+\node[store]   (d8c) at (15.4, 4.30) {D8 TonKho};
+\draw[flow] (e5) -- (p5) node[elabel, midway, above] {Kiểm kê};
+\draw[flow] (p5.east) -- ++(0.25,0) |- (d9.west);
+\draw[flow] (p5.east) -- ++(0.25,0) |- (d5.west);
+\draw[flow] (p5.east) -- ++(0.25,0) |- (d8c.west);
 
-% ========== DATA FLOWS ==========
+%--- 6.0 ---
+\node[entity]  (e6) at (8.8, 2.7) {Quản lý kho};
+\node[process] (p6) at (12.3, 2.7) {6.0 Báo cáo thống kê};
+\node[store]   (d6b) at (15.4, 3.15) {D6 PNK};
+\node[store]   (d7b) at (15.4, 2.55) {D7 PXK};
+\node[store]   (d8d) at (15.4, 1.95) {D8 TonKho};
+\draw[flow] (e6) to[bend left=18] (p6)
+    node[elabel, pos=0.55, above] {Yêu cầu BC};
+\draw[flow] (p6) to[bend left=18] (e6)
+    node[elabel, pos=0.55, below] {Báo cáo};
+\draw[flow] (p6.east) -- ++(0.25,0) |- (d6b.west);
+\draw[flow] (p6.east) -- ++(0.25,0) |- (d7b.west);
+\draw[flow] (p6.east) -- ++(0.25,0) |- (d8d.west);
 
-% --- 1.0 Quản lý người dùng ---
-\draw[flow] (admin) -- (p1)
-    node[label, midway, above, sloped] {Cấu hình};
-\draw[flow] (p1) -- (d1);
-\draw[flow] (p1) -- (d10);
+%----- Đường phân cột -----
+\draw[gray!40, dashed, line width=0.6pt] (7.7, 9.3) -- (7.7, 1.6);
 
-% --- 2.0 Quản lý danh mục ---
-\draw[flow] (nv) -- (p2)
-    node[label, pos=0.35, left] {QL danh mục};
-\draw[flow] (p2) -- (d2);
-\draw[flow] (p2) -- (d3);
+%----- Chú thích -----
+\node[font=\scriptsize, anchor=west, align=left, text width=15.5cm] at (-0.5, 0.9) {%
+  \textbf{Ký hiệu:}
+  ellipse = thực thể ngoài;\quad
+  HCN xám = tiến trình;\quad
+  HCN trắng = kho dữ liệu (D).\\
+  \textit{Ghi chú:} kho dữ liệu dùng chung (ví dụ D8) được lặp lại tại các tiến trình liên quan để tránh đường chéo.
+};
 
-% --- 3.0 Quản lý nhập kho ---
-\draw[flow] (nv.east) to[out=0, in=90, looseness=0.9] (p3.north)
-    node[label, pos=0.45, above] {Lập phiếu nhập};
-\draw[flow] (ql) -- (p3)
-    node[label, midway, above, sloped] {Duyệt};
-\draw[flow] (ncc.west) to[out=180, in=0, looseness=0.6] (p3.east)
-    node[label, pos=0.55, right] {Giao hàng};
-\draw[flow] (p3) -- (d6);
-\draw[flow] (p3) -- (d8)
-    node[label, midway, above right] {Tăng tồn};
-
-% --- 4.0 Quản lý xuất kho ---
-\draw[flow] (nv.east) to[out=10, in=90, looseness=1.1] (p4.north)
-    node[label, pos=0.55, right] {Lập phiếu xuất};
-\draw[flow] (ql.south) to[out=-90, in=90, looseness=0.5] (p4.north east)
-    node[label, pos=0.4, right] {Duyệt};
-\draw[flow] (kh.east) to[out=0, in=180, looseness=0.55] (p4.west)
-    node[label, pos=0.4, below] {Đơn hàng};
-\draw[flow] (p4) -- (d7);
-\draw[flow] (p4) -- (d8)
-    node[label, midway, below right] {Giảm tồn};
-
-% --- 5.0 Quản lý tồn kho ---
-\draw[flow] (nv.south) to[out=-90, in=90, looseness=0.35] (p5.north)
-    node[label, pos=0.25, right] {Kiểm kê};
-\draw[flow] (p5) -- (d8);
-\draw[flow] (p5) -- (d5);
-\draw[flow] (p5) -- (d9);
-
-% --- 6.0 Báo cáo thống kê ---
-\draw[flow] (ql.south west) to[out=-120, in=30, looseness=0.7] (p6.north east)
-    node[label, pos=0.45, above] {Yêu cầu BC};
-\draw[flow] (p6.east) to[out=0, in=180, looseness=0.4] (d6.west);
-\draw[flow] (p6.east) to[out=-20, in=180, looseness=0.5] (d7.west);
-\draw[flow] (p6) -- (d8);
-\draw[flow] (p6.north) to[out=90, in=180, looseness=0.8] (ql.west)
-    node[label, pos=0.55, left] {Báo cáo};
-
-\end{tikzpicture}
+\end{tikzpicture}%
 }
 \caption{DFD cấp 1 – Phân rã các luồng dữ liệu trong hệ thống quản lý kho hàng}
 \label{fig:dfd-level1}
