@@ -1,9 +1,9 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.85, transform shape]
+\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.8cm}]
 
-\begin{class}[text width=4.2cm]{PhieuNhapKho}{-8,2}
+\begin{class}{PhieuNhapKho}{-9,3}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ MaKho: String}
@@ -15,7 +15,7 @@
 \operation{+ DuyetPhieuNhap(): void}
 \end{class}
 
-\begin{class}[text width=4.2cm]{ChiTietPhieuNhap}{-2.5,2}
+\begin{class}{ChiTietPhieuNhap}{2,3}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaHangHoa: String}
@@ -24,7 +24,7 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-\begin{class}[text width=4.2cm]{PhieuXuatKho}{3,2}
+\begin{class}{PhieuXuatKho}{-9,-2}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ MaKho: String}
@@ -36,7 +36,7 @@
 \operation{+ DuyetPhieuXuat(): void}
 \end{class}
 
-\begin{class}[text width=4.2cm]{ChiTietPhieuXuat}{-2.5,-2.5}
+\begin{class}{ChiTietPhieuXuat}{2,-2}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaHangHoa: String}
@@ -45,9 +45,9 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-% Quan hệ
+% Quan hệ (clear routing)
 \draw (PhieuNhapKho) -- (ChiTietPhieuNhap) node[midway, above, font=\tiny] {1..*};
-\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, right, font=\tiny] {1..*};
+\draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\tiny] {1..*};
 
 \end{tikzpicture}
 }

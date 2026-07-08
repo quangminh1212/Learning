@@ -1,15 +1,15 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.85, transform shape]
+\begin{tikzpicture}[scale=0.78, transform shape, every class/.style={text width=5.5cm}]
 
-\begin{class}[text width=5cm]{NguoiDung}{-6,-2}
+\begin{class}{NguoiDung}{-8,-2.5}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ VaiTro: String}
 \operation{+ LapPhieuNhap(): void}
 \end{class}
 
-\begin{class}[text width=5cm]{PhieuNhapKho}{-0.5,-2}
+\begin{class}{PhieuNhapKho}{0,-2.5}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ MaKho: String}
@@ -19,29 +19,29 @@
 \operation{+ DuyetPhieuNhap(): void}
 \end{class}
 
-\begin{class}[text width=5cm]{ChiTietPhieuNhap}{5,-2}
+\begin{class}{ChiTietPhieuNhap}{7,-2.5}
 \attribute{+ MaPhieuNhap: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuong: Integer}
 \attribute{+ DonGia: Decimal}
 \end{class}
 
-\begin{class}[text width=5cm]{HangHoa}{11,-2}
+\begin{class}{HangHoa}{12,-2.5}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \end{class}
 
-\begin{class}[text width=5cm]{NhaCungCap}{-3,2.5}
+\begin{class}{NhaCungCap}{-4,3}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ TenNhaCungCap: String}
 \end{class}
 
-\begin{class}[text width=5cm]{Kho}{2.5,2.5}
+\begin{class}{Kho}{3,3}
 \attribute{+ MaKho: String}
 \attribute{+ TenKho: String}
 \end{class}
 
-\begin{class}[text width=5cm]{TonKho}{8,2.5}
+\begin{class}{TonKho}{9,3}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}

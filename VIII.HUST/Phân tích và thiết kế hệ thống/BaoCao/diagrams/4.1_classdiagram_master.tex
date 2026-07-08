@@ -1,15 +1,16 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.85, transform shape]
+\begin{tikzpicture}[scale=0.72, transform shape, every class/.style={text width=6.2cm}]
 
-\begin{class}[text width=4.2cm]{NhomHangHoa}{-8,3}
+% Row 1 - Master data top
+\begin{class}{NhomHangHoa}{-10,4}
 \attribute{+ MaNhomHang: String}
 \attribute{+ TenNhomHang: String}
 \attribute{+ MoTa: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{HangHoa}{-2.5,3}
+\begin{class}{HangHoa}{-2,4}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \attribute{+ MaNhomHang: String}
@@ -20,12 +21,13 @@
 \operation{+ CapNhatThongTin(): void}
 \end{class}
 
-\begin{class}[text width=4.2cm]{DonViTinh}{3,3}
+\begin{class}{DonViTinh}{7,4}
 \attribute{+ MaDonViTinh: String}
 \attribute{+ TenDonViTinh: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{Kho}{-8,-1}
+% Row 2
+\begin{class}{Kho}{-10,0}
 \attribute{+ MaKho: String}
 \attribute{+ TenKho: String}
 \attribute{+ DiaChi: String}
@@ -34,7 +36,7 @@
 \attribute{+ TrangThai: Boolean}
 \end{class}
 
-\begin{class}[text width=4.2cm]{NguoiDung}{-2.5,-1}
+\begin{class}{NguoiDung}{-2,0}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ TenDangNhap: String}
 \attribute{+ MatKhau: String}
@@ -45,7 +47,7 @@
 \operation{+ DangXuat(): void}
 \end{class}
 
-\begin{class}[text width=4.2cm]{NhaCungCap}{3,-1}
+\begin{class}{NhaCungCap}{7,0}
 \attribute{+ MaNhaCungCap: String}
 \attribute{+ TenNhaCungCap: String}
 \attribute{+ DiaChi: String}
@@ -54,7 +56,8 @@
 \attribute{+ NguoiLienHe: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{KhachHang}{-8,-5}
+% Row 3
+\begin{class}{KhachHang}{-10,-4.5}
 \attribute{+ MaKhachHang: String}
 \attribute{+ TenKhachHang: String}
 \attribute{+ DiaChi: String}
@@ -64,7 +67,7 @@
 \attribute{+ NguoiLienHe: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{TonKho}{-2.5,-5}
+\begin{class}{TonKho}{2,-4.5}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
@@ -72,10 +75,10 @@
 \operation{+ CapNhatTonKho(): void}
 \end{class}
 
-% Quan hệ
+% Relations (spread to avoid crossing)
 \draw (NhomHangHoa) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
 \draw (DonViTinh) -- (HangHoa) node[midway, above, font=\tiny] {1..*};
-\draw (HangHoa) -- (TonKho) node[midway, right, font=\tiny] {1..*};
+\draw (HangHoa.east) -- ++(0.8,0) |- (TonKho.north) node[pos=0.25, above, font=\tiny] {1..*};
 \draw (Kho) -- (TonKho) node[midway, above, font=\tiny] {1..*};
 
 \end{tikzpicture}

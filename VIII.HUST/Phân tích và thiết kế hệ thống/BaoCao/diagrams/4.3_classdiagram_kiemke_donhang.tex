@@ -1,9 +1,9 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.85, transform shape]
+\begin{tikzpicture}[scale=0.78, transform shape, every class/.style={text width=5.8cm}]
 
-\begin{class}[text width=4.2cm]{PhieuKiemKe}{-8,2}
+\begin{class}{PhieuKiemKe}{-9,3.5}
 \attribute{+ MaPhieuKiemKe: String}
 \attribute{+ MaKho: String}
 \attribute{+ MaNguoiDung: String}
@@ -11,7 +11,7 @@
 \attribute{+ TrangThai: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{ChiTietKiemKe}{-2.5,2}
+\begin{class}{ChiTietKiemKe}{2,3.5}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaPhieuKiemKe: String}
 \attribute{+ MaHangHoa: String}
@@ -20,7 +20,7 @@
 \attribute{+ ChenhLech: Integer}
 \end{class}
 
-\begin{class}[text width=4.2cm]{DonDatHang}{3,2}
+\begin{class}{DonDatHang}{-9,-1}
 \attribute{+ MaDonHang: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ NgayDat: DateTime}
@@ -28,7 +28,7 @@
 \attribute{+ TrangThai: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{ChiTietDonHang}{-2.5,-2.5}
+\begin{class}{ChiTietDonHang}{2,-1}
 \attribute{+ MaChiTiet: String}
 \attribute{+ MaDonHang: String}
 \attribute{+ MaHangHoa: String}
@@ -37,7 +37,7 @@
 \attribute{+ ThanhTien: Decimal}
 \end{class}
 
-\begin{class}[text width=4.2cm]{ThanhToan}{3,-2.5}
+\begin{class}{ThanhToan}{-9,-5}
 \attribute{+ MaThanhToan: String}
 \attribute{+ MaPhieu: String}
 \attribute{+ LoaiPhieu: String}
@@ -46,7 +46,7 @@
 \attribute{+ PhuongThuc: String}
 \end{class}
 
-\begin{class}[text width=4.2cm]{LichSuThaoTac}{-2.5,-6.8}
+\begin{class}{LichSuThaoTac}{2,-5}
 \attribute{+ MaLog: String}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ HanhDong: String}
@@ -57,7 +57,7 @@
 
 % Quan hệ
 \draw (PhieuKiemKe) -- (ChiTietKiemKe) node[midway, above, font=\tiny] {1..*};
-\draw (DonDatHang) -- (ChiTietDonHang) node[midway, right, font=\tiny] {1..*};
+\draw (DonDatHang) -- (ChiTietDonHang) node[midway, above, font=\tiny] {1..*};
 
 \end{tikzpicture}
 }
