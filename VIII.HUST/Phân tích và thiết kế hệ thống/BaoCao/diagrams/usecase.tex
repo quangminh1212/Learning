@@ -1,41 +1,71 @@
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    actor/.style={circle, draw, minimum size=1cm, font=\small},
-    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.8cm, minimum height=1cm, font=\small, align=center},
-    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=10pt}
+    actor/.style={circle, draw, minimum size=0.8cm, font=\small},
+    usecase/.style={ellipse, draw, fill=blue!5, minimum width=2.6cm, minimum height=0.7cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw, dashed, fill=gray!5, inner sep=8pt}
 ]
 
 % Hệ thống
-\node[system, minimum width=10cm, minimum height=9cm] (system) at (0,0) {};
-\node[font=\bfseries] at (0,4.2) {Hệ thống quản lý kho hàng};
+\node[system, minimum width=11cm, minimum height=11cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,5.3) {Hệ thống quản lý kho hàng};
 
-% Các use case
-\node[usecase] (uc1) at (-2,2.5) {Quản lý\\hàng hóa};
-\node[usecase] (uc2) at (2,2.5) {Quản lý\\nhập kho};
-\node[usecase] (uc3) at (-2,0.5) {Quản lý\\xuất kho};
-\node[usecase] (uc4) at (2,0.5) {Quản lý\\tồn kho};
-\node[usecase] (uc5) at (-2,-1.5) {Quản lý\\người dùng};
-\node[usecase] (uc6) at (2,-1.5) {Báo cáo\\thống kê};
+% Các use case (UC01-UC13)
+\node[usecase] (uc01) at (-3.5,4) {UC01: Quản lý\\tài khoản};
+\node[usecase] (uc02) at (-3.5,2.8) {UC02: Đăng nhập\\/Đăng xuất};
+\node[usecase] (uc03) at (-3.5,1.6) {UC03: Quản lý\\nhà cung cấp};
+\node[usecase] (uc04) at (-3.5,0.4) {UC04: Quản lý\\khách hàng};
+\node[usecase] (uc05) at (-3.5,-0.8) {UC05: Quản lý\\hàng hóa};
+\node[usecase] (uc06) at (-3.5,-2) {UC06: Tìm kiếm\\hàng hóa};
+\node[usecase] (uc07) at (-3.5,-3.2) {UC07: Quản lý kho};
+\node[usecase] (uc08) at (-3.5,-4.4) {UC08: Tìm kiếm kho};
+
+\node[usecase] (uc09) at (3.5,4) {UC09: Lập phiếu\\nhập kho};
+\node[usecase] (uc10) at (3.5,2.8) {UC10: Lập phiếu\\xuất kho};
+\node[usecase] (uc11) at (3.5,1.6) {UC11: Quản lý\\đơn đặt hàng};
+\node[usecase] (uc12) at (3.5,0.4) {UC12: Quản lý\\thanh toán};
+\node[usecase] (uc13) at (3.5,-0.8) {UC13: Xem báo cáo\\thống kê};
 
 % Các tác nhân
-\node[actor, label=below:\small Nhân viên kho] (actor1) at (-6,1) {};
-\node[actor, label=below:\small Quản lý kho] (actor2) at (6,2) {};
-\node[actor, label=below:\small Quản trị viên] (actor3) at (6,-1) {};
-\node[actor, label=below:\small Khách hàng] (actor4) at (-6,-2) {};
+\node[actor, label=below:\scriptsize Quản trị viên] (admin) at (-7,3.5) {};
+\node[actor, label=below:\scriptsize Quản lý kho] (qlk) at (7,3.5) {};
+\node[actor, label=below:\scriptsize Nhân viên kho] (nvk) at (-7,-1) {};
+\node[actor, label=below:\scriptsize Khách hàng] (kh) at (7,-1) {};
+\node[actor, label=below:\scriptsize Nhà cung cấp] (ncc) at (7,-4) {};
 
-% Liên kết
-\draw (actor1) -- (uc1);
-\draw (actor1) -- (uc2);
-\draw (actor1) -- (uc3);
-\draw (actor1) -- (uc4);
-\draw (actor2) -- (uc2);
-\draw (actor2) -- (uc3);
-\draw (actor2) -- (uc4);
-\draw (actor2) -- (uc6);
-\draw (actor3) -- (uc5);
-\draw (actor3) -- (uc6);
-\draw (actor4) -- (uc3);
+% Liên kết Quản trị viên
+\draw (admin) -- (uc01);
+\draw (admin) -- (uc02);
+
+% Liên kết Quản lý kho
+\draw (qlk) -- (uc02);
+\draw (qlk) -- (uc03);
+\draw (qlk) -- (uc04);
+\draw (qlk) -- (uc05);
+\draw (qlk) -- (uc07);
+\draw (qlk) -- (uc09);
+\draw (qlk) -- (uc10);
+\draw (qlk) -- (uc11);
+\draw (qlk) -- (uc12);
+\draw (qlk) -- (uc13);
+
+% Liên kết Nhân viên kho
+\draw (nvk) -- (uc02);
+\draw (nvk) -- (uc03);
+\draw (nvk) -- (uc04);
+\draw (nvk) -- (uc05);
+\draw (nvk) -- (uc06);
+\draw (nvk) -- (uc07);
+\draw (nvk) -- (uc08);
+\draw (nvk) -- (uc09);
+\draw (nvk) -- (uc10);
+
+% Liên kết Khách hàng
+\draw (kh) -- (uc02);
+\draw (kh) -- (uc11);
+
+% Liên kết Nhà cung cấp
+\draw (ncc) -- (uc02);
 
 \end{tikzpicture}
 \caption{Sơ đồ use case tổng quát của hệ thống quản lý kho hàng}

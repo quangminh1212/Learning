@@ -2,7 +2,9 @@
 
 \section{Bảng mô tả các lớp}
 
-\begin{longtable}{|p{3cm}|p{3cm}|p{6.5cm}|}
+Bảng dưới đây mô tả chi tiết các lớp trong hệ thống, bao gồm tên lớp, các thuộc tính chính và mô tả chức năng:
+
+\begin{longtable}{|p{3cm}|p{5cm}|p{5cm}|}
 \hline
 \textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
 \hline
@@ -11,56 +13,68 @@
 \textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
 \hline
 \endhead
-NguoiDung & MaNguoiDung, TenDangNhap, MatKhau, VaiTro, TrangThai & Lưu thông tin tài khoản và phân quyền. \\
+NguoiDung & MaNguoiDung, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & Lưu thông tin tài khoản người dùng và phân quyền truy cập. \\
 \hline
-HangHoa & MaHangHoa, TenHangHoa, MaNhomHang, MaDonViTinh, GiaNhap, GiaXuat, MoTa, TrangThai & Lưu thông tin hàng hóa. \\
+HangHoa & MaHangHoa, TenHangHoa, MaNhomHang, MaDonViTinh, GiaNhap, GiaXuat, MoTa, TrangThai & Lưu thông tin hàng hóa: mã, tên, nhóm, đơn vị, giá, mô tả. \\
 \hline
-NhomHangHoa & MaNhomHang, TenNhomHang, MoTa & Phân loại hàng hóa. \\
+NhomHangHoa & MaNhomHang, TenNhomHang, MoTa & Phân loại hàng hóa theo nhóm. \\
 \hline
-DonViTinh & MaDonViTinh, TenDonViTinh & Đơn vị đo lường hàng hóa. \\
+DonViTinh & MaDonViTinh, TenDonViTinh & Đơn vị đo lường hàng hóa (cái, kg, hộp...). \\
 \hline
-NhaCungCap & MaNhaCungCap, TenNhaCungCap, DiaChi, SoDienThoai, Email & Thông tin nhà cung cấp. \\
+NhaCungCap & MaNhaCungCap, TenNhaCungCap, DiaChi, SoDienThoai, Email, NguoiLienHe & Thông tin nhà cung cấp hàng hóa. \\
 \hline
-KhachHang & MaKhachHang, TenKhachHang, DiaChi, SoDienThoai, Email & Thông tin khách hàng. \\
+KhachHang & MaKhachHang, TenKhachHang, DiaChi, SoDienThoai, Email, MaSoThue, NguoiLienHe & Thông tin khách hàng nhận hàng. \\
 \hline
-Kho & MaKho, TenKho, DiaChi, NguoiPhuTrach & Thông tin kho hàng. \\
+Kho & MaKho, TenKho, DiaChi, NguoiPhuTrach, DienTich, TrangThai & Thông tin kho hàng: mã, tên, địa chỉ, người phụ trách. \\
 \hline
-PhieuNhapKho & MaPhieuNhap, MaNhaCungCap, MaKho, MaNguoiDung, NgayNhap, TongTien, TrangThai & Thông tin phiếu nhập kho. \\
+PhieuNhapKho & MaPhieuNhap, MaNhaCungCap, MaKho, MaNguoiDung, NgayNhap, TongTien, TrangThai & Thông tin phiếu nhập kho: nhà cung cấp, kho, ngày, tổng tiền. \\
 \hline
-ChiTietPhieuNhap & MaChiTiet, MaPhieuNhap, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu nhập. \\
+ChiTietPhieuNhap & MaChiTiet, MaPhieuNhap, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu nhập: số lượng, đơn giá, thành tiền. \\
 \hline
-PhieuXuatKho & MaPhieuXuat, MaKhachHang, MaKho, MaNguoiDung, NgayXuat, TongTien, TrangThai & Thông tin phiếu xuất kho. \\
+PhieuXuatKho & MaPhieuXuat, MaKhachHang, MaKho, MaNguoiDung, NgayXuat, TongTien, TrangThai & Thông tin phiếu xuất kho: khách hàng, kho, ngày, tổng tiền. \\
 \hline
-ChiTietPhieuXuat & MaChiTiet, MaPhieuXuat, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu xuất. \\
+ChiTietPhieuXuat & MaChiTiet, MaPhieuXuat, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết hàng hóa trong phiếu xuất: số lượng, đơn giá, thành tiền. \\
 \hline
-PhieuKiemKe & MaPhieuKiemKe, MaKho, MaNguoiDung, NgayKiemKe, TrangThai & Thông tin phiếu kiểm kê. \\
+PhieuKiemKe & MaPhieuKiemKe, MaKho, MaNguoiDung, NgayKiemKe, TrangThai & Thông tin phiếu kiểm kê: kho, người kiểm, ngày. \\
 \hline
-ChiTietKiemKe & MaChiTiet, MaPhieuKiemKe, MaHangHoa, SoLuongThucTe, SoLuongSoSach, ChenhLech & Chi tiết kiểm kê. \\
+ChiTietKiemKe & MaChiTiet, MaPhieuKiemKe, MaHangHoa, SoLuongThucTe, SoLuongSoSach, ChenhLech & Chi tiết kiểm kê: số thực tế, số sổ sách, chênh lệch. \\
 \hline
 TonKho & MaKho, MaHangHoa, SoLuongTon, NgayCapNhat & Số lượng tồn kho của từng hàng tại từng kho. \\
 \hline
-LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong & Lưu lịch sử thao tác của người dùng. \\
+DonDatHang & MaDonHang, MaKhachHang, NgayDat, NgayGiao, TrangThai & Thông tin đơn đặt hàng: khách hàng, ngày đặt, ngày giao. \\
+\hline
+ChiTietDonHang & MaChiTiet, MaDonHang, MaHangHoa, SoLuong, DonGia, ThanhTien & Chi tiết đơn hàng: hàng hóa, số lượng, giá. \\
+\hline
+ThanhToan & MaThanhToan, MaPhieu, LoaiPhieu, SoTien, NgayThanhToan, PhuongThuc & Thông tin thanh toán: phiếu liên quan, số tiền, phương thức. \\
+\hline
+LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong, MoTa & Lưu lịch sử thao tác của người dùng trên hệ thống. \\
 \hline
 \end{longtable}
 
 \section{Bảng mô tả quan hệ giữa các lớp}
 
-\begin{longtable}{|p{4cm}|p{4cm}|p{4.5cm}|}
+Bảng dưới đây mô tả các quan hệ giữa các lớp trong hệ thống:
+
+\begin{longtable}{|p{4cm}|p{3cm}|p{6cm}|}
 \hline
-\textbf{Lớp nguồn} & \textbf{Lớp đích} & \textbf{Loại quan hệ} \\
+\textbf{Lớp nguồn -- Lớp đích} & \textbf{Bậc quan hệ} & \textbf{Mô tả} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Lớp nguồn} & \textbf{Lớp đích} & \textbf{Loại quan hệ} \\
+\textbf{Lớp nguồn -- Lớp đích} & \textbf{Bậc quan hệ} & \textbf{Mô tả} \\
 \hline
 \endhead
 NguoiDung -- PhieuNhapKho & 1..n & Một người dùng lập nhiều phiếu nhập. \\
 \hline
 NguoiDung -- PhieuXuatKho & 1..n & Một người dùng lập nhiều phiếu xuất. \\
 \hline
+NguoiDung -- LichSuThaoTac & 1..n & Một người dùng có nhiều bản ghi log. \\
+\hline
 NhaCungCap -- PhieuNhapKho & 1..n & Một nhà cung cấp có nhiều phiếu nhập. \\
 \hline
 KhachHang -- PhieuXuatKho & 1..n & Một khách hàng có nhiều phiếu xuất. \\
+\hline
+KhachHang -- DonDatHang & 1..n & Một khách hàng đặt nhiều đơn hàng. \\
 \hline
 Kho -- PhieuNhapKho & 1..n & Một kho nhận nhiều phiếu nhập. \\
 \hline
@@ -78,18 +92,90 @@ PhieuNhapKho -- ChiTietPhieuNhap & 1..n & Một phiếu nhập có nhiều dòng
 \hline
 PhieuXuatKho -- ChiTietPhieuXuat & 1..n & Một phiếu xuất có nhiều dòng chi tiết. \\
 \hline
+DonDatHang -- ChiTietDonHang & 1..n & Một đơn hàng có nhiều dòng chi tiết. \\
+\hline
 NhomHangHoa -- HangHoa & 1..n & Một nhóm hàng có nhiều hàng hóa. \\
 \hline
-DonViTinh -- HangHoa & 1..n & Một đơn vị tính được dùng cho nhiều hàng hóa. \\
+DonViTinh -- HangHoa & 1..n & Một đơn vị tính dùng cho nhiều hàng hóa. \\
+\hline
+PhieuNhapKho -- ThanhToan & 1..n & Một phiếu nhập có nhiều lần thanh toán. \\
+\hline
+PhieuXuatKho -- ThanhToan & 1..n & Một phiếu xuất có nhiều lần thanh toán. \\
 \hline
 \end{longtable}
 
+\section{Các phương thức chính của lớp}
+
+\subsection{Lớp NguoiDung}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{dangNhap(tenDangNhap, matKhau)}: Kiểm tra thông tin đăng nhập, trả về phiên làm việc.
+    \item \texttt{dangXuat()}: Xóa phiên làm việc.
+    \item \texttt{themNguoiDung(thongTin)}: Thêm tài khoản mới, mã hóa mật khẩu.
+    \item \texttt{suaNguoiDung(ma, thongTin)}: Cập nhật thông tin tài khoản.
+    \item \texttt{khoaTaiKhoan(ma)}: Khóa tài khoản, chuyển trạng thái ngừng hoạt động.
+    \item \texttt{kiemTraQuyen(ma, hanhDong)}: Kiểm tra người dùng có quyền thực hiện hành động.
+\end{itemize}
+
+\subsection{Lớp HangHoa}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{themHangHoa(thongTin)}: Thêm hàng hóa mới, khởi tạo tồn kho bằng 0.
+    \item \texttt{suaHangHoa(ma, thongTin)}: Cập nhật thông tin hàng hóa.
+    \item \texttt{xoaHangHoa(ma)}: Đánh dấu ngừng sử dụng (không xóa vật lý).
+    \item \texttt{timKiem(tuKhoa, dieuKien)}: Tìm kiếm hàng hóa theo mã, tên, nhóm, kho.
+    \item \texttt{layTonKho(ma, maKho)}: Lấy số lượng tồn kho của hàng tại một kho.
+\end{itemize}
+
+\subsection{Lớp PhieuNhapKho}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{lapPhieu(thongTin)}: Tạo phiếu nhập mới, trạng thái ``Chờ duyệt''.
+    \item \texttt{themChiTiet(maPhieu, chiTiet)}: Thêm dòng hàng hóa vào phiếu.
+    \item \texttt{duyetPhieu(ma)}: Duyệt phiếu, cập nhật tồn kho (tăng), ghi log.
+    \item \texttt{tuChoiPhieu(ma, lyDo)}: Từ chối phiếu, lưu lý do.
+    \item \texttt{huyPhieu(ma)}: Hủy phiếu (chỉ khi ``Mới tạo'' hoặc ``Từ chối'').
+    \item \texttt{tinhTongTien(ma)}: Tính tổng tiền phiếu từ các dòng chi tiết.
+\end{itemize}
+
+\subsection{Lớp PhieuXuatKho}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{lapPhieu(thongTin)}: Tạo phiếu xuất mới, trạng thái ``Chờ duyệt''.
+    \item \texttt{themChiTiet(maPhieu, chiTiet)}: Thêm dòng hàng, kiểm tra tồn kho đủ.
+    \item \texttt{duyetPhieu(ma)}: Duyệt phiếu, giảm tồn kho, ghi log.
+    \item \texttt{tuChoiPhieu(ma, lyDo)}: Từ chối phiếu, lưu lý do.
+    \item \texttt{huyPhieu(ma)}: Hủy phiếu.
+    \item \texttt{kiemTraTonKho(maHang, maKho, soLuong)}: Kiểm tra tồn kho có đủ để xuất.
+\end{itemize}
+
+\subsection{Lớp TonKho}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{layTonKho(maKho, maHang)}: Lấy số lượng tồn hiện tại.
+    \item \texttt{tangTonKho(maKho, maHang, soLuong)}: Tăng tồn kho khi nhập hàng.
+    \item \texttt{giamTonKho(maKho, maHang, soLuong)}: Giảm tồn kho khi xuất hàng.
+    \item \texttt{dieuChinhTonKho(maKho, maHang, soLuongMoi)}: Điều chỉnh tồn kho khi kiểm kê.
+    \item \texttt{layHangTonThap(maKho, nguong)}: Lấy danh sách hàng tồn dưới ngưỡng cảnh báo.
+\end{itemize}
+
 \section{Thiết kế thành phần (Component Diagram)}
 
-Component Diagram mô tả các thành phần phần mềm chính của hệ thống và mối quan hệ giữa chúng. Hệ thống được tổ chức theo kiến trúc phân lớp gồm: giao diện người dùng, controller, service, repository và cơ sở dữ liệu. Các dịch vụ chuyên biệt như xác thực, báo cáo và quản lý tồn kho được tách riêng để dễ bảo trì và mở rộng.
+Component Diagram mô tả các thành phần phần mềm chính của hệ thống và mối quan hệ giữa chúng. Hệ thống được tổ chức theo kiến trúc phân lớp gồm: giao diện người dùng (UI Layer), tầng điều khiển (Controller Layer), tầng dịch vụ (Service Layer), tầng truy cập dữ liệu (DAO Layer) và cơ sở dữ liệu.
+
+\textbf{Các thành phần chính}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{UI Layer}: Trang đăng nhập, Dashboard, Quản lý hàng hóa, Quản lý phiếu nhập/xuất, Báo cáo.
+    \item \textbf{Controller Layer}: NguoiDungController, HangHoaController, PhieuNhapController, PhieuXuatController, BaoCaoController.
+    \item \textbf{Service Layer}: AuthService (xác thực), TonKhoService (quản lý tồn kho), BaoCaoService (báo cáo), ThongBaoService (thông báo).
+    \item \textbf{DAO Layer}: NguoiDungDAO, HangHoaDAO, PhieuNhapDAO, PhieuXuatDAO, TonKhoDAO, BaoCaoDAO.
+    \item \textbf{Database}: PostgreSQL -- lưu trữ toàn bộ dữ liệu hệ thống.
+\end{itemize}
+
+Các dịch vụ chuyên biệt như xác thực, báo cáo và quản lý tồn kho được tách riêng để dễ bảo trì và mở rộng. Kiến trúc này cho phép thay đổi tầng giao diện hoặc cơ sở dữ liệu mà không ảnh hưởng đến logic nghiệp vụ.
 
 \input{diagrams/component}
 
 \section{Kết luận chương}
 
-Chương 6 đã mô tả chi tiết các lớp trong hệ thống, các quan hệ giữa chúng và thiết kế thành phần phần mềm. Các thiết kế này là nền tảng để xây dựng mô hình cơ sở dữ liệu và triển khai phần mềm trong Chương 7.
+Chương 6 đã mô tả chi tiết 18 lớp trong hệ thống với đầy đủ thuộc tính, liệt kê 19 quan hệ giữa các lớp và đặc tả các phương thức chính của 5 lớp quan trọng (NguoiDung, HangHoa, PhieuNhapKho, PhieuXuatKho, TonKho). Đồng thời trình bày thiết kế thành phần phần mềm theo kiến trúc phân lớp với 5 tầng. Các thiết kế này là nền tảng để xây dựng mô hình cơ sở dữ liệu và triển khai giao diện trong Chương 7.

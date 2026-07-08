@@ -2,44 +2,138 @@
 
 \section{Giới thiệu}
 
-Biểu đồ trình tự (Sequence Diagram) mô tả luồng tương tác giữa các đối tượng theo thời gian trong từng ca sử dụng. Chương này trình bày các sequence diagram cho các use case chính của hệ thống quản lý kho hàng.
+Biểu đồ trình tự (Sequence Diagram) mô tả luồng tương tác giữa các đối tượng theo thời gian trong từng ca sử dụng. Chương này trình bày các sequence diagram cho các use case chính của hệ thống quản lý kho hàng, bao gồm: UC05 (Quản lý hàng hóa), UC06 (Tìm kiếm hàng hóa), UC09 (Lập phiếu nhập kho) và UC10 (Lập phiếu xuất kho). Ngoài ra, chương còn trình bày biểu đồ trạng thái (State Machine Diagram) cho phiếu nhập kho và phiếu xuất kho.
 
 \section{UC05 -- Quản lý hàng hóa}
 
-Luồng tương tác bao gồm: nhân viên kho nhập thông tin hàng hóa, hệ thống kiểm tra dữ liệu, lưu hàng hóa và khởi tạo tồn kho ban đầu tại các kho.
+\textbf{Mô tả tương tác}: Nhân viên kho đăng nhập vào hệ thống, chọn chức năng quản lý hàng hóa, thêm hàng hóa mới. Hệ thống kiểm tra dữ liệu nhập (mã không trùng, nhóm hàng và đơn vị tính hợp lệ), lưu hàng hóa vào cơ sở dữ liệu và tự động khởi tạo bản ghi tồn kho bằng 0 tại tất cả các kho đang hoạt động.
+
+\textbf{Các đối tượng tham gia}: Nhân viên kho (tác nhân), Giao diện (Boundary), HangHoaController (Control), HangHoaDAO (Entity), TonKhoDAO (Entity), Cơ sở dữ liệu.
+
+\textbf{Luồng tương tác}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên kho gửi yêu cầu ``Thêm hàng hóa'' qua giao diện.
+    \item Giao diện chuyển yêu cầu đến HangHoaController.
+    \item HangHoaController gọi HangHoaDAO kiểm tra mã hàng có trùng không.
+    \item HangHoaDAO truy vấn cơ sở dữ liệu, trả về kết quả.
+    \item Nếu mã không trùng: HangHoaController gọi HangHoaDAO lưu hàng hóa.
+    \item HangHoaDAO lưu vào cơ sở dữ liệu, trả về mã hàng mới.
+    \item HangHoaController gọi TonKhoDAO khởi tạo tồn kho bằng 0 tại các kho.
+    \item TonKhoDAO lưu bản ghi tồn kho, trả về kết quả.
+    \item HangHoaController trả thông báo thành công cho giao diện.
+    \item Giao diện hiển thị thông báo cho nhân viên kho.
+\end{enumerate}
 
 \input{diagrams/sequence_uc05}
 
 \section{UC06 -- Tìm kiếm hàng hóa}
 
-Người dùng nhập từ khóa, hệ thống truy vấn cơ sở dữ liệu và trả về danh sách hàng hóa kèm theo số lượng tồn kho tại các kho.
+\textbf{Mô tả tương tác}: Người dùng nhập từ khóa tìm kiếm và điều kiện lọc. Hệ thống truy vấn cơ sở dữ liệu, trả về danh sách hàng hóa kèm số lượng tồn kho tại các kho.
+
+\textbf{Các đối tượng tham gia}: Người dùng (tác nhân), Giao diện, HangHoaController, HangHoaDAO, TonKhoDAO, Cơ sở dữ liệu.
+
+\textbf{Luồng tương tác}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng nhập từ khóa và điều kiện lọc trên giao diện.
+    \item Giao diện gửi yêu cầu tìm kiếm đến HangHoaController.
+    \item HangHoaController gọi HangHoaDAO tìm kiếm hàng hóa theo điều kiện.
+    \item HangHoaDAO truy vấn cơ sở dữ liệu, trả về danh sách hàng hóa.
+    \item HangHoaController gọi TonKhoDAO lấy tồn kho cho từng hàng.
+    \item TonKhoDAO truy vấn, trả về số lượng tồn tại các kho.
+    \item HangHoaController tổng hợp dữ liệu và trả về giao diện.
+    \item Giao diện hiển thị danh sách kết quả kèm tồn kho.
+\end{enumerate}
 
 \input{diagrams/sequence_uc06}
 
 \section{UC09 -- Lập phiếu nhập kho}
 
-Nhân viên kho lập phiếu nhập, hệ thống kiểm tra dữ liệu, lưu phiếu nhập và chi tiết, sau đó cập nhật tồn kho tương ứng.
+\textbf{Mô tả tương tác}: Nhân viên kho lập phiếu nhập, thêm danh sách hàng hóa. Hệ thống lưu phiếu ở trạng thái ``Chờ duyệt''. Quản lý kho duyệt phiếu, hệ thống cập nhật tồn kho (tăng số lượng) và lưu lịch sử thao tác.
+
+\textbf{Các đối tượng tham gia}: Nhân viên kho, Quản lý kho (tác nhân), Giao diện, PhieuNhapController, PhieuNhapDAO, ChiTietPhieuNhapDAO, TonKhoDAO, LichSuDAO, Cơ sở dữ liệu.
+
+\textbf{Luồng tương tác}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên kho gửi yêu cầu lập phiếu nhập qua giao diện.
+    \item Giao diện chuyển đến PhieuNhapController.
+    \item PhieuNhapController tạo phiếu mới qua PhieuNhapDAO (trạng thái: ``Chờ duyệt'').
+    \item Nhân viên kho thêm từng dòng hàng hóa: PhieuNhapController gọi ChiTietPhieuNhapDAO lưu chi tiết.
+    \item PhieuNhapController tính tổng tiền và cập nhật phiếu.
+    \item Nhân viên kho gửi duyệt. Quản lý kho xem phiếu và duyệt.
+    \item PhieuNhapController cập nhật trạng thái ``Đã duyệt''.
+    \item PhieuNhapController gọi TonKhoDAO cập nhật tồn kho (tăng số lượng từng hàng tại kho nhập).
+    \item PhieuNhapController gọi LichSuDAO ghi log thao tác duyệt.
+    \item Giao diện hiển thị thông báo thành công.
+\end{enumerate}
 
 \input{diagrams/sequence_uc09}
 
 \section{UC10 -- Lập phiếu xuất kho}
 
-Nhân viên kho lập phiếu xuất, hệ thống kiểm tra tồn kho đủ để xuất, lưu phiếu xuất và giảm tồn kho sau khi hoàn tất.
+\textbf{Mô tả tương tác}: Nhân viên kho lập phiếu xuất, thêm danh sách hàng hóa. Hệ thống kiểm tra tồn kho đủ trước khi cho phép thêm. Quản lý kho duyệt phiếu, hệ thống giảm tồn kho và lưu lịch sử.
+
+\textbf{Các đối tượng tham gia}: Nhân viên kho, Quản lý kho (tác nhân), Giao diện, PhieuXuatController, PhieuXuatDAO, ChiTietPhieuXuatDAO, TonKhoDAO, LichSuDAO, Cơ sở dữ liệu.
+
+\textbf{Luồng tương tác}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên kho gửi yêu cầu lập phiếu xuất qua giao diện.
+    \item Giao diện chuyển đến PhieuXuatController.
+    \item PhieuXuatController tạo phiếu mới qua PhieuXuatDAO (trạng thái: ``Chờ duyệt'').
+    \item Nhân viên kho thêm từng dòng hàng: PhieuXuatController gọi TonKhoDAO kiểm tra tồn kho đủ.
+    \item Nếu đủ: gọi ChiTietPhieuXuatDAO lưu chi tiết. Nếu không đủ: thông báo lỗi.
+    \item PhieuXuatController tính tổng tiền và cập nhật phiếu.
+    \item Nhân viên kho gửi duyệt. Quản lý kho duyệt.
+    \item PhieuXuatController cập nhật trạng thái ``Đã duyệt''.
+    \item PhieuXuatController gọi TonKhoDAO giảm tồn kho (giảm số lượng từng hàng tại kho xuất).
+    \item PhieuXuatController gọi LichSuDAO ghi log.
+    \item Giao diện hiển thị thông báo thành công.
+\end{enumerate}
 
 \input{diagrams/sequence_uc10}
 
 \section{Biểu đồ trạng thái (State Machine Diagram)}
 
-Biểu đồ trạng thái mô tả các trạng thái và chuyển tiếp của phiếu nhập kho và phiếu xuất kho trong quá trình xử lý. Các trạng thái chính bao gồm: Mới tạo, Chờ duyệt, Đã duyệt, Đã nhập/xuất kho và Hủy.
+Biểu đồ trạng thái mô tả các trạng thái và chuyển tiếp của phiếu nhập kho và phiếu xuất kho trong quá trình xử lý. Việc theo dõi trạng thái giúp quản lý quy trình duyệt phiếu và kiểm soát luồng công việc.
 
 \subsection{Trạng thái phiếu nhập kho}
+
+Phiếu nhập kho có các trạng thái sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Mới tạo}: Phiếu vừa được lập, chưa gửi duyệt. Có thể sửa/xóa.
+    \item \textbf{Chờ duyệt}: Phiếu đã gửi duyệt, chờ quản lý kho xem xét. Không thể sửa.
+    \item \textbf{Đã duyệt}: Phiếu được duyệt, tồn kho đã cập nhật. Không thể sửa/xóa.
+    \item \textbf{Từ chối}: Phiếu bị từ chối, kèm lý do. Tồn kho không đổi.
+    \item \textbf{Đã hủy}: Phiếu bị hủy (chỉ ở trạng thái ``Mới tạo'' hoặc ``Từ chối'').
+\end{itemize}
+
+\textbf{Các chuyển tiếp trạng thái}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Mới tạo $\rightarrow$ Chờ duyệt: khi nhân viên gửi duyệt.
+    \item Chờ duyệt $\rightarrow$ Đã duyệt: khi quản lý kho duyệt.
+    \item Chờ duyệt $\rightarrow$ Từ chối: khi quản lý kho từ chối.
+    \item Mới tạo $\rightarrow$ Đã hủy: khi nhân viên hủy phiếu.
+    \item Từ chối $\rightarrow$ Đã hủy: khi nhân viên hủy phiếu bị từ chối.
+\end{itemize}
 
 \input{diagrams/state_phieu_nhap}
 
 \subsection{Trạng thái phiếu xuất kho}
 
+Phiếu xuất kho có các trạng thái tương tự phiếu nhập:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Mới tạo}: Phiếu vừa lập, chưa gửi duyệt.
+    \item \textbf{Chờ duyệt}: Đã gửi duyệt, chờ quản lý kho xem xét.
+    \item \textbf{Đã duyệt}: Được duyệt, tồn kho đã giảm.
+    \item \textbf{Từ chối}: Bị từ chối, tồn kho không đổi.
+    \item \textbf{Đã hủy}: Phiếu bị hủy.
+\end{itemize}
+
+\textbf{Các chuyển tiếp trạng thái}: Tương tự phiếu nhập kho.
+
 \input{diagrams/state_phieu_xuat}
 
 \section{Kết luận chương}
 
-Chương 5 đã trình bày các biểu đồ trình tự cho các ca sử dụng chính và biểu đồ trạng thái cho phiếu nhập/xuất kho. Các luồng tương tác và chuyển đổi trạng thái này làm cơ sở cho thiết kế chi tiết các lớp và cơ sở dữ liệu trong Chương 6 và Chương 7.
+Chương 5 đã trình bày chi tiết bốn biểu đồ trình tự cho các ca sử dụng chính: UC05 (quản lý hàng hóa), UC06 (tìm kiếm hàng hóa), UC09 (lập phiếu nhập kho) và UC10 (lập phiếu xuất kho). Mỗi biểu đồ đều mô tả đầy đủ các đối tượng tham gia, luồng tương tác theo thời gian và thứ tự các bước. Đồng thời trình bày hai biểu đồ trạng thái cho phiếu nhập kho và phiếu xuất kho, mô tả các trạng thái và chuyển tiếp. Các luồng tương tác và chuyển đổi trạng thái này làm cơ sở cho thiết kế chi tiết các lớp và cơ sở dữ liệu trong Chương 6 và Chương 7.

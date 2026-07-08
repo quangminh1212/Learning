@@ -2,47 +2,136 @@
 
 \section{Giới thiệu doanh nghiệp}
 
-Đề tài được thực hiện trong bối cảnh một doanh nghiệp thương mại – sản xuất có hoạt động nhập, xuất và lưu trữ hàng hóa thường xuyên. Doanh nghiệp có nhiều kho hàng, nhiều nhóm hàng hóa và thực hiện giao dịch với nhiều nhà cung cấp, khách hàng. Công tác quản lý kho hiện đang đóng vai trò then chốt trong việc đảm bảo đủ hàng để bán, giảm thiểu tồn kho dư thừa và kiểm soát dòng tiền.
+Đề tài được thực hiện trong bối cảnh một doanh nghiệp thương mại -- sản xuất có quy mô vừa, chuyên hoạt động nhập, xuất và lưu trữ hàng hóa thường xuyên. Doanh nghiệp có mạng lưới gồm nhiều kho hàng đặt tại các khu vực khác nhau, quản lý hàng trăm mặt hàng thuộc nhiều nhóm hàng hóa đa dạng (nguyên vật liệu, bán thành phẩm, thành phẩm) và duy trì quan hệ giao dịch với hàng chục nhà cung cấp cũng như khách hàng thường xuyên.
+
+Công tác quản lý kho đóng vai trò then chốt trong chuỗi hoạt động của doanh nghiệp: đảm bảo đủ hàng để đáp ứng đơn hàng bán ra, giảm thiểu lượng hàng tồn dư thừa gây đọng vốn, kiểm soát chặt chẽ dòng tiền liên quan đến nhập/xuất hàng và cung cấp số liệu đáng tin cậy phục vụ công tác kế toán, báo cáo thuế và ra quyết định kinh doanh.
+
+Hiện nay, doanh nghiệp đang trong quá trình chuyển đổi số, mong muốn xây dựng một hệ thống thông tin quản lý kho hàng thống nhất nhằm thay thế các phương pháp quản lý thủ công rời rạc, đồng thời tạo nền tảng tích hợp với hệ thống kế toán và bán hàng trong tương lai.
+
+\section{Phạm vi và đối tượng của hệ thống}
+
+\subsection{Phạm vi hệ thống}
+
+Hệ thống quản lý kho hàng được phân tích và thiết kế trong phạm vi sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item Quản lý toàn bộ thông tin hàng hóa, nhóm hàng, đơn vị tính tại các kho.
+    \item Quản lý thông tin nhà cung cấp, khách hàng và các đối tác liên quan.
+    \item Thực hiện các nghiệp vụ nhập kho, xuất kho, kiểm kê tồn kho.
+    \item Quản lý đơn đặt hàng và theo dõi thanh toán, công nợ.
+    \item Cung cấp báo cáo thống kê nhập -- xuất -- tồn, cảnh báo tồn kho, báo cáo doanh thu.
+    \item Quản lý tài khoản người dùng, phân quyền theo vai trò và lưu vết thao tác.
+\end{itemize}
+
+\subsection{Đối tượng sử dụng}
+
+Hệ thống phục vụ các đối tượng sử dụng chính sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Quản trị viên}: Quản lý tài khoản, cấu hình hệ thống, sao lưu dữ liệu.
+    \item \textbf{Quản lý kho}: Giám sát tồn kho, phê duyệt phiếu nhập/xuất, xem báo cáo.
+    \item \textbf{Nhân viên kho}: Thực hiện nhập kho, xuất kho, kiểm kê, cập nhật tồn kho.
+    \item \textbf{Khách hàng}: Tra cứu đơn hàng và lịch sử giao dịch (nếu được cấp quyền).
+    \item \textbf{Nhà cung cấp}: Cung cấp thông tin đơn hàng, theo dõi trạng thái nhập kho.
+\end{itemize}
 
 \section{Thực trạng quy trình quản lý hiện tại và các hạn chế}
 
-Trong bối cảnh kinh doanh hiện đại, hoạt động quản lý kho hàng đóng vai trò then chốt đối với hầu hết các doanh nghiệp thương mại, sản xuất và logistics. Việc kiểm soát tồn kho, nhập xuất hàng hóa và theo dõi luân chuyển hàng tồn kho ảnh hưởng trực tiếp đến chi phí vận hành, khả năng đáp ứng đơn hàng và hiệu quả kinh doanh chung.
+\subsection{Quy trình quản lý hiện tại}
 
-Tuy nhiên, tại nhiều doanh nghiệp vừa và nhỏ, công tác quản lý kho vẫn phụ thuộc nhiều vào phương pháp thủ công như ghi chép sổ sách, lưu trữ bằng bảng tính Excel hoặc các phần mềm đơn lẻ không liên kết. Cách làm này dễ dẫn đến các vấn đề:
+Hiện tại, doanh nghiệp quản lý kho hàng theo quy trình chủ yếu dựa trên sổ sách và bảng tính Excel. Quy trình cụ thể như sau:
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item Dữ liệu phân tán, khó tổng hợp và đối chiếu.
-    \item Thiếu cơ chế kiểm soát số lượng tồn kho theo thời gian thực.
-    \item Khó truy vết lịch sử nhập xuất và người thực hiện thao tác.
-    \item Báo cáo chậm, không hỗ trợ ra quyết định kịp thời.
-    \item Sai sót trong quá trình nhập xuất, khó kiểm soát chênh lệch.
+    \item \textbf{Nhập kho}: Khi hàng đến, nhân viên kho đối chiếu với đơn đặt hàng của nhà cung cấp, kiểm tra số lượng và chất lượng, sau đó ghi vào sổ nhập kho và cập nhật file Excel tồn kho.
+    \item \textbf{Xuất kho}: Khi có yêu cầu xuất hàng, nhân viên kiểm tra tồn kho trên file Excel, lập phiếu xuất giấy, ghi nhận số lượng xuất và cập nhật lại file Excel.
+    \item \textbf{Kiểm kê}: Định kỳ hàng tháng, nhân viên kho đối chiếu số lượng thực tế trong kho với số liệu trên file Excel, ghi chênh lệch vào biên bản kiểm kê giấy.
+    \item \textbf{Báo cáo}: Cuối tháng, kế toán tổng hợp số liệu từ các file Excel riêng biệt để lập báo cáo nhập -- xuất -- tồn và báo cáo giá trị hàng tồn kho.
 \end{itemize}
 
-\section{Mục tiêu của hệ thống}
+\subsection{Các hạn chế của quy trình hiện tại}
+
+Mặc dù quy trình hiện tại đã đáp ứng được nhu cầu cơ bản, nhưng còn nhiều hạn chế đáng kể:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Dữ liệu phân tán}: Thông tin lưu trữ rải rác trên nhiều file Excel độc lập, khó tổng hợp và đối chiếu giữa các kho, dẫn đến sai lệch số liệu.
+    \item \textbf{Thiếu kiểm soát thời gian thực}: Không có cơ chế cập nhật tồn kho tức thời, dễ xảy ra tình trạng bán quá số lượng tồn thực tế.
+    \item \textbf{Khó truy vết}: Lịch sử nhập xuất và người thực hiện thao tác không được ghi nhận đầy đủ, gây khó khăn khi cần kiểm tra, truy vết trách nhiệm.
+    \item \textbf{Báo cáo chậm}: Việc tổng hợp số liệu thủ công tốn nhiều thời gian, báo cáo thường chậm trễ, không hỗ trợ ra quyết định kịp thời.
+    \item \textbf{Sai sót cao}: Việc nhập liệu thủ công dễ dẫn đến sai sót, khó kiểm soát chênh lệch giữa số sổ sách và thực tế.
+    \item \textbf{Khó mở rộng}: Khi số lượng hàng hóa, kho và giao dịch tăng lên, quy trình thủ công trở nên quá tải, khó kiểm soát và duy trì.
+\end{itemize}
+
+\section{Mục tiêu và yêu cầu của hệ thống}
+
+\subsection{Mục tiêu chung}
 
 Mục tiêu của đề tài là phân tích, thiết kế và đề xuất một hệ thống thông tin quản lý kho hàng đáp ứng các yêu cầu sau:
 
 \begin{itemize}[leftmargin=1.5cm]
     \item Số hóa toàn bộ quy trình quản lý hàng hóa, nhập kho, xuất kho và kiểm kê.
-    \item Cung cấp khả năng tra cứu, tìm kiếm và cập nhật thông tin hàng tồn kho nhanh chóng.
+    \item Cung cấp khả năng tra cứu, tìm kiếm và cập nhật thông tin hàng tồn kho nhanh chóng, chính xác.
     \item Hỗ trợ quản lý nhiều kho, nhiều loại hàng hóa và nhiều nhà cung cấp/khách hàng.
     \item Tự động hóa việc tính toán tồn kho, cảnh báo hết hàng hoặc tồn kho quá mức.
-    \item Tạo báo cáo thống kê về nhập xuất tồn, hàng hóa bán chạy, hàng tồn lâu ngày.
+    \item Tạo báo cáo thống kê đa dạng về nhập xuất tồn, hàng hóa bán chạy, hàng tồn lâu ngày, giá trị tồn kho.
+    \item Quản lý phân quyền người dùng theo vai trò, lưu vết toàn bộ thao tác để dễ kiểm tra, truy vết.
+\end{itemize}
+
+\subsection{Yêu cầu chức năng}
+
+Hệ thống cần đáp ứng các yêu cầu chức năng cụ thể sau:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item Quản lý tài khoản người dùng: tạo, sửa, xóa, phân quyền, kích hoạt/khóa tài khoản.
+    \item Đăng nhập/đăng xuất: xác thực người dùng, quản lý phiên làm việc.
+    \item Quản lý nhà cung cấp và khách hàng: thêm, sửa, xóa, tìm kiếm thông tin đối tác.
+    \item Quản lý hàng hóa: thêm, sửa, xóa, phân loại, tìm kiếm hàng hóa.
+    \item Quản lý kho: tạo, cập nhật, tìm kiếm thông tin kho.
+    \item Lập phiếu nhập kho: ghi nhận hàng nhập, cập nhật tồn kho tự động.
+    \item Lập phiếu xuất kho: kiểm tra tồn kho, ghi nhận hàng xuất, giảm tồn kho.
+    \item Quản lý đơn đặt hàng: tạo, duyệt, theo dõi đơn hàng.
+    \item Quản lý thanh toán: ghi nhận thanh toán, theo dõi công nợ.
+    \item Kiểm kê tồn kho: đối chiếu thực tế với sổ sách, điều chỉnh chênh lệch.
+    \item Báo cáo thống kê: xuất báo cáo nhập xuất tồn, tồn kho thấp, hàng bán chạy, công nợ.
+\end{itemize}
+
+\subsection{Yêu cầu phi chức năng}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Hiệu năng}: Hệ thống phản hồi thao tác trong vòng 2 giây, hỗ trợ đồng thời ít nhất 50 người dùng.
+    \item \textbf{Bảo mật}: Mã hóa mật khẩu, phân quyền theo vai trò, ghi log toàn bộ thao tác.
+    \item \textbf{Tính khả dụng}: Hệ thống hoạt động 99\% thời gian, có cơ chế sao lưu dữ liệu định kỳ.
+    \item \textbf{Tính mở rộng}: Kiến trúc phân lớp cho phép dễ dàng thêm tính năng, tích hợp với hệ thống kế toán, bán hàng.
+    \item \textbf{Tính thân thiện}: Giao diện tiếng Việt, thao tác trực quan, hỗ trợ cả máy tính và máy tính bảng.
 \end{itemize}
 
 \section{Lựa chọn công nghệ và công cụ}
 
 \subsection{Lựa chọn công nghệ triển khai}
 
-Hệ thống được đề xuất triển khai theo mô hình ứng dụng web (Web Application) với các công nghệ sau:
+Hệ thống được đề xuất triển khai theo mô hình ứng dụng web (Web Application) với kiến trúc phân lớp (multi-tier) bao gồm: tầng giao diện, tầng nghiệp vụ, tầng truy cập dữ liệu và tầng cơ sở dữ liệu. Các công nghệ cụ thể như sau:
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Ngôn ngữ lập trình}: Python / Java / C\# (tùy theo định hướng nhóm).
-    \item \textbf{Framework}: Django / Spring Boot / ASP.NET Core.
-    \item \textbf{Cơ sở dữ liệu}: PostgreSQL / MySQL / SQL Server.
-    \item \textbf{Giao diện}: HTML5, CSS3, JavaScript kết hợp các thư viện UI hiện đại.
+    \item \textbf{Ngôn ngữ lập trình}: Python -- ngôn ngữ có cú pháp rõ ràng, thư viện phong phú, cộng đồng lớn.
+    \item \textbf{Framework}: Django -- framework Python đầy đủ tính năng, hỗ trợ ORM, phân quyền, bảo mật.
+    \item \textbf{Cơ sở dữ liệu}: PostgreSQL -- hệ quản trị CSDL quan hệ mã nguồn mở, ổn định, hiệu năng cao.
+    \item \textbf{Giao diện}: HTML5, CSS3, JavaScript kết hợp Bootstrap để tạo giao diện responsive.
+    \item \textbf{Báo cáo}: Thư viện ReportLab (PDF), pandas/openpyxl (Excel) để xuất báo cáo.
 \end{itemize}
 
 \subsection{Lựa chọn công cụ biểu diễn UML}
 
-Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm: Use Case Diagram, Class Diagram, Sequence Diagram, Activity Diagram và ERD.
+Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm:
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Use Case Diagram}: Mô tả các tác nhân và ca sử dụng của hệ thống.
+    \item \textbf{Activity Diagram}: Mô tả luồng hoạt động của các nghiệp vụ chính.
+    \item \textbf{Class Diagram}: Mô tả các lớp đối tượng và quan hệ giữa chúng.
+    \item \textbf{Sequence Diagram}: Mô tả luồng tương tác giữa các đối tượng theo thời gian.
+    \item \textbf{State Machine Diagram}: Mô tả trạng thái và chuyển tiếp của các đối tượng.
+    \item \textbf{Component Diagram}: Mô tả các thành phần phần mềm và quan hệ giữa chúng.
+    \item \textbf{ERD}: Mô tả mô hình cơ sở dữ liệu quan hệ.
+\end{itemize}
+
+\section{Kết luận chương}
+
+Chương 1 đã giới thiệu bối cảnh doanh nghiệp, phạm vi và đối tượng sử dụng hệ thống, phân tích thực trạng quy trình quản lý kho hiện tại cùng các hạn chế. Từ đó đề ra mục tiêu, yêu cầu chức năng và phi chức năng của hệ thống, đồng thời lựa chọn công nghệ và công cụ phù hợp. Đây là cơ sở để mô tả chi tiết nghiệp vụ và phân tích hệ thống trong các chương tiếp theo.
