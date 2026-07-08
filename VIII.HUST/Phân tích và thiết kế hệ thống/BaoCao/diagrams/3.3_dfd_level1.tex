@@ -1,67 +1,81 @@
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.9, transform shape,
-    entity/.style={ellipse, draw=black, fill=white, line width=0.8pt, minimum width=2.4cm, minimum height=1cm, font=\scriptsize\bfseries, align=center},
-    process/.style={rectangle, draw=black, fill=gray!10, line width=0.8pt, minimum width=2.8cm, minimum height=1.1cm, font=\scriptsize, align=center, rounded corners=2pt},
-    store/.style={rectangle, draw=black, fill=white, line width=0.8pt, minimum width=2cm, minimum height=0.8cm, font=\scriptsize, align=center, rounded corners=2pt},
-    flow/.style={-{Stealth[scale=0.7]}, line width=0.6pt},
-    label/.style={font=\tiny, fill=white, inner sep=0.8pt}
+\begin{tikzpicture}[scale=0.95, transform shape,
+    entity/.style={ellipse, draw=black, fill=white, line width=1.1pt, minimum width=3.0cm, minimum height=1.3cm, font=\normalsize\bfseries, align=center},
+    process/.style={rectangle, draw=black, fill=gray!10, line width=1.1pt, minimum width=3.2cm, minimum height=1.3cm, font=\normalsize, align=center, rounded corners=3pt},
+    store/.style={rectangle, draw=black, fill=white, line width=1.1pt, minimum width=2.4cm, minimum height=1.0cm, font=\normalsize, align=center, rounded corners=2pt},
+    flow/.style={-{Stealth[scale=0.9]}, line width=0.9pt},
+    label/.style={font=\small, fill=white, inner sep=1.2pt}
 ]
 
-\node[entity] (ql) at (-6.5,3.5) {Quản lý kho};
-\node[entity] (nv) at (0,7.2) {Nhân viên kho};
-\node[entity] (kh) at (6.5,3.5) {Khách hàng};
-\node[entity] (ncc) at (6.5,-3.5) {Nhà cung cấp};
-\node[entity] (admin) at (-6.5,-3.5) {Quản trị viên};
+% Entity positions - arranged around the diagram
+\node[entity] (admin) at (-6,5) {Quản trị viên};
+\node[entity] (nv) at (0,7) {Nhân viên kho};
+\node[entity] (ql) at (6,5) {Quản lý kho};
+\node[entity] (ncc) at (6,-5) {Nhà cung cấp};
+\node[entity] (kh) at (-6,-5) {Khách hàng};
 
-\node[process] (p1) at (-4.5,0) {1.0 Quản lý\\người dùng};
-\node[process] (p2) at (-3,3.5) {2.0 Quản lý\\danh mục};
-\node[process] (p3) at (3,3.5) {3.0 Quản lý\\nhập kho};
-\node[process] (p4) at (5,0) {4.0 Quản lý\\xuất kho};
-\node[process] (p5) at (2,-3.5) {5.0 Quản lý\\tồn kho};
-\node[process] (p6) at (-3.5,-3.5) {6.0 Báo cáo\\thống kê};
+% Process positions - arranged in a structured grid
+\node[process] (p1) at (-4,2) {1.0 Quản lý\\người dùng};
+\node[process] (p2) at (0,3) {2.0 Quản lý\\danh mục};
+\node[process] (p3) at (4,2) {3.0 Quản lý\\nhập kho};
+\node[process] (p4) at (4,-2) {4.0 Quản lý\\xuất kho};
+\node[process] (p5) at (0,-3) {5.0 Quản lý\\tồn kho};
+\node[process] (p6) at (-4,-2) {6.0 Báo cáo\\thống kê};
 
-\node[store] (d1) at (-6.5,0) {D1\\Users};
-\node[store] (d2) at (-2,5.8) {D2\\HangHoa};
-\node[store] (d3) at (2,5.8) {D3\\NCC};
-\node[store] (d4) at (6.5,0) {D4\\KH};
-\node[store] (d5) at (2,-6.5) {D5\\Kho};
-\node[store] (d6) at (6.0,2.2) {D6\\PNK};
-\node[store] (d7) at (6.0,-2.2) {D7\\PXK};
-\node[store] (d8) at (0,-2.5) {D8\\TonKho};
-\node[store] (d9) at (-2,-6.5) {D9\\KiemKe};
-\node[store] (d10) at (-6.5,-2) {D10\\Log};
+% Data store positions - grouped logically
+\node[store] (d1) at (-6,2) {D1\\Users};
+\node[store] (d10) at (-2,0.5) {D10\\Log};
 
-\draw[flow] (admin) -- (p1) node[label, midway, right] {Cấu hình};
-\draw[flow] (p1) -- (d1) node[label, midway, above] {};
-\draw[flow] (p1) -- (d10) node[label, midway, left] {};
+\node[store] (d2) at (-2,5) {D2\\HangHoa};
+\node[store] (d3) at (2,5) {D3\\NCC};
+\node[store] (d4) at (6,0) {D4\\KH};
 
-\draw[flow] (nv) -- (p2) node[label, pos=0.3, right, xshift=3pt] {QL danh mục};
-\draw[flow] (p2) -- (d2) node[label, midway, right] {};
+\node[store] (d6) at (5.5,0.5) {D6\\PNK};
+\node[store] (d7) at (5.5,-0.5) {D7\\PXK};
+\node[store] (d8) at (0,0) {D8\\TonKho};
 
-\draw[flow] (nv) -- (p3) node[label, pos=0.25, left, xshift=-3pt] {Lập phiếu nhập};
-\draw[flow] (ql) -- (p3) node[label, pos=0.45, below, yshift=-2pt] {Duyệt};
-\draw[flow] (ncc) -- (p3) node[label, midway, below left] {Giao hàng};
+\node[store] (d5) at (2,-5) {D5\\Kho};
+\node[store] (d9) at (-2,-5) {D9\\KiemKe};
+
+% Data flows - organized by process
+% P1: Quản lý người dùng
+\draw[flow] (admin) -- (p1) node[label, midway, above] {Cấu hình};
+\draw[flow] (p1) -- (d1) node[label, midway, left] {};
+\draw[flow] (p1) -- (d10) node[label, midway, right] {};
+
+% P2: Quản lý danh mục
+\draw[flow] (nv) -- (p2) node[label, midway, left] {QL danh mục};
+\draw[flow] (p2) -- (d2) node[label, midway, left] {};
+\draw[flow] (p2) -- (d3) node[label, midway, right] {};
+
+% P3: Quản lý nhập kho
+\draw[flow] (nv) -- (p3) node[label, pos=0.3, above left] {Lập phiếu nhập};
+\draw[flow] (ql) -- (p3) node[label, pos=0.4, above right] {Duyệt};
+\draw[flow] (ncc) -- (p3) node[label, midway, below] {Giao hàng};
 \draw[flow] (p3) -- (d6) node[label, midway, right] {};
-\draw[flow] (p3) -- (d8) node[label, pos=0.35, above, xshift=2pt] {Tăng tồn};
+\draw[flow] (p3) -- (d8) node[label, midway, below] {Tăng tồn};
 
-\draw[flow] (nv) -- (p4) node[label, pos=0.25, left, xshift=-3pt, yshift=3pt] {Lập phiếu xuất};
-\draw[flow] (ql) -- (p4) node[label, pos=0.45, above, yshift=2pt] {Duyệt};
-\draw[flow] (kh) -- (p4) node[label, midway, left] {Đơn hàng};
+% P4: Quản lý xuất kho
+\draw[flow] (nv) -- (p4) node[label, pos=0.3, below left] {Lập phiếu xuất};
+\draw[flow] (ql) -- (p4) node[label, pos=0.4, below right] {Duyệt};
+\draw[flow] (kh) -- (p4) node[label, midway, below] {Đơn hàng};
 \draw[flow] (p4) -- (d7) node[label, midway, right] {};
-\draw[flow] (p4) -- (d8) node[label, pos=0.35, below, xshift=-2pt] {Giảm tồn};
+\draw[flow] (p4) -- (d8) node[label, midway, above] {Giảm tồn};
 
-\draw[flow] (nv) -- (p5) node[label, pos=0.3, right, xshift=3pt, yshift=-3pt] {Kiểm kê};
+% P5: Quản lý tồn kho
+\draw[flow] (nv) -- (p5) node[label, midway, left] {Kiểm kê};
 \draw[flow] (p5) -- (d8) node[label, midway, above] {};
 \draw[flow] (p5) -- (d5) node[label, midway, right] {};
 \draw[flow] (p5) -- (d9) node[label, midway, left] {};
 
-\draw[flow] (ql) -- (p6) node[label, pos=0.45, left, xshift=-2pt] {Yêu cầu BC};
-\draw[flow] (p6) -- (d6) node[label, midway, below, pos=0.3] {};
-\draw[flow] (p6) -- (d7) node[label, midway, above, pos=0.3] {};
+% P6: Báo cáo thống kê
+\draw[flow] (ql) -- (p6) node[label, midway, above] {Yêu cầu BC};
+\draw[flow] (p6) -- (d6) node[label, midway, above right] {};
+\draw[flow] (p6) -- (d7) node[label, midway, below right] {};
 \draw[flow] (p6) -- (d8) node[label, midway, right] {};
-\draw[flow] (p6) -- (ql) node[label, midway, above] {Báo cáo};
+\draw[flow] (p6) -- (ql) node[label, midway, right] {Báo cáo};
 
 \end{tikzpicture}
 }
