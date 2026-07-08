@@ -1,5 +1,6 @@
 \begin{figure}[H]
 \centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}[scale=0.9, transform shape,
     entity/.style={rectangle, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.8cm, minimum height=1cm, font=\small\bfseries, align=center, rounded corners=2pt},
     relation/.style={diamond, draw=green!70!black, fill=green!5, line width=0.6pt, aspect=2, minimum width=1.8cm, minimum height=0.8cm, font=\scriptsize, align=center},
@@ -32,6 +33,7 @@
 \draw[arrow] (HangHoa) -- (r4) -- (TonKho);
 
 \end{tikzpicture}
+}
 \caption{Sơ đồ ERD -- Danh mục (Master Data)}
 \label{fig:erd-master}
 \end{figure}

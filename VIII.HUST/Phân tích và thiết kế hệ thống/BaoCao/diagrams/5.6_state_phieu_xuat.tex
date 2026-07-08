@@ -1,5 +1,6 @@
 \begin{figure}[H]
 \centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}[
     state/.style={rectangle, rounded corners, draw, fill=green!10, minimum width=2.5cm, minimum height=1cm, font=\small, align=center},
     arrow/.style={-{Stealth[scale=0.8]}, thick}
@@ -18,6 +19,7 @@
 \draw[arrow] (approved) -- (cancel) node[midway, right, font=\scriptsize] {Hủy phiếu};
 
 \end{tikzpicture}
+}
 \caption{State Machine Diagram – Trạng thái phiếu xuất kho}
 \label{fig:state-xuatkho}
 \end{figure}

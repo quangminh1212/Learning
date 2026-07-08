@@ -1,5 +1,6 @@
 \begin{figure}[H]
 \centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}[
     entity/.style={ellipse, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.8cm, minimum height=1.1cm, font=\small\bfseries, align=center},
     process/.style={circle, draw=green!70!black, fill=green!5, line width=0.8pt, minimum size=2.4cm, font=\bfseries\small, align=center},
@@ -31,6 +32,7 @@
 \draw[flow] (sys) -- (admin) node[label, midway, right] {Log, trạng thái hệ thống};
 
 \end{tikzpicture}
+}
 \caption{DFD cấp 0 (Context Diagram) – Hệ thống quản lý kho hàng}
 \label{fig:dfd-context}
 \end{figure}

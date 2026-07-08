@@ -1,5 +1,6 @@
 \begin{figure}[H]
 \centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}[scale=0.9, transform shape,
     component/.style={rectangle, draw, fill=yellow!15, minimum width=3cm, minimum height=1.2cm, font=\small, align=center},
     database/.style={cylinder, shape border rotate=90, draw, fill=gray!15, minimum width=2cm, minimum height=1.2cm, font=\small, align=center},
@@ -26,6 +27,7 @@
 \draw[arrow] (service) -- (inventory) node[midway, above, font=\scriptsize] {Tính tồn kho};
 
 \end{tikzpicture}
+}
 \caption{Component Diagram – Kiến trúc thành phần hệ thống quản lý kho hàng}
 \label{fig:component}
 \end{figure}
