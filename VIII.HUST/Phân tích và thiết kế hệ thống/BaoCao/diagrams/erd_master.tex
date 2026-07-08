@@ -1,0 +1,37 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape,
+    entity/.style={rectangle, draw=blue!70!black, fill=blue!5, line width=0.8pt, minimum width=2.5cm, minimum height=0.9cm, font=\scriptsize\bfseries, align=center, rounded corners=2pt},
+    relation/.style={diamond, draw=green!70!black, fill=green!5, line width=0.6pt, aspect=2, minimum width=1.5cm, font=\tiny, align=center},
+    arrow/.style={-{Stealth[scale=0.7]}, line width=0.6pt}
+]
+
+% Hàng 1: NhomHangHoa, HangHoa, DonViTinh
+\node[entity] (NhomHang) at (-5,3) {NhomHangHoa};
+\node[entity] (HangHoa) at (0,3) {HangHoa};
+\node[entity] (DonVi) at (5,3) {DonViTinh};
+
+\node[relation] (r1) at (-2.5,3) {phân loại};
+\node[relation] (r2) at (2.5,3) {đo lường};
+\draw[arrow] (NhomHang) -- (r1) -- (HangHoa);
+\draw[arrow] (HangHoa) -- (r2) -- (DonVi);
+
+% Hàng 2: Kho, NguoiDung, NhaCungCap, KhachHang
+\node[entity] (Kho) at (-5,0) {Kho};
+\node[entity] (NguoiDung) at (0,0) {NguoiDung};
+\node[entity] (NCC) at (5,0) {NhaCungCap};
+\node[entity] (KH) at (5,-3) {KhachHang};
+
+% Hàng 3: TonKho
+\node[entity] (TonKho) at (0,-3) {TonKho};
+
+\node[relation] (r3) at (-2.5,-1.5) {lưu trữ};
+\draw[arrow] (Kho) -- (r3) -- (TonKho);
+
+\node[relation] (r4) at (0,0) {tồn tại};
+\draw[arrow] (HangHoa) -- (r4) -- (TonKho);
+
+\end{tikzpicture}
+\caption{Sơ đồ ERD -- Danh mục (Master Data)}
+\label{fig:erd-master}
+\end{figure}
