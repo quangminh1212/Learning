@@ -1,14 +1,14 @@
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.9, transform shape]
+\begin{tikzpicture}[scale=0.85, transform shape]
 
-\begin{class}[text width=5cm]{NguoiDung}{-6,0}
+\begin{class}[text width=5cm]{NguoiDung}{-6,-2}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ VaiTro: String}
 \operation{+ LapPhieuXuat(): void}
 \end{class}
 
-\begin{class}[text width=5cm]{PhieuXuatKho}{-2.5,0}
+\begin{class}[text width=5cm]{PhieuXuatKho}{-0.5,-2}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaKhachHang: String}
 \attribute{+ MaKho: String}
@@ -18,29 +18,29 @@
 \operation{+ DuyetPhieuXuat(): void}
 \end{class}
 
-\begin{class}[text width=5cm]{ChiTietPhieuXuat}{1.5,0}
+\begin{class}[text width=5cm]{ChiTietPhieuXuat}{5,-2}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuong: Integer}
 \attribute{+ DonGia: Decimal}
 \end{class}
 
-\begin{class}[text width=5cm]{KhachHang}{-2.5,3}
-\attribute{+ MaKhachHang: String}
-\attribute{+ TenKhachHang: String}
-\end{class}
-
-\begin{class}[text width=5cm]{Kho}{1.5,3}
-\attribute{+ MaKho: String}
-\attribute{+ TenKho: String}
-\end{class}
-
-\begin{class}[text width=5cm]{HangHoa}{5.5,0}
+\begin{class}[text width=5cm]{HangHoa}{11,-2}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \end{class}
 
-\begin{class}[text width=5cm]{TonKho}{5.5,3}
+\begin{class}[text width=5cm]{KhachHang}{-3,2.5}
+\attribute{+ MaKhachHang: String}
+\attribute{+ TenKhachHang: String}
+\end{class}
+
+\begin{class}[text width=5cm]{Kho}{2.5,2.5}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\end{class}
+
+\begin{class}[text width=5cm]{TonKho}{8,2.5}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
@@ -50,11 +50,11 @@
 
 \draw (NguoiDung) -- (PhieuXuatKho) node[midway, above, font=\scriptsize] {1..*};
 \draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\scriptsize] {1..*};
-\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\scriptsize] {n..1};
-\draw (PhieuXuatKho) -- (Kho) node[midway, left, font=\scriptsize] {n..1};
 \draw (ChiTietPhieuXuat) -- (HangHoa) node[midway, above, font=\scriptsize] {n..1};
-\draw (TonKho) -- (Kho) node[midway, right, font=\scriptsize] {1..*};
-\draw (TonKho) -- (HangHoa) node[midway, right, font=\scriptsize] {1..1};
+\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\scriptsize] {n..1};
+\draw (PhieuXuatKho) -- (Kho) node[midway, right, font=\scriptsize] {n..1};
+\draw (TonKho) -- (Kho) node[midway, above, font=\scriptsize] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, above right, font=\scriptsize] {1..1};
 
 \end{tikzpicture}
 \caption{Biểu đồ lớp trong ca sử dụng UC10 -- Lập phiếu xuất kho}

@@ -2,13 +2,13 @@
 \centering
 \begin{tikzpicture}[scale=0.9, transform shape]
 
-\begin{class}[text width=5cm]{NguoiDung}{-6,0}
+\begin{class}[text width=5cm]{NguoiDung}{-7,0}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ VaiTro: String}
 \operation{+ DangNhap(): Boolean}
 \end{class}
 
-\begin{class}[text width=5cm]{HangHoa}{-2.5,0}
+\begin{class}[text width=5cm]{HangHoa}{-1.5,0}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
 \attribute{+ MaNhomHang: String}
@@ -19,17 +19,17 @@
 \operation{+ TimKiem(): List}
 \end{class}
 
-\begin{class}[text width=5cm]{NhomHangHoa}{2.5,2.5}
+\begin{class}[text width=5cm]{NhomHangHoa}{-1.5,3.8}
 \attribute{+ MaNhomHang: String}
 \attribute{+ TenNhomHang: String}
 \end{class}
 
-\begin{class}[text width=5cm]{DonViTinh}{2.5,-2.5}
+\begin{class}[text width=5cm]{DonViTinh}{-1.5,-3.8}
 \attribute{+ MaDonViTinh: String}
 \attribute{+ TenDonViTinh: String}
 \end{class}
 
-\begin{class}[text width=5cm]{TonKho}{6.5,0}
+\begin{class}[text width=5cm]{TonKho}{5.5,0}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
@@ -37,8 +37,8 @@
 \end{class}
 
 \draw (NguoiDung) -- (HangHoa) node[midway, above, font=\scriptsize] {1..*};
-\draw (HangHoa) -- (NhomHangHoa) node[midway, above, font=\scriptsize] {n..1};
-\draw (HangHoa) -- (DonViTinh) node[midway, below, font=\scriptsize] {n..1};
+\draw (HangHoa) -- (NhomHangHoa) node[midway, right, font=\scriptsize] {n..1};
+\draw (HangHoa) -- (DonViTinh) node[midway, right, font=\scriptsize] {n..1};
 \draw (HangHoa) -- (TonKho) node[midway, above, font=\scriptsize] {1..*};
 
 \end{tikzpicture}
