@@ -65,17 +65,23 @@ Gồm các lớp ít thay đổi: người dùng, hàng hóa, nhóm hàng, đơn
 
 \input{diagrams/tex/4.1_classdiagram_master}
 
+Giải thích sơ đồ: Sơ đồ lớp danh mục mô tả ``xương sống'' dữ liệu tĩnh của hệ thống. \texttt{HangHoa} là trung tâm: thuộc một \texttt{NhomHangHoa}, gắn một \texttt{DonViTinh}, và có nhiều bản ghi \texttt{TonKho} (mỗi kho một dòng tồn). \texttt{Kho} quan hệ 1--n với \texttt{TonKho}. \texttt{NhaCungCap} và \texttt{KhachHang} là danh mục đối tác dùng sau này trên phiếu. \texttt{NguoiDung} đại diện tài khoản/vai trò. Các đường nối kèm số nhiều (1, n, 1..*) cho biết ràng buộc: ví dụ một hàng có nhiều tồn theo kho; nhiều hàng chung một nhóm.
+
 \subsection{Nhóm nghiệp vụ nhập -- xuất}
 
 Gồm phiếu nhập/xuất và chi tiết dòng hàng; quan hệ với NCC, KH, kho, hàng.
 
 \input{diagrams/tex/4.2_classdiagram_nhapxuat}
 
+Giải thích sơ đồ: Nhóm này mô tả cấu trúc \textbf{giao dịch}. \texttt{PhieuNhapKho} gắn \texttt{NhaCungCap}, \texttt{Kho}, \texttt{NguoiDung} (người lập) và có nhiều \texttt{ChiTietPhieuNhap}; mỗi chi tiết trỏ một \texttt{HangHoa}. \texttt{PhieuXuatKho} tương tự nhưng gắn \texttt{KhachHang}. \texttt{TonKho} liên kết Kho--HangHoa để khi duyệt phiếu có thể tăng/giảm số lượng. Sơ đồ làm rõ: phiếu và chi tiết là cấu trúc master--detail; tồn là lớp bị cập nhật bởi hành vi duyệt (sẽ thấy rõ hơn ở sequence).
+
 \subsection{Nhóm kiểm kê và lịch sử}
 
 Gồm phiếu kiểm kê, chi tiết kiểm kê và log thao tác.
 
 \input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
+
+Giải thích sơ đồ: \texttt{PhieuKiemKe} -- \texttt{ChiTietKiemKe} cũng theo mẫu master--detail; mỗi dòng lưu SL sổ, SL thực tế, chênh lệch. \texttt{LichSuThaoTac} ghi nhận ai làm gì (duyệt, thêm hàng\ldots), quan hệ với \texttt{NguoiDung}. Nhóm này bổ sung phần cấu trúc cho UC11 và audit, tách khỏi sơ đồ nhập xuất để tránh rối.
 
 \section{Phân tích cấu trúc trong từng use case (biểu đồ lớp theo UC)}
 
@@ -92,6 +98,8 @@ Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ
 \textbf{Phương thức liên quan}: \texttt{themTaiKhoan()}, \texttt{dangNhap()} (kiểm tra sau khi tạo); \texttt{ghiLog()} trên \texttt{LichSuThaoTac}.
 
 \input{diagrams/tex/6.2_class_uc03}
+
+Giải thích sơ đồ: Chỉ giữ hai lớp cần cho UC03: \texttt{NguoiDung} (đối tượng được tạo, chứa thuộc tính tài khoản và các operation đăng nhập/thêm TK) và \texttt{LichSuThaoTac} (ghi vết). Quan hệ 1..* nghĩa là một người dùng có thể phát sinh nhiều log. Các lớp hàng/phiếu không xuất hiện vì không tham gia mục tiêu ``thêm tài khoản''.
 
 \subsection{UC06 -- Thêm hàng hóa}
 
@@ -111,6 +119,8 @@ Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ
 
 \input{diagrams/tex/4.4_class_uc05}
 
+Giải thích sơ đồ: Cắt lát cấu trúc cho UC06. \texttt{HangHoa} ở giữa, quan hệ n..1 với \texttt{NhomHangHoa} và \texttt{DonViTinh} (mỗi hàng thuộc đúng một nhóm, một ĐVT). Quan hệ 1..* với \texttt{TonKho}: sau khi thêm hàng phải có dòng tồn theo kho. \texttt{NguoiDung} thể hiện actor thực hiện. Các operation trên \texttt{HangHoa} (\texttt{CapNhatThongTin}, \texttt{TimKiem}) và \texttt{TonKho.CapNhatTonKho} gắn với việc tạo và sau này tra cứu hàng.
+
 \subsection{UC09 -- Lập phiếu nhập kho}
 
 \textbf{Mục tiêu use case}: tạo phiếu nhập, chi tiết dòng hàng; khi duyệt cập nhật tồn.
@@ -129,6 +139,8 @@ Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ
 
 \input{diagrams/tex/4.5_class_uc09}
 
+Giải thích sơ đồ: \texttt{PhieuNhapKho} là lớp trung tâm UC09 với operation \texttt{LapPhieuNhap}, \texttt{DuyetPhieuNhap}. Nó liên kết 1..* tới \texttt{ChiTietPhieuNhap}; mỗi chi tiết n..1 tới \texttt{HangHoa}. Phiếu phụ thuộc \texttt{NhaCungCap}, \texttt{Kho}, \texttt{NguoiDung}. \texttt{TonKho} nối Kho và HangHoa -- khi duyệt, phương thức cập nhật tồn được gọi. Sơ đồ giải thích \textit{vì sao} cần đủ các lớp này: thiếu chi tiết thì không biết nhập hàng gì; thiếu TonKho thì không cập nhật được số lượng sau duyệt.
+
 \subsection{UC10 -- Lập phiếu xuất kho}
 
 \textbf{Mục tiêu use case}: tạo phiếu xuất; kiểm tra tồn khi thêm dòng; duyệt thì giảm tồn.
@@ -140,6 +152,8 @@ Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ
 \textbf{Phương thức liên quan}: \texttt{PhieuXuatKho.lapPhieu()}, \texttt{themChiTiet} (kèm \texttt{TonKho.kiemTraDu}), \texttt{duyetPhieu()} $\rightarrow$ \texttt{TonKho.giamTon()}.
 
 \input{diagrams/tex/4.6_class_uc10}
+
+Giải thích sơ đồ: Cấu trúc tương tự UC09 nhưng \texttt{PhieuXuatKho} gắn \texttt{KhachHang} thay cho NCC. \texttt{TonKho} đóng hai vai: (1) \texttt{kiemTraDu} khi thêm dòng -- chặn xuất vượt tồn; (2) \texttt{giamTon} khi duyệt. \texttt{ChiTietPhieuXuat} lưu từng mặt hàng xuất. Sơ đồ làm rõ cấu trúc cần có để use case xuất vừa an toàn (không âm tồn) vừa truy vết được khách và kho xuất.
 
 \section{Bảng mô tả thuộc tính các lớp}
 

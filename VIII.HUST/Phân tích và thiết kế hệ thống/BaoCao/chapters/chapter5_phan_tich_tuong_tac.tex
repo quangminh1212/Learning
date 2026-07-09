@@ -48,6 +48,8 @@ Mỗi sơ đồ trình tự gắn với một use case đã đặc tả: thể h
 
 \input{diagrams/tex/5.7_sequence_uc01}
 
+Giải thích sơ đồ: Trục đứng là các đối tượng (Người dùng, Giao diện đăng nhập, Hệ thống, CSDL); trục thời gian đi từ trên xuống. Mũi tên ngang là thông điệp: (1)--(2) actor thao tác form; (3) giao diện gửi thông tin đăng nhập cho hệ thống; (4) hệ thống hỏi CSDL kiểm tra tài khoản; (5)--(6) trả kết quả và hiển thị trang chủ hoặc lỗi. Sơ đồ chứng minh hành vi UC01 là chuỗi tương tác \textit{boundary $\rightarrow$ control $\rightarrow$ entity}, không chỉ là ``màn hình login''.
+
 \subsection{UC06 -- Thêm hàng hóa}
 
 \textbf{Bối cảnh}: NV/QL thêm mặt hàng mới; hệ thống phải vừa lưu danh mục vừa khởi tạo tồn.
@@ -65,6 +67,8 @@ Mỗi sơ đồ trình tự gắn với một use case đã đặc tả: thể h
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
+Giải thích sơ đồ: Sequence thể hiện thứ tự: NV chọn quản lý hàng hóa $\rightarrow$ nhập thông tin $\rightarrow$ giao diện gửi hệ thống $\rightarrow$ kiểm tra dữ liệu $\rightarrow$ lưu \texttt{HangHoa} xuống CSDL $\rightarrow$ cập nhật/tạo tồn ban đầu $\rightarrow$ trả thông báo thành công $\rightarrow$ hiển thị lại danh sách. Các lời gọi lồng nhau (hệ thống $\rightarrow$ CSDL) cho thấy bước lưu và khởi tạo tồn là hai thao tác dữ liệu tuần tự sau khi validate.
+
 \subsection{UC07 -- Tìm kiếm hàng hóa}
 
 \textbf{Bối cảnh}: Tra cứu không làm thay đổi dữ liệu; nhấn mạnh luồng đọc (query) từ \texttt{HangHoa} và \texttt{TonKho}.
@@ -74,6 +78,8 @@ Mỗi sơ đồ trình tự gắn với một use case đã đặc tả: thể h
 \textbf{Kịch bản chính}: Nhập điều kiện $\rightarrow$ truy vấn $\rightarrow$ ghép thông tin tồn $\rightarrow$ hiển thị (hoặc thông báo không có dữ liệu).
 
 \input{diagrams/tex/5.2_sequence_uc06}
+
+Giải thích sơ đồ: Đây là luồng \textbf{chỉ đọc}. Actor gửi điều kiện tìm; hệ thống truy vấn CSDL lấy danh sách hàng rồi lấy tồn tương ứng; kết quả trả về giao diện. Không có bước ``Lưu'' thay đổi nghiệp vụ. So với UC06, sequence này ngắn hơn và không có nhánh cập nhật tồn.
 
 \subsection{UC09 -- Lập phiếu nhập kho}
 
@@ -91,6 +97,8 @@ Mỗi sơ đồ trình tự gắn với một use case đã đặc tả: thể h
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
+Giải thích sơ đồ: Sequence có \textbf{hai actor theo thời gian}: NV tạo phiếu và gửi duyệt trước; QL xuất hiện ở bước duyệt. Các thông điệp thể hiện lưu phiếu/chi tiết (trạng thái Chờ duyệt), rồi nhánh duyệt: cập nhật trạng thái, gọi cập nhật \texttt{TonKho} (tăng), ghi log. Nhánh từ chối (nếu có trên sơ đồ/mô tả) không gọi tăng tồn. Sơ đồ gắn hành vi với cấu trúc lớp phiếu--chi tiết--tồn đã nêu ở Ch.4.
+
 \subsection{UC10 -- Lập phiếu xuất kho}
 
 \textbf{Bối cảnh}: Tương tự nhập nhưng có thêm tương tác kiểm tra tồn trước khi chấp nhận dòng hàng; duyệt thì trừ tồn.
@@ -100,6 +108,8 @@ Mỗi sơ đồ trình tự gắn với một use case đã đặc tả: thể h
 \textbf{Kịch bản chính}: Tạo phiếu $\rightarrow$ thêm dòng (kiểm tra tồn) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ giảm tồn + log.
 
 \input{diagrams/tex/5.4_sequence_uc10}
+
+Giải thích sơ đồ: Khác UC09 ở chỗ trước khi chấp nhận dòng hàng, hệ thống phải \textbf{hỏi tồn} (\texttt{kiemTraDu}). Chỉ khi đủ, chi tiết mới được lưu. Sau duyệt, thông điệp cập nhật tồn theo hướng \textbf{giảm}. Sequence làm rõ ràng buộc an toàn: không cho xuất vượt số lượng hiện có.
 
 \section{Phân tích hành vi đối tượng phiếu (biểu đồ trạng thái)}
 
@@ -111,11 +121,15 @@ Trạng thái điển hình: Mới tạo $\rightarrow$ Chờ duyệt $\rightarro
 
 \input{diagrams/tex/5.5_state_phieu_nhap}
 
+Giải thích sơ đồ: Hình tròn/oval (hoặc bo tròn) là các \textbf{trạng thái} của một phiếu nhập. Mũi tên là \textbf{sự kiện chuyển trạng thái}: gửi duyệt, duyệt, từ chối, hủy. Ý nghĩa: ở ``Chờ duyệt'' phiếu không được sửa tùy tiện; ``Đã duyệt'' là trạng thái kết thúc nghiệp vụ thành công và là điều kiện để tăng tồn; ``Từ chối'' kết thúc mà không đụng tồn. State bổ sung cho sequence: sequence nói \textit{ai gọi ai}, state nói \textit{phiếu đang ở pha nào}.
+
 \subsection{Phiếu xuất kho}
 
 Cùng mô hình trạng thái với phiếu nhập (Mới tạo, Chờ duyệt, Đã duyệt, Từ chối, Hủy).
 
 \input{diagrams/tex/5.6_state_phieu_xuat}
+
+Giải thích sơ đồ: Máy trạng thái phiếu xuất \textbf{đối xứng} phiếu nhập: cùng các trạng thái và sự kiện chuyển. Khác biệt nghiệp vụ nằm ở hành động kèm theo khi vào ``Đã duyệt'' (giảm tồn thay vì tăng), không nằm ở hình dạng sơ đồ trạng thái.
 
 \section{Kết luận chương}
 

@@ -396,6 +396,15 @@ def process_chapter(doc: Document, path: Path, chap_num: int, fig_counter: dict)
             continue
 
         if content[pos] == "\\":
+            # Unwrap common text formatting so content is not dropped
+            mfmt = re.match(
+                r"\\(textbf|textit|emph|texttt|underline|text)\*?\{([^{}]*)\}",
+                content[pos:],
+            )
+            if mfmt:
+                body_para(doc, mfmt.group(2), indent=False)
+                pos += mfmt.end()
+                continue
             m = re.match(r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^{}]*\})*", content[pos:])
             if m:
                 pos += m.end()

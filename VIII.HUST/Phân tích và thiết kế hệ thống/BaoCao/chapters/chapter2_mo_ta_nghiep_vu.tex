@@ -246,11 +246,17 @@ Biểu đồ hoạt động minh họa luồng thực hiện các nghiệp vụ 
 \subsection{Nghiệp vụ nhập kho}
 \input{diagrams/tex/2.1_activity_nhapkho}
 
+Giải thích sơ đồ: Biểu đồ hoạt động mô tả luồng \textbf{nhập kho} từ lúc bắt đầu đến kết thúc. Các hình chữ nhật là bước xử lý (lập phiếu, nhập NCC/kho, thêm chi tiết hàng). Hình thoi là điểm quyết định: (1) dữ liệu phiếu có hợp lệ không -- nếu không thì báo lỗi và quay lại nhập; (2) quản lý có duyệt không -- nếu duyệt thì cập nhật tồn kho và in/lưu phiếu, nếu từ chối thì thông báo và có thể lập lại. Mũi tên thể hiện thứ tự thực hiện; nhánh ``Không'' quay vòng để sửa sai trước khi đi tiếp.
+
 \subsection{Nghiệp vụ xuất kho}
 \input{diagrams/tex/2.2_activity_xuatkho}
 
+Giải thích sơ đồ: Tương tự nhập kho nhưng gắn nghiệp vụ \textbf{xuất hàng}. Luồng đi qua lập phiếu, chọn khách/kho, thêm dòng hàng (kèm kiểm tra tồn đủ), gửi duyệt, quản lý duyệt/từ chối. Khác biệt cốt lõi so với nhập: tại bước thêm hàng, hệ thống phải \textbf{chặn xuất vượt tồn}; khi duyệt thành công thì \textbf{giảm tồn} thay vì tăng. Các quyết định ``hợp lệ?'' / ``duyệt?'' tạo nhánh xử lý lỗi và từ chối rõ ràng.
+
 \subsection{Nghiệp vụ kiểm kê}
 \input{diagrams/tex/2.3_activity_kiemke}
+
+Giải thích sơ đồ: Biểu đồ thể hiện quy trình \textbf{kiểm kê định kỳ}: tạo phiếu theo kho $\rightarrow$ hệ thống nạp số lượng theo sổ $\rightarrow$ nhân viên nhập số thực tế $\rightarrow$ tính chênh lệch $\rightarrow$ gửi duyệt $\rightarrow$ quản lý duyệt điều chỉnh thì cập nhật tồn bằng số thực tế. Sơ đồ nhấn mạnh rằng tồn kho trên hệ thống chỉ đổi \textbf{sau khi duyệt}, không đổi ngay khi nhập số liệu kiểm đếm.
 
 \section{Kết luận chương}
 
