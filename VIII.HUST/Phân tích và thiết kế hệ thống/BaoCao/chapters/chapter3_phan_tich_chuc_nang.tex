@@ -26,9 +26,9 @@ Nhân viên kho & Lập phiếu nhập/xuất; thêm/tìm hàng, đối tác. \\
 \section{Nguyên tắc}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item Use case = \textbf{một mục tiêu cụ thể} (vd.\ Thêm hàng hóa), không phải ``Quản lý hàng hóa''.
-    \item \textbf{Tổng quát}: nhóm chức năng từ nghiệp vụ.
-    \item \textbf{Phân rã}: các use case cụ thể thuộc nhóm (12 UC tiêu biểu).
+    \item Use case = \textbf{một mục tiêu cụ thể} của actor (vd.\ Thêm hàng hóa), không phải ``Quản lý hàng hóa''.
+    \item \textbf{Nghiệp vụ} (Ch.2) $\neq$ use case. Đăng nhập/đăng xuất \textbf{không} phải nghiệp vụ kho -- là use case \textbf{hệ thống} (UC01, UC02).
+    \item \textbf{Tổng quát}: nhóm chức năng; \textbf{Phân rã}: 12 UC tiêu biểu.
 \end{itemize}
 
 \section{Sơ đồ use case tổng quát}
@@ -87,7 +87,8 @@ UC12 & Xem báo cáo nhập xuất tồn & QL kho, QTV \\
 \subsection{UC01 -- Đăng nhập}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Vào hệ thống sau xác thực.
+    \item \textbf{Loại}: Use case \textbf{hệ thống} (không phải nghiệp vụ kho).
+    \item \textbf{Mục tiêu}: Vào hệ thống sau khi xác thực.
     \item \textbf{Trước}: Có tài khoản hoạt động.
     \item \textbf{Chính}: Nhập tên/MK $\rightarrow$ kiểm tra $\rightarrow$ tạo phiên.
     \item \textbf{Thay thế}: Sai TT / khóa $\rightarrow$ lỗi.
@@ -96,6 +97,7 @@ UC12 & Xem báo cáo nhập xuất tồn & QL kho, QTV \\
 \subsection{UC02 -- Đăng xuất}
 
 \begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Loại}: Use case hệ thống.
     \item \textbf{Mục tiêu}: Kết thúc phiên. Chọn đăng xuất $\rightarrow$ xóa phiên.
 \end{itemize}
 

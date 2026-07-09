@@ -11,13 +11,18 @@ Báo cáo theo \textbf{hướng đối tượng} (UML):
     \item \textbf{CSDL \& giao diện} (Ch.7).
 \end{enumerate}
 
-\textit{Lưu ý}: Nghiệp vụ ``Quản lý \ldots'' là gói công việc \textbf{chung}, không phải một use case. Use case là \textbf{một mục tiêu cụ thể} của actor. Chọn \textbf{12 use case} tiêu biểu; sửa/xóa/tìm cùng nhóm có luồng tương tự.
+\textit{Lưu ý}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Nghiệp vụ} = công việc nghiệp vụ của doanh nghiệp (nhập kho, xuất kho, kiểm kê\ldots).
+    \item \textbf{Không} coi \textbf{đăng nhập / đăng xuất} là nghiệp vụ -- đó là \textbf{chức năng hệ thống} (hỗ trợ an toàn truy cập), được mô hình hóa bằng use case ở Chương 3 (UC01, UC02).
+    \item Nghiệp vụ ``Quản lý \ldots'' là gói chung; use case = một mục tiêu cụ thể của actor.
+\end{itemize}
 
 \section{Tổng quan nghiệp vụ}
 
-Hệ thống quản lý kho hỗ trợ kiểm soát hàng hóa từ khi nhập vào đến khi xuất ra, đồng thời duy trì danh mục người dùng, đối tác, hàng hóa và kho. Các nghiệp vụ chính và use case tiêu biểu:
+Hệ thống phục vụ các nghiệp vụ \textbf{cốt lõi của kho}: danh mục (tài khoản nội bộ, đối tác, hàng, kho), nhập/xuất, kiểm kê và theo dõi tồn. Bảng ánh xạ sang use case tiêu biểu:
 
-\begin{longtable}{|p{4cm}|p{9cm}|}
+\begin{longtable}{|p{4.2cm}|p{8.8cm}|}
 \hline
 \textbf{Nghiệp vụ} & \textbf{Use case tiêu biểu (Ch.3)} \\
 \hline
@@ -26,8 +31,6 @@ Hệ thống quản lý kho hỗ trợ kiểm soát hàng hóa từ khi nhập v
 \textbf{Nghiệp vụ} & \textbf{Use case tiêu biểu (Ch.3)} \\
 \hline
 \endhead
-Xác thực & UC01 Đăng nhập; UC02 Đăng xuất \\
-\hline
 Quản lý tài khoản & UC03 Thêm tài khoản \\
 \hline
 Quản lý nhà cung cấp & UC04 Thêm nhà cung cấp \\
@@ -48,26 +51,9 @@ Báo cáo tồn kho & UC12 Xem báo cáo nhập xuất tồn \\
 \hline
 \end{longtable}
 
-\section{Nghiệp vụ 1: Xác thực}
+\noindent\textit{Chức năng hệ thống (không phải nghiệp vụ)}: Đăng nhập (UC01), Đăng xuất (UC02) -- điều kiện để người dùng truy cập các nghiệp vụ trên.
 
-\textbf{Mô tả}: Nghiệp vụ xác thực đảm bảo chỉ người có tài khoản hợp lệ mới được sử dụng hệ thống. Người dùng đăng nhập bằng tên đăng nhập và mật khẩu; hệ thống kiểm tra và tạo phiên làm việc (session). Khi kết thúc, người dùng đăng xuất để xóa phiên, tránh người khác dùng tiếp máy.
-
-\textbf{Người thực hiện}: Tất cả người dùng (quản trị viên, quản lý kho, nhân viên kho).
-
-\textbf{Quy trình}:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Người dùng mở trang đăng nhập, nhập tên đăng nhập và mật khẩu.
-    \item Hệ thống kiểm tra tài khoản tồn tại, mật khẩu đúng, trạng thái đang hoạt động.
-    \item Nếu hợp lệ: tạo phiên, ghi nhận thời gian đăng nhập, chuyển đến trang chủ theo vai trò.
-    \item Nếu không hợp lệ: thông báo lỗi (sai thông tin hoặc tài khoản bị khóa), yêu cầu nhập lại.
-    \item Khi đăng xuất: hệ thống xóa phiên và quay về trang đăng nhập.
-\end{enumerate}
-
-\textbf{Dữ liệu liên quan}: Bảng \texttt{NguoiDung} (tên đăng nhập, mật khẩu mã hóa, trạng thái); bảng \texttt{LichSuThaoTac} (ghi log đăng nhập/đăng xuất).
-
-\textbf{Use case liên quan}: UC01 Đăng nhập; UC02 Đăng xuất.
-
-\section{Nghiệp vụ 2: Quản lý tài khoản}
+\section{Nghiệp vụ 1: Quản lý tài khoản}
 
 \textbf{Mô tả}: Quản trị viên duy trì danh sách tài khoản trên hệ thống, gán vai trò (quản trị viên, quản lý kho, nhân viên kho) để phân quyền. Chỉ người được cấp quyền tương ứng mới thực hiện được các thao tác nhập/xuất, duyệt phiếu, quản lý danh mục.
 
@@ -82,13 +68,13 @@ Báo cáo tồn kho & UC12 Xem báo cáo nhập xuất tồn \\
     \item Nếu trùng tên đăng nhập: báo lỗi, yêu cầu đổi tên.
 \end{enumerate}
 
-Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \textbf{khóa/mở} tài khoản, \textbf{tìm kiếm} danh sách -- các thao tác này có luồng tương tự (chọn bản ghi $\rightarrow$ thực hiện $\rightarrow$ lưu) và không đặc tả riêng trong 10 UC tiêu biểu.
+Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \textbf{khóa/mở} tài khoản, \textbf{tìm kiếm} danh sách -- luồng tương tự (chọn bản ghi $\rightarrow$ thực hiện $\rightarrow$ lưu).
 
 \textbf{Dữ liệu liên quan}: \texttt{NguoiDung} (mã, tên đăng nhập, mật khẩu, họ tên, vai trò, trạng thái).
 
 \textbf{Use case tiêu biểu}: UC03 Thêm tài khoản.
 
-\section{Nghiệp vụ 3: Quản lý nhà cung cấp}
+\section{Nghiệp vụ 2: Quản lý nhà cung cấp}
 
 \textbf{Mô tả}: Lưu trữ và duy trì thông tin các nhà cung cấp hàng hóa (tên, địa chỉ, điện thoại, email, người liên hệ). Thông tin NCC được dùng khi lập phiếu nhập kho, giúp truy vết hàng đến từ ai.
 
@@ -106,7 +92,7 @@ Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \tex
 
 \textbf{Use case tiêu biểu}: UC04 Thêm nhà cung cấp.
 
-\section{Nghiệp vụ 4: Quản lý khách hàng}
+\section{Nghiệp vụ 3: Quản lý khách hàng}
 
 \textbf{Mô tả}: Tương tự nhà cung cấp, nghiệp vụ này quản lý danh mục khách hàng nhận hàng khi xuất kho (tên, địa chỉ, liên hệ, mã số thuế nếu là doanh nghiệp). Phục vụ lập phiếu xuất và theo dõi lịch sử giao dịch theo khách.
 
@@ -124,7 +110,7 @@ Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \tex
 
 \textbf{Use case tiêu biểu}: UC05 Thêm khách hàng.
 
-\section{Nghiệp vụ 5: Quản lý hàng hóa}
+\section{Nghiệp vụ 4: Quản lý hàng hóa}
 
 \textbf{Mô tả}: Duy trì danh mục hàng hóa trong hệ thống: mã, tên, nhóm hàng, đơn vị tính, giá nhập, giá xuất, mô tả, trạng thái. Hàng hóa là trung tâm của hệ thống -- mọi phiếu nhập/xuất và tồn kho đều tham chiếu đến mã hàng. Khi thêm hàng mới, hệ thống tự khởi tạo số lượng tồn bằng 0 tại các kho đang hoạt động.
 
@@ -151,7 +137,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Use case tiêu biểu}: UC06 Thêm hàng hóa; UC07 Tìm kiếm hàng hóa.
 
-\section{Nghiệp vụ 6: Quản lý kho}
+\section{Nghiệp vụ 5: Quản lý kho}
 
 \textbf{Mô tả}: Doanh nghiệp có thể có nhiều kho (địa điểm khác nhau). Nghiệp vụ này duy trì thông tin từng kho: mã, tên, địa chỉ, người phụ trách, diện tích, trạng thái hoạt động. Tồn kho được theo dõi theo từng cặp (kho, hàng hóa).
 
@@ -170,7 +156,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Use case tiêu biểu}: UC08 Thêm kho.
 
-\section{Nghiệp vụ 7: Nhập kho}
+\section{Nghiệp vụ 6: Nhập kho}
 
 \textbf{Mô tả}: Khi hàng từ nhà cung cấp về kho, nhân viên lập \textbf{phiếu nhập kho} ghi nhận NCC, kho nhận, ngày nhập và từng dòng hàng (mã hàng, số lượng, đơn giá). Phiếu được gửi \textbf{duyệt}; chỉ khi quản lý kho duyệt, hệ thống mới \textbf{tăng tồn kho} và khóa phiếu. Nếu từ chối, tồn không đổi.
 
@@ -191,7 +177,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Use case tiêu biểu}: UC09 Lập phiếu nhập kho (bao gồm luồng lập và duyệt với hai actor).
 
-\section{Nghiệp vụ 8: Xuất kho}
+\section{Nghiệp vụ 7: Xuất kho}
 
 \textbf{Mô tả}: Khi xuất hàng cho khách hàng hoặc sử dụng nội bộ, nhân viên lập \textbf{phiếu xuất kho}. Hệ thống \textbf{kiểm tra tồn đủ} trước khi cho phép thêm dòng hàng. Sau khi quản lý duyệt, tồn kho được \textbf{giảm} tương ứng.
 
@@ -212,7 +198,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Use case tiêu biểu}: UC10 Lập phiếu xuất kho (lập + duyệt).
 
-\section{Nghiệp vụ 9: Kiểm kê tồn kho}
+\section{Nghiệp vụ 8: Kiểm kê tồn kho}
 
 \textbf{Mô tả}: Định kỳ (tháng/quý), đối chiếu số lượng hàng \textbf{thực tế} trong kho với số lượng trên hệ thống (sổ sách). Nếu có chênh lệch, quản lý duyệt điều chỉnh để \texttt{TonKho} khớp thực tế.
 
@@ -232,7 +218,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Use case tiêu biểu}: UC11 Lập phiếu kiểm kê.
 
-\section{Nghiệp vụ 10: Báo cáo nhập -- xuất -- tồn}
+\section{Nghiệp vụ 9: Báo cáo nhập -- xuất -- tồn}
 
 \textbf{Mô tả}: Quản lý kho / quản trị viên xem \textbf{báo cáo tồn kho} và tổng hợp nhập--xuất--tồn theo khoảng thời gian, theo kho hoặc theo hàng, phục vụ theo dõi vận hành (không bao gồm module tài chính/thanh toán phức tạp).
 
@@ -252,4 +238,4 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \section{Kết luận chương}
 
-Chương 2 mô tả 10 nghiệp vụ (gồm \textbf{kiểm kê} và \textbf{báo cáo tồn}). Ánh xạ sang 12 use case tiêu biểu ở Chương 3. Tiếp: đặc tả UC, activity, sequence, class.
+Chương 2 mô tả \textbf{9 nghiệp vụ} cốt lõi của kho (không tính đăng nhập/đăng xuất -- chức năng hệ thống). Ánh xạ sang use case ở Chương 3 (UC01--UC02 là use case hệ thống; UC03--UC12 gắn nghiệp vụ). Tiếp: đặc tả UC, activity, sequence, class.
