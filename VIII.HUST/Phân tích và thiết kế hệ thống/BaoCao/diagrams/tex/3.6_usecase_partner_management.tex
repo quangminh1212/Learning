@@ -4,31 +4,27 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.6pt, minimum width=3.4cm, minimum height=0.8cm, font=\footnotesize, align=center},
-    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=10pt, rounded corners=4pt}
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.75cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
+    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=12cm, minimum height=8cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=black] at (0,3.6) {Quản lý đối tác};
+\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,2.6) {Đối tác};
 
-\node[usecase] (uc03) at (-3.5,1.2) {UC03: Quản lý\\nhà cung cấp};
-\node[usecase] (uc04) at (3.5,1.2) {UC04: Quản lý\\khách hàng};
+\node[usecase] (uc04) at (-2.8,0.3) {UC04: Thêm nhà cung cấp};
+\node[usecase] (uc05) at (2.8,0.3) {UC05: Thêm khách hàng};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6.5,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6.5,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (-6.5,-2.2) {};
-\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (6.5,-2.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
 
-\draw[line width=0.5pt] (nvk) -- (uc03);
-\draw[line width=0.5pt] (nvk) -- (uc04);
-\draw[line width=0.5pt] (qlk) -- (uc03);
-\draw[line width=0.5pt] (qlk) -- (uc04);
-\draw[line width=0.5pt] (ncc) -- (uc03);
-\draw[line width=0.5pt] (kh) -- (uc04);
+\draw (nvk) -- (uc04);
+\draw (nvk) -- (uc05);
+\draw (qlk) -- (uc04);
+\draw (qlk) -- (uc05);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- Quản lý đối tác}
+\caption{Sơ đồ use case phân rã -- Đối tác}
 \label{fig:usecase-partner-management}
 \end{figure}

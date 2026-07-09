@@ -4,31 +4,27 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.8cm, font=\scriptsize\bfseries},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.6pt, minimum width=3.4cm, minimum height=0.8cm, font=\footnotesize, align=center},
-    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=10pt, rounded corners=4pt}
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.75cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
+    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=12cm, minimum height=8cm] (system) at (0,0) {};
-\node[font=\bfseries\small, text=black] at (0,3.6) {Quản lý nhập xuất};
+\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,2.6) {Nhập / xuất kho};
 
-\node[usecase] (uc09) at (-3.5,1.2) {UC09: Lập phiếu\\nhập kho};
-\node[usecase] (uc10) at (3.5,1.2) {UC10: Lập phiếu\\xuất kho};
+\node[usecase] (uc09) at (-2.8,0.3) {UC09: Lập phiếu nhập};
+\node[usecase] (uc10) at (2.8,0.3) {UC10: Lập phiếu xuất};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6.5,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6.5,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (-6.5,-2.2) {};
-\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (6.5,-2.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
 
-\draw[line width=0.5pt] (nvk) -- (uc09);
-\draw[line width=0.5pt] (nvk) -- (uc10);
-\draw[line width=0.5pt] (qlk) -- (uc09);
-\draw[line width=0.5pt] (qlk) -- (uc10);
-\draw[line width=0.5pt] (ncc) -- (uc09);
-\draw[line width=0.5pt] (kh) -- (uc10);
+\draw (nvk) -- (uc09);
+\draw (nvk) -- (uc10);
+\draw (qlk) -- (uc09);
+\draw (qlk) -- (uc10);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- Quản lý nhập xuất}
+\caption{Sơ đồ use case phân rã -- Nhập xuất}
 \label{fig:usecase-inventory-management}
 \end{figure}

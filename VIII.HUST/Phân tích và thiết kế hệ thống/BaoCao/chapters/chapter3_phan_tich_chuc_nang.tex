@@ -2,8 +2,6 @@
 
 \section{Phân tích tác nhân}
 
-Tác nhân (actor) là những người hoặc hệ thống bên ngoài tương tác với hệ thống quản lý kho hàng. Dựa trên phân tích nghiệp vụ ở Chương 2, hệ thống có năm nhóm tác nhân chính:
-
 \begin{longtable}{|p{3.5cm}|p{9cm}|}
 \hline
 \textbf{Tác nhân} & \textbf{Mô tả} \\
@@ -13,75 +11,81 @@ Tác nhân (actor) là những người hoặc hệ thống bên ngoài tương 
 \textbf{Tác nhân} & \textbf{Mô tả} \\
 \hline
 \endhead
-Quản trị viên & Quản lý tài khoản người dùng, cấu hình hệ thống, phân quyền truy cập, sao lưu và khôi phục dữ liệu. Có toàn quyền trên hệ thống. \\
+Quản trị viên & Thêm tài khoản, phân quyền; có thể quản lý kho. \\
 \hline
-Quản lý kho & Giám sát tồn kho, phê duyệt phiếu nhập/xuất, quản lý thông tin kho và hàng hóa. \\
+Quản lý kho & Duyệt phiếu nhập/xuất; quản lý hàng, đối tác, kho. \\
 \hline
-Nhân viên kho & Thực hiện các thao tác nhập kho, xuất kho, kiểm kê, cập nhật thông tin hàng hóa và đối tác. Là người dùng thao tác nhiều nhất với hệ thống. \\
-\hline
-Khách hàng & Xem trạng thái phiếu xuất và lịch sử giao dịch (nếu được cấp tài khoản). \\
-\hline
-Nhà cung cấp & Cung cấp thông tin giao hàng, theo dõi trạng thái phiếu nhập kho liên quan đến mình (nếu được cấp tài khoản). \\
+Nhân viên kho & Lập phiếu nhập/xuất; thêm/tìm hàng, đối tác, kho. \\
 \hline
 \end{longtable}
 
 \section{Sơ đồ phân cấp chức năng (BFD)}
 
-Sơ đồ phân cấp chức năng (Business Function Diagram -- BFD) mô tả các chức năng chính của hệ thống quản lý kho hàng theo cấp độ từ tổng quan đến chi tiết. Hệ thống được chia thành 5 nhóm chức năng lớn, mỗi nhóm tiếp tục phân rã thành các chức năng con cụ thể:
+Cấp lá là hành động cụ thể (tương ứng use case):
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Quản lý người dùng}: Quản lý tài khoản, Phân quyền, Đăng nhập/đăng xuất.
-    \item \textbf{Quản lý đối tác}: Quản lý nhà cung cấp, Quản lý khách hàng.
-    \item \textbf{Quản lý hàng hóa}: Quản lý nhóm hàng, Quản lý đơn vị tính, Quản lý hàng hóa, Tìm kiếm hàng hóa.
-    \item \textbf{Quản lý kho}: Quản lý thông tin kho, Tìm kiếm kho, Phân bổ hàng hóa, Kiểm kê, Cảnh báo tồn kho.
-    \item \textbf{Quản lý nhập xuất}: Lập phiếu nhập, Duyệt phiếu nhập, Lập phiếu xuất, Duyệt phiếu xuất.
+    \item Người dùng: Đăng nhập, Đăng xuất, Thêm tài khoản.
+    \item Đối tác: Thêm NCC, Thêm KH.
+    \item Hàng \& kho: Thêm hàng, Tìm hàng, Thêm kho.
+    \item Nhập xuất: Lập phiếu nhập, Lập phiếu xuất.
 \end{itemize}
 
 \input{diagrams/tex/3.1_bfd}
 
 \section{Sơ đồ luồng dữ liệu (DFD)}
 
-Sơ đồ luồng dữ liệu (Data Flow Diagram -- DFD) mô tả luồng thông tin giữa các tác nhân và các quá trình xử lý bên trong hệ thống. DFD cấp 0 (Context Diagram) thể hiện toàn bộ hệ thống như một quá trình duy nhất tương tác với các tác nhân bên ngoài. DFD cấp 1 phân rã hệ thống thành các quá trình chức năng chính và các kho dữ liệu tương ứng.
+\subsection{DFD cấp 0}
 
-\subsection{DFD cấp 0 (Context Diagram)}
-
-DFD cấp 0 cho thấy hệ thống quản lý kho hàng nhận dữ liệu đầu vào từ năm tác nhân: Quản trị viên, Quản lý kho, Nhân viên kho, Khách hàng và Nhà cung cấp. Hệ thống trả về các thông tin đầu ra tương ứng: thông tin tài khoản, phiếu nhập/xuất, kết quả tìm kiếm, cảnh báo tồn kho.
+Hệ thống tương tác với QTV, QL kho, NV kho: tài khoản, phiếu nhập/xuất, kết quả tìm kiếm, cảnh báo tồn.
 
 \input{diagrams/tex/3.2_dfd_context}
 
 \subsection{DFD cấp 1}
 
-DFD cấp 1 phân rã hệ thống thành các quá trình xử lý chính:
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{P1 -- Quản lý người dùng}: Xử lý đăng nhập, phân quyền, quản lý tài khoản.
-    \item \textbf{P2 -- Quản lý hàng hóa và kho}: Thêm, sửa, xóa, tìm kiếm hàng hóa và kho.
-    \item \textbf{P3 -- Quản lý đối tác}: Quản lý thông tin nhà cung cấp và khách hàng.
-    \item \textbf{P4 -- Quản lý nhập xuất}: Lập và duyệt phiếu nhập/xuất, kiểm kê.
-\end{itemize}
-
-Các kho dữ liệu (data store) bao gồm: DS1 NguoiDung, DS2 HangHoa, DS3 Kho, DS4 NhaCungCap, DS5 KhachHang, DS6 PhieuNhapXuat, DS7 TonKho, DS8 LichSuThaoTac.
+P1 Người dùng; P2 Hàng hóa \& kho; P3 Đối tác; P4 Nhập xuất. Kho dữ liệu: NguoiDung, HangHoa, Kho, NhaCungCap, KhachHang, PhieuNhapXuat, TonKho, LichSuThaoTac.
 
 \input{diagrams/tex/3.3_dfd_level1}
 
-\section{Sơ đồ use case tổng quát}
+\section{Use case: nguyên tắc và danh sách (10 UC)}
 
-Sơ đồ use case tổng quát mô tả toàn bộ các ca sử dụng (use case) của hệ thống và mối quan hệ giữa các tác nhân với các use case tương ứng. Hệ thống có 10 use case chính (UC01--UC10) được thực hiện bởi 5 tác nhân.
+\textbf{Use case} = \textbf{một mục tiêu cụ thể} actor muốn đạt được. Không coi ``Quản lý hàng hóa'' là một UC (đó là nghiệp vụ). Ví dụ nghiệp vụ tài khoản có thể có thêm/sửa/xóa/tìm; báo cáo chọn các UC tiêu biểu để đặc tả gọn.
+
+\begin{longtable}{|p{1.3cm}|p{5.5cm}|p{6cm}|}
+\hline
+\textbf{Mã} & \textbf{Use case (mục tiêu)} & \textbf{Tác nhân chính} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Mã} & \textbf{Use case (mục tiêu)} & \textbf{Tác nhân chính} \\
+\hline
+\endhead
+UC01 & Đăng nhập & Tất cả \\
+\hline
+UC02 & Đăng xuất & Tất cả \\
+\hline
+UC03 & Thêm tài khoản & Quản trị viên \\
+\hline
+UC04 & Thêm nhà cung cấp & NV kho, QL kho \\
+\hline
+UC05 & Thêm khách hàng & NV kho, QL kho \\
+\hline
+UC06 & Thêm hàng hóa & NV kho, QL kho \\
+\hline
+UC07 & Tìm kiếm hàng hóa & Có quyền \\
+\hline
+UC08 & Thêm kho & QL kho, QTV \\
+\hline
+UC09 & Lập phiếu nhập kho & NV kho (lập), QL kho (duyệt) \\
+\hline
+UC10 & Lập phiếu xuất kho & NV kho (lập), QL kho (duyệt) \\
+\hline
+\end{longtable}
+
+\section{Sơ đồ use case tổng quát}
 
 \input{diagrams/tex/3.4_usecase}
 
 \section{Sơ đồ use case phân rã}
-
-Các use case chính được phân rã thành các nhóm chức năng cụ thể:
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Quản lý người dùng}: UC01 Quản lý tài khoản, UC02 Đăng nhập/đăng xuất.
-    \item \textbf{Quản lý đối tác}: UC03 Quản lý nhà cung cấp, UC04 Quản lý khách hàng.
-    \item \textbf{Quản lý hàng hóa và kho}: UC05 Quản lý hàng hóa, UC06 Tìm kiếm hàng hóa, UC07 Quản lý kho, UC08 Tìm kiếm kho.
-    \item \textbf{Quản lý nhập xuất}: UC09 Lập phiếu nhập kho, UC10 Lập phiếu xuất kho.
-\end{itemize}
-
-Dưới đây là các sơ đồ use case phân rã cho từng nhóm chức năng:
 
 \input{diagrams/tex/3.5_usecase_user_management}
 
@@ -93,168 +97,93 @@ Dưới đây là các sơ đồ use case phân rã cho từng nhóm chức năn
 
 \section{Đặc tả use case}
 
-\subsection{UC01 -- Quản lý tài khoản người dùng}
+\subsection{UC01 -- Đăng nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tác nhân}: Tất cả.
+    \item \textbf{Mục đích}: Vào hệ thống sau khi xác thực.
+    \item \textbf{Điều kiện trước}: Có tài khoản đang hoạt động.
+    \item \textbf{Luồng chính}: Mở form $\rightarrow$ nhập tên/mật khẩu $\rightarrow$ kiểm tra $\rightarrow$ tạo phiên, vào trang chủ.
+    \item \textbf{Luồng thay thế}: Sai thông tin / bị khóa $\rightarrow$ báo lỗi.
+    \item \textbf{Điều kiện sau}: Có phiên làm việc.
+\end{itemize}
+
+\subsection{UC02 -- Đăng xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tác nhân}: Người đã đăng nhập.
+    \item \textbf{Mục đích}: Kết thúc phiên.
+    \item \textbf{Luồng chính}: Chọn đăng xuất $\rightarrow$ xóa phiên $\rightarrow$ về form đăng nhập.
+\end{itemize}
+
+\subsection{UC03 -- Thêm tài khoản}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tác nhân}: Quản trị viên.
-    \item \textbf{Mục đích}: Tạo, chỉnh sửa, khóa/mở tài khoản người dùng và phân quyền theo vai trò.
-    \item \textbf{Điều kiện trước}: Quản trị viên đã đăng nhập vào hệ thống.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Quản trị viên chọn chức năng ``Quản lý tài khoản''.
-        \item Hệ thống hiển thị danh sách tài khoản người dùng.
-        \item Quản trị viên chọn ``Thêm tài khoản'', nhập thông tin: họ tên, tên đăng nhập, mật khẩu, email, số điện thoại, vai trò.
-        \item Hệ thống kiểm tra tên đăng nhập không trùng, mã hóa mật khẩu và lưu.
-        \item Hệ thống hiển thị thông báo thành công và cập nhật danh sách.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Tên đăng nhập đã tồn tại $\rightarrow$ hệ thống thông báo lỗi, yêu cầu nhập tên khác.
-    \item \textbf{Điều kiện sau}: Tài khoản mới được tạo, có thể đăng nhập.
+    \item \textbf{Mục đích}: Tạo tài khoản mới với vai trò.
+    \item \textbf{Luồng chính}: Nhập họ tên, tên đăng nhập, mật khẩu, vai trò $\rightarrow$ kiểm tra trùng $\rightarrow$ mã hóa, lưu.
+    \item \textbf{Luồng thay thế}: Tên đăng nhập trùng $\rightarrow$ báo lỗi.
 \end{itemize}
 
-\subsection{UC02 -- Đăng nhập / Đăng xuất}
+\subsection{UC04 -- Thêm nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Tất cả người dùng.
-    \item \textbf{Mục đích}: Xác thực người dùng trước khi truy cập hệ thống.
-    \item \textbf{Điều kiện trước}: Người dùng đã có tài khoản và đang ở trạng thái hoạt động.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng truy cập trang đăng nhập.
-        \item Nhập tên đăng nhập và mật khẩu, nhấn ``Đăng nhập''.
-        \item Hệ thống kiểm tra thông tin: tài khoản tồn tại, mật khẩu đúng, trạng thái hoạt động.
-        \item Hệ thống tạo phiên làm việc, ghi log đăng nhập, chuyển đến trang chủ.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Thông tin sai hoặc tài khoản bị khóa $\rightarrow$ hệ thống thông báo lỗi tương ứng.
-    \item \textbf{Điều kiện sau}: Người dùng đăng nhập thành công, phiên làm việc được tạo.
+    \item \textbf{Tác nhân}: NV kho, QL kho.
+    \item \textbf{Mục đích}: Thêm NCC vào danh mục.
+    \item \textbf{Luồng chính}: Nhập mã, tên, địa chỉ, SĐT, email $\rightarrow$ kiểm tra mã $\rightarrow$ lưu.
 \end{itemize}
 
-\subsection{UC03 -- Quản lý nhà cung cấp}
+\subsection{UC05 -- Thêm khách hàng}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Thêm, sửa, xóa, tìm kiếm thông tin nhà cung cấp.
-    \item \textbf{Điều kiện trước}: Người dùng đã đăng nhập với quyền phù hợp.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng chọn ``Quản lý nhà cung cấp''.
-        \item Hệ thống hiển thị danh sách nhà cung cấp.
-        \item Người dùng chọn ``Thêm mới'', nhập mã, tên, địa chỉ, số điện thoại, email, người liên hệ.
-        \item Hệ thống kiểm tra mã không trùng và lưu.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Mã đã tồn tại $\rightarrow$ thông báo lỗi. Xóa nhà cung cấp có phiếu nhập liên quan $\rightarrow$ không cho xóa, chỉ cho đánh dấu ngừng hoạt động.
-    \item \textbf{Điều kiện sau}: Thông tin nhà cung cấp được cập nhật trong cơ sở dữ liệu.
+    \item \textbf{Tác nhân}: NV kho, QL kho.
+    \item \textbf{Mục đích}: Thêm khách hàng vào danh mục.
+    \item \textbf{Luồng chính}: Tương tự UC04; có thể thêm mã số thuế.
 \end{itemize}
 
-\subsection{UC04 -- Quản lý khách hàng}
+\subsection{UC06 -- Thêm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Thêm, sửa, xóa, tìm kiếm thông tin khách hàng.
-    \item \textbf{Điều kiện trước}: Người dùng đã đăng nhập với quyền phù hợp.
-    \item \textbf{Luồng chính}: Tương tự UC03, thay nhà cung cấp bằng khách hàng. Thông tin nhập gồm: mã, tên, địa chỉ, số điện thoại, email, mã số thuế, người liên hệ.
-    \item \textbf{Điều kiện sau}: Thông tin khách hàng được cập nhật trong cơ sở dữ liệu.
+    \item \textbf{Tác nhân}: NV kho, QL kho.
+    \item \textbf{Mục đích}: Thêm mặt hàng mới.
+    \item \textbf{Điều kiện trước}: Đã có nhóm hàng, đơn vị tính.
+    \item \textbf{Luồng chính}: Nhập mã, tên, nhóm, ĐVT, giá $\rightarrow$ kiểm tra mã $\rightarrow$ lưu + khởi tạo tồn = 0 tại các kho.
 \end{itemize}
 
-\subsection{UC05 -- Quản lý hàng hóa}
+\subsection{UC07 -- Tìm kiếm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mục đích}: Thêm, cập nhật, tìm kiếm, phân loại hàng hóa.
-    \item \textbf{Điều kiện trước}: Đã có thông tin nhóm hàng và đơn vị tính trong hệ thống.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng chọn ``Quản lý hàng hóa''.
-        \item Hệ thống hiển thị danh sách hàng hóa.
-        \item Người dùng chọn ``Thêm mới'', nhập mã, tên, chọn nhóm hàng, đơn vị tính, giá nhập, giá xuất, mô tả.
-        \item Hệ thống kiểm tra mã không trùng, lưu hàng hóa và tự động khởi tạo tồn kho bằng 0 tại tất cả các kho.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Mã đã tồn tại $\rightarrow$ thông báo lỗi.
-    \item \textbf{Điều kiện sau}: Hàng hóa mới được tạo, có bản ghi tồn kho tại các kho.
+    \item \textbf{Tác nhân}: Người có quyền.
+    \item \textbf{Mục đích}: Tra cứu hàng theo mã/tên/nhóm/kho.
+    \item \textbf{Luồng chính}: Nhập từ khóa, lọc $\rightarrow$ hiển thị danh sách kèm tồn.
 \end{itemize}
 
-\subsection{UC06 -- Tìm kiếm hàng hóa}
+\subsection{UC08 -- Thêm kho}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Tất cả người dùng có quyền.
-    \item \textbf{Mục đích}: Tra cứu hàng hóa theo mã, tên, nhóm hàng hoặc kho.
-    \item \textbf{Điều kiện trước}: Người dùng đã đăng nhập.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng nhập từ khóa tìm kiếm (mã hoặc tên hàng).
-        \item Chọn điều kiện lọc: nhóm hàng, kho, trạng thái.
-        \item Hệ thống truy vấn và hiển thị danh sách kết quả kèm tồn kho tại các kho.
-        \item Người dùng có thể xem chi tiết, sắp xếp, xuất Excel.
-    \end{enumerate}
-    \item \textbf{Điều kiện sau}: Người dùng nhận được thông tin hàng hóa cần tra cứu.
-\end{itemize}
-
-\subsection{UC07 -- Quản lý kho}
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Quản lý kho, Quản trị viên.
-    \item \textbf{Mục đích}: Tạo, cập nhật, tìm kiếm thông tin kho.
-    \item \textbf{Điều kiện trước}: Người dùng đã đăng nhập với quyền quản lý kho hoặc quản trị viên.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng chọn ``Quản lý kho''.
-        \item Hệ thống hiển thị danh sách kho.
-        \item Người dùng chọn ``Thêm mới'', nhập mã kho, tên kho, địa chỉ, người phụ trách, diện tích.
-        \item Hệ thống kiểm tra mã không trùng và lưu.
-    \end{enumerate}
-    \item \textbf{Điều kiện sau}: Thông tin kho được cập nhật trong cơ sở dữ liệu.
-\end{itemize}
-
-\subsection{UC08 -- Tìm kiếm kho}
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Tất cả người dùng có quyền.
-    \item \textbf{Mục đích}: Tra cứu thông tin kho và tồn kho trong kho.
-    \item \textbf{Điều kiện trước}: Người dùng đã đăng nhập.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Người dùng nhập mã hoặc tên kho cần tra cứu.
-        \item Hệ thống hiển thị thông tin chi tiết kho và danh sách hàng tồn.
-        \item Người dùng có thể lọc theo nhóm hàng, sắp xếp theo số lượng tồn.
-    \end{enumerate}
-    \item \textbf{Điều kiện sau}: Người dùng nhận được thông tin kho và danh sách tồn kho.
+    \item \textbf{Tác nhân}: QL kho, QTV.
+    \item \textbf{Mục đích}: Tạo kho mới.
+    \item \textbf{Luồng chính}: Nhập mã, tên, địa chỉ, phụ trách $\rightarrow$ lưu.
 \end{itemize}
 
 \subsection{UC09 -- Lập phiếu nhập kho}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho (lập phiếu), Quản lý kho (duyệt phiếu).
-    \item \textbf{Mục đích}: Ghi nhận hàng hóa nhập vào kho từ nhà cung cấp.
-    \item \textbf{Điều kiện trước}: Đã có thông tin nhà cung cấp, kho và hàng hóa trong hệ thống.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Nhân viên kho chọn ``Lập phiếu nhập'', nhập nhà cung cấp, kho nhập, ngày nhập.
-        \item Thêm danh sách hàng hóa: chọn hàng, nhập số lượng, đơn giá. Hệ thống tính thành tiền.
-        \item Gửi phiếu để duyệt. Trạng thái: ``Chờ duyệt''.
-        \item Quản lý kho xem phiếu, kiểm tra và duyệt.
-        \item Hệ thống cập nhật tồn kho (tăng), trạng thái: ``Đã duyệt''. Ghi log.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Quản lý kho từ chối $\rightarrow$ trạng thái: ``Từ chối'', kèm lý do, tồn kho không đổi.
-    \item \textbf{Điều kiện sau}: Tồn kho được cập nhật, phiếu nhập được lưu.
+    \item \textbf{Tác nhân}: NV kho (lập), QL kho (duyệt).
+    \item \textbf{Mục đích}: Ghi nhận nhập hàng và cập nhật tồn khi duyệt.
+    \item \textbf{Luồng chính}: (1) NV chọn NCC, kho, thêm dòng hàng; (2) Gửi duyệt; (3) QL duyệt $\rightarrow$ tăng tồn, ghi log.
+    \item \textbf{Luồng thay thế}: QL từ chối $\rightarrow$ tồn không đổi.
 \end{itemize}
 
 \subsection{UC10 -- Lập phiếu xuất kho}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tác nhân}: Nhân viên kho (lập phiếu), Quản lý kho (duyệt phiếu).
-    \item \textbf{Mục đích}: Ghi nhận hàng hóa xuất ra khỏi kho cho khách hàng hoặc sản xuất.
-    \item \textbf{Điều kiện trước}: Đã có thông tin khách hàng, kho và hàng hóa. Tồn kho đủ để xuất.
-    \item \textbf{Luồng chính}:
-    \begin{enumerate}
-        \item Nhân viên kho chọn ``Lập phiếu xuất'', nhập khách hàng, kho xuất, ngày xuất.
-        \item Thêm danh sách hàng hóa: chọn hàng, nhập số lượng. Hệ thống kiểm tra tồn kho đủ.
-        \item Hệ thống hiển thị đơn giá xuất, tính thành tiền và tổng tiền.
-        \item Gửi phiếu để duyệt. Trạng thái: ``Chờ duyệt''.
-        \item Quản lý kho duyệt. Hệ thống giảm tồn kho, trạng thái: ``Đã duyệt''. Ghi log.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Tồn kho không đủ $\rightarrow$ hệ thống thông báo, không cho thêm dòng. Quản lý kho từ chối $\rightarrow$ trạng thái: ``Từ chối'', tồn kho không đổi.
-    \item \textbf{Điều kiện sau}: Tồn kho được giảm, phiếu xuất được lưu.
+    \item \textbf{Tác nhân}: NV kho (lập), QL kho (duyệt).
+    \item \textbf{Mục đích}: Ghi nhận xuất hàng và giảm tồn khi duyệt.
+    \item \textbf{Luồng chính}: (1) NV chọn KH, kho, thêm dòng (kiểm tra tồn đủ); (2) Gửi duyệt; (3) QL duyệt $\rightarrow$ giảm tồn.
+    \item \textbf{Luồng thay thế}: Tồn không đủ / từ chối $\rightarrow$ không giảm tồn.
 \end{itemize}
 
 \section{Kết luận chương}
 
-Chương 3 đã phân tích chi tiết các tác nhân của hệ thống, xây dựng sơ đồ phân cấp chức năng (BFD), sơ đồ luồng dữ liệu (DFD) cấp 0 và cấp 1, sơ đồ use case tổng quát và phân rã. Đồng thời đặc tả chi tiết 10 use case chính (UC01--UC10) với đầy đủ thông tin: tác nhân, mục đích, điều kiện trước, luồng chính, luồng thay thế và điều kiện sau. Đây là cơ sở để phân tích hành vi (sơ đồ lớp) và phân tích tương tác (sơ đồ tuần tự) trong các chương tiếp theo.
+Chương 3 xác định 3 tác nhân, BFD/DFD và \textbf{10 use case} theo mục tiêu cụ thể (không gộp thành ``quản lý \ldots'' chung). Đặc tả đủ 10 UC làm cơ sở cho sơ đồ lớp và sequence các chương sau.
