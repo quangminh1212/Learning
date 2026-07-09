@@ -2,31 +2,33 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.9,
-    transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.3cm, minimum height=0.7cm, font=\footnotesize, align=center},
-    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
+    scale=0.78, transform shape,
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.65cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.5pt, minimum width=3.3cm, minimum height=0.55cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=6pt, rounded corners=3pt}
 ]
+\node[system, minimum width=14.5cm, minimum height=9.8cm] (system) at (0,0.2) {};
+\node[font=\bfseries\small] at (0,4.7) {Phân rã: Hàng hóa \& Kho};
 
-\node[system, minimum width=11cm, minimum height=7.5cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,3.3) {Phân rã: Hàng hóa \& kho};
+\node[font=\scriptsize\bfseries] at (-3.3,3.8) {Hàng hóa};
+\node[usecase] (h13) at (-3.3,3.0) {UC13: Thêm hàng};
+\node[usecase] (h14) at (-3.3,1.9) {UC14: Sửa hàng};
+\node[usecase] (h15) at (-3.3,0.8) {UC15: Xóa hàng};
+\node[usecase] (h16) at (-3.3,-0.3) {UC16: Tìm hàng};
+\node[usecase] (h17) at (-3.3,-1.4) {UC17: Xem DS hàng};
 
-\node[usecase] (uc06) at (0,1.8) {UC10: Thêm hàng hóa};
-\node[usecase] (uc07) at (0,0.4) {UC11: Tìm kiếm hàng hóa};
-\node[usecase] (uc08) at (0,-1.0) {UC12: Thêm kho};
+\node[font=\scriptsize\bfseries] at (3.3,3.8) {Kho};
+\node[usecase] (k18) at (3.3,3.0) {UC18: Thêm kho};
+\node[usecase] (k19) at (3.3,1.9) {UC19: Sửa kho};
+\node[usecase] (k20) at (3.3,0.8) {UC20: Xóa kho};
+\node[usecase] (k21) at (3.3,-0.3) {UC21: Tìm kho};
+\node[usecase] (k22) at (3.3,-1.4) {UC22: Xem DS kho};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-5.8,0.4) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (5.8,0.4) {};
-
-\draw (nvk) -- (uc06);
-\draw (nvk) -- (uc07);
-\draw (qlk) -- (uc06);
-\draw (qlk) -- (uc07);
-\draw (qlk) -- (uc08);
-
-\end{tikzpicture}
-}
-\caption{Use case phân rã -- Hàng hóa và kho}
+\node[actor, label=below:{\scriptsize\bfseries NV / QL}] (nv) at (-7.5,0.8) {};
+\node[actor, label=below:{\scriptsize\bfseries QL / QTV}] (ql) at (7.5,0.8) {};
+\foreach \u in {h13,h14,h15,h16,h17} { \draw (nv) -- (\u); \draw (ql) -- (\u); }
+\foreach \u in {k18,k19,k20,k21,k22} { \draw (ql) -- (\u); }
+\end{tikzpicture}}
+\caption{Use case phân rã -- Hàng hóa (UC13--17) và Kho (UC18--22)}
 \label{fig:usecase-item-management}
 \end{figure}

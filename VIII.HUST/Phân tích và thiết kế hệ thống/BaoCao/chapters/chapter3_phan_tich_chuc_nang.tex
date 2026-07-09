@@ -38,9 +38,9 @@ Tác nhân là vai trò bên ngoài hệ thống, chủ động khởi tạo tư
 \endhead
 Quản trị viên & Quản lý tài khoản, phân quyền; quản lý kho; xem báo cáo nhập xuất tồn. \\
 \hline
-Quản lý kho & Duyệt phiếu nhập/xuất/kiểm kê; quản lý danh mục hàng, đối tác, kho; xem báo cáo. \\
+Quản lý kho & Duyệt phiếu; quản lý NCC, hàng, kho (đủ thêm/sửa/xóa/tìm/xem); xem báo cáo. \\
 \hline
-Nhân viên kho & Lập phiếu nhập, xuất, kiểm kê; CRUD + tìm/xem DS nhà cung cấp; thêm/tìm hàng hóa; thêm khách hàng. \\
+Nhân viên kho & Lập/sửa/xóa/tìm/xem phiếu nhập--xuất--kiểm kê; CRUD+tìm/xem DS NCC, hàng hóa. \\
 \hline
 \end{longtable}
 
@@ -62,7 +62,7 @@ Giải thích sơ đồ:
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Hộp nét đứt}: ranh giới hệ thống quản lý kho -- mọi use case nằm trong hệ thống.
     \item \textbf{Ba actor} (hình người): Quản trị viên (trái), Quản lý kho (phải), Nhân viên kho (dưới) -- vai trò bên ngoài chủ động gọi chức năng.
-    \item \textbf{Các oval}: nhóm chức năng mức tổng quát (Đăng nhập/Đăng xuất, Quản lý tài khoản, NCC, KH, hàng hóa, kho, nhập, xuất, kiểm kê, báo cáo tồn). Đây \textbf{chưa} phải use case chi tiết.
+    \item \textbf{Các oval}: nhóm chức năng mức tổng quát (Đăng nhập/Đăng xuất, Quản lý tài khoản, NCC, hàng hóa, kho, nhập, xuất, kiểm kê, báo cáo tồn -- \textbf{không} có khách hàng). Đây \textbf{chưa} phải use case chi tiết.
     \item \textbf{Đường nối} actor--oval: actor đó được quyền tham gia nhóm chức năng tương ứng (ví dụ NV không nối ``Báo cáo tồn'' nếu chỉ QL/QTV xem báo cáo; QTV nối tài khoản và kho).
     \item \textbf{Ý nghĩa phân tích}: xác định \textit{ai dùng gì} ở mức toàn hệ thống trước khi đi sâu từng mục tiêu.
 \end{itemize}
@@ -74,32 +74,32 @@ Mỗi sơ đồ phân rã gắn với một nhóm chức năng; mỗi oval là \
 \subsection{Nhóm truy cập và tài khoản}
 \input{diagrams/tex/3.5_usecase_user_management}
 
-Giải thích sơ đồ: Phân rã nhóm truy cập/tài khoản thành ba use case mục tiêu: \textbf{UC01 Đăng nhập}, \textbf{UC02 Đăng xuất} (mọi người dùng), \textbf{UC03 Thêm tài khoản} (chỉ Quản trị viên). Đường nối thể hiện: người dùng thường chỉ thực hiện đăng nhập/đăng xuất; QTV làm cả ba. Sơ đồ khẳng định đăng nhập/đăng xuất là use case hệ thống, còn thêm tài khoản là mục tiêu quản trị người dùng -- không gộp thành một oval ``Quản lý tài khoản''.
+Giải thích sơ đồ: Nhóm truy cập/tài khoản gồm (1) use case \textbf{hệ thống}: \textbf{UC01 Đăng nhập}, \textbf{UC02 Đăng xuất} (mọi người dùng); (2) năm use case \textbf{quản trị tài khoản} chỉ QTV: \textbf{UC03 Thêm}, \textbf{UC04 Sửa}, \textbf{UC05 Xóa}, \textbf{UC06 Tìm kiếm}, \textbf{UC07 Xem danh sách} -- cùng nguyên tắc ``mỗi hành động một use case'' như NCC, không gộp thành một oval ``Quản lý tài khoản''. Người dùng thường chỉ nối UC01--UC02; QTV nối cả bảy.
 
 \subsection{Nhóm đối tác}
 \input{diagrams/tex/3.6_usecase_partner_management}
 
-Giải thích sơ đồ: Nhóm nhà cung cấp được \textbf{phân rã đủ năm mục tiêu}: \textbf{UC04 Thêm}, \textbf{UC05 Sửa}, \textbf{UC06 Xóa}, \textbf{UC07 Tìm kiếm}, \textbf{UC08 Xem danh sách NCC} -- minh họa rõ nguyên tắc ``mỗi hành động là một use case'', không gộp thành một oval ``Quản lý NCC''. Bên cạnh đó có \textbf{UC09 Thêm khách hàng} (mức độ tương tự có thể mở rộng CRUD KH nếu cần). Cả Nhân viên kho và Quản lý kho đều nối tới các UC này vì cả hai vai trò được phép thao tác danh mục đối tác.
+Giải thích sơ đồ: Nhóm NCC phân rã đủ năm mục tiêu \textbf{UC08--UC12} (Thêm/Sửa/Xóa/Tìm/Xem DS). \textbf{Không} có use case khách hàng. NV và QL đều nối các UC NCC.
 
 \subsection{Nhóm hàng hóa và kho}
 \input{diagrams/tex/3.7_usecase_item_management}
 
-Giải thích sơ đồ: Ba use case: \textbf{UC10 Thêm hàng hóa}, \textbf{UC11 Tìm kiếm hàng hóa} (NV và QL đều dùng), \textbf{UC12 Thêm kho} (chủ yếu QL). Tách ``thêm'' và ``tìm'' hàng vì mục tiêu khác nhau (ghi nhận danh mục mới vs tra cứu tồn). Thêm kho thuộc nhóm danh mục kho, actor QL/QTV có quyền cao hơn NV ở thao tác này.
+Giải thích sơ đồ: Cột trái -- \textbf{hàng hóa UC13--UC17} (Thêm/Sửa/Xóa/Tìm/Xem DS), NV+QL. Cột phải -- \textbf{kho UC18--UC22} cùng năm thao tác, chủ yếu QL/QTV. Nguyên tắc: thêm được thì phải sửa/xóa/tìm/xem được.
 
 \subsection{Nhóm nhập, xuất, kiểm kê, báo cáo}
 \input{diagrams/tex/3.8_usecase_inventory_management}
 
-Giải thích sơ đồ: Bốn use case nghiệp vụ cốt lõi vận hành kho: \textbf{UC13 Lập phiếu nhập}, \textbf{UC14 Lập phiếu xuất}, \textbf{UC15 Lập phiếu kiểm kê}, \textbf{UC16 Xem báo cáo nhập xuất tồn}. NV nối tới UC13--UC15 (thao tác lập phiếu); QL nối cả bốn (duyệt + xem báo cáo). UC13--UC15 trong đặc tả có thêm actor phụ QL ở bước duyệt; sơ đồ thể hiện cả hai vai trò tham gia nhóm nhập/xuất/kiểm kê.
+Giải thích sơ đồ: \textbf{Phiếu nhập UC23--UC27} và \textbf{phiếu xuất UC28--UC32} mỗi nhóm đủ Lập/Sửa/Xóa/Tìm/Xem DS; thêm \textbf{UC33 Kiểm kê}, \textbf{UC34 Báo cáo}. NV thao tác lập/sửa phiếu; QL duyệt và xem báo cáo.
 
 \section{Bảng tổng hợp use case}
 
 \begin{longtable}{|p{1.1cm}|p{4.8cm}|p{3.2cm}|p{3.5cm}|}
 \hline
-\textbf{Mã} & \textbf{Tên use case} & \textbf{Tác nhân} & \textbf{Nhóm chức năng} \\
+\textbf{Mã} & \textbf{Tên use case} & \textbf{Tác nhân} & \textbf{Nhóm} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Mã} & \textbf{Tên use case} & \textbf{Tác nhân} & \textbf{Nhóm chức năng} \\
+\textbf{Mã} & \textbf{Tên use case} & \textbf{Tác nhân} & \textbf{Nhóm} \\
 \hline
 \endhead
 UC01 & Đăng nhập & Tất cả & Hệ thống \\
@@ -108,31 +108,67 @@ UC02 & Đăng xuất & Tất cả & Hệ thống \\
 \hline
 UC03 & Thêm tài khoản & QTV & Tài khoản \\
 \hline
-UC04 & Thêm nhà cung cấp & NV, QL & NCC \\
+UC04 & Sửa tài khoản & QTV & Tài khoản \\
 \hline
-UC05 & Sửa nhà cung cấp & NV, QL & NCC \\
+UC05 & Xóa tài khoản & QTV & Tài khoản \\
 \hline
-UC06 & Xóa nhà cung cấp & NV, QL & NCC \\
+UC06 & Tìm kiếm tài khoản & QTV & Tài khoản \\
 \hline
-UC07 & Tìm kiếm nhà cung cấp & NV, QL & NCC \\
+UC07 & Xem danh sách tài khoản & QTV & Tài khoản \\
 \hline
-UC08 & Xem danh sách nhà cung cấp & NV, QL & NCC \\
+UC08 & Thêm nhà cung cấp & NV, QL & NCC \\
 \hline
-UC09 & Thêm khách hàng & NV, QL & Đối tác \\
+UC09 & Sửa nhà cung cấp & NV, QL & NCC \\
 \hline
-UC10 & Thêm hàng hóa & NV, QL & Hàng hóa \\
+UC10 & Xóa nhà cung cấp & NV, QL & NCC \\
 \hline
-UC11 & Tìm kiếm hàng hóa & Có quyền & Hàng hóa \\
+UC11 & Tìm kiếm nhà cung cấp & NV, QL & NCC \\
 \hline
-UC12 & Thêm kho & QL, QTV & Kho \\
+UC12 & Xem danh sách nhà cung cấp & NV, QL & NCC \\
 \hline
-UC13 & Lập phiếu nhập kho & NV, QL & Nhập kho \\
+UC13 & Thêm hàng hóa & NV, QL & Hàng hóa \\
 \hline
-UC14 & Lập phiếu xuất kho & NV, QL & Xuất kho \\
+UC14 & Sửa hàng hóa & NV, QL & Hàng hóa \\
 \hline
-UC15 & Lập phiếu kiểm kê & NV, QL & Kiểm kê \\
+UC15 & Xóa hàng hóa & NV, QL & Hàng hóa \\
 \hline
-UC16 & Xem báo cáo nhập xuất tồn & QL, QTV & Báo cáo \\
+UC16 & Tìm kiếm hàng hóa & NV, QL & Hàng hóa \\
+\hline
+UC17 & Xem danh sách hàng hóa & NV, QL & Hàng hóa \\
+\hline
+UC18 & Thêm kho & QL, QTV & Kho \\
+\hline
+UC19 & Sửa kho & QL, QTV & Kho \\
+\hline
+UC20 & Xóa kho & QL, QTV & Kho \\
+\hline
+UC21 & Tìm kiếm kho & QL, QTV & Kho \\
+\hline
+UC22 & Xem danh sách kho & QL, QTV & Kho \\
+\hline
+UC23 & Lập phiếu nhập kho & NV, QL & Nhập kho \\
+\hline
+UC24 & Sửa phiếu nhập kho & NV, QL & Nhập kho \\
+\hline
+UC25 & Xóa phiếu nhập kho & NV, QL & Nhập kho \\
+\hline
+UC26 & Tìm kiếm phiếu nhập & NV, QL & Nhập kho \\
+\hline
+UC27 & Xem danh sách phiếu nhập & NV, QL & Nhập kho \\
+\hline
+UC28 & Lập phiếu xuất kho & NV, QL & Xuất kho \\
+\hline
+UC29 & Sửa phiếu xuất kho & NV, QL & Xuất kho \\
+\hline
+UC30 & Xóa phiếu xuất kho & NV, QL & Xuất kho \\
+\hline
+UC31 & Tìm kiếm phiếu xuất & NV, QL & Xuất kho \\
+\hline
+UC32 & Xem danh sách phiếu xuất & NV, QL & Xuất kho \\
+\hline
+UC33 & Lập phiếu kiểm kê & NV, QL & Kiểm kê \\
+\hline
+UC34 & Xem báo cáo nhập xuất tồn & QL, QTV & Báo cáo \\
 \hline
 \end{longtable}
 
@@ -219,31 +255,117 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Điều kiện sau}: Bản ghi \texttt{NguoiDung} mới được lưu; mật khẩu đã mã hóa; tài khoản có thể đăng nhập nếu trạng thái ``Hoạt động''.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item QTV chọn menu ``Quản lý tài khoản''.
-        \item Hệ thống hiển thị danh sách tài khoản hiện có.
+        \item QTV mở ``Quản lý tài khoản'' (có thể từ UC07 xem danh sách).
         \item QTV chọn ``Thêm tài khoản''.
-        \item Hệ thống mở form nhập: họ tên, tên đăng nhập, mật khẩu, nhập lại mật khẩu, email (nếu có), vai trò, trạng thái.
+        \item Hệ thống mở form: họ tên, tên đăng nhập, mật khẩu, nhập lại mật khẩu, email (nếu có), vai trò, trạng thái.
         \item QTV nhập đủ thông tin và nhấn ``Lưu''.
-        \item Hệ thống kiểm tra các trường bắt buộc và định dạng.
-        \item Hệ thống kiểm tra tên đăng nhập chưa tồn tại trong CSDL.
-        \item Hệ thống mã hóa mật khẩu và lưu tài khoản mới.
-        \item Hệ thống (tuỳ chọn) ghi log thao tác thêm tài khoản.
-        \item Hệ thống thông báo thành công và cập nhật lại danh sách tài khoản.
+        \item Hệ thống kiểm tra trường bắt buộc, định dạng, và tên đăng nhập chưa tồn tại.
+        \item Hệ thống mã hóa mật khẩu, lưu tài khoản, ghi log (tuỳ chọn).
+        \item Thông báo thành công, làm mới danh sách.
     \end{enumerate}
     \item \textbf{Luồng thay thế}:
     \begin{enumerate}
-        \item \textit{A1 -- Tên đăng nhập trùng}: Thông báo lỗi, yêu cầu đổi tên đăng nhập, giữ các trường khác.
+        \item \textit{A1 -- Tên đăng nhập trùng}: Báo lỗi, yêu cầu đổi tên, giữ các trường khác.
         \item \textit{A2 -- Mật khẩu nhập lại không khớp}: Báo lỗi, không lưu.
         \item \textit{A3 -- Thiếu trường bắt buộc}: Đánh dấu trường thiếu, không gửi lưu.
     \end{enumerate}
-    \item \textbf{Ghi chú}: Sửa tài khoản, khóa/mở khóa, tìm kiếm tài khoản có luồng tương tự (chọn bản ghi $\rightarrow$ thao tác $\rightarrow$ lưu) và không tách thành use case riêng trong phạm vi báo cáo.
 \end{itemize}
 
-\subsection{UC04 -- Thêm nhà cung cấp}
+\subsection{UC04 -- Sửa tài khoản}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Sửa tài khoản.
+    \item \textbf{Mã}: UC04.
+    \item \textbf{Tác nhân chính}: Quản trị viên.
+    \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin tài khoản đã có (họ tên, email, vai trò, trạng thái; đổi mật khẩu nếu cần) khi nhân sự đổi vị trí hoặc cần hiệu chỉnh.
+    \item \textbf{Mục tiêu}: Bản ghi \texttt{NguoiDung} phản ánh đúng thông tin và quyền mới nhất.
+    \item \textbf{Điều kiện trước}: QTV đã đăng nhập; đã tồn tại tài khoản cần sửa (thường chọn từ UC07 hoặc kết quả UC06).
+    \item \textbf{Điều kiện sau}: Thông tin tài khoản được cập nhật; tên đăng nhập thường \textbf{không} đổi (khóa định danh).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item QTV tìm/chọn tài khoản cần sửa trên danh sách.
+        \item Chọn ``Sửa''. Hệ thống nạp form với dữ liệu hiện tại.
+        \item QTV chỉnh họ tên, email, vai trò, trạng thái; nếu đổi mật khẩu thì nhập mật khẩu mới + xác nhận.
+        \item Nhấn ``Lưu''. Hệ thống validate; nếu có mật khẩu mới thì mã hóa lại.
+        \item Thông báo thành công, hiển thị lại danh sách/chi tiết.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}:
+    \begin{enumerate}
+        \item \textit{A1 -- Hủy sửa}: Quay lại danh sách, không lưu.
+        \item \textit{A2 -- Mật khẩu xác nhận không khớp}: Báo lỗi, không lưu.
+        \item \textit{A3 -- Không cho hạ/xóa quyền của chính mình} (tuỳ chính sách): hệ thống từ chối thao tác nguy hiểm.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{UC05 -- Xóa tài khoản}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xóa tài khoản.
+    \item \textbf{Mã}: UC05.
+    \item \textbf{Tác nhân chính}: Quản trị viên.
+    \item \textbf{Mô tả tóm tắt}: Gỡ tài khoản khỏi hệ thống hoặc khóa vĩnh viễn. Nếu tài khoản đã lập phiếu / có log thì không xóa cứng để giữ toàn vẹn lịch sử.
+    \item \textbf{Mục tiêu}: Tài khoản không còn đăng nhập được (đã xóa hoặc đã khóa).
+    \item \textbf{Điều kiện trước}: QTV đã đăng nhập; đã chọn một tài khoản (không phải tài khoản đang đăng nhập của chính QTV -- khuyến nghị).
+    \item \textbf{Điều kiện sau}: Tài khoản bị xóa \textbf{hoặc} chuyển trạng thái ``Khóa'' / ``Ngừng''.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item QTV chọn tài khoản $\rightarrow$ ``Xóa''.
+        \item Hệ thống kiểm tra có phiếu / lịch sử thao tác tham chiếu người dùng không.
+        \item \textbf{Nếu chưa có dữ liệu liên quan}: yêu cầu xác nhận $\rightarrow$ xóa bản ghi $\rightarrow$ thông báo thành công.
+        \item \textbf{Nếu đã có phiếu/log}: thông báo không xóa cứng; đề xuất ``Khóa tài khoản''.
+        \item QTV xác nhận khóa $\rightarrow$ cập nhật trạng thái; người dùng không đăng nhập được nữa (UC01 từ chối).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Hủy xác nhận $\rightarrow$ không thay đổi; cố xóa chính mình $\rightarrow$ hệ thống chặn.
+\end{itemize}
+
+\subsection{UC06 -- Tìm kiếm tài khoản}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Tìm kiếm tài khoản.
+    \item \textbf{Mã}: UC06.
+    \item \textbf{Tác nhân chính}: Quản trị viên.
+    \item \textbf{Mô tả tóm tắt}: Lọc nhanh tài khoản theo tên đăng nhập, họ tên hoặc vai trò khi danh sách dài.
+    \item \textbf{Mục tiêu}: Nhận được danh sách tài khoản khớp điều kiện tìm.
+    \item \textbf{Điều kiện trước}: QTV đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Hiển thị kết quả; không bắt buộc đổi dữ liệu.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Trên màn hình tài khoản, QTV nhập từ khóa (tên đăng nhập / họ tên) và/hoặc chọn lọc vai trò, trạng thái.
+        \item Nhấn ``Tìm kiếm''.
+        \item Hệ thống truy vấn \texttt{NguoiDung} theo điều kiện.
+        \item Hiển thị các bản ghi khớp (tên đăng nhập, họ tên, vai trò, trạng thái).
+        \item QTV có thể chọn một dòng để sửa (UC04) / xóa (UC05).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Không có kết quả $\rightarrow$ thông báo ``Không tìm thấy tài khoản''.
+\end{itemize}
+
+\subsection{UC07 -- Xem danh sách tài khoản}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách tài khoản.
+    \item \textbf{Mã}: UC07.
+    \item \textbf{Tác nhân chính}: Quản trị viên.
+    \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý tài khoản và xem toàn bộ (hoặc phân trang) danh sách đang có -- điểm vào thường dùng trước khi thêm/sửa/xóa/tìm.
+    \item \textbf{Mục tiêu}: Nhìn được danh mục người dùng hiện tại của hệ thống.
+    \item \textbf{Điều kiện trước}: QTV đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Danh sách được hiển thị; QTV có thể chọn thao tác tiếp (thêm UC03, sửa UC04\ldots).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item QTV chọn menu ``Quản lý tài khoản''.
+        \item Hệ thống tải danh sách \texttt{NguoiDung} (có thể gồm cả tài khoản đã khóa).
+        \item Hiển thị bảng: tên đăng nhập, họ tên, vai trò, trạng thái, email (phân trang nếu nhiều).
+        \item QTV có thể sắp xếp theo cột hoặc chuyển trang.
+        \item Từ danh sách, chọn ``Thêm'' / ``Sửa'' / ``Xóa'' / ô tìm kiếm (chuyển sang các UC tương ứng).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Chưa có tài khoản nào ngoài QTV hiện tại $\rightarrow$ bảng ngắn + gợi ý ``Thêm tài khoản''.
+    \item \textbf{Ghi chú}: \textit{Xem danh sách} khác \textit{Tìm kiếm}: xem danh sách là hiển thị mặc định; tìm kiếm là lọc theo từ khóa/điều kiện.
+\end{itemize}
+
+\subsection{UC08 -- Thêm nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm nhà cung cấp.
-    \item \textbf{Mã}: UC04.
+    \item \textbf{Mã}: UC08.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Bổ sung nhà cung cấp mới vào danh mục để dùng khi lập phiếu nhập.
     \item \textbf{Mục tiêu}: Lưu được bản ghi NCC mới, chọn được trên form nhập kho.
@@ -251,7 +373,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Điều kiện sau}: Có bản ghi \texttt{NhaCungCap} mới; xuất hiện trong danh sách và form chọn.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item Actor mở ``Quản lý nhà cung cấp'' (có thể từ UC08 xem danh sách).
+        \item Actor mở ``Quản lý nhà cung cấp'' (có thể từ UC12 xem danh sách).
         \item Chọn ``Thêm mới''.
         \item Nhập mã NCC, tên, địa chỉ, SĐT, email, người liên hệ, mô tả (nếu có).
         \item Nhấn ``Lưu''. Hệ thống kiểm tra mã bắt buộc và không trùng.
@@ -264,15 +386,15 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC05 -- Sửa nhà cung cấp}
+\subsection{UC09 -- Sửa nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Sửa nhà cung cấp.
-    \item \textbf{Mã}: UC05.
+    \item \textbf{Mã}: UC09.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin NCC đã có (địa chỉ, SĐT, người liên hệ\ldots) khi NCC đổi thông tin liên lạc.
     \item \textbf{Mục tiêu}: Bản ghi NCC phản ánh đúng thông tin mới nhất.
-    \item \textbf{Điều kiện trước}: Actor đã đăng nhập; đã tồn tại ít nhất một NCC (thường chọn từ danh sách UC08 hoặc kết quả tìm UC07).
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập; đã tồn tại ít nhất một NCC (thường chọn từ danh sách UC12 hoặc kết quả tìm UC11).
     \item \textbf{Điều kiện sau}: Thông tin \texttt{NhaCungCap} được cập nhật; các phiếu nhập cũ vẫn giữ mã NCC (không đổi khóa).
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
@@ -289,11 +411,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC06 -- Xóa nhà cung cấp}
+\subsection{UC10 -- Xóa nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xóa nhà cung cấp.
-    \item \textbf{Mã}: UC06.
+    \item \textbf{Mã}: UC10.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Gỡ NCC khỏi danh mục đang dùng. Nếu NCC đã phát sinh phiếu nhập thì không xóa cứng để giữ toàn vẹn dữ liệu lịch sử.
     \item \textbf{Mục tiêu}: NCC không còn xuất hiện khi chọn NCC mới trên phiếu nhập (đã xóa hoặc đã ngừng).
@@ -310,11 +432,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Luồng thay thế}: Actor hủy xác nhận $\rightarrow$ không thay đổi dữ liệu.
 \end{itemize}
 
-\subsection{UC07 -- Tìm kiếm nhà cung cấp}
+\subsection{UC11 -- Tìm kiếm nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Tìm kiếm nhà cung cấp.
-    \item \textbf{Mã}: UC07.
+    \item \textbf{Mã}: UC11.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Lọc nhanh NCC theo mã, tên hoặc số điện thoại khi danh sách dài.
     \item \textbf{Mục tiêu}: Nhận được danh sách NCC khớp điều kiện tìm.
@@ -326,21 +448,21 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
         \item Nhấn ``Tìm kiếm''.
         \item Hệ thống truy vấn \texttt{NhaCungCap} theo điều kiện.
         \item Hiển thị các bản ghi khớp (mã, tên, SĐT, trạng thái).
-        \item Actor có thể chọn một dòng để xem chi tiết / sửa (UC05) / xóa (UC06).
+        \item Actor có thể chọn một dòng để xem chi tiết / sửa (UC09) / xóa (UC10).
     \end{enumerate}
     \item \textbf{Luồng thay thế}: Không có kết quả $\rightarrow$ thông báo ``Không tìm thấy nhà cung cấp''.
 \end{itemize}
 
-\subsection{UC08 -- Xem danh sách nhà cung cấp}
+\subsection{UC12 -- Xem danh sách nhà cung cấp}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xem danh sách nhà cung cấp.
-    \item \textbf{Mã}: UC08.
+    \item \textbf{Mã}: UC12.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý NCC và xem toàn bộ (hoặc phân trang) danh sách đang có -- điểm vào thường dùng trước khi thêm/sửa/xóa/tìm.
     \item \textbf{Mục tiêu}: Nhìn được danh mục NCC hiện tại của hệ thống.
     \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền xem danh mục đối tác.
-    \item \textbf{Điều kiện sau}: Danh sách được hiển thị; actor có thể chọn thao tác tiếp (thêm UC04, sửa UC05\ldots).
+    \item \textbf{Điều kiện sau}: Danh sách được hiển thị; actor có thể chọn thao tác tiếp (thêm UC08, sửa UC09\ldots).
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
         \item Actor chọn menu ``Quản lý nhà cung cấp''.
@@ -353,227 +475,350 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Ghi chú}: \textit{Xem danh sách} khác \textit{Tìm kiếm}: xem danh sách là hiển thị mặc định toàn bộ (có phân trang); tìm kiếm là lọc theo từ khóa.
 \end{itemize}
 
-\subsection{UC09 -- Thêm khách hàng}
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tên use case}: Thêm khách hàng.
-    \item \textbf{Mã}: UC09.
-    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mô tả tóm tắt}: Bổ sung khách hàng nhận hàng khi xuất kho; có thể lưu mã số thuế nếu là khách doanh nghiệp.
-    \item \textbf{Mục tiêu}: Có hồ sơ KH mới để gắn với phiếu xuất.
-    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền phù hợp.
-    \item \textbf{Điều kiện sau}: Bản ghi \texttt{KhachHang} được tạo và dùng được trên form phiếu xuất.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Mở ``Quản lý khách hàng'' $\rightarrow$ ``Thêm mới''.
-        \item Nhập mã KH, tên, địa chỉ, SĐT, email, mã số thuế (tuỳ chọn), người liên hệ.
-        \item Hệ thống kiểm tra mã không trùng và lưu.
-        \item Thông báo thành công, cập nhật danh sách.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Mã trùng hoặc thiếu mã/tên $\rightarrow$ báo lỗi, không lưu.
-\end{itemize}
-
-\subsection{UC10 -- Thêm hàng hóa}
+\subsection{UC13 -- Thêm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm hàng hóa.
-    \item \textbf{Mã}: UC10.
-    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mô tả tóm tắt}: Thêm mặt hàng vào danh mục trung tâm của hệ thống; đồng thời khởi tạo số lượng tồn bằng 0 tại tất cả các kho đang hoạt động để sẵn sàng nhập/xuất.
-    \item \textbf{Mục tiêu}: Hàng mới tồn tại trong danh mục và có bản ghi tồn kho ban đầu.
-    \item \textbf{Điều kiện trước}:
-    \begin{enumerate}
-        \item Actor đã đăng nhập.
-        \item Đã có ít nhất một nhóm hàng và một đơn vị tính.
-        \item (Khuyến nghị) Đã có kho đang hoạt động để khởi tạo tồn.
-    \end{enumerate}
-    \item \textbf{Điều kiện sau}:
-    \begin{enumerate}
-        \item Có bản ghi \texttt{HangHoa} mới.
-        \item Có các bản ghi \texttt{TonKho} tương ứng (mỗi kho một dòng, số lượng = 0) nếu hệ thống cấu hình khởi tạo tự động.
-    \end{enumerate}
+    \item \textbf{Mã}: UC13.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Bổ sung bản ghi hàng hóa mới vào hệ thống.
+    \item \textbf{Mục tiêu}: Lưu được bản ghi mới, dùng được ở các chức năng liên quan.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền phù hợp.
+    \item \textbf{Điều kiện sau}: Có bản ghi mới trong CSDL; xuất hiện trên danh sách.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item Actor mở ``Quản lý hàng hóa'' $\rightarrow$ ``Thêm mới''.
-        \item Hệ thống hiển thị form: mã hàng, tên hàng, nhóm hàng, đơn vị tính, giá nhập, giá xuất, mô tả, trạng thái.
-        \item Actor nhập/chọn đầy đủ thông tin bắt buộc, nhấn ``Lưu''.
-        \item Hệ thống kiểm tra mã hàng chưa tồn tại; nhóm và ĐVT hợp lệ; giá $\geq$ 0.
-        \item Hệ thống lưu \texttt{HangHoa}.
-        \item Hệ thống tạo \texttt{TonKho} = 0 cho từng kho đang hoạt động.
-        \item Hệ thống thông báo thành công và hiển thị lại danh sách hàng.
+        \item Actor mở màn hình quản lý (từ UC17 xem danh sách).
+        \item Chọn ``Thêm mới'', nhập thông tin bắt buộc, nhấn ``Lưu''.
+        \item Hệ thống kiểm tra hợp lệ / không trùng khóa.
+        \item Lưu CSDL, thông báo thành công, làm mới danh sách.
     \end{enumerate}
-    \item \textbf{Luồng thay thế}:
-    \begin{enumerate}
-        \item \textit{A1 -- Mã hàng trùng}: Báo lỗi, không lưu.
-        \item \textit{A2 -- Chưa chọn nhóm/ĐVT}: Báo thiếu thông tin.
-        \item \textit{A3 -- Giá âm}: Báo lỗi ràng buộc.
-    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Trùng mã / thiếu trường $\rightarrow$ báo lỗi, không lưu.
 \end{itemize}
 
-\subsection{UC11 -- Tìm kiếm hàng hóa}
+
+\subsection{UC14 -- Sửa hàng hóa}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Sửa hàng hóa.
+    \item \textbf{Mã}: UC14.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin bản ghi đã có.
+    \item \textbf{Mục tiêu}: Dữ liệu phản ánh đúng thông tin mới nhất.
+    \item \textbf{Điều kiện trước}: Đã có bản ghi (chọn từ UC17 hoặc UC16). Có thể sửa tên, giá, nhóm, mô tả; mã hàng thường cố định.
+    \item \textbf{Điều kiện sau}: Bản ghi được cập nhật; khóa định danh thường không đổi.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Chọn bản ghi $\rightarrow$ ``Sửa'' $\rightarrow$ nạp form.
+        \item Chỉnh các trường cho phép $\rightarrow$ ``Lưu''.
+        \item Hệ thống validate và cập nhật CSDL.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Hủy / dữ liệu không hợp lệ $\rightarrow$ không lưu.
+\end{itemize}
+
+
+\subsection{UC15 -- Xóa hàng hóa}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xóa hàng hóa.
+    \item \textbf{Mã}: UC15.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Gỡ bản ghi khỏi danh mục đang dùng.
+    \item \textbf{Mục tiêu}: Bản ghi không còn dùng cho thao tác mới (đã xóa hoặc đã ngừng).
+    \item \textbf{Điều kiện trước}: Đã chọn một bản ghi.
+    \item \textbf{Điều kiện sau}: Xóa cứng \textbf{hoặc} chuyển trạng thái ngừng/khóa.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Chọn bản ghi $\rightarrow$ ``Xóa'' $\rightarrow$ xác nhận.
+        \item Hệ thống kiểm tra ràng buộc tham chiếu.
+        \item Nếu chưa có phiếu: xóa/ngừng; nếu đã có phiếu nhập/xuất: chỉ đánh dấu ngừng sử dụng.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Hủy xác nhận $\rightarrow$ không đổi dữ liệu.
+\end{itemize}
+
+
+\subsection{UC16 -- Tìm kiếm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Tìm kiếm hàng hóa.
-    \item \textbf{Mã}: UC11.
-    \item \textbf{Tác nhân chính}: Mọi người dùng được cấp quyền tra cứu.
-    \item \textbf{Mô tả tóm tắt}: Tra cứu nhanh mặt hàng theo mã, tên, nhóm hoặc theo tồn tại một kho; hỗ trợ kiểm tra trước khi lập phiếu xuất/nhập.
-    \item \textbf{Mục tiêu}: Nhận được danh sách hàng thỏa điều kiện kèm thông tin tồn (nếu có).
-    \item \textbf{Điều kiện trước}: Actor đã đăng nhập; danh mục hàng đã có dữ liệu (có thể rỗng).
-    \item \textbf{Điều kiện sau}: Không bắt buộc thay đổi dữ liệu; actor xem được kết quả tìm kiếm.
+    \item \textbf{Mã}: UC16.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Lọc nhanh theo mã/tên (hoặc điều kiện liên quan).
+    \item \textbf{Mục tiêu}: Nhận danh sách khớp điều kiện.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Hiển thị kết quả; không bắt buộc đổi dữ liệu.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item Actor mở màn hình hàng hóa / tìm kiếm.
-        \item Nhập từ khóa (mã hoặc tên), có thể chọn thêm bộ lọc: nhóm hàng, kho, trạng thái.
-        \item Nhấn ``Tìm kiếm''.
-        \item Hệ thống truy vấn \texttt{HangHoa} (và \texttt{TonKho} nếu lọc theo kho).
-        \item Hệ thống hiển thị bảng kết quả: mã, tên, nhóm, ĐVT, tồn (theo kho hoặc tổng), trạng thái.
-        \item Actor có thể chọn một dòng để xem chi tiết.
+        \item Nhập từ khóa / bộ lọc $\rightarrow$ ``Tìm kiếm''.
+        \item Hệ thống truy vấn và hiển thị kết quả.
+        \item Có thể chọn dòng để sửa (UC14) / xóa (UC15).
     \end{enumerate}
-    \item \textbf{Luồng thay thế}:
-    \begin{enumerate}
-        \item \textit{A1 -- Không có kết quả}: Hiển thị thông báo ``Không tìm thấy hàng hóa phù hợp''.
-        \item \textit{A2 -- Bỏ trống mọi điều kiện}: Hệ thống có thể trả về danh sách trang đầu (phân trang) hoặc yêu cầu nhập ít nhất một điều kiện (theo quy ước giao diện).
-    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Không có kết quả $\rightarrow$ thông báo trống.
 \end{itemize}
 
-\subsection{UC12 -- Thêm kho}
+
+\subsection{UC17 -- Xem danh sách hàng hóa}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách hàng hóa.
+    \item \textbf{Mã}: UC17.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý và xem toàn bộ (hoặc phân trang) danh sách -- điểm vào trước khi thêm/sửa/xóa/tìm.
+    \item \textbf{Mục tiêu}: Nhìn được danh mục hiện tại.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Danh sách hiển thị; có thể sang UC13/UC14/UC15/UC16.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Chọn menu quản lý $\rightarrow$ hệ thống tải danh sách.
+        \item Hiển thị bảng (phân trang nếu nhiều).
+        \item Từ danh sách chọn Thêm / Sửa / Xóa / Tìm.
+    \end{enumerate}
+    \item \textbf{Ghi chú}: Xem danh sách $\neq$ Tìm kiếm (mặc định toàn bộ vs lọc theo từ khóa).
+\end{itemize}
+
+
+\subsection{UC18 -- Thêm kho}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm kho.
-    \item \textbf{Mã}: UC12.
-    \item \textbf{Tác nhân chính}: Quản lý kho, Quản trị viên.
-    \item \textbf{Mô tả tóm tắt}: Khai báo kho hàng mới (địa điểm lưu trữ) để theo dõi tồn và lập phiếu theo từng kho.
-    \item \textbf{Mục tiêu}: Có kho mới trong danh mục, sẵn sàng nhận nhập/xuất/kiểm kê.
-    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền quản lý kho hoặc QTV.
-    \item \textbf{Điều kiện sau}: Bản ghi \texttt{Kho} được lưu; có thể chọn kho trên các form phiếu.
+    \item \textbf{Mã}: UC18.
+    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Bổ sung bản ghi kho mới vào hệ thống.
+    \item \textbf{Mục tiêu}: Lưu được bản ghi mới, dùng được ở các chức năng liên quan.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền phù hợp.
+    \item \textbf{Điều kiện sau}: Có bản ghi mới trong CSDL; xuất hiện trên danh sách.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item Mở ``Quản lý kho'' $\rightarrow$ ``Thêm mới''.
-        \item Nhập mã kho, tên kho, địa chỉ, người phụ trách, diện tích, trạng thái.
-        \item Hệ thống kiểm tra mã kho duy nhất và lưu.
-        \item Thông báo thành công.
+        \item Actor mở màn hình quản lý (từ UC22 xem danh sách).
+        \item Chọn ``Thêm mới'', nhập thông tin bắt buộc, nhấn ``Lưu''.
+        \item Hệ thống kiểm tra hợp lệ / không trùng khóa.
+        \item Lưu CSDL, thông báo thành công, làm mới danh sách.
     \end{enumerate}
-    \item \textbf{Luồng thay thế}: Mã kho trùng $\rightarrow$ báo lỗi.
+    \item \textbf{Luồng thay thế}: Trùng mã / thiếu trường $\rightarrow$ báo lỗi, không lưu.
 \end{itemize}
 
-\subsection{UC13 -- Lập phiếu nhập kho}
+
+\subsection{UC19 -- Sửa kho}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tên use case}: Lập phiếu nhập kho.
-    \item \textbf{Mã}: UC13.
-    \item \textbf{Tác nhân chính}: Nhân viên kho (lập và gửi duyệt).
-    \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt hoặc từ chối).
-    \item \textbf{Mô tả tóm tắt}: Ghi nhận lô hàng nhập từ nhà cung cấp vào một kho cụ thể. Chỉ khi quản lý duyệt, tồn kho mới tăng -- tránh cập nhật tồn khi dữ liệu phiếu chưa được kiểm soát.
-    \item \textbf{Mục tiêu}: Tạo phiếu nhập đầy đủ chi tiết; sau duyệt thì tồn kho phản ánh đúng số lượng đã nhập.
-    \item \textbf{Điều kiện trước}:
-    \begin{enumerate}
-        \item NV và QL đã có tài khoản và đăng nhập.
-        \item Đã có nhà cung cấp, kho và ít nhất một mặt hàng trong danh mục.
-    \end{enumerate}
-    \item \textbf{Điều kiện sau (duyệt thành công)}:
-    \begin{enumerate}
-        \item Phiếu ở trạng thái ``Đã duyệt''.
-        \item Từng dòng hàng: \texttt{TonKho} tại kho nhập được cộng đúng số lượng.
-        \item Có log thao tác duyệt.
-    \end{enumerate}
+    \item \textbf{Tên use case}: Sửa kho.
+    \item \textbf{Mã}: UC19.
+    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin bản ghi đã có.
+    \item \textbf{Mục tiêu}: Dữ liệu phản ánh đúng thông tin mới nhất.
+    \item \textbf{Điều kiện trước}: Đã có bản ghi (chọn từ UC22 hoặc UC21). 
+    \item \textbf{Điều kiện sau}: Bản ghi được cập nhật; khóa định danh thường không đổi.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item NV chọn ``Lập phiếu nhập kho''.
-        \item Hệ thống mở form phiếu: chọn nhà cung cấp, kho nhập, ngày nhập, ghi chú.
-        \item NV thêm từng dòng chi tiết: chọn hàng hóa, nhập số lượng, đơn giá.
-        \item Hệ thống tính thành tiền từng dòng và tổng tiền phiếu.
-        \item NV kiểm tra lại và chọn ``Gửi duyệt''.
-        \item Hệ thống kiểm tra phiếu có ít nhất một dòng hàng, các trường bắt buộc hợp lệ.
-        \item Hệ thống lưu phiếu với trạng thái ``Chờ duyệt''.
-        \item QL mở danh sách phiếu chờ duyệt, chọn phiếu cần xem.
-        \item QL kiểm tra thông tin NCC, kho, danh sách hàng; chọn ``Duyệt''.
-        \item Hệ thống đổi trạng thái phiếu thành ``Đã duyệt''.
-        \item Với mỗi dòng chi tiết, hệ thống tăng \texttt{SoLuongTon} tương ứng (Kho, HangHoa).
-        \item Hệ thống ghi log và thông báo duyệt thành công.
+        \item Chọn bản ghi $\rightarrow$ ``Sửa'' $\rightarrow$ nạp form.
+        \item Chỉnh các trường cho phép $\rightarrow$ ``Lưu''.
+        \item Hệ thống validate và cập nhật CSDL.
     \end{enumerate}
-    \item \textbf{Luồng thay thế}:
-    \begin{enumerate}
-        \item \textit{A1 -- Phiếu không có dòng hàng}: Không cho gửi duyệt, yêu cầu bổ sung.
-        \item \textit{A2 -- QL từ chối}: Nhập lý do từ chối; trạng thái ``Từ chối''; \textbf{không} đổi tồn kho.
-        \item \textit{A3 -- NV hủy phiếu ở trạng thái cho phép}: Phiếu ``Đã hủy'', tồn không đổi.
-    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Hủy / dữ liệu không hợp lệ $\rightarrow$ không lưu.
 \end{itemize}
 
-\subsection{UC14 -- Lập phiếu xuất kho}
+
+\subsection{UC20 -- Xóa kho}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Tên use case}: Lập phiếu xuất kho.
-    \item \textbf{Mã}: UC14.
-    \item \textbf{Tác nhân chính}: Nhân viên kho (lập).
-    \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt).
-    \item \textbf{Mô tả tóm tắt}: Ghi nhận xuất hàng cho khách hàng từ một kho. Hệ thống chặn xuất vượt tồn; chỉ giảm tồn khi phiếu được duyệt.
-    \item \textbf{Mục tiêu}: Tạo phiếu xuất hợp lệ; sau duyệt tồn kho giảm đúng số lượng đã xuất.
-    \item \textbf{Điều kiện trước}: Đã có khách hàng, kho, hàng hóa; NV/QL đã đăng nhập.
-    \item \textbf{Điều kiện sau (duyệt thành công)}: Phiếu ``Đã duyệt''; tồn kho giảm; có log.
+    \item \textbf{Tên use case}: Xóa kho.
+    \item \textbf{Mã}: UC20.
+    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Gỡ bản ghi khỏi danh mục đang dùng.
+    \item \textbf{Mục tiêu}: Bản ghi không còn dùng cho thao tác mới (đã xóa hoặc đã ngừng).
+    \item \textbf{Điều kiện trước}: Đã chọn một bản ghi.
+    \item \textbf{Điều kiện sau}: Xóa cứng \textbf{hoặc} chuyển trạng thái ngừng/khóa.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item NV chọn ``Lập phiếu xuất kho''.
-        \item Chọn khách hàng, kho xuất, ngày xuất, lý do xuất (nếu có).
-        \item Thêm dòng hàng: chọn mặt hàng, nhập số lượng xuất.
-        \item Hệ thống đọc \texttt{TonKho} tại kho xuất; nếu số lượng yêu cầu $\leq$ tồn thì cho phép, gán đơn giá xuất, tính thành tiền.
-        \item NV gửi duyệt; phiếu ``Chờ duyệt''.
-        \item QL mở phiếu, duyệt.
-        \item Hệ thống cập nhật ``Đã duyệt'', trừ tồn từng dòng, ghi log.
+        \item Chọn bản ghi $\rightarrow$ ``Xóa'' $\rightarrow$ xác nhận.
+        \item Hệ thống kiểm tra ràng buộc tham chiếu.
+        \item Nếu kho đã có tồn/phiếu: không xóa cứng, chỉ ngừng hoạt động.
     \end{enumerate}
-    \item \textbf{Luồng thay thế}:
-    \begin{enumerate}
-        \item \textit{A1 -- Tồn không đủ}: Không thêm được dòng; thông báo số tồn hiện có.
-        \item \textit{A2 -- QL từ chối}: Tồn không đổi; lưu lý do.
-    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Hủy xác nhận $\rightarrow$ không đổi dữ liệu.
 \end{itemize}
 
-\subsection{UC15 -- Lập phiếu kiểm kê}
+
+\subsection{UC21 -- Tìm kiếm kho}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Tìm kiếm kho.
+    \item \textbf{Mã}: UC21.
+    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Lọc nhanh theo mã/tên (hoặc điều kiện liên quan).
+    \item \textbf{Mục tiêu}: Nhận danh sách khớp điều kiện.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Hiển thị kết quả; không bắt buộc đổi dữ liệu.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Nhập từ khóa / bộ lọc $\rightarrow$ ``Tìm kiếm''.
+        \item Hệ thống truy vấn và hiển thị kết quả.
+        \item Có thể chọn dòng để sửa (UC19) / xóa (UC20).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Không có kết quả $\rightarrow$ thông báo trống.
+\end{itemize}
+
+
+\subsection{UC22 -- Xem danh sách kho}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách kho.
+    \item \textbf{Mã}: UC22.
+    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý và xem toàn bộ (hoặc phân trang) danh sách -- điểm vào trước khi thêm/sửa/xóa/tìm.
+    \item \textbf{Mục tiêu}: Nhìn được danh mục hiện tại.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Danh sách hiển thị; có thể sang UC18/UC19/UC20/UC21.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Chọn menu quản lý $\rightarrow$ hệ thống tải danh sách.
+        \item Hiển thị bảng (phân trang nếu nhiều).
+        \item Từ danh sách chọn Thêm / Sửa / Xóa / Tìm.
+    \end{enumerate}
+    \item \textbf{Ghi chú}: Xem danh sách $\neq$ Tìm kiếm (mặc định toàn bộ vs lọc theo từ khóa).
+\end{itemize}
+
+
+\subsection{UC23 -- Lập phiếu nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Lập phiếu nhập.
+    \item \textbf{Mã}: UC23.
+    \item \textbf{Tác nhân}: NV (lập), QL (duyệt).
+    \item \textbf{Mô tả tóm tắt}: Tạo phiếu mới, thêm chi tiết hàng, gửi duyệt; duyệt mới cập nhật tồn.
+    \item \textbf{Mục tiêu}: Có phiếu hợp lệ; sau duyệt tồn phản ánh đúng.
+    \item \textbf{Điều kiện trước}: Đã đăng nhập; đã có kho, hàng (và NCC nếu nhập).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item NV chọn lập phiếu nhập (từ UC27).
+        
+        \item Chọn NCC, kho nhập, ngày; thêm dòng hàng (SL, đơn giá).
+        \item Gửi duyệt; QL duyệt $\rightarrow$ \textbf{tăng} tồn; từ chối $\rightarrow$ tồn không đổi.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Thiếu dòng hàng / tồn không đủ (xuất) / QL từ chối.
+\end{itemize}
+
+\subsection{UC24 -- Sửa phiếu nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Sửa phiếu nhập.
+    \item \textbf{Mã}: UC24.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Chỉnh header/chi tiết phiếu khi chưa duyệt.
+    \item \textbf{Điều kiện trước}: Chỉ sửa khi phiếu còn ``Chờ duyệt'' (hoặc nháp).
+    \item \textbf{Luồng sự kiện chính}: Chọn phiếu $\rightarrow$ Sửa $\rightarrow$ lưu; trạng thái vẫn Chờ duyệt (hoặc nháp).
+    \item \textbf{Luồng thay thế}: Phiếu Đã duyệt $\rightarrow$ không cho sửa (phải lập phiếu điều chỉnh / kiểm kê nếu cần).
+\end{itemize}
+
+\subsection{UC25 -- Xóa phiếu nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xóa phiếu nhập.
+    \item \textbf{Mã}: UC25.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Hủy/xóa phiếu không còn dùng.
+    \item \textbf{Điều kiện sau}: Phiếu bị xóa hoặc ``Đã hủy''; tồn không đổi (vì chưa duyệt hoặc đã từ chối).
+    \item \textbf{Luồng sự kiện chính}: Chọn phiếu $\rightarrow$ Xóa/Hủy $\rightarrow$ xác nhận. Chỉ xóa/hủy khi trạng thái Chờ duyệt hoặc Từ chối; phiếu Đã duyệt không xóa cứng.
+\end{itemize}
+
+\subsection{UC26 -- Tìm kiếm phiếu nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Tìm kiếm phiếu nhập.
+    \item \textbf{Mã}: UC26.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Lọc phiếu theo mã, ngày, kho, trạng thái, NCC.
+    \item \textbf{Luồng sự kiện chính}: Nhập điều kiện $\rightarrow$ tìm $\rightarrow$ danh sách kết quả $\rightarrow$ mở chi tiết / sửa / xóa nếu được phép.
+\end{itemize}
+
+\subsection{UC27 -- Xem danh sách phiếu nhập}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách phiếu nhập.
+    \item \textbf{Mã}: UC27.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Xem danh sách phiếu (phân trang), điểm vào lập/sửa/xóa/tìm/duyệt.
+    \item \textbf{Luồng sự kiện chính}: Mở menu phiếu $\rightarrow$ tải danh sách $\rightarrow$ chọn thao tác tiếp (UC23/UC24/UC25/UC26 hoặc duyệt trên phiếu chờ).
+\end{itemize}
+
+
+\subsection{UC28 -- Lập phiếu xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Lập phiếu xuất.
+    \item \textbf{Mã}: UC28.
+    \item \textbf{Tác nhân}: NV (lập), QL (duyệt).
+    \item \textbf{Mô tả tóm tắt}: Tạo phiếu mới, thêm chi tiết hàng, gửi duyệt; duyệt mới cập nhật tồn.
+    \item \textbf{Mục tiêu}: Có phiếu hợp lệ; sau duyệt tồn phản ánh đúng.
+    \item \textbf{Điều kiện trước}: Đã đăng nhập; đã có kho, hàng (và NCC nếu nhập).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item NV chọn lập phiếu xuất (từ UC32).
+        
+        \item Chọn kho xuất, ngày, lý do xuất / ghi chú người nhận (không quản lý danh mục khách hàng).
+        \item Thêm dòng hàng; hệ thống \textbf{kiểm tra tồn đủ}. Gửi duyệt; QL duyệt $\rightarrow$ \textbf{giảm} tồn.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Thiếu dòng hàng / tồn không đủ (xuất) / QL từ chối.
+\end{itemize}
+
+\subsection{UC29 -- Sửa phiếu xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Sửa phiếu xuất.
+    \item \textbf{Mã}: UC29.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Chỉnh header/chi tiết phiếu khi chưa duyệt.
+    \item \textbf{Điều kiện trước}: Chỉ sửa khi phiếu còn ``Chờ duyệt'' (hoặc nháp).
+    \item \textbf{Luồng sự kiện chính}: Chọn phiếu $\rightarrow$ Sửa $\rightarrow$ lưu; trạng thái vẫn Chờ duyệt (hoặc nháp).
+    \item \textbf{Luồng thay thế}: Phiếu Đã duyệt $\rightarrow$ không cho sửa (phải lập phiếu điều chỉnh / kiểm kê nếu cần).
+\end{itemize}
+
+\subsection{UC30 -- Xóa phiếu xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xóa phiếu xuất.
+    \item \textbf{Mã}: UC30.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Hủy/xóa phiếu không còn dùng.
+    \item \textbf{Điều kiện sau}: Phiếu bị xóa hoặc ``Đã hủy''; tồn không đổi (vì chưa duyệt hoặc đã từ chối).
+    \item \textbf{Luồng sự kiện chính}: Chọn phiếu $\rightarrow$ Xóa/Hủy $\rightarrow$ xác nhận. Chỉ xóa/hủy khi Chờ duyệt hoặc Từ chối; phiếu Đã duyệt không xóa cứng.
+\end{itemize}
+
+\subsection{UC31 -- Tìm kiếm phiếu xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Tìm kiếm phiếu xuất.
+    \item \textbf{Mã}: UC31.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Lọc phiếu theo mã, ngày, kho, trạng thái.
+    \item \textbf{Luồng sự kiện chính}: Nhập điều kiện $\rightarrow$ tìm $\rightarrow$ danh sách kết quả $\rightarrow$ mở chi tiết / sửa / xóa nếu được phép.
+\end{itemize}
+
+\subsection{UC32 -- Xem danh sách phiếu xuất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách phiếu xuất.
+    \item \textbf{Mã}: UC32.
+    \item \textbf{Tác nhân chính}: NV, QL.
+    \item \textbf{Mô tả tóm tắt}: Xem danh sách phiếu (phân trang), điểm vào lập/sửa/xóa/tìm/duyệt.
+    \item \textbf{Luồng sự kiện chính}: Mở menu phiếu $\rightarrow$ tải danh sách $\rightarrow$ chọn thao tác tiếp (UC28/UC29/UC30/UC31 hoặc duyệt trên phiếu chờ).
+\end{itemize}
+
+
+\subsection{UC33 -- Lập phiếu kiểm kê}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Lập phiếu kiểm kê.
-    \item \textbf{Mã}: UC15.
-    \item \textbf{Tác nhân chính}: Nhân viên kho (tạo phiếu, nhập số thực tế).
-    \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt điều chỉnh chênh lệch).
-    \item \textbf{Mô tả tóm tắt}: Định kỳ đối chiếu số lượng hàng thực tế trong kho với số trên hệ thống. Chênh lệch chỉ được đưa vào tồn chính thức sau khi quản lý duyệt.
-    \item \textbf{Mục tiêu}: Ghi nhận kết quả kiểm đếm; đồng bộ tồn kho với thực tế khi được duyệt.
-    \item \textbf{Điều kiện trước}: Đã có kho và hàng; actor đã đăng nhập.
-    \item \textbf{Điều kiện sau (duyệt)}: \texttt{TonKho} được gán bằng số thực tế; phiếu ``Đã duyệt''; có log.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item NV chọn ``Lập phiếu kiểm kê'', chọn kho và ngày kiểm.
-        \item Hệ thống nạp danh sách hàng đang theo dõi tại kho kèm \textbf{số lượng sổ} (từ \texttt{TonKho}).
-        \item NV nhập \textbf{số lượng thực tế} sau khi kiểm đếm.
-        \item Hệ thống tính \textbf{chênh lệch} = thực tế $-$ sổ sách cho từng dòng.
-        \item NV gửi duyệt phiếu kiểm kê.
-        \item QL xem tổng hợp chênh lệch (thừa/thiếu), chọn ``Duyệt điều chỉnh''.
-        \item Hệ thống cập nhật tồn = số thực tế, đổi trạng thái phiếu, ghi log.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: QL từ chối / yêu cầu kiểm lại $\rightarrow$ tồn giữ nguyên số sổ.
+    \item \textbf{Mã}: UC33.
+    \item \textbf{Tác nhân}: NV (lập), QL (duyệt).
+    \item \textbf{Mô tả tóm tắt}: Nhập số lượng thực tế theo kho; duyệt thì gán \texttt{TonKho} = thực tế.
+    \item \textbf{Luồng chính}: Chọn kho $\rightarrow$ nạp SL sổ $\rightarrow$ nhập SL thực tế $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ cập nhật tồn.
 \end{itemize}
 
-\subsection{UC16 -- Xem báo cáo nhập xuất tồn}
+\subsection{UC34 -- Xem báo cáo nhập xuất tồn}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xem báo cáo nhập xuất tồn.
-    \item \textbf{Mã}: UC16.
-    \item \textbf{Tác nhân chính}: Quản lý kho, Quản trị viên.
-    \item \textbf{Mô tả tóm tắt}: Tra cứu số liệu tổng hợp phục vụ điều hành kho: tồn hiện tại hoặc biến động nhập--xuất--tồn theo khoảng thời gian, theo kho hoặc theo hàng. Không bao gồm phân hệ tài chính/thanh toán phức tạp.
-    \item \textbf{Mục tiêu}: Có bảng số liệu NXT/tồn đúng điều kiện lọc để xem hoặc xuất file.
-    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền xem báo cáo; hệ thống đã có dữ liệu phiếu/tồn (có thể rỗng).
-    \item \textbf{Điều kiện sau}: Actor xem được báo cáo; việc xuất Excel (nếu có) tạo file phía client; không bắt buộc ghi thay đổi nghiệp vụ.
-    \item \textbf{Luồng sự kiện chính}:
-    \begin{enumerate}
-        \item Actor mở chức năng ``Báo cáo nhập xuất tồn''.
-        \item Chọn loại xem: tồn hiện tại \textit{hoặc} nhập--xuất--tồn theo kỳ.
-        \item Nhập điều kiện: từ ngày -- đến ngày, kho (tuỳ chọn), nhóm hàng / mã hàng (tuỳ chọn).
-        \item Nhấn ``Xem báo cáo''.
-        \item Hệ thống tổng hợp từ \texttt{PhieuNhapKho}/\texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}/\texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{HangHoa}.
-        \item Hệ thống hiển thị bảng kết quả (mã hàng, tên, tồn đầu/nhập/xuất/tồn cuối hoặc tồn hiện tại tùy loại).
-        \item Actor có thể nhấn ``Xuất Excel'' để tải file.
-    \end{enumerate}
-    \item \textbf{Luồng thay thế}: Không có dữ liệu trong kỳ $\rightarrow$ bảng rỗng / thông báo không có phát sinh.
+    \item \textbf{Mã}: UC34.
+    \item \textbf{Tác nhân}: QL, QTV.
+    \item \textbf{Mô tả tóm tắt}: Xem tồn hiện tại hoặc tổng hợp nhập--xuất--tồn theo kỳ/kho/hàng; có thể xuất Excel.
 \end{itemize}
 
-\section{Kết luận chương}
-
-Chương 3 hoàn thành \textbf{phân tích chức năng}: dùng \textbf{biểu đồ use case} (tổng quát, phân rã) và \textbf{đặc tả use case} đầy đủ để xác định chức năng và mục tiêu của từng actor. Tiếp theo, Chương 4 thực hiện \textbf{phân tích cấu trúc} bằng \textbf{biểu đồ lớp}.

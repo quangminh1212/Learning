@@ -12,7 +12,7 @@
 % Các bước
 \node[startstop] (start) {Bắt đầu};
 \node[process, below=of start] (step1) {Nhân viên kho lập phiếu xuất kho};
-\node[process, below=of step1] (step2) {Nhập thông tin khách hàng, kho, ngày xuất};
+\node[process, below=of step1] (step2) {Nhập kho, ngày, lý do xuất / ghi chú};
 \node[process, below=of step2] (step3) {Thêm chi tiết hàng hóa xuất};
 \node[decision, below=of step3] (dec1) {Tồn kho\\đủ?};
 \node[process, below=of dec1] (step4) {Gửi phiếu xuất để duyệt};
@@ -42,6 +42,6 @@
 
 \end{tikzpicture}
 }
-\caption{Activity -- UC14 Lập phiếu xuất kho}
+\caption{Activity -- UC28 Lập phiếu xuất kho}
 \label{fig:activity-xuatkho}
 \end{figure}

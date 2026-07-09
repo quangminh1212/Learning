@@ -2,34 +2,38 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.88,
-    transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.5cm, minimum height=0.7cm, font=\scriptsize, align=center},
-    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
+    scale=0.72, transform shape,
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.6cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.5pt, minimum width=3.1cm, minimum height=0.5cm, font=\scriptsize, align=center},
+    system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=5pt, rounded corners=3pt}
 ]
+\node[system, minimum width=15cm, minimum height=11cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,5.1) {Phân rã: Phiếu nhập / xuất / kiểm kê / báo cáo};
 
-\node[system, minimum width=12.5cm, minimum height=8cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,3.5) {Phân rã: Nhập / xuất / kiểm kê / báo cáo};
+\node[font=\scriptsize\bfseries] at (-3.6,4.2) {Phiếu nhập};
+\node[usecase] (n23) at (-3.6,3.5) {UC23: Lập PN};
+\node[usecase] (n24) at (-3.6,2.6) {UC24: Sửa PN};
+\node[usecase] (n25) at (-3.6,1.7) {UC25: Xóa PN};
+\node[usecase] (n26) at (-3.6,0.8) {UC26: Tìm PN};
+\node[usecase] (n27) at (-3.6,-0.1) {UC27: Xem DS PN};
 
-\node[usecase] (uc09) at (-3.5,1.6) {UC13: Lập phiếu nhập};
-\node[usecase] (uc10) at (3.5,1.6) {UC14: Lập phiếu xuất};
-\node[usecase] (uc11) at (-3.5,-0.4) {UC15: Lập phiếu kiểm kê};
-\node[usecase] (uc12) at (3.5,-0.4) {UC16: Xem BC nhập xuất tồn};
+\node[font=\scriptsize\bfseries] at (3.6,4.2) {Phiếu xuất};
+\node[usecase] (x28) at (3.6,3.5) {UC28: Lập PX};
+\node[usecase] (x29) at (3.6,2.6) {UC29: Sửa PX};
+\node[usecase] (x30) at (3.6,1.7) {UC30: Xóa PX};
+\node[usecase] (x31) at (3.6,0.8) {UC31: Tìm PX};
+\node[usecase] (x32) at (3.6,-0.1) {UC32: Xem DS PX};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7,0.6) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7,0.6) {};
+\node[usecase] (kk) at (-3.6,-1.3) {UC33: Lập kiểm kê};
+\node[usecase] (bc) at (3.6,-1.3) {UC34: Xem BC tồn};
 
-\draw (nvk) -- (uc09);
-\draw (nvk) -- (uc10);
-\draw (nvk) -- (uc11);
-\draw (qlk) -- (uc09);
-\draw (qlk) -- (uc10);
-\draw (qlk) -- (uc11);
-\draw (qlk) -- (uc12);
-
-\end{tikzpicture}
+\node[actor, label=below:{\scriptsize\bfseries NV kho}] (nv) at (-8,1.2) {};
+\node[actor, label=below:{\scriptsize\bfseries QL kho}] (ql) at (8,1.2) {};
+\foreach \u in {n23,n24,n25,n26,n27,x28,x29,x30,x31,x32,kk} {
+  \draw (nv) -- (\u); \draw (ql) -- (\u);
 }
-\caption{Use case phân rã -- Nhập, xuất, kiểm kê, báo cáo tồn}
+\draw (ql) -- (bc);
+\end{tikzpicture}}
+\caption{Use case phân rã -- PN (UC23--27), PX (UC28--32), KK (UC33), BC (UC34)}
 \label{fig:usecase-inventory-management}
 \end{figure}

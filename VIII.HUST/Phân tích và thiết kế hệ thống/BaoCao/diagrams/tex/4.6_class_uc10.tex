@@ -5,8 +5,9 @@
 
 \begin{class}{PhieuXuatKho}{0,0}
 \attribute{+ MaPhieuXuat: String}
-\attribute{+ MaKhachHang: String}
 \attribute{+ MaKho: String}
+\attribute{+ LyDoXuat: String}
+\attribute{+ GhiChu: String}
 \attribute{+ NgayXuat: DateTime}
 \attribute{+ TongTien: Decimal}
 \operation{+ LapPhieuXuat(): void}
@@ -23,11 +24,6 @@
 \begin{class}{HangHoa}{12,0}
 \attribute{+ MaHangHoa: String}
 \attribute{+ TenHangHoa: String}
-\end{class}
-
-\begin{class}{KhachHang}{-6,4}
-\attribute{+ MaKhachHang: String}
-\attribute{+ TenKhachHang: String}
 \end{class}
 
 \begin{class}{Kho}{6,4}
@@ -51,7 +47,6 @@
 
 \draw (PhieuXuatKho) -- (ChiTietPhieuXuat) node[midway, above, font=\small] {1..*};
 \draw (ChiTietPhieuXuat) -- (HangHoa) node[midway, above, font=\small] {n..1};
-\draw (PhieuXuatKho) -- (KhachHang) node[midway, left, font=\small] {n..1};
 \draw (PhieuXuatKho) -- (Kho) node[midway, right, font=\small] {n..1};
 \draw (TonKho) -- (Kho) node[midway, above, font=\small] {1..*};
 \draw (TonKho) -- (HangHoa) node[midway, right, font=\small] {1..1};
@@ -59,6 +54,6 @@
 
 \end{tikzpicture}
 }
-\caption{Biểu đồ lớp trong ca sử dụng UC11 -- Lập phiếu xuất kho}
+\caption{Biểu đồ lớp trong ca sử dụng UC28 -- Lập phiếu xuất kho}
 \label{fig:class-uc10}
 \end{figure}

@@ -25,15 +25,13 @@ DonViTinh & Đơn vị tính: mã, tên. \\
 \hline
 NhaCungCap & NCC: mã, tên, địa chỉ, SĐT, email, người liên hệ. \\
 \hline
-KhachHang & KH: mã, tên, địa chỉ, SĐT, email, MST, người liên hệ. \\
-\hline
 Kho & Kho: mã, tên, địa chỉ, người phụ trách, diện tích, trạng thái. \\
 \hline
 PhieuNhapKho & Phiếu nhập: mã, NCC, kho, người lập, ngày, tổng tiền, trạng thái. \\
 \hline
 ChiTietPhieuNhap & Chi tiết nhập: mã phiếu, hàng, số lượng, đơn giá, thành tiền. \\
 \hline
-PhieuXuatKho & Phiếu xuất: mã, KH, kho, người lập, ngày, tổng tiền, trạng thái. \\
+PhieuXuatKho & Phiếu xuất: mã, kho, người lập, ngày, lý do, ghi chú, tổng tiền, trạng thái (không KH). \\
 \hline
 ChiTietPhieuXuat & Chi tiết xuất: mã phiếu, hàng, số lượng, đơn giá, thành tiền. \\
 \hline
@@ -101,7 +99,7 @@ NgayCapNhat & DATETIME & Lần cập nhật gần nhất. \\
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{PhieuNhapKho}: MaPhieu, MaNCC, MaKho, MaNguoiDung, NgayNhap, TongTien, TrangThai (Chờ duyệt / Đã duyệt / Từ chối).
-    \item \textbf{PhieuXuatKho}: tương tự, thay NCC bằng MaKhachHang, NgayXuat.
+    \item \textbf{PhieuXuatKho}: MaPhieu, MaKho, MaNguoiDung, NgayXuat, LyDoXuat, GhiChu, TongTien, TrangThai (không có MaKhachHang).
     \item Chi tiết phiếu: MaPhieu, MaHang, SoLuong, DonGia, ThanhTien.
 \end{itemize}
 
@@ -121,7 +119,7 @@ NgayCapNhat & DATETIME & Lần cập nhật gần nhất. \\
 Giải thích sơ đồ: Sơ đồ điều hướng (navigation) cho thấy người dùng \textbf{đi từ màn nào sang màn nào} sau khi đăng nhập:
 \begin{itemize}[leftmargin=1.5cm]
     \item Điểm vào: \textbf{Đăng nhập (UC01)} $\rightarrow$ \textbf{Trang chủ (Dashboard)}.
-    \item Từ trang chủ tỏa ra các màn chức năng: Hàng hóa (UC10--UC11), NCC (UC04--UC08), Kho (UC12), Tài khoản (UC03), Báo cáo tồn (UC16), Phiếu nhập (UC13), Phiếu xuất (UC14), Kiểm kê (UC15).
+    \item Từ trang chủ tỏa ra các màn chức năng: Hàng hóa (UC13--UC17), NCC (UC08--UC12), Kho (UC18--UC22), Tài khoản (UC03--UC07), Báo cáo (UC34), Phiếu nhập (UC23--UC27), Phiếu xuất (UC28--UC32), Kiểm kê (UC33).
     \item Mỗi hộp gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 \end{itemize}
 Sơ đồ không mô tả layout chi tiết từng form, mà mô tả \textbf{cấu trúc menu/luồng màn hình} phục vụ triển khai UI.
@@ -130,9 +128,9 @@ Các màn hình chính:
 
 \begin{itemize}[leftmargin=1.5cm]
     \item Đăng nhập (UC01); Trang chủ / Dashboard.
-    \item Hàng hóa (UC10, UC11); Nhà cung cấp (UC04--UC08: thêm/sửa/xóa/tìm/xem DS); Khách hàng (UC09); Kho (UC12); Tài khoản (UC03).
-    \item Phiếu nhập (UC13); Phiếu xuất (UC14); Kiểm kê (UC15).
-    \item Báo cáo nhập--xuất--tồn (UC16): chọn điều kiện, bảng kết quả, xuất Excel.
+    \item Hàng hóa (UC13--UC17); NCC (UC08--UC12); Kho (UC18--UC22); Tài khoản (UC03--UC07) -- mỗi nhóm đủ thêm/sửa/xóa/tìm/xem DS.
+    \item Phiếu nhập (UC23--UC27); Phiếu xuất (UC28--UC32); Kiểm kê (UC33).
+    \item Báo cáo nhập--xuất--tồn (UC34): chọn điều kiện, bảng kết quả, xuất Excel.
 \end{itemize}
 
 \section{Kết luận chương}
