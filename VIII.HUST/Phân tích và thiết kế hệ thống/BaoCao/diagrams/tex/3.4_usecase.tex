@@ -10,31 +10,28 @@
 ]
 
 % Hệ thống
-\node[system, minimum width=12cm, minimum height=13cm] (system) at (0,-0.2) {};
-\node[font=\bfseries\small, text=black] at (0,6) {Hệ thống quản lý kho hàng};
+\node[system, minimum width=12cm, minimum height=11cm] (system) at (0,0.5) {};
+\node[font=\bfseries\small, text=black] at (0,5.5) {Hệ thống quản lý kho hàng};
 
-% Các use case (UC01-UC13) - bố trí thưa hơn
-\node[usecase] (uc01) at (-3.5,5) {UC01: Quản lý tài khoản};
-\node[usecase] (uc02) at (-3.5,3.6) {UC02: Đăng nhập / Đăng xuất};
-\node[usecase] (uc03) at (-3.5,2.2) {UC03: Quản lý nhà cung cấp};
-\node[usecase] (uc04) at (-3.5,0.8) {UC04: Quản lý khách hàng};
-\node[usecase] (uc05) at (-3.5,-0.6) {UC05: Quản lý hàng hóa};
-\node[usecase] (uc06) at (-3.5,-2) {UC06: Tìm kiếm hàng hóa};
-\node[usecase] (uc07) at (-3.5,-3.4) {UC07: Quản lý kho};
-\node[usecase] (uc08) at (-3.5,-4.8) {UC08: Tìm kiếm kho};
+% Các use case (UC01-UC10)
+\node[usecase] (uc01) at (-3.5,4.5) {UC01: Quản lý tài khoản};
+\node[usecase] (uc02) at (-3.5,3.1) {UC02: Đăng nhập / Đăng xuất};
+\node[usecase] (uc03) at (-3.5,1.7) {UC03: Quản lý nhà cung cấp};
+\node[usecase] (uc04) at (-3.5,0.3) {UC04: Quản lý khách hàng};
+\node[usecase] (uc05) at (-3.5,-1.1) {UC05: Quản lý hàng hóa};
+\node[usecase] (uc06) at (-3.5,-2.5) {UC06: Tìm kiếm hàng hóa};
+\node[usecase] (uc07) at (-3.5,-3.9) {UC07: Quản lý kho};
 
-\node[usecase] (uc09) at (3.5,5) {UC09: Lập phiếu nhập kho};
-\node[usecase] (uc10) at (3.5,3.6) {UC10: Lập phiếu xuất kho};
-\node[usecase] (uc11) at (3.5,2.2) {UC11: Quản lý đơn đặt hàng};
-\node[usecase] (uc12) at (3.5,0.8) {UC12: Quản lý thanh toán};
-\node[usecase] (uc13) at (3.5,-0.6) {UC13: Xem báo cáo thống kê};
+\node[usecase] (uc08) at (3.5,4.5) {UC08: Tìm kiếm kho};
+\node[usecase] (uc09) at (3.5,3.1) {UC09: Lập phiếu nhập kho};
+\node[usecase] (uc10) at (3.5,1.7) {UC10: Lập phiếu xuất kho};
 
 % Các tác nhân - bố trí cân đối
-\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-8,3.9) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (8,3.9) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-8,-2.2) {};
-\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (8,-2.2) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (8,-5.2) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-8,3.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (8,3.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-8,-1.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Khách hàng}] (kh) at (8,-1.0) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhà cung cấp}] (ncc) at (8,-3.5) {};
 
 % Liên kết Quản trị viên
 \draw[line width=0.5pt] (admin) -- (uc01);
@@ -48,9 +45,6 @@
 \draw[line width=0.5pt] (qlk) -- (uc07);
 \draw[line width=0.5pt] (qlk) -- (uc09);
 \draw[line width=0.5pt] (qlk) -- (uc10);
-\draw[line width=0.5pt] (qlk) -- (uc11);
-\draw[line width=0.5pt] (qlk) -- (uc12);
-\draw[line width=0.5pt] (qlk) -- (uc13);
 
 % Liên kết Nhân viên kho
 \draw[line width=0.5pt] (nvk) -- (uc02);
@@ -65,7 +59,6 @@
 
 % Liên kết Khách hàng
 \draw[line width=0.5pt] (kh) -- (uc02);
-\draw[line width=0.5pt] (kh) -- (uc11);
 
 % Liên kết Nhà cung cấp
 \draw[line width=0.5pt] (ncc) -- (uc02);

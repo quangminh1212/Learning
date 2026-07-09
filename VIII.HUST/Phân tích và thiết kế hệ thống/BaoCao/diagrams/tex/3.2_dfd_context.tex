@@ -16,17 +16,17 @@
 \node[entity] (ncc) at (7,-3.5) {Nhà cung\\cấp};
 \node[entity] (admin) at (-7,-3.5) {Quản trị\\viên};
 
-\draw[flow] (ql) -- (sys) node[label, pos=0.65, above left, sloped, align=center] {Yêu cầu\\duyệt, báo cáo};
-\draw[flow] (sys) -- (ql) node[label, pos=0.35, below right, sloped, align=center] {Kết quả\\duyệt, báo cáo};
+\draw[flow] (ql) -- (sys) node[label, pos=0.65, above left, sloped, align=center] {Yêu cầu\\duyệt};
+\draw[flow] (sys) -- (ql) node[label, pos=0.35, below right, sloped, align=center] {Kết quả\\duyệt};
 
 \draw[flow] (nv) -- (sys) node[label, pos=0.65, above right, align=center] {Dữ liệu\\nhập/xuất/kiểm kê};
 \draw[flow] (sys) -- (nv) node[label, pos=0.35, above left, align=center] {Phiếu, cảnh\\báo tồn kho};
 
-\draw[flow] (kh) -- (sys) node[label, pos=0.65, above right, sloped, align=center] {Đơn hàng,\\thanh toán};
-\draw[flow] (sys) -- (kh) node[label, pos=0.35, below left, sloped, align=center] {Trạng thái,\\hóa đơn};
+\draw[flow] (kh) -- (sys) node[label, pos=0.65, above right, sloped, align=center] {Yêu cầu\\tra cứu};
+\draw[flow] (sys) -- (kh) node[label, pos=0.35, below left, sloped, align=center] {Trạng thái\\phiếu xuất};
 
 \draw[flow] (ncc) -- (sys) node[label, pos=0.65, above left, sloped, align=center] {Giao hàng,\\hóa đơn};
-\draw[flow] (sys) -- (ncc) node[label, pos=0.35, below right, sloped, align=center] {Đơn đặt hàng,\\xác nhận};
+\draw[flow] (sys) -- (ncc) node[label, pos=0.35, below right, sloped, align=center] {Xác nhận\\nhập kho};
 
 \draw[flow] (admin) -- (sys) node[label, pos=0.65, above right, sloped, align=center] {Cấu hình,\\phân quyền};
 \draw[flow] (sys) -- (admin) node[label, pos=0.35, below left, sloped, align=center] {Log, trạng thái\\hệ thống};

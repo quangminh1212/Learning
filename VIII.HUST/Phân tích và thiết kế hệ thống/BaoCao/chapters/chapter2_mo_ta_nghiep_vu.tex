@@ -2,18 +2,16 @@
 
 \section{Tổng quan các nghiệp vụ}
 
-Hệ thống quản lý kho hàng đảm nhận việc kiểm soát toàn bộ vòng đời của hàng hóa từ khi nhập vào kho cho đến khi xuất ra khỏi kho, đồng thời quản lý thông tin đối tác, đơn hàng và báo cáo thống kê. Các nghiệp vụ chính của hệ thống được chia thành các nhóm sau:
+Hệ thống quản lý kho hàng đảm nhận việc kiểm soát toàn bộ vòng đời của hàng hóa từ khi nhập vào kho cho đến khi xuất ra khỏi kho, đồng thời quản lý thông tin đối tác và tồn kho. Các nghiệp vụ chính của hệ thống được chia thành các nhóm sau:
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Nhóm quản lý người dùng}: Quản lý tài khoản người dùng (UC01), Đăng nhập/đăng xuất (UC02).
     \item \textbf{Nhóm quản lý đối tác}: Quản lý nhà cung cấp (UC03), Quản lý khách hàng (UC04).
     \item \textbf{Nhóm quản lý hàng hóa và kho}: Quản lý hàng hóa (UC05), Tìm kiếm hàng hóa (UC06), Quản lý kho (UC07), Tìm kiếm kho (UC08).
     \item \textbf{Nhóm quản lý nhập xuất}: Lập phiếu nhập kho (UC09), Lập phiếu xuất kho (UC10).
-    \item \textbf{Nhóm quản lý đơn hàng và tài chính}: Quản lý đơn đặt hàng (UC11), Quản lý thanh toán (UC12).
-    \item \textbf{Nhóm báo cáo}: Xem báo cáo thống kê (UC13).
 \end{itemize}
 
-Các nhóm nghiệp vụ này có mối quan hệ chặt chẽ với nhau: thông tin hàng hóa và đối tác được sử dụng khi lập phiếu nhập/xuất; dữ liệu phiếu nhập/xuất là cơ sở để tính tồn kho và lập báo cáo; đơn đặt hàng liên kết với phiếu xuất kho và thanh toán.
+Các nhóm nghiệp vụ này có mối quan hệ chặt chẽ với nhau: thông tin hàng hóa và đối tác được sử dụng khi lập phiếu nhập/xuất; dữ liệu phiếu nhập/xuất là cơ sở để cập nhật và kiểm soát tồn kho.
 
 \section{Nghiệp vụ 1: Quản lý tài khoản người dùng (UC01)}
 
@@ -112,54 +110,6 @@ Các nhóm nghiệp vụ này có mối quan hệ chặt chẽ với nhau: thôn
 
 \textbf{Dữ liệu liên quan}: Bảng \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa}.
 
-\section{Nghiệp vụ 11: Quản lý đơn đặt hàng (UC11)}
-
-\textbf{Mô tả}: Khách hàng hoặc bộ phận bán hàng tạo đơn đặt hàng. Hệ thống theo dõi trạng thái đơn hàng và tự động tạo phiếu xuất kho khi đơn được duyệt.
-
-\textbf{Quy trình}:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Người dùng tạo đơn đặt hàng mới: chọn khách hàng, nhập ngày đặt, ngày giao dự kiến.
-    \item Thêm danh sách hàng hóa đặt: chọn hàng hóa, nhập số lượng, hệ thống hiển thị giá xuất và tính thành tiền.
-    \item Lưu đơn hàng. Trạng thái chuyển sang ``Mới tạo''.
-    \item Quản lý kho xem đơn, kiểm tra tồn kho và duyệt hoặc từ chối.
-    \item Nếu duyệt: hệ thống tự động tạo phiếu xuất kho tương ứng, trạng thái đơn chuyển sang ``Đã duyệt''.
-    \item Khi phiếu xuất hoàn tất, trạng thái đơn chuyển sang ``Đã giao''.
-\end{enumerate}
-
-\textbf{Dữ liệu liên quan}: Bảng \texttt{DonDatHang}, \texttt{ChiTietDonHang}, \texttt{PhieuXuatKho}, \texttt{KhachHang}, \texttt{HangHoa}.
-
-\section{Nghiệp vụ 12: Quản lý thanh toán (UC12)}
-
-\textbf{Mô tả}: Ghi nhận các khoản thanh toán liên quan đến phiếu nhập/xuất và đơn đặt hàng, cập nhật công nợ khách hàng và nhà cung cấp, tạo báo cáo tài chính tồn kho.
-
-\textbf{Quy trình}:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Người dùng chọn phiếu nhập hoặc phiếu xuất cần thanh toán.
-    \item Nhập số tiền thanh toán, ngày thanh toán, phương thức thanh toán (tiền mặt, chuyển khoản).
-    \item Hệ thống cập nhật công nợ: giảm số tiền còn nợ tương ứng.
-    \item Nếu thanh toán đủ: trạng thái thanh toán chuyển sang ``Đã thanh toán''.
-    \item Nếu thanh toán một phần: trạng thái chuyển sang ``Thanh toán một phần'', ghi nhận số tiền còn nợ.
-\end{enumerate}
-
-\textbf{Dữ liệu liên quan}: Bảng \texttt{ThanhToan}, \texttt{PhieuNhapKho}, \texttt{PhieuXuatKho}, \texttt{KhachHang}, \texttt{NhaCungCap}.
-
-\section{Nghiệp vụ 13: Xem báo cáo thống kê (UC13)}
-
-\textbf{Mô tả}: Quản lý kho và quản trị viên xem các báo cáo thống kê đa dạng phục vụ quản trị và ra quyết định. Các báo cáo chính bao gồm:
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item Báo cáo nhập -- xuất -- tồn theo khoảng thời gian.
-    \item Báo cáo hàng tồn kho thấp (dưới ngưỡng cảnh báo).
-    \item Báo cáo hàng bán chạy / xuất nhiều nhất.
-    \item Báo cáo doanh thu và công nợ theo khách hàng.
-    \item Báo cáo mua hàng theo nhà cung cấp.
-    \item Báo cáo giá trị tồn kho theo kho.
-\end{itemize}
-
-\textbf{Quy trình}: Người dùng chọn loại báo cáo, nhập điều kiện (khoảng thời gian, kho, hàng hóa, đối tác). Hệ thống truy vấn cơ sở dữ liệu, tổng hợp số liệu và hiển thị báo cáo dưới dạng bảng và biểu đồ. Người dùng có thể xuất báo cáo ra PDF hoặc Excel để lưu trữ hoặc gửi email.
-
-\textbf{Dữ liệu liên quan}: Các bảng \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{HangHoa}, \texttt{KhachHang}, \texttt{NhaCungCap}.
-
 \section{Sơ đồ hoạt động (Activity Diagram)}
 
 \subsection{Quy trình nhập kho}
@@ -182,4 +132,4 @@ Quy trình kiểm kê được thực hiện định kỳ (tháng/quý). Nhân v
 
 \section{Kết luận chương}
 
-Chương 2 đã mô tả chi tiết 13 nghiệp vụ chính của hệ thống quản lý kho hàng, bao gồm mô tả, quy trình thực hiện và dữ liệu liên quan cho từng nghiệp vụ. Đồng thời trình bày ba sơ đồ hoạt động cho các quy trình quan trọng: nhập kho, xuất kho và kiểm kê tồn kho. Các nghiệp vụ và quy trình này là cơ sở để xác định tác nhân, use case và thiết kế các sơ đồ UML trong các chương tiếp theo.
+Chương 2 đã mô tả chi tiết 10 nghiệp vụ chính (UC01--UC10) của hệ thống quản lý kho hàng, bao gồm mô tả, quy trình thực hiện và dữ liệu liên quan cho từng nghiệp vụ. Đồng thời trình bày ba sơ đồ hoạt động cho các quy trình quan trọng: nhập kho, xuất kho và kiểm kê tồn kho. Các nghiệp vụ và quy trình này là cơ sở để xác định tác nhân, use case và thiết kế các sơ đồ UML trong các chương tiếp theo.

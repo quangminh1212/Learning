@@ -18,8 +18,7 @@ Hệ thống quản lý kho hàng được phân tích và thiết kế trong ph
     \item Quản lý toàn bộ thông tin hàng hóa, nhóm hàng, đơn vị tính tại các kho.
     \item Quản lý thông tin nhà cung cấp, khách hàng và các đối tác liên quan.
     \item Thực hiện các nghiệp vụ nhập kho, xuất kho, kiểm kê tồn kho.
-    \item Quản lý đơn đặt hàng và theo dõi thanh toán, công nợ.
-    \item Cung cấp báo cáo thống kê nhập -- xuất -- tồn, cảnh báo tồn kho, báo cáo doanh thu.
+    \item Cảnh báo tồn kho thấp và hỗ trợ theo dõi tồn kho theo thời gian thực.
     \item Quản lý tài khoản người dùng, phân quyền theo vai trò và lưu vết thao tác.
 \end{itemize}
 
@@ -31,8 +30,8 @@ Hệ thống phục vụ các đối tượng sử dụng chính sau:
     \item \textbf{Quản trị viên}: Quản lý tài khoản, cấu hình hệ thống, sao lưu dữ liệu.
     \item \textbf{Quản lý kho}: Giám sát tồn kho, phê duyệt phiếu nhập/xuất, xem báo cáo.
     \item \textbf{Nhân viên kho}: Thực hiện nhập kho, xuất kho, kiểm kê, cập nhật tồn kho.
-    \item \textbf{Khách hàng}: Tra cứu đơn hàng và lịch sử giao dịch (nếu được cấp quyền).
-    \item \textbf{Nhà cung cấp}: Cung cấp thông tin đơn hàng, theo dõi trạng thái nhập kho.
+    \item \textbf{Khách hàng}: Xem trạng thái phiếu xuất và lịch sử giao dịch (nếu được cấp quyền).
+    \item \textbf{Nhà cung cấp}: Cung cấp thông tin giao hàng, theo dõi trạng thái nhập kho.
 \end{itemize}
 
 \section{Thực trạng quy trình quản lý hiện tại và các hạn chế}
@@ -72,7 +71,6 @@ Mục tiêu của đề tài là phân tích, thiết kế và đề xuất mộ
     \item Cung cấp khả năng tra cứu, tìm kiếm và cập nhật thông tin hàng tồn kho nhanh chóng, chính xác.
     \item Hỗ trợ quản lý nhiều kho, nhiều loại hàng hóa và nhiều nhà cung cấp/khách hàng.
     \item Tự động hóa việc tính toán tồn kho, cảnh báo hết hàng hoặc tồn kho quá mức.
-    \item Tạo báo cáo thống kê đa dạng về nhập xuất tồn, hàng hóa bán chạy, hàng tồn lâu ngày, giá trị tồn kho.
     \item Quản lý phân quyền người dùng theo vai trò, lưu vết toàn bộ thao tác để dễ kiểm tra, truy vết.
 \end{itemize}
 
@@ -88,10 +86,7 @@ Hệ thống cần đáp ứng các yêu cầu chức năng cụ thể sau:
     \item Quản lý kho: tạo, cập nhật, tìm kiếm thông tin kho.
     \item Lập phiếu nhập kho: ghi nhận hàng nhập, cập nhật tồn kho tự động.
     \item Lập phiếu xuất kho: kiểm tra tồn kho, ghi nhận hàng xuất, giảm tồn kho.
-    \item Quản lý đơn đặt hàng: tạo, duyệt, theo dõi đơn hàng.
-    \item Quản lý thanh toán: ghi nhận thanh toán, theo dõi công nợ.
     \item Kiểm kê tồn kho: đối chiếu thực tế với sổ sách, điều chỉnh chênh lệch.
-    \item Báo cáo thống kê: xuất báo cáo nhập xuất tồn, tồn kho thấp, hàng bán chạy, công nợ.
 \end{itemize}
 
 \subsection{Yêu cầu phi chức năng}

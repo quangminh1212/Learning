@@ -10,43 +10,35 @@
 % Gốc
 \node[rootbox] (root) at (0,0) {Hệ thống\\quản lý kho hàng};
 
-% Cấp 1 - dọc với khoảng cách vừa phải
-\node[box] (l1-1) at (2.5,9) {Quản lý\\người dùng};
-\node[box] (l1-2) at (2.5,6) {Quản lý\\danh mục};
-\node[box] (l1-3) at (2.5,3) {Quản lý\\nhập kho};
-\node[box] (l1-4) at (2.5,0) {Quản lý\\xuất kho};
-\node[box] (l1-5) at (2.5,-3) {Tồn kho\\và kiểm kê};
-\node[box] (l1-6) at (2.5,-6) {Đơn hàng\\và thanh toán};
-\node[box] (l1-7) at (2.5,-9) {Báo cáo\\thống kê};
+% Cấp 1 - 5 nhóm chức năng (bỏ đơn hàng/thanh toán và báo cáo)
+\node[box] (l1-1) at (2.5,6) {Quản lý\\người dùng};
+\node[box] (l1-2) at (2.5,3) {Quản lý\\danh mục};
+\node[box] (l1-3) at (2.5,0) {Quản lý\\nhập kho};
+\node[box] (l1-4) at (2.5,-3) {Quản lý\\xuất kho};
+\node[box] (l1-5) at (2.5,-6) {Tồn kho\\và kiểm kê};
 
 % Cấp 2 - ngang
-\node[box] (l2-1a) at (4.5,10) {Phân\\quyền};
-\node[box] (l2-1b) at (6.5,10) {Đăng nhập/\\Đăng xuất};
+\node[box] (l2-1a) at (4.5,7) {Phân\\quyền};
+\node[box] (l2-1b) at (6.5,7) {Đăng nhập/\\Đăng xuất};
 
-\node[box] (l2-2a) at (4.5,7) {Hàng\\hóa};
-\node[box] (l2-2b) at (6.5,7) {Nhà\\cung cấp};
-\node[box] (l2-2c) at (8.5,7) {Khách\\hàng};
-\node[box] (l2-2d) at (10.5,7) {Kho};
+\node[box] (l2-2a) at (4.5,4) {Hàng\\hóa};
+\node[box] (l2-2b) at (6.5,4) {Nhà\\cung cấp};
+\node[box] (l2-2c) at (8.5,4) {Khách\\hàng};
+\node[box] (l2-2d) at (10.5,4) {Kho};
 
-\node[box] (l2-3a) at (4.5,4) {Lập\\phiếu};
-\node[box] (l2-3b) at (6.5,4) {Duyệt\\phiếu};
-\node[box] (l2-3c) at (8.5,4) {Cập nhật\\tồn kho};
+\node[box] (l2-3a) at (4.5,1) {Lập\\phiếu};
+\node[box] (l2-3b) at (6.5,1) {Duyệt\\phiếu};
+\node[box] (l2-3c) at (8.5,1) {Cập nhật\\tồn kho};
 
-\node[box] (l2-4a) at (4.5,1) {Lập\\phiếu};
-\node[box] (l2-4b) at (6.5,1) {Duyệt\\phiếu};
-\node[box] (l2-4c) at (8.5,1) {Giảm\\tồn kho};
+\node[box] (l2-4a) at (4.5,-2) {Lập\\phiếu};
+\node[box] (l2-4b) at (6.5,-2) {Duyệt\\phiếu};
+\node[box] (l2-4c) at (8.5,-2) {Giảm\\tồn kho};
 
-\node[box] (l2-5a) at (4.5,-2) {Kiểm\\kê};
-\node[box] (l2-5b) at (6.5,-2) {Cảnh\\báo};
-
-\node[box] (l2-6a) at (4.5,-5) {Đơn đặt\\hàng};
-\node[box] (l2-6b) at (6.5,-5) {Thanh\\toán};
-
-\node[box] (l2-7a) at (4.5,-8) {Nhập xuất\\tồn};
-\node[box] (l2-7b) at (6.5,-8) {Hàng bán\\chạy};
+\node[box] (l2-5a) at (4.5,-5) {Kiểm\\kê};
+\node[box] (l2-5b) at (6.5,-5) {Cảnh\\báo};
 
 % Mũi tên
-\foreach \n in {1,...,7} {\draw[arrow] (root) -- (l1-\n);}
+\foreach \n in {1,...,5} {\draw[arrow] (root) -- (l1-\n);}
 \draw[arrow] (l1-1) -- (l2-1a);
 \draw[arrow] (l1-1) -- (l2-1b);
 \draw[arrow] (l1-2) -- (l2-2a);
@@ -61,10 +53,6 @@
 \draw[arrow] (l1-4) -- (l2-4c);
 \draw[arrow] (l1-5) -- (l2-5a);
 \draw[arrow] (l1-5) -- (l2-5b);
-\draw[arrow] (l1-6) -- (l2-6a);
-\draw[arrow] (l1-6) -- (l2-6b);
-\draw[arrow] (l1-7) -- (l2-7a);
-\draw[arrow] (l1-7) -- (l2-7b);
 
 \end{tikzpicture}
 \caption{Sơ đồ phân cấp chức năng (BFD) hệ thống quản lý kho hàng}

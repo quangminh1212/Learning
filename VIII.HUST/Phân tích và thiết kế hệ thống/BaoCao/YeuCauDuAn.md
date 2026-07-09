@@ -48,7 +48,6 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 5. Quản lý điều chuyển hàng giữa các kho.
 6. Quản lý tồn kho, kiểm kê định kỳ và điều chỉnh chênh lệch.
 7. Quản lý người dùng, phân quyền và theo dõi lịch sử thao tác.
-8. Báo cáo thống kê nhập xuất tồn.
 
 ### 4.2. Phạm vi đối tượng sử dụng
 
@@ -57,8 +56,8 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 | Quản trị viên | Quản lý tài khoản, cấu hình hệ thống, sao lưu dữ liệu, phân quyền. |
 | Quản lý kho | Giám sát tồn kho, phê duyệt phiếu nhập/xuất, xem báo cáo. |
 | Nhân viên kho | Lập phiếu nhập/xuất, kiểm kê, cập nhật trạng thái hàng hóa. |
-| Khách hàng | Tra cứu đơn hàng, lịch sử giao dịch (nếu được cấp quyền). |
-| Nhà cung cấp | Theo dõi trạng thái đơn hàng nhập (nếu được cấp quyền). |
+| Khách hàng | Xem trạng thái phiếu xuất, lịch sử giao dịch (nếu được cấp quyền). |
+| Nhà cung cấp | Theo dõi trạng thái phiếu nhập (nếu được cấp quyền). |
 
 ---
 
@@ -76,9 +75,6 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 | UC08 | Tìm kiếm kho | Tra cứu thông tin kho. |
 | UC09 | Lập phiếu nhập kho | Tạo phiếu nhập và cập nhật tồn kho. |
 | UC10 | Lập phiếu xuất kho | Tạo phiếu xuất và giảm tồn kho. |
-| UC11 | Quản lý đơn đặt hàng | Tạo, duyệt, theo dõi đơn đặt hàng từ khách hàng. |
-| UC12 | Quản lý thanh toán | Ghi nhận, cập nhật chi phí/thanh toán liên quan. |
-| UC13 | Xem báo cáo thống kê | Xem các báo cáo nhập xuất tồn, hàng bán chạy, tồn lâu. |
 
 ---
 
@@ -100,7 +96,7 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 Theo yêu cầu môn học và mục lục tham khảo, báo cáo cần bao gồm các sơ đồ sau:
 
 1. **Sơ đồ use case tổng quát** và sơ đồ use case phân rã.
-2. **Đặc tả use case** cho các use case chính (UC01–UC13).
+2. **Đặc tả use case** cho các use case chính (UC01–UC10).
 3. **Sơ đồ hoạt động (Activity Diagram)** cho các quy trình nhập kho, xuất kho, kiểm kê.
 4. **Sơ đồ lớp (Class Diagram)** tổng thể và biểu đồ lớp trong ca sử dụng cho các UC chính.
 5. **Sơ đồ trình tự (Sequence Diagram)** cho các luồng nhập kho, xuất kho, tìm kiếm hàng, quản lý tài khoản, ...
