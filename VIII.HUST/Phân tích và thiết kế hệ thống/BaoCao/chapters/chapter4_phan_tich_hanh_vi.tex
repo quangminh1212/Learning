@@ -1,35 +1,83 @@
-\chapter{SƠ ĐỒ HOẠT ĐỘNG (ACTIVITY DIAGRAM)}
+\chapter{PHÂN TÍCH CẤU TRÚC}
 
-Sau đặc tả use case, \textbf{Activity diagram} mô tả các bước actor đạt mục tiêu.
+\section{Giới thiệu giai đoạn}
 
-\section{UC03 -- Thêm tài khoản}
+\textbf{Phân tích cấu trúc} trả lời: hệ thống gồm những \textbf{lớp đối tượng} nào, thuộc tính và quan hệ ra sao. Biểu đồ đặc trưng: \textbf{Class Diagram} (biểu đồ lớp).
 
-\input{diagrams/tex/4.7_activity_uc03}
+\begin{itemize}[leftmargin=1.5cm]
+    \item Trước đó: Ch.3 \textbf{Phân tích chức năng} -- Use Case.
+    \item Sau đó: Ch.5 \textbf{Phân tích hành vi} -- Sequence.
+\end{itemize}
 
-\section{UC06 -- Thêm hàng hóa}
+\section{Các lớp chính}
 
-\input{diagrams/tex/4.8_activity_uc06}
+Từ nghiệp vụ và use case, xác định các lớp:
 
-\section{UC07 -- Tìm kiếm hàng hóa}
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{NguoiDung} -- tài khoản, phân quyền (UC01--UC03).
+    \item \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh} -- danh mục hàng (UC06--UC07).
+    \item \texttt{NhaCungCap}, \texttt{KhachHang} -- đối tác (UC04--UC05).
+    \item \texttt{Kho}, \texttt{TonKho} -- kho và tồn (UC08, nhập/xuất/kiểm kê).
+    \item \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap} -- UC09.
+    \item \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat} -- UC10.
+    \item \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe} -- UC11.
+    \item \texttt{LichSuThaoTac} -- ghi log.
+\end{itemize}
 
-\input{diagrams/tex/4.9_activity_uc07}
+\section{Biểu đồ lớp tổng thể}
 
-\section{UC09 -- Lập phiếu nhập kho}
+\subsection{Nhóm danh mục (Master Data)}
+\input{diagrams/tex/4.1_classdiagram_master}
 
-\input{diagrams/tex/2.1_activity_nhapkho}
+\subsection{Nhóm nghiệp vụ nhập xuất}
+\input{diagrams/tex/4.2_classdiagram_nhapxuat}
 
-\section{UC10 -- Lập phiếu xuất kho}
+\subsection{Nhóm kiểm kê và log}
+\input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
 
-\input{diagrams/tex/2.2_activity_xuatkho}
+\section{Biểu đồ lớp trong ca sử dụng}
 
-\section{UC11 -- Lập phiếu kiểm kê}
+\subsection{UC03 -- Thêm tài khoản}
+\input{diagrams/tex/6.2_class_uc03}
 
-\input{diagrams/tex/2.3_activity_kiemke}
+\subsection{UC06 -- Thêm hàng hóa}
+\input{diagrams/tex/4.4_class_uc05}
 
-\section{UC12 -- Xem báo cáo nhập xuất tồn}
+\subsection{UC09 -- Lập phiếu nhập}
+\input{diagrams/tex/4.5_class_uc09}
 
-Chọn điều kiện (kỳ, kho, hàng) $\rightarrow$ hệ thống tổng hợp $\rightarrow$ hiển thị bảng / xuất Excel.
+\subsection{UC10 -- Lập phiếu xuất}
+\input{diagrams/tex/4.6_class_uc10}
 
-\section{Kết luận}
+\section{Bảng thuộc tính chính}
 
-Activity cho các UC cốt lõi (gồm kiểm kê). Tiếp: Sequence (Ch.5), Class (Ch.6).
+\begin{longtable}{|p{3cm}|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
+\hline
+\endhead
+NguoiDung & Ma, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & UC01--03 \\
+\hline
+HangHoa & Ma, Ten, Nhom, DVT, GiaNhap, GiaXuat & UC06--07 \\
+\hline
+NhaCungCap / KhachHang & Ma, Ten, DiaChi, SDT, Email & UC04--05 \\
+\hline
+Kho & Ma, Ten, DiaChi, PhuTrach & UC08 \\
+\hline
+PhieuNhap / ChiTiet & MaPhieu, NCC, Kho, SoLuong, DonGia & UC09 \\
+\hline
+PhieuXuat / ChiTiet & MaPhieu, KH, Kho, SoLuong, DonGia & UC10 \\
+\hline
+PhieuKiemKe / ChiTiet & MaPhieu, Kho, SLThuc, SLSo, ChenhLech & UC11 \\
+\hline
+TonKho & MaKho, MaHang, SoLuongTon & Nhập/xuất/KK \\
+\hline
+\end{longtable}
+
+\section{Kết luận chương}
+
+Đã hoàn thành \textbf{phân tích cấu trúc} (biểu đồ lớp tổng thể và theo use case). Tiếp: \textbf{phân tích hành vi} -- biểu đồ trình tự (Ch.5).

@@ -1,62 +1,21 @@
-\chapter{SƠ ĐỒ LỚP (CLASS DIAGRAM)}
+\chapter{THIẾT KẾ CHI TIẾT}
 
-Class diagram sau use case -- activity -- sequence.
+Sau ba giai đoạn phân tích (chức năng -- cấu trúc -- hành vi), chương này chuyển sang \textbf{thiết kế}: kiến trúc thành phần và làm rõ quan hệ phục vụ triển khai.
 
-\section{Các lớp chính}
+\section{Component Diagram}
 
-NguoiDung; HangHoa, NhomHangHoa, DonViTinh; NhaCungCap, KhachHang; Kho, TonKho; PhieuNhapKho, ChiTietPhieuNhap; PhieuXuatKho, ChiTietPhieuXuat; PhieuKiemKe, ChiTietKiemKe; LichSuThaoTac.
-
-\section{Sơ đồ lớp tổng thể}
-
-\input{diagrams/tex/4.1_classdiagram_master}
-
-\input{diagrams/tex/4.2_classdiagram_nhapxuat}
-
-\input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
-
-\section{Class trong use case}
-
-\subsection{UC03 -- Thêm tài khoản}
-\input{diagrams/tex/6.2_class_uc03}
-
-\subsection{UC06 -- Thêm hàng hóa}
-\input{diagrams/tex/4.4_class_uc05}
-
-\subsection{UC09 -- Lập phiếu nhập}
-\input{diagrams/tex/4.5_class_uc09}
-
-\subsection{UC10 -- Lập phiếu xuất}
-\input{diagrams/tex/4.6_class_uc10}
-
-\section{Bảng thuộc tính chính}
-
-\begin{longtable}{|p{3cm}|p{5.5cm}|p{4.5cm}|}
-\hline
-\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
-\hline
-\endfirsthead
-\hline
-\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
-\hline
-\endhead
-NguoiDung & Ma, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & UC01--03 \\
-\hline
-HangHoa & Ma, Ten, Nhom, DVT, GiaNhap, GiaXuat & UC06--07 \\
-\hline
-NhaCungCap / KhachHang & Ma, Ten, DiaChi, SDT, Email & UC04--05 \\
-\hline
-Kho & Ma, Ten, DiaChi, PhuTrach & UC08 \\
-\hline
-PhieuNhap / ChiTiet & MaPhieu, NCC, Kho, SoLuong, DonGia & UC09 \\
-\hline
-PhieuXuat / ChiTiet & MaPhieu, KH, Kho, SoLuong, DonGia & UC10 \\
-\hline
-TonKho & MaKho, MaHang, SoLuongTon & Cập nhật khi duyệt \\
-\hline
-\end{longtable}
-
-\section{Component}
 \input{diagrams/tex/6.1_component}
 
-\section{Kết luận}
-Tiếp: CSDL và giao diện (Ch.7).
+\section{Quan hệ chính giữa các lớp (thiết kế)}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item NguoiDung 1--n PhieuNhapKho / PhieuXuatKho / PhieuKiemKe.
+    \item NhaCungCap 1--n PhieuNhapKho; KhachHang 1--n PhieuXuatKho.
+    \item Phieu 1--n ChiTiet; ChiTiet n--1 HangHoa.
+    \item Kho 1--n TonKho; HangHoa 1--n TonKho.
+    \item NguoiDung 1--n LichSuThaoTac.
+\end{itemize}
+
+\section{Kết luận chương}
+
+Thiết kế thành phần và quan hệ lớp làm nền cho CSDL và giao diện (Ch.7).

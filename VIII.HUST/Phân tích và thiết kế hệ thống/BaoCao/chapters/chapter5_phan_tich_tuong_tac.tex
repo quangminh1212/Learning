@@ -1,43 +1,60 @@
-\chapter{SƠ ĐỒ TRÌNH TỰ (SEQUENCE DIAGRAM)}
+\chapter{PHÂN TÍCH HÀNH VI}
 
-Sequence: tương tác đối tượng theo thời gian cho các use case chính.
+\section{Giới thiệu giai đoạn}
 
-\section{UC01 -- Đăng nhập}
+\textbf{Phân tích hành vi} trả lời: các đối tượng \textbf{tương tác như thế nào} theo thời gian để thực hiện use case. Biểu đồ đặc trưng: \textbf{Sequence Diagram} (biểu đồ trình tự). Bổ sung: State Machine cho vòng đời phiếu.
 
-Người dùng $\rightarrow$ form đăng nhập $\rightarrow$ hệ thống kiểm tra CSDL $\rightarrow$ tạo phiên / báo lỗi.
+\begin{itemize}[leftmargin=1.5cm]
+    \item Trước đó: Ch.3 chức năng (Use Case); Ch.4 cấu trúc (Class).
+    \item Sau đó: thiết kế chi tiết / CSDL / giao diện (Ch.6--7).
+\end{itemize}
+
+\section{Biểu đồ trình tự}
+
+\subsection{UC01 -- Đăng nhập}
+
+Người dùng $\rightarrow$ form $\rightarrow$ hệ thống kiểm tra CSDL $\rightarrow$ tạo phiên / báo lỗi.
 
 \input{diagrams/tex/5.7_sequence_uc01}
 
-\section{UC06 -- Thêm hàng hóa}
+\subsection{UC06 -- Thêm hàng hóa}
 
-NV $\rightarrow$ Giao diện $\rightarrow$ Hệ thống $\rightarrow$ CSDL (lưu hàng + tồn = 0).
+NV $\rightarrow$ giao diện $\rightarrow$ hệ thống $\rightarrow$ CSDL (lưu hàng + tồn = 0).
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
-\section{UC07 -- Tìm kiếm hàng hóa}
+\subsection{UC07 -- Tìm kiếm hàng hóa}
 
 Nhập điều kiện $\rightarrow$ truy vấn HangHoa + TonKho $\rightarrow$ danh sách.
 
 \input{diagrams/tex/5.2_sequence_uc06}
 
-\section{UC09 -- Lập phiếu nhập kho}
+\subsection{UC09 -- Lập phiếu nhập kho}
 
 NV lập phiếu, gửi duyệt; QL duyệt $\rightarrow$ tăng tồn, log.
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
-\section{UC10 -- Lập phiếu xuất kho}
+\subsection{UC10 -- Lập phiếu xuất kho}
 
 NV lập phiếu (kiểm tra tồn); QL duyệt $\rightarrow$ giảm tồn, log.
 
 \input{diagrams/tex/5.4_sequence_uc10}
 
-\section{State machine phiếu}
+\section{Biểu đồ trạng thái (bổ sung hành vi đối tượng)}
 
+\subsection{Trạng thái phiếu nhập}
 \input{diagrams/tex/5.5_state_phieu_nhap}
 
+\subsection{Trạng thái phiếu xuất}
 \input{diagrams/tex/5.6_state_phieu_xuat}
 
-\section{Kết luận}
+\section{Kết luận chương}
 
-Tiếp: Class diagram (Ch.6).
+Đã hoàn thành \textbf{phân tích hành vi} (sequence + state). Ba giai đoạn phân tích:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Chức năng -- Use Case;
+    \item Cấu trúc -- Class;
+    \item Hành vi -- Sequence.
+\end{enumerate}
+Tiếp: thiết kế chi tiết và CSDL/giao diện (Ch.6--7).

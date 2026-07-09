@@ -1,8 +1,14 @@
-\chapter{PHÂN TÍCH CHỨC NĂNG -- USE CASE}
+\chapter{PHÂN TÍCH CHỨC NĂNG}
 
-Theo \textbf{hướng đối tượng}: xuất phát từ actor và mục tiêu (use case).
+\section{Giới thiệu giai đoạn}
 
-Thứ tự: tác nhân $\rightarrow$ UC tổng quát $\rightarrow$ UC phân rã $\rightarrow$ đặc tả (12 UC).
+\textbf{Phân tích chức năng} trả lời: hệ thống cung cấp \textbf{chức năng gì}, \textbf{ai} sử dụng. Biểu đồ đặc trưng: \textbf{Use Case Diagram} (tổng quát, phân rã) và \textbf{đặc tả use case}.
+
+Hai giai đoạn sau:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Ch.4 \textbf{Phân tích cấu trúc} -- biểu đồ lớp;
+    \item Ch.5 \textbf{Phân tích hành vi} -- biểu đồ trình tự.
+\end{itemize}
 
 \section{Tác nhân}
 
@@ -15,27 +21,27 @@ Thứ tự: tác nhân $\rightarrow$ UC tổng quát $\rightarrow$ UC phân rã 
 \textbf{Tác nhân} & \textbf{Mô tả} \\
 \hline
 \endhead
-Quản trị viên & Thêm tài khoản; thêm kho. \\
+Quản trị viên & Thêm tài khoản; thêm kho; xem báo cáo. \\
 \hline
-Quản lý kho & Duyệt phiếu nhập/xuất; thêm/tìm hàng, đối tác, kho. \\
+Quản lý kho & Duyệt phiếu; quản lý hàng, đối tác, kho; kiểm kê; báo cáo. \\
 \hline
-Nhân viên kho & Lập phiếu nhập/xuất; thêm/tìm hàng, đối tác. \\
+Nhân viên kho & Lập phiếu nhập/xuất/kiểm kê; thêm/tìm hàng, đối tác. \\
 \hline
 \end{longtable}
 
-\section{Nguyên tắc}
+\section{Nguyên tắc use case}
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item Use case = \textbf{một mục tiêu cụ thể} của actor (vd.\ Thêm hàng hóa), không phải ``Quản lý hàng hóa''.
-    \item \textbf{Nghiệp vụ} (Ch.2) $\neq$ use case. Đăng nhập/đăng xuất \textbf{không} phải nghiệp vụ kho -- là use case \textbf{hệ thống} (UC01, UC02).
-    \item \textbf{Tổng quát}: nhóm chức năng; \textbf{Phân rã}: 12 UC tiêu biểu.
+    \item Use case = \textbf{một mục tiêu cụ thể} của actor (vd.\ Thêm hàng hóa).
+    \item Nghiệp vụ ``Quản lý \ldots'' \textbf{không} phải một use case.
+    \item Đăng nhập/đăng xuất: use case \textbf{hệ thống}, không phải nghiệp vụ kho.
 \end{itemize}
 
-\section{Sơ đồ use case tổng quát}
+\section{Biểu đồ use case tổng quát}
 
 \input{diagrams/tex/3.4_usecase}
 
-\section{Sơ đồ use case phân rã}
+\section{Biểu đồ use case phân rã}
 
 \input{diagrams/tex/3.5_usecase_user_management}
 
@@ -85,92 +91,72 @@ UC12 & Xem báo cáo nhập xuất tồn & QL kho, QTV \\
 \section{Đặc tả use case}
 
 \subsection{UC01 -- Đăng nhập}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Loại}: Use case \textbf{hệ thống} (không phải nghiệp vụ kho).
-    \item \textbf{Mục tiêu}: Vào hệ thống sau khi xác thực.
-    \item \textbf{Trước}: Có tài khoản hoạt động.
+    \item \textbf{Loại}: Use case hệ thống.
+    \item \textbf{Mục tiêu}: Vào hệ thống sau xác thực.
     \item \textbf{Chính}: Nhập tên/MK $\rightarrow$ kiểm tra $\rightarrow$ tạo phiên.
     \item \textbf{Thay thế}: Sai TT / khóa $\rightarrow$ lỗi.
 \end{itemize}
 
 \subsection{UC02 -- Đăng xuất}
-
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Loại}: Use case hệ thống.
-    \item \textbf{Mục tiêu}: Kết thúc phiên. Chọn đăng xuất $\rightarrow$ xóa phiên.
+    \item \textbf{Mục tiêu}: Kết thúc phiên.
 \end{itemize}
 
 \subsection{UC03 -- Thêm tài khoản}
-
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Actor}: QTV. \textbf{Mục tiêu}: Tạo tài khoản mới.
-    \item \textbf{Chính}: Nhập họ tên, tên ĐN, MK, vai trò $\rightarrow$ kiểm tra trùng $\rightarrow$ lưu.
+    \item \textbf{Chính}: Nhập TT + vai trò $\rightarrow$ kiểm tra trùng $\rightarrow$ lưu.
 \end{itemize}
 
 \subsection{UC04 -- Thêm nhà cung cấp}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Thêm NCC. Nhập mã, tên, liên hệ $\rightarrow$ lưu.
+    \item \textbf{Mục tiêu}: Thêm NCC vào danh mục.
 \end{itemize}
 
 \subsection{UC05 -- Thêm khách hàng}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Thêm KH. Tương tự UC04 (+ MST nếu có).
+    \item \textbf{Mục tiêu}: Thêm KH vào danh mục.
 \end{itemize}
 
 \subsection{UC06 -- Thêm hàng hóa}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Thêm mặt hàng. Nhập mã, tên, nhóm, ĐVT, giá $\rightarrow$ lưu + tồn = 0 các kho.
+    \item \textbf{Mục tiêu}: Thêm mặt hàng; khởi tạo tồn = 0 tại các kho.
 \end{itemize}
 
 \subsection{UC07 -- Tìm kiếm hàng hóa}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Tra cứu hàng theo mã/tên/nhóm, kèm tồn.
+    \item \textbf{Mục tiêu}: Tra cứu hàng kèm tồn kho.
 \end{itemize}
 
 \subsection{UC08 -- Thêm kho}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Mục tiêu}: Tạo kho mới (mã, tên, địa chỉ, phụ trách).
+    \item \textbf{Mục tiêu}: Tạo kho mới.
 \end{itemize}
 
 \subsection{UC09 -- Lập phiếu nhập kho}
-
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Actor}: NV lập, QL duyệt.
-    \item \textbf{Mục tiêu}: Ghi nhận nhập hàng và cập nhật tồn khi duyệt.
-    \item \textbf{Chính}: NV chọn NCC, kho, thêm dòng $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ tăng tồn.
-    \item \textbf{Thay thế}: Từ chối $\rightarrow$ tồn không đổi.
+    \item \textbf{Mục tiêu}: Ghi nhận nhập; duyệt thì tăng tồn.
 \end{itemize}
 
 \subsection{UC10 -- Lập phiếu xuất kho}
-
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Actor}: NV lập, QL duyệt.
-    \item \textbf{Mục tiêu}: Ghi nhận xuất hàng và giảm tồn khi duyệt.
-    \item \textbf{Chính}: NV chọn KH, kho, thêm dòng (tồn đủ) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ giảm tồn.
+    \item \textbf{Mục tiêu}: Ghi nhận xuất (kiểm tra tồn); duyệt thì giảm tồn.
 \end{itemize}
 
 \subsection{UC11 -- Lập phiếu kiểm kê}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Actor}: NV lập, QL duyệt điều chỉnh.
-    \item \textbf{Mục tiêu}: Đối chiếu tồn thực tế với sổ, điều chỉnh chênh lệch.
-    \item \textbf{Chính}: Chọn kho $\rightarrow$ nhập số thực tế $\rightarrow$ tính chênh lệch $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ cập nhật \texttt{TonKho}.
+    \item \textbf{Mục tiêu}: Đối chiếu thực tế -- sổ sách; duyệt thì điều chỉnh tồn.
 \end{itemize}
 
 \subsection{UC12 -- Xem báo cáo nhập xuất tồn}
-
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Actor}: QL kho, QTV.
-    \item \textbf{Mục tiêu}: Xem tổng hợp tồn / nhập--xuất--tồn theo điều kiện.
-    \item \textbf{Chính}: Chọn kỳ, kho, hàng $\rightarrow$ hệ thống tổng hợp $\rightarrow$ hiển thị bảng (có thể xuất Excel).
+    \item \textbf{Mục tiêu}: Xem tổng hợp tồn / NXT theo điều kiện.
 \end{itemize}
 
 \section{Kết luận chương}
 
-12 use case mục tiêu đã đặc tả (gồm kiểm kê và báo cáo tồn). Tiếp: Activity $\rightarrow$ Sequence $\rightarrow$ Class.
+Đã hoàn thành \textbf{phân tích chức năng} (biểu đồ use case + đặc tả). Tiếp: \textbf{phân tích cấu trúc} -- biểu đồ lớp (Ch.4).

@@ -115,18 +115,27 @@ Hệ thống được đề xuất triển khai theo mô hình ứng dụng web 
 
 \subsection{Hướng phân tích -- thiết kế: hướng đối tượng (OO)}
 
-Báo cáo theo \textbf{phân tích và thiết kế hướng đối tượng} (UML):
+Phân tích theo \textbf{3 giai đoạn} (mỗi giai đoạn một loại biểu đồ chính):
 
-\begin{enumerate}[leftmargin=1.5cm]
-    \item Nghiệp vụ $\rightarrow$ \textbf{Use Case} (tổng quát, phân rã, đặc tả).
-    \item \textbf{Activity} (luồng bước của use case).
-    \item \textbf{Sequence} (tương tác giữa các đối tượng).
-    \item \textbf{Class} (lớp đối tượng và quan hệ).
-    \item \textbf{State} / \textbf{Component} (bổ sung); thiết kế \textbf{bảng CSDL} + giao diện.
-\end{enumerate}
+\begin{longtable}{|p{4cm}|p{4.5cm}|p{4.5cm}|}
+\hline
+\textbf{Giai đoạn} & \textbf{Biểu đồ chính} & \textbf{Chương} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Giai đoạn} & \textbf{Biểu đồ chính} & \textbf{Chương} \\
+\hline
+\endhead
+1. Phân tích chức năng & Use Case & Ch.3 \\
+\hline
+2. Phân tích cấu trúc & Class (lớp) & Ch.4 \\
+\hline
+3. Phân tích hành vi & Sequence (trình tự) & Ch.5 \\
+\hline
+\end{longtable}
 
-Sơ đồ vẽ bằng TikZ / pgf-umlcd / pgf-umlsd trên LaTeX.
+Trước phân tích: khảo sát (Ch.1), mô tả nghiệp vụ + activity (Ch.2). Sau phân tích: thiết kế chi tiết (Ch.6), CSDL + giao diện (Ch.7).
 
 \section{Kết luận chương}
 
-Chương 1: bối cảnh, phạm vi, yêu cầu; \textbf{hướng đối tượng}. Tiếp: Nghiệp vụ $\rightarrow$ UC $\rightarrow$ Activity $\rightarrow$ Sequence $\rightarrow$ Class $\rightarrow$ CSDL/UI.
+Chương 1: bối cảnh, phạm vi, yêu cầu. Khung 3 giai đoạn phân tích: \textbf{chức năng -- cấu trúc -- hành vi} (Use Case -- Class -- Sequence).

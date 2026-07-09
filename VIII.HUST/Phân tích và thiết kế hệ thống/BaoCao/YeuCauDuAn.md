@@ -1,11 +1,10 @@
-# Hướng đối tượng (UML)
+# Khung phân tích (như nhóm 3)
 
-Nghiệp vụ → Use Case → Activity → Sequence → Class → CSDL/UI
+| Giai đoạn | Biểu đồ | Chương |
+|-----------|---------|--------|
+| 1. Phân tích **chức năng** | Use Case | Ch.3 |
+| 2. Phân tích **cấu trúc** | Class | Ch.4 |
+| 3. Phân tích **hành vi** | Sequence | Ch.5 |
 
-## 10 use case
-
-UC01–UC10 (mỗi UC = một mục tiêu cụ thể)
-
-## File
-
-`BaoCao/main.pdf` · `BaoCao/BaoCao_QuanLyKhoHang.docx`
+Trước: Ch.1 khảo sát, Ch.2 nghiệp vụ + activity  
+Sau: Ch.6 thiết kế chi tiết, Ch.7 CSDL/UI

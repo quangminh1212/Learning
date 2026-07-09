@@ -2,14 +2,15 @@
 
 \section{Quy trình phân tích -- thiết kế (hướng đối tượng)}
 
-Báo cáo theo \textbf{hướng đối tượng} (UML):
+Phân tích hệ thống theo \textbf{3 giai đoạn} (mỗi giai đoạn một loại biểu đồ chính):
 
 \begin{enumerate}[leftmargin=1.5cm]
-    \item \textbf{Nghiệp vụ} (chương này) -- mô tả công việc thực tế của doanh nghiệp.
-    \item \textbf{Use case} tổng quát $\rightarrow$ phân rã $\rightarrow$ đặc tả (Ch.3).
-    \item \textbf{Activity} (Ch.4) $\rightarrow$ \textbf{Sequence} (Ch.5) $\rightarrow$ \textbf{Class} (Ch.6).
-    \item \textbf{CSDL \& giao diện} (Ch.7).
+    \item \textbf{Phân tích chức năng} $\rightarrow$ biểu đồ \textbf{Use Case} (Ch.3).
+    \item \textbf{Phân tích cấu trúc} $\rightarrow$ biểu đồ \textbf{Lớp (Class)} (Ch.4).
+    \item \textbf{Phân tích hành vi} $\rightarrow$ biểu đồ \textbf{Trình tự (Sequence)} (Ch.5).
 \end{enumerate}
+
+Trước đó: mô tả \textbf{nghiệp vụ} + \textbf{biểu đồ hoạt động} (chương này). Sau phân tích: thiết kế chi tiết / CSDL / giao diện (Ch.6--7).
 
 \textit{Lưu ý}:
 \begin{itemize}[leftmargin=1.5cm]
@@ -238,4 +239,24 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \section{Kết luận chương}
 
-Chương 2 mô tả \textbf{9 nghiệp vụ} cốt lõi của kho (không tính đăng nhập/đăng xuất -- chức năng hệ thống). Ánh xạ sang use case ở Chương 3 (UC01--UC02 là use case hệ thống; UC03--UC12 gắn nghiệp vụ). Tiếp: đặc tả UC, activity, sequence, class.
+\section{Biểu đồ hoạt động (theo nghiệp vụ chính)}
+
+Biểu đồ hoạt động minh họa luồng thực hiện các nghiệp vụ nhập, xuất, kiểm kê (trước khi vào 3 giai đoạn phân tích UML).
+
+\subsection{Nghiệp vụ nhập kho}
+\input{diagrams/tex/2.1_activity_nhapkho}
+
+\subsection{Nghiệp vụ xuất kho}
+\input{diagrams/tex/2.2_activity_xuatkho}
+
+\subsection{Nghiệp vụ kiểm kê}
+\input{diagrams/tex/2.3_activity_kiemke}
+
+\section{Kết luận chương}
+
+Chương 2: \textbf{9 nghiệp vụ} kho + biểu đồ hoạt động. Tiếp theo:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Ch.3 -- \textbf{Phân tích chức năng} (Use Case);
+    \item Ch.4 -- \textbf{Phân tích cấu trúc} (Class);
+    \item Ch.5 -- \textbf{Phân tích hành vi} (Sequence).
+\end{enumerate}
