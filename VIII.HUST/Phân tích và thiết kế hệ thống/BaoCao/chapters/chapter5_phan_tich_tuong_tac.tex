@@ -2,27 +2,33 @@
 
 Sequence: tương tác đối tượng theo thời gian cho các use case chính.
 
+\section{UC01 -- Đăng nhập}
+
+Người dùng $\rightarrow$ form đăng nhập $\rightarrow$ hệ thống kiểm tra CSDL $\rightarrow$ tạo phiên / báo lỗi.
+
+\input{diagrams/tex/5.7_sequence_uc01}
+
 \section{UC06 -- Thêm hàng hóa}
 
-NV $\rightarrow$ Giao diện $\rightarrow$ HangHoaController $\rightarrow$ HangHoaDAO (kiểm tra mã, lưu) $\rightarrow$ TonKhoDAO (tồn = 0) $\rightarrow$ thông báo.
+NV $\rightarrow$ Giao diện $\rightarrow$ Hệ thống $\rightarrow$ CSDL (lưu hàng + tồn = 0).
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
 \section{UC07 -- Tìm kiếm hàng hóa}
 
-Nhập điều kiện $\rightarrow$ HangHoaController $\rightarrow$ HangHoaDAO + TonKhoDAO $\rightarrow$ danh sách.
+Nhập điều kiện $\rightarrow$ truy vấn HangHoa + TonKho $\rightarrow$ danh sách.
 
 \input{diagrams/tex/5.2_sequence_uc06}
 
 \section{UC09 -- Lập phiếu nhập kho}
 
-NV lập phiếu, thêm chi tiết, gửi duyệt; QL duyệt $\rightarrow$ tăng tồn, log.
+NV lập phiếu, gửi duyệt; QL duyệt $\rightarrow$ tăng tồn, log.
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
 \section{UC10 -- Lập phiếu xuất kho}
 
-NV lập phiếu (kiểm tra tồn), gửi duyệt; QL duyệt $\rightarrow$ giảm tồn, log.
+NV lập phiếu (kiểm tra tồn); QL duyệt $\rightarrow$ giảm tồn, log.
 
 \input{diagrams/tex/5.4_sequence_uc10}
 

@@ -1,0 +1,31 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{nd}{Người dùng}
+\newinst[2]{gd}{Giao diện đăng nhập}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{nd}{1. Mở trang đăng nhập}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{nd}{2. Nhập tên đăng nhập, mật khẩu}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin đăng nhập}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra tài khoản}{db}{Kết quả}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{5. Tạo phiên / báo lỗi}{gd}{}
+\end{call}
+
+\begin{call}{gd}{6. Chuyển trang chủ hoặc báo lỗi}{nd}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC01 -- Đăng nhập}
+\label{fig:sequence-uc01}
+\end{figure}
