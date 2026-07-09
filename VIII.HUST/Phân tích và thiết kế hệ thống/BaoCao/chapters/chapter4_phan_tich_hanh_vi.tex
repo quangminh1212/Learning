@@ -55,9 +55,9 @@ LichSuThaoTac & Log thao tác & Các UC ghi nhận \\
 \hline
 \end{longtable}
 
-\section{Biểu đồ lớp tổng thể}
+\section{Phân tích cấu trúc bằng biểu đồ lớp tổng thể}
 
-Để tránh chồng chéo, biểu đồ lớp tổng thể được tách thành ba nhóm.
+Biểu đồ lớp tổng thể mô tả cấu trúc toàn hệ thống. Tách thành ba nhóm để tránh chồng chéo.
 
 \subsection{Nhóm danh mục (Master Data)}
 
@@ -77,9 +77,9 @@ Gồm phiếu kiểm kê, chi tiết kiểm kê và log thao tác.
 
 \input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
 
-\section{Biểu đồ lớp trong ca sử dụng}
+\section{Phân tích cấu trúc trong từng use case (biểu đồ lớp theo UC)}
 
-Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra \textbf{các lớp tham gia} và \textbf{quan hệ} cần có để hoàn thành mục tiêu use case.
+Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ các lớp và quan hệ \textbf{cần có để thực hiện mục tiêu use case đó}.
 
 \subsection{UC03 -- Thêm tài khoản}
 
@@ -88,6 +88,8 @@ Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra
 \textbf{Lớp tham gia}: \texttt{NguoiDung} (đối tượng được tạo/cập nhật), \texttt{LichSuThaoTac} (ghi nhận thao tác thêm -- tùy chọn thiết kế).
 
 \textbf{Quan hệ}: Một \texttt{NguoiDung} có thể sinh ra nhiều bản ghi lịch sử thao tác (1..n).
+
+\textbf{Phương thức liên quan}: \texttt{themTaiKhoan()}, \texttt{dangNhap()} (kiểm tra sau khi tạo); \texttt{ghiLog()} trên \texttt{LichSuThaoTac}.
 
 \input{diagrams/tex/6.2_class_uc03}
 
@@ -105,6 +107,8 @@ Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra
 
 \textbf{Quan hệ chính}: HangHoa thuộc 1 NhomHangHoa; đo bằng 1 DonViTinh; có nhiều TonKho (theo từng Kho).
 
+\textbf{Phương thức liên quan}: \texttt{HangHoa.themHangHoa()}, \texttt{TonKho.khoiTaoTon()} / \texttt{capNhatTonKho()}; \texttt{HangHoa.timKiem()} dùng cho UC07.
+
 \input{diagrams/tex/4.4_class_uc05}
 
 \subsection{UC09 -- Lập phiếu nhập kho}
@@ -121,6 +125,8 @@ Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra
     \item Khi duyệt: TonKho tại (Kho, HangHoa) được tăng.
 \end{itemize}
 
+\textbf{Phương thức liên quan}: \texttt{PhieuNhapKho.lapPhieuNhap()}, \texttt{themChiTiet}, \texttt{guiDuyet()}, \texttt{duyetPhieuNhap()} / \texttt{tuChoiPhieu()}; \texttt{TonKho.tangTon()}.
+
 \input{diagrams/tex/4.5_class_uc09}
 
 \subsection{UC10 -- Lập phiếu xuất kho}
@@ -130,6 +136,8 @@ Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra
 \textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}.
 
 \textbf{Quan hệ}: tương tự phiếu nhập, thay NhaCungCap bằng KhachHang; TonKho dùng để kiểm tra và giảm số lượng.
+
+\textbf{Phương thức liên quan}: \texttt{PhieuXuatKho.lapPhieu()}, \texttt{themChiTiet} (kèm \texttt{TonKho.kiemTraDu}), \texttt{duyetPhieu()} $\rightarrow$ \texttt{TonKho.giamTon()}.
 
 \input{diagrams/tex/4.6_class_uc10}
 
@@ -176,14 +184,212 @@ LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong & Audit \\
 \hline
 \end{longtable}
 
+\section{Giải thích các phương thức của lớp}
+
+Ngoài thuộc tính (dữ liệu), mỗi lớp có \textbf{phương thức} (hành vi/khả năng xử lý). Dưới đây mô tả các phương thức chính gắn với use case đã phân tích.
+
+\subsection{Lớp NguoiDung}
+
+\begin{longtable}{|p{4.2cm}|p{8.5cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{dangNhap(ten, matKhau)} & Kiểm tra tên đăng nhập và mật khẩu; trả về thành công/thất bại. Dùng cho UC01. \\
+\hline
+\texttt{dangXuat()} & Hủy phiên làm việc hiện tại. Dùng cho UC02. \\
+\hline
+\texttt{themTaiKhoan(thongTin)} & Tạo tài khoản mới (mã hóa MK, gán vai trò). Dùng cho UC03. \\
+\hline
+\texttt{suaTaiKhoan(ma, thongTin)} & Cập nhật họ tên, vai trò, email\ldots \\
+\hline
+\texttt{khoaMoTaiKhoan(ma, trangThai)} & Đổi trạng thái hoạt động / khóa. \\
+\hline
+\texttt{kiemTraQuyen(hanhDong)} & Kiểm tra vai trò có được phép thực hiện hành động (lập phiếu, duyệt\ldots). \\
+\hline
+\end{longtable}
+
+\subsection{Lớp HangHoa}
+
+\begin{longtable}{|p{4.2cm}|p{8.5cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{themHangHoa(thongTin)} & Lưu hàng mới; gọi khởi tạo tồn kho. UC06. \\
+\hline
+\texttt{capNhatThongTin(ma, thongTin)} & Sửa tên, giá, nhóm, mô tả\ldots \\
+\hline
+\texttt{ngungSuDung(ma)} & Đánh dấu trạng thái ngừng (không xóa cứng nếu đã có phiếu). \\
+\hline
+\texttt{timKiem(tuKhoa, boLoc)} & Trả về danh sách hàng theo mã/tên/nhóm. UC07. \\
+\hline
+\texttt{layThongTin(ma)} & Lấy chi tiết một mặt hàng. \\
+\hline
+\end{longtable}
+
+\subsection{Lớp TonKho}
+
+\begin{longtable}{|p{4.5cm}|p{8.2cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{khoiTaoTon(maKho, maHang)} & Tạo dòng tồn = 0 khi thêm hàng mới (UC06). \\
+\hline
+\texttt{tangTon(maKho, maHang, sl)} & Cộng số lượng khi \textbf{duyệt phiếu nhập} (UC09). \\
+\hline
+\texttt{giamTon(maKho, maHang, sl)} & Trừ số lượng khi \textbf{duyệt phiếu xuất} (UC10); chỉ gọi nếu đã kiểm tra đủ. \\
+\hline
+\texttt{kiemTraDu(maKho, maHang, sl)} & Trả về true/false -- tồn có đủ để xuất không. UC10. \\
+\hline
+\texttt{ganTheoKiemKe(maKho, maHang, slThuc)} & Gán tồn = số thực tế khi duyệt kiểm kê (UC11). \\
+\hline
+\texttt{layTon(maKho, maHang)} & Đọc số lượng hiện tại (tìm kiếm, báo cáo UC07, UC12). \\
+\hline
+\end{longtable}
+
+\subsection{Lớp PhieuNhapKho}
+
+\begin{longtable}{|p{4.2cm}|p{8.5cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{lapPhieu(thongTinChung)} & Tạo phiếu mới (NCC, kho, ngày, người lập); trạng thái ban đầu. UC09. \\
+\hline
+\texttt{themChiTiet(dongHang)} & Thêm dòng hàng (mã hàng, SL, đơn giá); tính thành tiền. \\
+\hline
+\texttt{tinhTongTien()} & Cộng thành tiền các dòng $\rightarrow$ \texttt{TongTien}. \\
+\hline
+\texttt{guiDuyet()} & Đổi trạng thái sang ``Chờ duyệt''. \\
+\hline
+\texttt{duyetPhieu()} & QL duyệt: ``Đã duyệt''; gọi \texttt{TonKho.tangTon} từng dòng; ghi log. \\
+\hline
+\texttt{tuChoiPhieu(lyDo)} & ``Từ chối''; \textbf{không} đổi tồn; lưu lý do. \\
+\hline
+\end{longtable}
+
+\subsection{Lớp PhieuXuatKho}
+
+\begin{longtable}{|p{4.2cm}|p{8.5cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{lapPhieu(thongTinChung)} & Tạo phiếu xuất (KH, kho, ngày). UC10. \\
+\hline
+\texttt{themChiTiet(dongHang)} & Thêm dòng; trước đó gọi \texttt{TonKho.kiemTraDu}; đủ mới cho thêm. \\
+\hline
+\texttt{tinhTongTien()} & Tính tổng giá trị phiếu xuất. \\
+\hline
+\texttt{guiDuyet()} & Chuyển ``Chờ duyệt''. \\
+\hline
+\texttt{duyetPhieu()} & ``Đã duyệt''; gọi \texttt{TonKho.giamTon} từng dòng; ghi log. \\
+\hline
+\texttt{tuChoiPhieu(lyDo)} & Từ chối; tồn không đổi. \\
+\hline
+\end{longtable}
+
+\subsection{Lớp PhieuKiemKe}
+
+\begin{longtable}{|p{4.5cm}|p{8.2cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{taoPhieu(maKho, ngay)} & Tạo phiếu kiểm kê; nạp danh sách hàng + SL sổ từ \texttt{TonKho}. UC11. \\
+\hline
+\texttt{nhapSoThucTe(maHang, sl)} & Ghi số thực tế; tính chênh lệch = thực tế $-$ sổ. \\
+\hline
+\texttt{guiDuyet()} & Gửi QL xem xét. \\
+\hline
+\texttt{duyetDieuChinh()} & QL duyệt: gọi \texttt{TonKho.ganTheoKiemKe} cho từng dòng lệch. \\
+\hline
+\end{longtable}
+
+\subsection{Lớp NhaCungCap / KhachHang / Kho}
+
+\begin{longtable}{|p{4.2cm}|p{8.5cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{themMoi(thongTin)} & Thêm NCC (UC04), KH (UC05) hoặc Kho (UC08). \\
+\hline
+\texttt{capNhat(ma, thongTin)} & Sửa thông tin danh mục. \\
+\hline
+\texttt{timKiem(tuKhoa)} & Tra cứu theo mã/tên. \\
+\hline
+\texttt{ngungHoatDong(ma)} & Đánh dấu ngừng khi đã có phiếu liên quan (không xóa cứng). \\
+\hline
+\end{longtable}
+
+\subsection{Lớp LichSuThaoTac}
+
+\begin{longtable}{|p{4.5cm}|p{8.2cm}|}
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Phương thức} & \textbf{Mô tả / khi nào dùng} \\
+\hline
+\endhead
+\texttt{ghiLog(nguoiDung, hanhDong, doiTuong, moTa)} & Ghi nhận ai làm gì, lúc nào (đăng nhập, duyệt phiếu, thêm hàng\ldots). \\
+\hline
+\end{longtable}
+
+\subsection{Liên hệ phương thức với use case (tóm tắt)}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{UC01/UC02}: \texttt{NguoiDung.dangNhap} / \texttt{dangXuat}; có thể kèm \texttt{LichSuThaoTac.ghiLog}.
+    \item \textbf{UC03}: \texttt{NguoiDung.themTaiKhoan}.
+    \item \textbf{UC04--UC05, UC08}: \texttt{themMoi} trên lớp danh mục tương ứng.
+    \item \textbf{UC06}: \texttt{HangHoa.themHangHoa} + \texttt{TonKho.khoiTaoTon}.
+    \item \textbf{UC07}: \texttt{HangHoa.timKiem} + \texttt{TonKho.layTon}.
+    \item \textbf{UC09}: \texttt{PhieuNhapKho.lapPhieu / themChiTiet / guiDuyet / duyetPhieu} (+ \texttt{tangTon}).
+    \item \textbf{UC10}: tương tự phiếu xuất (+ \texttt{kiemTraDu}, \texttt{giamTon}).
+    \item \textbf{UC11}: \texttt{PhieuKiemKe.*} + \texttt{ganTheoKiemKe}.
+    \item \textbf{UC12}: chủ yếu đọc dữ liệu (\texttt{layTon}, tổng hợp từ phiếu) -- có thể đặt ở lớp dịch vụ báo cáo khi thiết kế chi tiết.
+\end{itemize}
+
 \section{Tóm tắt quan hệ quan trọng}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{1 -- n}: NguoiDung--Phieu; NhaCungCap--PhieuNhap; KhachHang--PhieuXuat; Phieu--ChiTiet; Kho--TonKho; HangHoa--TonKho.
     \item \textbf{n -- 1}: ChiTiet--HangHoa; HangHoa--NhomHangHoa; HangHoa--DonViTinh.
-    \item \textbf{Cập nhật tồn}: chỉ khi duyệt phiếu nhập (tăng), phiếu xuất (giảm), phiếu kiểm kê (gán theo thực tế).
+    \item \textbf{Cập nhật tồn}: chỉ qua phương thức \texttt{tangTon} / \texttt{giamTon} / \texttt{ganTheoKiemKe} khi duyệt phiếu tương ứng.
 \end{itemize}
 
 \section{Kết luận chương}
 
-Chương 4 hoàn thành \textbf{phân tích cấu trúc}: xác định lớp, thuộc tính, quan hệ; trình bày class diagram tổng thể và class diagram trong các use case UC03, UC06, UC09, UC10. Đây là cơ sở để phân tích hành vi (các đối tượng đó tương tác thế nào -- Ch.5) và thiết kế CSDL (Ch.7).
+Chương 4 hoàn thành \textbf{phân tích cấu trúc} bằng biểu đồ lớp: đã nêu lớp, \textbf{thuộc tính}, \textbf{phương thức} và quan hệ. Các phương thức chính sẽ xuất hiện lại dưới dạng lời gọi thông điệp trên \textbf{biểu đồ trình tự} (Ch.5 -- phân tích hành vi).
