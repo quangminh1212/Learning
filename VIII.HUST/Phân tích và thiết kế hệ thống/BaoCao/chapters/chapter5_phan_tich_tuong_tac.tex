@@ -2,59 +2,127 @@
 
 \section{Giới thiệu giai đoạn}
 
-\textbf{Phân tích hành vi} trả lời: các đối tượng \textbf{tương tác như thế nào} theo thời gian để thực hiện use case. Biểu đồ đặc trưng: \textbf{Sequence Diagram} (biểu đồ trình tự). Bổ sung: State Machine cho vòng đời phiếu.
+\textbf{Phân tích hành vi} là giai đoạn thứ ba trong ba giai đoạn phân tích hướng đối tượng. Giai đoạn này trả lời: để thực hiện một use case, các \textbf{đối tượng} (actor, giao diện, điều khiển, thực thể/CSDL) \textbf{gửi thông điệp cho nhau theo thứ tự thời gian} như thế nào?
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item Trước đó: Ch.3 chức năng (Use Case); Ch.4 cấu trúc (Class).
-    \item Sau đó: thiết kế chi tiết / CSDL / giao diện (Ch.6--7).
+    \item \textbf{Biểu đồ chính}: Sequence Diagram (biểu đồ trình tự).
+    \item \textbf{Bổ sung}: State Machine Diagram -- vòng đời trạng thái của phiếu nhập/xuất.
+    \item \textbf{Trước đó}: Ch.3 chức năng (Use Case); Ch.4 cấu trúc (Class) -- đã biết lớp nào tồn tại.
+    \item \textbf{Sau đó}: thiết kế chi tiết, CSDL, giao diện (Ch.6--7).
 \end{itemize}
+
+Mỗi sequence dưới đây bám một use case đã đặc tả ở Chương 3 và sử dụng các lớp đã xác định ở Chương 4.
 
 \section{Biểu đồ trình tự}
 
 \subsection{UC01 -- Đăng nhập}
 
-Người dùng $\rightarrow$ form $\rightarrow$ hệ thống kiểm tra CSDL $\rightarrow$ tạo phiên / báo lỗi.
+\textbf{Mô tả tương tác}: Người dùng muốn vào hệ thống. Giao diện nhận tên đăng nhập và mật khẩu, chuyển cho hệ thống kiểm tra trên cơ sở dữ liệu. Nếu hợp lệ, tạo phiên và điều hướng trang chủ; nếu không, trả thông báo lỗi.
+
+\textbf{Đối tượng tham gia}: Người dùng (actor), Giao diện đăng nhập, Hệ thống (xử lý xác thực), Cơ sở dữ liệu (\texttt{NguoiDung}).
+
+\textbf{Các bước chính}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng mở form đăng nhập.
+    \item Nhập tên đăng nhập, mật khẩu và gửi.
+    \item Hệ thống truy vấn CSDL kiểm tra tài khoản.
+    \item Trả kết quả: thành công (tạo phiên) hoặc lỗi.
+\end{enumerate}
 
 \input{diagrams/tex/5.7_sequence_uc01}
 
 \subsection{UC06 -- Thêm hàng hóa}
 
-NV $\rightarrow$ giao diện $\rightarrow$ hệ thống $\rightarrow$ CSDL (lưu hàng + tồn = 0).
+\textbf{Mô tả tương tác}: Nhân viên kho thêm mặt hàng mới. Hệ thống kiểm tra mã không trùng, lưu \texttt{HangHoa}, sau đó khởi tạo các bản ghi \texttt{TonKho} = 0 cho từng kho.
+
+\textbf{Đối tượng tham gia}: Nhân viên kho, Giao diện hàng hóa, Hệ thống (điều khiển nghiệp vụ hàng hóa), Cơ sở dữ liệu.
+
+\textbf{Các bước chính}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item NV chọn thêm hàng, nhập thông tin trên form.
+    \item Giao diện gửi dữ liệu cho hệ thống.
+    \item Hệ thống kiểm tra tính hợp lệ (mã, nhóm, ĐVT).
+    \item Lưu hàng hóa vào CSDL.
+    \item Cập nhật/tạo tồn kho ban đầu.
+    \item Trả thông báo thành công và làm mới danh sách.
+\end{enumerate}
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
 \subsection{UC07 -- Tìm kiếm hàng hóa}
 
-Nhập điều kiện $\rightarrow$ truy vấn HangHoa + TonKho $\rightarrow$ danh sách.
+\textbf{Mô tả tương tác}: Người dùng nhập từ khóa và điều kiện lọc. Hệ thống truy vấn hàng hóa và tồn kho, trả danh sách kết quả lên giao diện.
+
+\textbf{Đối tượng tham gia}: Người dùng, Giao diện, Hệ thống, CSDL (\texttt{HangHoa}, \texttt{TonKho}).
+
+\textbf{Các bước chính}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhập từ khóa / chọn bộ lọc, gửi yêu cầu tìm.
+    \item Hệ thống truy vấn CSDL theo điều kiện.
+    \item Lấy thêm thông tin tồn kho tương ứng.
+    \item Hiển thị danh sách (hoặc thông báo không có dữ liệu).
+\end{enumerate}
 
 \input{diagrams/tex/5.2_sequence_uc06}
 
 \subsection{UC09 -- Lập phiếu nhập kho}
 
-NV lập phiếu, gửi duyệt; QL duyệt $\rightarrow$ tăng tồn, log.
+\textbf{Mô tả tương tác}: Nhân viên lập phiếu nhập (chọn NCC, kho, thêm dòng hàng) và gửi duyệt. Quản lý kho duyệt; hệ thống cập nhật trạng thái phiếu, \textbf{tăng tồn kho}, ghi lịch sử.
+
+\textbf{Đối tượng tham gia}: Nhân viên kho, Quản lý kho, Giao diện phiếu nhập, Hệ thống, CSDL (\texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{TonKho}, \texttt{LichSuThaoTac}).
+
+\textbf{Các bước chính}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item NV tạo phiếu, thêm chi tiết dòng hàng, gửi duyệt.
+    \item Hệ thống lưu phiếu ở trạng thái ``Chờ duyệt''.
+    \item QL mở phiếu, chọn duyệt (hoặc từ chối).
+    \item Nếu duyệt: cập nhật trạng thái, cộng \texttt{TonKho}, ghi log.
+    \item Thông báo kết quả cho người dùng.
+\end{enumerate}
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
 \subsection{UC10 -- Lập phiếu xuất kho}
 
-NV lập phiếu (kiểm tra tồn); QL duyệt $\rightarrow$ giảm tồn, log.
+\textbf{Mô tả tương tác}: Nhân viên lập phiếu xuất; mỗi dòng hàng được kiểm tra tồn đủ. Sau khi quản lý duyệt, hệ thống \textbf{giảm tồn kho}.
+
+\textbf{Đối tượng tham gia}: Nhân viên kho, Quản lý kho, Giao diện phiếu xuất, Hệ thống, CSDL (\texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{LichSuThaoTac}).
+
+\textbf{Các bước chính}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item NV tạo phiếu xuất, thêm dòng hàng.
+    \item Hệ thống kiểm tra tồn; không đủ thì báo lỗi, không lưu dòng.
+    \item Gửi duyệt. QL duyệt hoặc từ chối.
+    \item Nếu duyệt: trừ tồn, cập nhật trạng thái, ghi log.
+\end{enumerate}
 
 \input{diagrams/tex/5.4_sequence_uc10}
 
-\section{Biểu đồ trạng thái (bổ sung hành vi đối tượng)}
+\section{Biểu đồ trạng thái phiếu}
 
-\subsection{Trạng thái phiếu nhập}
+Ngoài tương tác giữa các đối tượng, hành vi của \textbf{bản thân đối tượng phiếu} được mô tả bằng máy trạng thái: phiếu chỉ được sửa ở một số trạng thái; tồn kho chỉ đổi khi chuyển sang ``Đã duyệt''.
+
+\subsection{Trạng thái phiếu nhập kho}
+
+Các trạng thái: \textbf{Mới tạo} $\rightarrow$ \textbf{Chờ duyệt} $\rightarrow$ \textbf{Đã duyệt} hoặc \textbf{Từ chối}; có thể \textbf{Hủy} từ Mới tạo/Từ chối.
+
 \input{diagrams/tex/5.5_state_phieu_nhap}
 
-\subsection{Trạng thái phiếu xuất}
+\subsection{Trạng thái phiếu xuất kho}
+
+Cấu trúc trạng thái tương tự phiếu nhập (Mới tạo, Chờ duyệt, Đã duyệt, Từ chối, Hủy).
+
 \input{diagrams/tex/5.6_state_phieu_xuat}
 
 \section{Kết luận chương}
 
-Đã hoàn thành \textbf{phân tích hành vi} (sequence + state). Ba giai đoạn phân tích:
+Chương 5 hoàn thành \textbf{phân tích hành vi}: biểu đồ trình tự cho UC01, UC06, UC07, UC09, UC10 và biểu đồ trạng thái phiếu nhập/xuất.
+
+Tổng kết \textbf{ba giai đoạn phân tích}:
 \begin{enumerate}[leftmargin=1.5cm]
-    \item Chức năng -- Use Case;
-    \item Cấu trúc -- Class;
-    \item Hành vi -- Sequence.
+    \item \textbf{Chức năng} (Ch.3): Use Case -- hệ thống làm gì, ai dùng.
+    \item \textbf{Cấu trúc} (Ch.4): Class -- có những lớp và quan hệ nào.
+    \item \textbf{Hành vi} (Ch.5): Sequence -- các lớp tương tác thế nào theo thời gian.
 \end{enumerate}
-Tiếp: thiết kế chi tiết và CSDL/giao diện (Ch.6--7).
+
+Tiếp theo: thiết kế chi tiết (Ch.6) và thiết kế CSDL/giao diện (Ch.7).

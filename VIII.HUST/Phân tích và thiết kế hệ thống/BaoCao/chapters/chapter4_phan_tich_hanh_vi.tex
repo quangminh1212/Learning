@@ -2,82 +2,188 @@
 
 \section{Giới thiệu giai đoạn}
 
-\textbf{Phân tích cấu trúc} trả lời: hệ thống gồm những \textbf{lớp đối tượng} nào, thuộc tính và quan hệ ra sao. Biểu đồ đặc trưng: \textbf{Class Diagram} (biểu đồ lớp).
+\textbf{Phân tích cấu trúc} là giai đoạn thứ hai trong ba giai đoạn phân tích hướng đối tượng. Giai đoạn này trả lời: hệ thống được cấu thành từ những \textbf{lớp đối tượng} nào? Mỗi lớp có thuộc tính gì? Quan hệ giữa các lớp ra sao?
 
 \begin{itemize}[leftmargin=1.5cm]
-    \item Trước đó: Ch.3 \textbf{Phân tích chức năng} -- Use Case.
-    \item Sau đó: Ch.5 \textbf{Phân tích hành vi} -- Sequence.
+    \item \textbf{Biểu đồ chính}: Class Diagram (biểu đồ lớp).
+    \item \textbf{Trước đó}: Ch.3 Phân tích chức năng -- Use Case (đã biết actor và mục tiêu).
+    \item \textbf{Sau đó}: Ch.5 Phân tích hành vi -- Sequence (các đối tượng tương tác thế nào theo thời gian).
 \end{itemize}
 
-\section{Các lớp chính}
+Từ đặc tả use case, các danh từ nghiệp vụ quan trọng được ứng viên thành lớp (ví dụ: hàng hóa, phiếu nhập, tồn kho, người dùng\ldots). Các lớp liên quan chặt được nhóm thành sơ đồ con để dễ đọc.
 
-Từ nghiệp vụ và use case, xác định các lớp:
+\section{Xác định các lớp chính}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \texttt{NguoiDung} -- tài khoản, phân quyền (UC01--UC03).
-    \item \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh} -- danh mục hàng (UC06--UC07).
-    \item \texttt{NhaCungCap}, \texttt{KhachHang} -- đối tác (UC04--UC05).
-    \item \texttt{Kho}, \texttt{TonKho} -- kho và tồn (UC08, nhập/xuất/kiểm kê).
-    \item \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap} -- UC09.
-    \item \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat} -- UC10.
-    \item \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe} -- UC11.
-    \item \texttt{LichSuThaoTac} -- ghi log.
-\end{itemize}
+\begin{longtable}{|p{3.5cm}|p{5cm}|p{4.5cm}|}
+\hline
+\textbf{Lớp} & \textbf{Vai trò} & \textbf{Use case liên quan} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Lớp} & \textbf{Vai trò} & \textbf{Use case liên quan} \\
+\hline
+\endhead
+NguoiDung & Tài khoản, vai trò, trạng thái & UC01--UC03 \\
+\hline
+HangHoa & Thông tin mặt hàng & UC06, UC07, phiếu \\
+\hline
+NhomHangHoa & Phân loại hàng & UC06 \\
+\hline
+DonViTinh & Đơn vị đo (cái, kg\ldots) & UC06 \\
+\hline
+NhaCungCap & Nhà cung cấp & UC04, UC09 \\
+\hline
+KhachHang & Khách hàng & UC05, UC10 \\
+\hline
+Kho & Kho hàng & UC08, phiếu, tồn \\
+\hline
+TonKho & Số lượng tồn theo kho--hàng & UC06, UC09--UC12 \\
+\hline
+PhieuNhapKho & Phiếu nhập & UC09 \\
+\hline
+ChiTietPhieuNhap & Dòng hàng trên phiếu nhập & UC09 \\
+\hline
+PhieuXuatKho & Phiếu xuất & UC10 \\
+\hline
+ChiTietPhieuXuat & Dòng hàng trên phiếu xuất & UC10 \\
+\hline
+PhieuKiemKe & Phiếu kiểm kê & UC11 \\
+\hline
+ChiTietKiemKe & Dòng kiểm kê (thực tế, sổ, chênh) & UC11 \\
+\hline
+LichSuThaoTac & Log thao tác & Các UC ghi nhận \\
+\hline
+\end{longtable}
 
 \section{Biểu đồ lớp tổng thể}
 
+Để tránh chồng chéo, biểu đồ lớp tổng thể được tách thành ba nhóm.
+
 \subsection{Nhóm danh mục (Master Data)}
+
+Gồm các lớp ít thay đổi: người dùng, hàng hóa, nhóm hàng, đơn vị tính, nhà cung cấp, khách hàng, kho, tồn kho.
+
 \input{diagrams/tex/4.1_classdiagram_master}
 
-\subsection{Nhóm nghiệp vụ nhập xuất}
+\subsection{Nhóm nghiệp vụ nhập -- xuất}
+
+Gồm phiếu nhập/xuất và chi tiết dòng hàng; quan hệ với NCC, KH, kho, hàng.
+
 \input{diagrams/tex/4.2_classdiagram_nhapxuat}
 
-\subsection{Nhóm kiểm kê và log}
+\subsection{Nhóm kiểm kê và lịch sử}
+
+Gồm phiếu kiểm kê, chi tiết kiểm kê và log thao tác.
+
 \input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
 
 \section{Biểu đồ lớp trong ca sử dụng}
 
+Phân tích cấu trúc đi sâu vào một số use case quan trọng: chỉ ra \textbf{các lớp tham gia} và \textbf{quan hệ} cần có để hoàn thành mục tiêu use case.
+
 \subsection{UC03 -- Thêm tài khoản}
+
+\textbf{Mục tiêu use case}: tạo bản ghi người dùng mới.
+
+\textbf{Lớp tham gia}: \texttt{NguoiDung} (đối tượng được tạo/cập nhật), \texttt{LichSuThaoTac} (ghi nhận thao tác thêm -- tùy chọn thiết kế).
+
+\textbf{Quan hệ}: Một \texttt{NguoiDung} có thể sinh ra nhiều bản ghi lịch sử thao tác (1..n).
+
 \input{diagrams/tex/6.2_class_uc03}
 
 \subsection{UC06 -- Thêm hàng hóa}
+
+\textbf{Mục tiêu use case}: thêm mặt hàng và khởi tạo tồn.
+
+\textbf{Lớp tham gia}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \texttt{NguoiDung}: người thực hiện.
+    \item \texttt{HangHoa}: đối tượng được tạo.
+    \item \texttt{NhomHangHoa}, \texttt{DonViTinh}: tham chiếu bắt buộc khi tạo hàng.
+    \item \texttt{TonKho}, \texttt{Kho}: khởi tạo tồn = 0 tại từng kho.
+\end{itemize}
+
+\textbf{Quan hệ chính}: HangHoa thuộc 1 NhomHangHoa; đo bằng 1 DonViTinh; có nhiều TonKho (theo từng Kho).
+
 \input{diagrams/tex/4.4_class_uc05}
 
-\subsection{UC09 -- Lập phiếu nhập}
+\subsection{UC09 -- Lập phiếu nhập kho}
+
+\textbf{Mục tiêu use case}: tạo phiếu nhập, chi tiết dòng hàng; khi duyệt cập nhật tồn.
+
+\textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}.
+
+\textbf{Quan hệ chính}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item Một phiếu nhập có nhiều chi tiết (1..n).
+    \item Mỗi chi tiết tham chiếu một HangHoa.
+    \item Phiếu gắn một NhaCungCap, một Kho, một NguoiDung (người lập).
+    \item Khi duyệt: TonKho tại (Kho, HangHoa) được tăng.
+\end{itemize}
+
 \input{diagrams/tex/4.5_class_uc09}
 
-\subsection{UC10 -- Lập phiếu xuất}
+\subsection{UC10 -- Lập phiếu xuất kho}
+
+\textbf{Mục tiêu use case}: tạo phiếu xuất; kiểm tra tồn khi thêm dòng; duyệt thì giảm tồn.
+
+\textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}.
+
+\textbf{Quan hệ}: tương tự phiếu nhập, thay NhaCungCap bằng KhachHang; TonKho dùng để kiểm tra và giảm số lượng.
+
 \input{diagrams/tex/4.6_class_uc10}
 
-\section{Bảng thuộc tính chính}
+\section{Bảng mô tả thuộc tính các lớp}
 
 \begin{longtable}{|p{3cm}|p{5.5cm}|p{4.5cm}|}
 \hline
-\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
+\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Ghi chú} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
+\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Ghi chú} \\
 \hline
 \endhead
-NguoiDung & Ma, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & UC01--03 \\
+NguoiDung & MaNguoiDung, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & Phân quyền \\
 \hline
-HangHoa & Ma, Ten, Nhom, DVT, GiaNhap, GiaXuat & UC06--07 \\
+HangHoa & MaHangHoa, TenHangHoa, MaNhom, MaDVT, GiaNhap, GiaXuat, TrangThai & Trung tâm danh mục \\
 \hline
-NhaCungCap / KhachHang & Ma, Ten, DiaChi, SDT, Email & UC04--05 \\
+NhomHangHoa & MaNhomHang, TenNhomHang, MoTa & Phân loại \\
 \hline
-Kho & Ma, Ten, DiaChi, PhuTrach & UC08 \\
+DonViTinh & MaDonViTinh, TenDonViTinh & Cái, kg, thùng\ldots \\
 \hline
-PhieuNhap / ChiTiet & MaPhieu, NCC, Kho, SoLuong, DonGia & UC09 \\
+NhaCungCap & MaNCC, Ten, DiaChi, SDT, Email, NguoiLienHe & Phục vụ nhập \\
 \hline
-PhieuXuat / ChiTiet & MaPhieu, KH, Kho, SoLuong, DonGia & UC10 \\
+KhachHang & MaKH, Ten, DiaChi, SDT, Email, MST & Phục vụ xuất \\
 \hline
-PhieuKiemKe / ChiTiet & MaPhieu, Kho, SLThuc, SLSo, ChenhLech & UC11 \\
+Kho & MaKho, TenKho, DiaChi, NguoiPhuTrach, TrangThai & Nhiều kho \\
 \hline
-TonKho & MaKho, MaHang, SoLuongTon & Nhập/xuất/KK \\
+TonKho & MaKho, MaHangHoa, SoLuongTon, NgayCapNhat & Khóa phức hợp \\
+\hline
+PhieuNhapKho & MaPhieu, MaNCC, MaKho, MaNV, NgayNhap, TongTien, TrangThai & Chờ duyệt/Đã duyệt \\
+\hline
+ChiTietPhieuNhap & MaPhieu, MaHang, SoLuong, DonGia, ThanhTien & Dòng nhập \\
+\hline
+PhieuXuatKho & MaPhieu, MaKH, MaKho, MaNV, NgayXuat, TongTien, TrangThai & Tương tự nhập \\
+\hline
+ChiTietPhieuXuat & MaPhieu, MaHang, SoLuong, DonGia, ThanhTien & Dòng xuất \\
+\hline
+PhieuKiemKe & MaPhieu, MaKho, MaNV, NgayKiem, TrangThai & Kiểm kê \\
+\hline
+ChiTietKiemKe & MaPhieu, MaHang, SLThucTe, SLSoSach, ChenhLech & Điều chỉnh tồn \\
+\hline
+LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong & Audit \\
 \hline
 \end{longtable}
 
+\section{Tóm tắt quan hệ quan trọng}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{1 -- n}: NguoiDung--Phieu; NhaCungCap--PhieuNhap; KhachHang--PhieuXuat; Phieu--ChiTiet; Kho--TonKho; HangHoa--TonKho.
+    \item \textbf{n -- 1}: ChiTiet--HangHoa; HangHoa--NhomHangHoa; HangHoa--DonViTinh.
+    \item \textbf{Cập nhật tồn}: chỉ khi duyệt phiếu nhập (tăng), phiếu xuất (giảm), phiếu kiểm kê (gán theo thực tế).
+\end{itemize}
+
 \section{Kết luận chương}
 
-Đã hoàn thành \textbf{phân tích cấu trúc} (biểu đồ lớp tổng thể và theo use case). Tiếp: \textbf{phân tích hành vi} -- biểu đồ trình tự (Ch.5).
+Chương 4 hoàn thành \textbf{phân tích cấu trúc}: xác định lớp, thuộc tính, quan hệ; trình bày class diagram tổng thể và class diagram trong các use case UC03, UC06, UC09, UC10. Đây là cơ sở để phân tích hành vi (các đối tượng đó tương tác thế nào -- Ch.5) và thiết kế CSDL (Ch.7).
