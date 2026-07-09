@@ -62,8 +62,8 @@
 \draw[flow] (p3.east) -- ++(0.3,0) |- (d8a.west)
     node[elabel, pos=0.65, below] {Tăng tồn};
 
-%===== CỘT PHẢI: 4.0 – 5.0 – 6.0 =====
-\node[coltitle] at (13.0, 10.15) {Xuất kho / Tồn kho / Báo cáo};
+%===== CỘT PHẢI: 4.0 – 5.0 =====
+\node[coltitle] at (13.0, 10.15) {Xuất kho / Tồn kho};
 
 % 4.0
 \node[entity]  (e4a) at (9.5, 9.0) {Nhân viên kho};
@@ -75,7 +75,7 @@
 \node[store]   (d8b) at (16.8, 7.30) {D8 TonKho};
 \draw[flow] (e4a.east) -- (p4.west) node[elabel, pos=0.45, above] {Lập phiếu xuất};
 \draw[flow] (e4b) -- (p4)            node[elabel, midway, above] {Duyệt};
-\draw[flow] (e4c.east) -- (p4.west)  node[elabel, pos=0.45, below] {Đơn hàng};
+\draw[flow] (e4c.east) -- (p4.west)  node[elabel, pos=0.45, below] {Yêu cầu xuất};
 \draw[flow] (p4.east) -- ++(0.3,0) |- (d7.west);
 \draw[flow] (p4.east) -- ++(0.3,0) |- (d4.west);
 \draw[flow] (p4.east) -- ++(0.3,0) |- (d8b.west)
@@ -83,34 +83,22 @@
 
 % 5.0
 \node[entity]  (e5) at (9.5, 5.4) {Nhân viên kho};
-\node[process] (p5) at (13.5, 5.4) {5.0 Quản lý tồn kho};
-\node[store]   (d9) at (16.8, 5.85) {D9 KiemKe};
-\node[store]   (d5) at (16.8, 5.20) {D5 Kho};
-\node[store]   (d8c) at (16.8, 4.55) {D8 TonKho};
+\node[entity]  (e5b) at (9.5, 4.5) {Quản lý kho};
+\node[process] (p5) at (13.5, 5.0) {5.0 Quản lý tồn kho};
+\node[store]   (d9) at (16.8, 5.55) {D9 KiemKe};
+\node[store]   (d5) at (16.8, 4.90) {D5 Kho};
+\node[store]   (d8c) at (16.8, 4.25) {D8 TonKho};
 \draw[flow] (e5) -- (p5) node[elabel, midway, above] {Kiểm kê};
+\draw[flow] (e5b) -- (p5) node[elabel, midway, below] {Cảnh báo tồn};
 \draw[flow] (p5.east) -- ++(0.3,0) |- (d9.west);
 \draw[flow] (p5.east) -- ++(0.3,0) |- (d5.west);
 \draw[flow] (p5.east) -- ++(0.3,0) |- (d8c.west);
 
-% 6.0
-\node[entity]  (e6) at (9.5, 2.8) {Quản lý kho};
-\node[process] (p6) at (13.5, 2.8) {6.0 Báo cáo thống kê};
-\node[store]   (d6b) at (16.8, 3.25) {D6 PNK};
-\node[store]   (d7b) at (16.8, 2.60) {D7 PXK};
-\node[store]   (d8d) at (16.8, 1.95) {D8 TonKho};
-\draw[flow] (e6.north east) -- ++(0.55,0.5) -- (p6.north west)
-    node[elabel, pos=0.5, above] {Yêu cầu BC};
-\draw[flow] (p6.south west) -- ++(-0.55,-0.5) -- (e6.south east)
-    node[elabel, pos=0.5, below] {Báo cáo};
-\draw[flow] (p6.east) -- ++(0.3,0) |- (d6b.west);
-\draw[flow] (p6.east) -- ++(0.3,0) |- (d7b.west);
-\draw[flow] (p6.east) -- ++(0.3,0) |- (d8d.west);
-
 % Phân cột
-\draw[gray!45, dashed, line width=0.6pt] (8.4, 10.0) -- (8.4, 1.6);
+\draw[gray!45, dashed, line width=0.6pt] (8.4, 10.0) -- (8.4, 3.6);
 
 % Chú thích
-\node[font=\scriptsize, anchor=north west, align=left, text width=17cm] at (-0.4, 1.35) {%
+\node[font=\scriptsize, anchor=north west, align=left, text width=17cm] at (-0.4, 3.2) {%
   \textbf{Ký hiệu:}
   ellipse = thực thể ngoài;\quad
   HCN xám = tiến trình;\quad

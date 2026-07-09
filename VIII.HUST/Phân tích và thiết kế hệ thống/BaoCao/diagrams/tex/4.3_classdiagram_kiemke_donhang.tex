@@ -20,33 +20,7 @@
 \attribute{+ ChenhLech: Integer}
 \end{class}
 
-\begin{class}{DonDatHang}{-11,-1}
-\attribute{+ MaDonHang: String}
-\attribute{+ MaKhachHang: String}
-\attribute{+ NgayDat: DateTime}
-\attribute{+ NgayGiao: DateTime}
-\attribute{+ TrangThai: String}
-\end{class}
-
-\begin{class}{ChiTietDonHang}{2,-1}
-\attribute{+ MaChiTiet: String}
-\attribute{+ MaDonHang: String}
-\attribute{+ MaHangHoa: String}
-\attribute{+ SoLuong: Integer}
-\attribute{+ DonGia: Decimal}
-\attribute{+ ThanhTien: Decimal}
-\end{class}
-
-\begin{class}{ThanhToan}{-11,-6}
-\attribute{+ MaThanhToan: String}
-\attribute{+ MaPhieu: String}
-\attribute{+ LoaiPhieu: String}
-\attribute{+ SoTien: Decimal}
-\attribute{+ NgayThanhToan: DateTime}
-\attribute{+ PhuongThuc: String}
-\end{class}
-
-\begin{class}{LichSuThaoTac}{2,-6}
+\begin{class}{LichSuThaoTac}{-4.5,-1}
 \attribute{+ MaLog: String}
 \attribute{+ MaNguoiDung: String}
 \attribute{+ HanhDong: String}
@@ -57,10 +31,9 @@
 
 % Quan hệ
 \draw (PhieuKiemKe) -- (ChiTietKiemKe) node[midway, above, font=\tiny] {1..*};
-\draw (DonDatHang) -- (ChiTietDonHang) node[midway, above, font=\tiny] {1..*};
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ lớp kiểm kê, đơn hàng và thanh toán}
-\label{fig:class-diagram-kiemke-donhang}
+\caption{Sơ đồ lớp kiểm kê và lịch sử thao tác}
+\label{fig:class-diagram-kiemke}
 \end{figure}

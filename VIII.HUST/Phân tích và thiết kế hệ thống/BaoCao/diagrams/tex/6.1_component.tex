@@ -20,11 +20,11 @@
 \draw[arrow] (repository) -- (db) node[label, midway, right] {SQL};
 
 \node[component] (auth) at (5.5,0) {Authentication\\Service};
-\node[component] (report) at (5.5,-2) {Report Service\\(Báo cáo)};
+\node[component] (notify) at (5.5,-2) {Notification Service\\(Cảnh báo tồn kho)};
 \node[component] (inventory) at (5.5,-4) {Inventory Service\\(Tồn kho)};
 
 \draw[arrow] (controller) -- (auth) node[label, midway, above] {Xác thực};
-\draw[arrow] (service) -- (report) node[label, midway, above] {Tạo báo cáo};
+\draw[arrow] (service) -- (notify) node[label, midway, above] {Gửi cảnh báo};
 \draw[arrow] (service) -- (inventory) node[label, midway, above] {Tính tồn kho};
 
 \end{tikzpicture}

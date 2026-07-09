@@ -18,23 +18,13 @@
 \draw[arrow] (PNK) -- (r1) -- (CTPN);
 \draw[arrow] (PXK) -- (r2) -- (CTPX);
 
-% Hàng 2: Kiểm kê và đơn hàng
+% Hàng 2: Kiểm kê và log
 \node[entity] (PKK) at (-5,-2) {PhieuKiemKe};
 \node[entity] (CTKK) at (0,-2) {ChiTietKiemKe};
-\node[entity] (DDH) at (5,-2) {DonDatHang};
-\node[entity] (CTDH) at (5,-5) {ChiTietDonHang};
+\node[entity] (LST) at (5,-2) {LichSuThaoTac};
 
 \node[relation] (r3) at (-2.5,-2) {có chi tiết};
-\node[relation] (r4) at (5,-3.5) {có chi tiết};
 \draw[arrow] (PKK) -- (r3) -- (CTKK);
-\draw[arrow] (DDH) -- (r4) -- (CTDH);
-
-% Hàng 3: Thanh toán và log
-\node[entity] (TT) at (-2,-5) {ThanhToan};
-\node[entity] (LST) at (2,-5) {LichSuThaoTac};
-
-\node[relation] (r5) at (0,-5) {ghi nhận};
-\draw[arrow] (TT) -- (r5) -- (LST);
 
 \end{tikzpicture}
 }

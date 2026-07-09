@@ -30,7 +30,6 @@ Do đó, việc xây dựng một hệ thống thông tin quản lý kho hàng l
 - Quản lý tập trung thông tin hàng hóa, nhà cung cấp, khách hàng và kho.
 - Cập nhật tồn kho tự động theo thời gian thực khi có phiếu nhập/xuất.
 - Cảnh báo tồn kho thấp, tồn kho cao và hàng sắp hết hạn.
-- Hỗ trợ báo cáo nhập xuất tồn, hàng bán chạy, hàng tồn lâu ngày.
 - Phân quyền người dùng và ghi log thao tác để đảm bảo an toàn dữ liệu.
 
 ---
@@ -54,7 +53,7 @@ Hệ thống tập trung vào các nghiệp vụ cốt lõi:
 | Tác nhân | Vai trò chính |
 |----------|---------------|
 | Quản trị viên | Quản lý tài khoản, cấu hình hệ thống, sao lưu dữ liệu, phân quyền. |
-| Quản lý kho | Giám sát tồn kho, phê duyệt phiếu nhập/xuất, xem báo cáo. |
+| Quản lý kho | Giám sát tồn kho, phê duyệt phiếu nhập/xuất, cảnh báo tồn kho thấp. |
 | Nhân viên kho | Lập phiếu nhập/xuất, kiểm kê, cập nhật trạng thái hàng hóa. |
 | Khách hàng | Xem trạng thái phiếu xuất, lịch sử giao dịch (nếu được cấp quyền). |
 | Nhà cung cấp | Theo dõi trạng thái phiếu nhập (nếu được cấp quyền). |
@@ -123,7 +122,7 @@ Theo yêu cầu môn học và mục lục tham khảo, báo cáo cần bao gồ
 | Chương | Nội dung |
 |--------|----------|
 | **Chương 1** | Khảo sát hiện trạng: Giới thiệu doanh nghiệp; Thực trạng quy trình quản lý hiện tại và các hạn chế; Mục tiêu của hệ thống. |
-| **Chương 2** | Mô tả nghiệp vụ: Các nghiệp vụ nhập kho, xuất kho, kiểm kê, điều chuyển, quản lý hàng hóa, nhà cung cấp, khách hàng, báo cáo. |
+| **Chương 2** | Mô tả nghiệp vụ: Các nghiệp vụ nhập kho, xuất kho, kiểm kê, điều chuyển, quản lý hàng hóa, nhà cung cấp, khách hàng. |
 | **Chương 3** | Phân tích chức năng: Use case tổng quát, use case phân rã, đặc tả use case. |
 | **Chương 4** | Phân tích hành vi: Biểu đồ lớp tổng thể và biểu đồ lớp trong ca sử dụng cho các UC chính. |
 | **Chương 5** | Phân tích tương tác: Biểu đồ trình tự (sequence) cho các ca sử dụng chính. |
