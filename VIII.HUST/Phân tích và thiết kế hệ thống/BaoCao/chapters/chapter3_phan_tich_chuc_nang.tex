@@ -79,17 +79,17 @@ Giải thích sơ đồ: Phân rã nhóm truy cập/tài khoản thành ba use c
 \subsection{Nhóm đối tác}
 \input{diagrams/tex/3.6_usecase_partner_management}
 
-Giải thích sơ đồ: Hai use case độc lập: \textbf{UC04 Thêm nhà cung cấp} và \textbf{UC05 Thêm khách hàng}. Cả Nhân viên kho và Quản lý kho đều nối tới hai UC này vì cả hai vai trò đều được phép cập nhật danh mục đối tác. Tách NCC và KH thành hai mục tiêu riêng (không gộp ``Quản lý đối tác'') đúng nguyên tắc mỗi oval một mục tiêu.
+Giải thích sơ đồ: Hai use case độc lập: \textbf{UC04 Thêm nhà cung cấp} và \textbf{UC09 Thêm khách hàng}. Cả Nhân viên kho và Quản lý kho đều nối tới hai UC này vì cả hai vai trò đều được phép cập nhật danh mục đối tác. Tách NCC và KH thành hai mục tiêu riêng (không gộp ``Quản lý đối tác'') đúng nguyên tắc mỗi oval một mục tiêu.
 
 \subsection{Nhóm hàng hóa và kho}
 \input{diagrams/tex/3.7_usecase_item_management}
 
-Giải thích sơ đồ: Ba use case: \textbf{UC06 Thêm hàng hóa}, \textbf{UC07 Tìm kiếm hàng hóa} (NV và QL đều dùng), \textbf{UC08 Thêm kho} (chủ yếu QL). Tách ``thêm'' và ``tìm'' hàng vì mục tiêu khác nhau (ghi nhận danh mục mới vs tra cứu tồn). Thêm kho thuộc nhóm danh mục kho, actor QL/QTV có quyền cao hơn NV ở thao tác này.
+Giải thích sơ đồ: Ba use case: \textbf{UC10 Thêm hàng hóa}, \textbf{UC11 Tìm kiếm hàng hóa} (NV và QL đều dùng), \textbf{UC12 Thêm kho} (chủ yếu QL). Tách ``thêm'' và ``tìm'' hàng vì mục tiêu khác nhau (ghi nhận danh mục mới vs tra cứu tồn). Thêm kho thuộc nhóm danh mục kho, actor QL/QTV có quyền cao hơn NV ở thao tác này.
 
 \subsection{Nhóm nhập, xuất, kiểm kê, báo cáo}
 \input{diagrams/tex/3.8_usecase_inventory_management}
 
-Giải thích sơ đồ: Bốn use case nghiệp vụ cốt lõi vận hành kho: \textbf{UC09 Lập phiếu nhập}, \textbf{UC10 Lập phiếu xuất}, \textbf{UC11 Lập phiếu kiểm kê}, \textbf{UC12 Xem báo cáo nhập xuất tồn}. NV nối tới UC09--UC11 (thao tác lập phiếu); QL nối cả bốn (duyệt + xem báo cáo). UC09--UC11 trong đặc tả có thêm actor phụ QL ở bước duyệt; sơ đồ thể hiện cả hai vai trò tham gia nhóm nhập/xuất/kiểm kê.
+Giải thích sơ đồ: Bốn use case nghiệp vụ cốt lõi vận hành kho: \textbf{UC13 Lập phiếu nhập}, \textbf{UC14 Lập phiếu xuất}, \textbf{UC15 Lập phiếu kiểm kê}, \textbf{UC16 Xem báo cáo nhập xuất tồn}. NV nối tới UC13--UC15 (thao tác lập phiếu); QL nối cả bốn (duyệt + xem báo cáo). UC13--UC15 trong đặc tả có thêm actor phụ QL ở bước duyệt; sơ đồ thể hiện cả hai vai trò tham gia nhóm nhập/xuất/kiểm kê.
 
 \section{Bảng tổng hợp use case}
 
@@ -110,21 +110,21 @@ UC03 & Thêm tài khoản & QTV & Tài khoản \\
 \hline
 UC04 & Thêm nhà cung cấp & NV, QL & Đối tác \\
 \hline
-UC05 & Thêm khách hàng & NV, QL & Đối tác \\
+UC09 & Thêm khách hàng & NV, QL & Đối tác \\
 \hline
-UC06 & Thêm hàng hóa & NV, QL & Hàng hóa \\
+UC10 & Thêm hàng hóa & NV, QL & Hàng hóa \\
 \hline
-UC07 & Tìm kiếm hàng hóa & Có quyền & Hàng hóa \\
+UC11 & Tìm kiếm hàng hóa & Có quyền & Hàng hóa \\
 \hline
-UC08 & Thêm kho & QL, QTV & Kho \\
+UC12 & Thêm kho & QL, QTV & Kho \\
 \hline
-UC09 & Lập phiếu nhập kho & NV, QL & Nhập kho \\
+UC13 & Lập phiếu nhập kho & NV, QL & Nhập kho \\
 \hline
-UC10 & Lập phiếu xuất kho & NV, QL & Xuất kho \\
+UC14 & Lập phiếu xuất kho & NV, QL & Xuất kho \\
 \hline
-UC11 & Lập phiếu kiểm kê & NV, QL & Kiểm kê \\
+UC15 & Lập phiếu kiểm kê & NV, QL & Kiểm kê \\
 \hline
-UC12 & Xem báo cáo nhập xuất tồn & QL, QTV & Báo cáo \\
+UC16 & Xem báo cáo nhập xuất tồn & QL, QTV & Báo cáo \\
 \hline
 \end{longtable}
 
@@ -257,11 +257,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC05 -- Thêm khách hàng}
+\subsection{UC09 -- Thêm khách hàng}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm khách hàng.
-    \item \textbf{Mã}: UC05.
+    \item \textbf{Mã}: UC09.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Bổ sung khách hàng nhận hàng khi xuất kho; có thể lưu mã số thuế nếu là khách doanh nghiệp.
     \item \textbf{Mục tiêu}: Có hồ sơ KH mới để gắn với phiếu xuất.
@@ -277,11 +277,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Luồng thay thế}: Mã trùng hoặc thiếu mã/tên $\rightarrow$ báo lỗi, không lưu.
 \end{itemize}
 
-\subsection{UC06 -- Thêm hàng hóa}
+\subsection{UC10 -- Thêm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm hàng hóa.
-    \item \textbf{Mã}: UC06.
+    \item \textbf{Mã}: UC10.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Thêm mặt hàng vào danh mục trung tâm của hệ thống; đồng thời khởi tạo số lượng tồn bằng 0 tại tất cả các kho đang hoạt động để sẵn sàng nhập/xuất.
     \item \textbf{Mục tiêu}: Hàng mới tồn tại trong danh mục và có bản ghi tồn kho ban đầu.
@@ -314,11 +314,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC07 -- Tìm kiếm hàng hóa}
+\subsection{UC11 -- Tìm kiếm hàng hóa}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Tìm kiếm hàng hóa.
-    \item \textbf{Mã}: UC07.
+    \item \textbf{Mã}: UC11.
     \item \textbf{Tác nhân chính}: Mọi người dùng được cấp quyền tra cứu.
     \item \textbf{Mô tả tóm tắt}: Tra cứu nhanh mặt hàng theo mã, tên, nhóm hoặc theo tồn tại một kho; hỗ trợ kiểm tra trước khi lập phiếu xuất/nhập.
     \item \textbf{Mục tiêu}: Nhận được danh sách hàng thỏa điều kiện kèm thông tin tồn (nếu có).
@@ -340,11 +340,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC08 -- Thêm kho}
+\subsection{UC12 -- Thêm kho}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm kho.
-    \item \textbf{Mã}: UC08.
+    \item \textbf{Mã}: UC12.
     \item \textbf{Tác nhân chính}: Quản lý kho, Quản trị viên.
     \item \textbf{Mô tả tóm tắt}: Khai báo kho hàng mới (địa điểm lưu trữ) để theo dõi tồn và lập phiếu theo từng kho.
     \item \textbf{Mục tiêu}: Có kho mới trong danh mục, sẵn sàng nhận nhập/xuất/kiểm kê.
@@ -360,11 +360,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Luồng thay thế}: Mã kho trùng $\rightarrow$ báo lỗi.
 \end{itemize}
 
-\subsection{UC09 -- Lập phiếu nhập kho}
+\subsection{UC13 -- Lập phiếu nhập kho}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Lập phiếu nhập kho.
-    \item \textbf{Mã}: UC09.
+    \item \textbf{Mã}: UC13.
     \item \textbf{Tác nhân chính}: Nhân viên kho (lập và gửi duyệt).
     \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt hoặc từ chối).
     \item \textbf{Mô tả tóm tắt}: Ghi nhận lô hàng nhập từ nhà cung cấp vào một kho cụ thể. Chỉ khi quản lý duyệt, tồn kho mới tăng -- tránh cập nhật tồn khi dữ liệu phiếu chưa được kiểm soát.
@@ -403,11 +403,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC10 -- Lập phiếu xuất kho}
+\subsection{UC14 -- Lập phiếu xuất kho}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Lập phiếu xuất kho.
-    \item \textbf{Mã}: UC10.
+    \item \textbf{Mã}: UC14.
     \item \textbf{Tác nhân chính}: Nhân viên kho (lập).
     \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt).
     \item \textbf{Mô tả tóm tắt}: Ghi nhận xuất hàng cho khách hàng từ một kho. Hệ thống chặn xuất vượt tồn; chỉ giảm tồn khi phiếu được duyệt.
@@ -431,11 +431,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \end{enumerate}
 \end{itemize}
 
-\subsection{UC11 -- Lập phiếu kiểm kê}
+\subsection{UC15 -- Lập phiếu kiểm kê}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Lập phiếu kiểm kê.
-    \item \textbf{Mã}: UC11.
+    \item \textbf{Mã}: UC15.
     \item \textbf{Tác nhân chính}: Nhân viên kho (tạo phiếu, nhập số thực tế).
     \item \textbf{Tác nhân phụ}: Quản lý kho (duyệt điều chỉnh chênh lệch).
     \item \textbf{Mô tả tóm tắt}: Định kỳ đối chiếu số lượng hàng thực tế trong kho với số trên hệ thống. Chênh lệch chỉ được đưa vào tồn chính thức sau khi quản lý duyệt.
@@ -455,11 +455,11 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Luồng thay thế}: QL từ chối / yêu cầu kiểm lại $\rightarrow$ tồn giữ nguyên số sổ.
 \end{itemize}
 
-\subsection{UC12 -- Xem báo cáo nhập xuất tồn}
+\subsection{UC16 -- Xem báo cáo nhập xuất tồn}
 
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xem báo cáo nhập xuất tồn.
-    \item \textbf{Mã}: UC12.
+    \item \textbf{Mã}: UC16.
     \item \textbf{Tác nhân chính}: Quản lý kho, Quản trị viên.
     \item \textbf{Mô tả tóm tắt}: Tra cứu số liệu tổng hợp phục vụ điều hành kho: tồn hiện tại hoặc biến động nhập--xuất--tồn theo khoảng thời gian, theo kho hoặc theo hàng. Không bao gồm phân hệ tài chính/thanh toán phức tạp.
     \item \textbf{Mục tiêu}: Có bảng số liệu NXT/tồn đúng điều kiện lọc để xem hoặc xuất file.

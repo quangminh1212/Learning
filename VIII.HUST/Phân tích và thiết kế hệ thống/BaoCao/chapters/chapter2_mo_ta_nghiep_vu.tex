@@ -36,19 +36,19 @@ Quản lý tài khoản & UC03 Thêm tài khoản \\
 \hline
 Quản lý nhà cung cấp & UC04 Thêm nhà cung cấp \\
 \hline
-Quản lý khách hàng & UC05 Thêm khách hàng \\
+Quản lý khách hàng & UC09 Thêm khách hàng \\
 \hline
-Quản lý hàng hóa & UC06 Thêm hàng hóa; UC07 Tìm kiếm hàng hóa \\
+Quản lý hàng hóa & UC10 Thêm hàng hóa; UC11 Tìm kiếm hàng hóa \\
 \hline
-Quản lý kho & UC08 Thêm kho \\
+Quản lý kho & UC12 Thêm kho \\
 \hline
-Nhập kho & UC09 Lập phiếu nhập kho \\
+Nhập kho & UC13 Lập phiếu nhập kho \\
 \hline
-Xuất kho & UC10 Lập phiếu xuất kho \\
+Xuất kho & UC14 Lập phiếu xuất kho \\
 \hline
-Kiểm kê & UC11 Lập phiếu kiểm kê \\
+Kiểm kê & UC15 Lập phiếu kiểm kê \\
 \hline
-Báo cáo tồn kho & UC12 Xem báo cáo nhập xuất tồn \\
+Báo cáo tồn kho & UC16 Xem báo cáo nhập xuất tồn \\
 \hline
 \end{longtable}
 
@@ -109,7 +109,7 @@ Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \tex
 
 \textbf{Dữ liệu liên quan}: \texttt{KhachHang} (mã, tên, địa chỉ, SĐT, email, MST, người liên hệ).
 
-\textbf{Use case tiêu biểu}: UC05 Thêm khách hàng.
+\textbf{Use case tiêu biểu}: UC09 Thêm khách hàng.
 
 \section{Nghiệp vụ 4: Quản lý hàng hóa}
 
@@ -136,7 +136,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{TonKho}, \texttt{Kho}.
 
-\textbf{Use case tiêu biểu}: UC06 Thêm hàng hóa; UC07 Tìm kiếm hàng hóa.
+\textbf{Use case tiêu biểu}: UC10 Thêm hàng hóa; UC11 Tìm kiếm hàng hóa.
 
 \section{Nghiệp vụ 5: Quản lý kho}
 
@@ -155,7 +155,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{Kho}, \texttt{TonKho}, \texttt{HangHoa}.
 
-\textbf{Use case tiêu biểu}: UC08 Thêm kho.
+\textbf{Use case tiêu biểu}: UC12 Thêm kho.
 
 \section{Nghiệp vụ 6: Nhập kho}
 
@@ -176,7 +176,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{TonKho}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
 
-\textbf{Use case tiêu biểu}: UC09 Lập phiếu nhập kho (bao gồm luồng lập và duyệt với hai actor).
+\textbf{Use case tiêu biểu}: UC13 Lập phiếu nhập kho (bao gồm luồng lập và duyệt với hai actor).
 
 \section{Nghiệp vụ 7: Xuất kho}
 
@@ -197,7 +197,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
 
-\textbf{Use case tiêu biểu}: UC10 Lập phiếu xuất kho (lập + duyệt).
+\textbf{Use case tiêu biểu}: UC14 Lập phiếu xuất kho (lập + duyệt).
 
 \section{Nghiệp vụ 8: Kiểm kê tồn kho}
 
@@ -217,7 +217,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{TonKho}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
 
-\textbf{Use case tiêu biểu}: UC11 Lập phiếu kiểm kê.
+\textbf{Use case tiêu biểu}: UC15 Lập phiếu kiểm kê.
 
 \section{Nghiệp vụ 9: Báo cáo nhập -- xuất -- tồn}
 
@@ -235,7 +235,7 @@ Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng kh
 
 \textbf{Dữ liệu liên quan}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{HangHoa}, \texttt{Kho}.
 
-\textbf{Use case tiêu biểu}: UC12 Xem báo cáo nhập xuất tồn.
+\textbf{Use case tiêu biểu}: UC16 Xem báo cáo nhập xuất tồn.
 
 \section{Kết luận chương}
 
