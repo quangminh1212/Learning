@@ -40,7 +40,7 @@ Quản trị viên & Quản lý tài khoản, phân quyền; quản lý kho; xem
 \hline
 Quản lý kho & Duyệt phiếu nhập/xuất/kiểm kê; quản lý danh mục hàng, đối tác, kho; xem báo cáo. \\
 \hline
-Nhân viên kho & Lập phiếu nhập, xuất, kiểm kê; thêm và tìm kiếm hàng hóa, nhà cung cấp, khách hàng. \\
+Nhân viên kho & Lập phiếu nhập, xuất, kiểm kê; CRUD + tìm/xem DS nhà cung cấp; thêm/tìm hàng hóa; thêm khách hàng. \\
 \hline
 \end{longtable}
 
@@ -79,7 +79,7 @@ Giải thích sơ đồ: Phân rã nhóm truy cập/tài khoản thành ba use c
 \subsection{Nhóm đối tác}
 \input{diagrams/tex/3.6_usecase_partner_management}
 
-Giải thích sơ đồ: Hai use case độc lập: \textbf{UC04 Thêm nhà cung cấp} và \textbf{UC09 Thêm khách hàng}. Cả Nhân viên kho và Quản lý kho đều nối tới hai UC này vì cả hai vai trò đều được phép cập nhật danh mục đối tác. Tách NCC và KH thành hai mục tiêu riêng (không gộp ``Quản lý đối tác'') đúng nguyên tắc mỗi oval một mục tiêu.
+Giải thích sơ đồ: Nhóm nhà cung cấp được \textbf{phân rã đủ năm mục tiêu}: \textbf{UC04 Thêm}, \textbf{UC05 Sửa}, \textbf{UC06 Xóa}, \textbf{UC07 Tìm kiếm}, \textbf{UC08 Xem danh sách NCC} -- minh họa rõ nguyên tắc ``mỗi hành động là một use case'', không gộp thành một oval ``Quản lý NCC''. Bên cạnh đó có \textbf{UC09 Thêm khách hàng} (mức độ tương tự có thể mở rộng CRUD KH nếu cần). Cả Nhân viên kho và Quản lý kho đều nối tới các UC này vì cả hai vai trò được phép thao tác danh mục đối tác.
 
 \subsection{Nhóm hàng hóa và kho}
 \input{diagrams/tex/3.7_usecase_item_management}
@@ -108,7 +108,15 @@ UC02 & Đăng xuất & Tất cả & Hệ thống \\
 \hline
 UC03 & Thêm tài khoản & QTV & Tài khoản \\
 \hline
-UC04 & Thêm nhà cung cấp & NV, QL & Đối tác \\
+UC04 & Thêm nhà cung cấp & NV, QL & NCC \\
+\hline
+UC05 & Sửa nhà cung cấp & NV, QL & NCC \\
+\hline
+UC06 & Xóa nhà cung cấp & NV, QL & NCC \\
+\hline
+UC07 & Tìm kiếm nhà cung cấp & NV, QL & NCC \\
+\hline
+UC08 & Xem danh sách nhà cung cấp & NV, QL & NCC \\
 \hline
 UC09 & Thêm khách hàng & NV, QL & Đối tác \\
 \hline
@@ -237,24 +245,112 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
     \item \textbf{Tên use case}: Thêm nhà cung cấp.
     \item \textbf{Mã}: UC04.
     \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
-    \item \textbf{Mô tả tóm tắt}: Bổ sung nhà cung cấp vào danh mục để sử dụng khi lập phiếu nhập kho và truy vết nguồn hàng.
-    \item \textbf{Mục tiêu}: Lưu được thông tin NCC mới, chọn được NCC khi nhập kho.
+    \item \textbf{Mô tả tóm tắt}: Bổ sung nhà cung cấp mới vào danh mục để dùng khi lập phiếu nhập.
+    \item \textbf{Mục tiêu}: Lưu được bản ghi NCC mới, chọn được trên form nhập kho.
     \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền quản lý danh mục đối tác.
-    \item \textbf{Điều kiện sau}: Có bản ghi \texttt{NhaCungCap} mới; hiển thị trong danh sách và form chọn NCC.
+    \item \textbf{Điều kiện sau}: Có bản ghi \texttt{NhaCungCap} mới; xuất hiện trong danh sách và form chọn.
     \item \textbf{Luồng sự kiện chính}:
     \begin{enumerate}
-        \item Actor mở ``Quản lý nhà cung cấp''.
-        \item Hệ thống hiển thị danh sách NCC.
-        \item Actor chọn ``Thêm mới''.
-        \item Nhập mã NCC, tên, địa chỉ, số điện thoại, email, người liên hệ, mô tả (nếu có).
+        \item Actor mở ``Quản lý nhà cung cấp'' (có thể từ UC08 xem danh sách).
+        \item Chọn ``Thêm mới''.
+        \item Nhập mã NCC, tên, địa chỉ, SĐT, email, người liên hệ, mô tả (nếu có).
         \item Nhấn ``Lưu''. Hệ thống kiểm tra mã bắt buộc và không trùng.
-        \item Hệ thống lưu NCC và thông báo thành công.
+        \item Hệ thống lưu NCC, thông báo thành công, làm mới danh sách.
     \end{enumerate}
     \item \textbf{Luồng thay thế}:
     \begin{enumerate}
-        \item \textit{A1 -- Mã NCC trùng}: Báo lỗi, yêu cầu nhập mã khác.
-        \item \textit{A2 -- Thiếu tên hoặc mã}: Không cho lưu.
+        \item \textit{A1 -- Mã trùng}: Báo lỗi, yêu cầu đổi mã.
+        \item \textit{A2 -- Thiếu mã/tên}: Không cho lưu.
     \end{enumerate}
+\end{itemize}
+
+\subsection{UC05 -- Sửa nhà cung cấp}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Sửa nhà cung cấp.
+    \item \textbf{Mã}: UC05.
+    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
+    \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin NCC đã có (địa chỉ, SĐT, người liên hệ\ldots) khi NCC đổi thông tin liên lạc.
+    \item \textbf{Mục tiêu}: Bản ghi NCC phản ánh đúng thông tin mới nhất.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập; đã tồn tại ít nhất một NCC (thường chọn từ danh sách UC08 hoặc kết quả tìm UC07).
+    \item \textbf{Điều kiện sau}: Thông tin \texttt{NhaCungCap} được cập nhật; các phiếu nhập cũ vẫn giữ mã NCC (không đổi khóa).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Actor tìm/chọn NCC cần sửa trên danh sách.
+        \item Chọn ``Sửa''. Hệ thống nạp form với dữ liệu hiện tại.
+        \item Actor chỉnh sửa các trường cho phép (tên, địa chỉ, SĐT, email, người liên hệ, mô tả). Mã NCC thường \textbf{không} cho đổi.
+        \item Nhấn ``Lưu''. Hệ thống validate và cập nhật CSDL.
+        \item Thông báo thành công, hiển thị lại danh sách/chi tiết.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}:
+    \begin{enumerate}
+        \item \textit{A1 -- Hủy sửa}: Quay lại danh sách, không lưu.
+        \item \textit{A2 -- Dữ liệu không hợp lệ}: Báo lỗi từng trường, giữ form.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{UC06 -- Xóa nhà cung cấp}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xóa nhà cung cấp.
+    \item \textbf{Mã}: UC06.
+    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
+    \item \textbf{Mô tả tóm tắt}: Gỡ NCC khỏi danh mục đang dùng. Nếu NCC đã phát sinh phiếu nhập thì không xóa cứng để giữ toàn vẹn dữ liệu lịch sử.
+    \item \textbf{Mục tiêu}: NCC không còn xuất hiện khi chọn NCC mới trên phiếu nhập (đã xóa hoặc đã ngừng).
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập; đã chọn một NCC.
+    \item \textbf{Điều kiện sau}: NCC bị xóa khỏi CSDL \textbf{hoặc} chuyển trạng thái ``Ngừng hoạt động'' / ẩn khỏi form chọn.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Actor chọn NCC $\rightarrow$ ``Xóa''.
+        \item Hệ thống kiểm tra có phiếu nhập tham chiếu mã NCC không.
+        \item \textbf{Nếu chưa có phiếu}: yêu cầu xác nhận $\rightarrow$ xóa bản ghi (hoặc đánh dấu xóa) $\rightarrow$ thông báo thành công.
+        \item \textbf{Nếu đã có phiếu}: thông báo không được xóa cứng; đề xuất ``Ngừng hoạt động''.
+        \item Actor xác nhận ngừng $\rightarrow$ cập nhật trạng thái, ẩn khỏi danh sách chọn khi lập phiếu mới.
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Actor hủy xác nhận $\rightarrow$ không thay đổi dữ liệu.
+\end{itemize}
+
+\subsection{UC07 -- Tìm kiếm nhà cung cấp}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Tìm kiếm nhà cung cấp.
+    \item \textbf{Mã}: UC07.
+    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
+    \item \textbf{Mô tả tóm tắt}: Lọc nhanh NCC theo mã, tên hoặc số điện thoại khi danh sách dài.
+    \item \textbf{Mục tiêu}: Nhận được danh sách NCC khớp điều kiện tìm.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
+    \item \textbf{Điều kiện sau}: Hiển thị kết quả; không bắt buộc đổi dữ liệu.
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Trên màn hình NCC, actor nhập từ khóa (mã/tên/SĐT).
+        \item Nhấn ``Tìm kiếm''.
+        \item Hệ thống truy vấn \texttt{NhaCungCap} theo điều kiện.
+        \item Hiển thị các bản ghi khớp (mã, tên, SĐT, trạng thái).
+        \item Actor có thể chọn một dòng để xem chi tiết / sửa (UC05) / xóa (UC06).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Không có kết quả $\rightarrow$ thông báo ``Không tìm thấy nhà cung cấp''.
+\end{itemize}
+
+\subsection{UC08 -- Xem danh sách nhà cung cấp}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tên use case}: Xem danh sách nhà cung cấp.
+    \item \textbf{Mã}: UC08.
+    \item \textbf{Tác nhân chính}: Nhân viên kho, Quản lý kho.
+    \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý NCC và xem toàn bộ (hoặc phân trang) danh sách đang có -- điểm vào thường dùng trước khi thêm/sửa/xóa/tìm.
+    \item \textbf{Mục tiêu}: Nhìn được danh mục NCC hiện tại của hệ thống.
+    \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền xem danh mục đối tác.
+    \item \textbf{Điều kiện sau}: Danh sách được hiển thị; actor có thể chọn thao tác tiếp (thêm UC04, sửa UC05\ldots).
+    \item \textbf{Luồng sự kiện chính}:
+    \begin{enumerate}
+        \item Actor chọn menu ``Quản lý nhà cung cấp''.
+        \item Hệ thống tải danh sách NCC (mặc định: đang hoạt động; có thể gồm cả ngừng).
+        \item Hiển thị bảng: mã, tên, SĐT, email, trạng thái (phân trang nếu nhiều).
+        \item Actor có thể sắp xếp theo cột hoặc chuyển trang.
+        \item Từ danh sách, actor chọn ``Thêm'' / chọn một dòng để ``Sửa'' / ``Xóa'' / ô tìm kiếm (chuyển sang các UC tương ứng).
+    \end{enumerate}
+    \item \textbf{Luồng thay thế}: Chưa có NCC nào $\rightarrow$ bảng rỗng + gợi ý ``Thêm nhà cung cấp''.
+    \item \textbf{Ghi chú}: \textit{Xem danh sách} khác \textit{Tìm kiếm}: xem danh sách là hiển thị mặc định toàn bộ (có phân trang); tìm kiếm là lọc theo từ khóa.
 \end{itemize}
 
 \subsection{UC09 -- Thêm khách hàng}

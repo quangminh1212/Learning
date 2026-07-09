@@ -2,29 +2,35 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.9,
+    scale=0.82,
     transform shape,
     actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.5cm, minimum height=0.62cm, font=\scriptsize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,2.6) {Phân rã: Đối tác};
+\node[system, minimum width=13cm, minimum height=10cm] (system) at (0,0.2) {};
+\node[font=\bfseries\small] at (0,4.7) {Phân rã: Quản lý nhà cung cấp (+ KH)};
 
-\node[usecase] (uc04) at (-2.8,0.3) {UC04: Thêm nhà cung cấp};
-\node[usecase] (uc05) at (2.8,0.3) {UC09: Thêm khách hàng};
+% NCC CRUD + list
+\node[usecase] (uc04) at (-3.2,3.3) {UC04: Thêm NCC};
+\node[usecase] (uc05) at (-3.2,2.1) {UC05: Sửa NCC};
+\node[usecase] (uc06) at (-3.2,0.9) {UC06: Xóa NCC};
+\node[usecase] (uc07) at (-3.2,-0.3) {UC07: Tìm kiếm NCC};
+\node[usecase] (uc08) at (-3.2,-1.5) {UC08: Xem danh sách NCC};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
+\node[usecase] (uc09) at (3.2,1.0) {UC09: Thêm khách hàng};
 
-\draw (nvk) -- (uc04);
-\draw (nvk) -- (uc05);
-\draw (qlk) -- (uc04);
-\draw (qlk) -- (uc05);
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7.2,0.8) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7.2,0.8) {};
+
+\foreach \u in {uc04,uc05,uc06,uc07,uc08,uc09} {
+  \draw (nvk) -- (\u);
+  \draw (qlk) -- (\u);
+}
 
 \end{tikzpicture}
 }
-\caption{Use case phân rã -- Thêm NCC, Thêm khách hàng}
+\caption{Use case phân rã -- NCC (Thêm/Sửa/Xóa/Tìm/Xem DS) và Thêm KH}
 \label{fig:usecase-partner-management}
 \end{figure}

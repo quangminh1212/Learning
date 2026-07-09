@@ -121,7 +121,7 @@ NgayCapNhat & DATETIME & Lần cập nhật gần nhất. \\
 Giải thích sơ đồ: Sơ đồ điều hướng (navigation) cho thấy người dùng \textbf{đi từ màn nào sang màn nào} sau khi đăng nhập:
 \begin{itemize}[leftmargin=1.5cm]
     \item Điểm vào: \textbf{Đăng nhập (UC01)} $\rightarrow$ \textbf{Trang chủ (Dashboard)}.
-    \item Từ trang chủ tỏa ra các màn chức năng: Hàng hóa (UC10--07), Đối tác (UC04--05), Kho (UC12), Tài khoản (UC03), Báo cáo tồn (UC16), Phiếu nhập (UC13), Phiếu xuất (UC14), Kiểm kê (UC15).
+    \item Từ trang chủ tỏa ra các màn chức năng: Hàng hóa (UC10--UC11), NCC (UC04--UC08), Kho (UC12), Tài khoản (UC03), Báo cáo tồn (UC16), Phiếu nhập (UC13), Phiếu xuất (UC14), Kiểm kê (UC15).
     \item Mỗi hộp gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 \end{itemize}
 Sơ đồ không mô tả layout chi tiết từng form, mà mô tả \textbf{cấu trúc menu/luồng màn hình} phục vụ triển khai UI.
@@ -130,7 +130,7 @@ Các màn hình chính:
 
 \begin{itemize}[leftmargin=1.5cm]
     \item Đăng nhập (UC01); Trang chủ / Dashboard.
-    \item Hàng hóa (UC10, UC11); Đối tác (UC04, UC09); Kho (UC12); Tài khoản (UC03).
+    \item Hàng hóa (UC10, UC11); Nhà cung cấp (UC04--UC08: thêm/sửa/xóa/tìm/xem DS); Khách hàng (UC09); Kho (UC12); Tài khoản (UC03).
     \item Phiếu nhập (UC13); Phiếu xuất (UC14); Kiểm kê (UC15).
     \item Báo cáo nhập--xuất--tồn (UC16): chọn điều kiện, bảng kết quả, xuất Excel.
 \end{itemize}

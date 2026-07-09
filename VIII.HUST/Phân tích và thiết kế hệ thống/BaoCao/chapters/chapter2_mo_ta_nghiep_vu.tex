@@ -34,7 +34,7 @@ Hệ thống phục vụ các nghiệp vụ \textbf{cốt lõi của kho}: danh 
 \endhead
 Quản lý tài khoản & UC03 Thêm tài khoản \\
 \hline
-Quản lý nhà cung cấp & UC04 Thêm nhà cung cấp \\
+Quản lý nhà cung cấp & UC04 Thêm; UC05 Sửa; UC06 Xóa; UC07 Tìm kiếm; UC08 Xem danh sách NCC \\
 \hline
 Quản lý khách hàng & UC09 Thêm khách hàng \\
 \hline
@@ -77,21 +77,22 @@ Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \tex
 
 \section{Nghiệp vụ 2: Quản lý nhà cung cấp}
 
-\textbf{Mô tả}: Lưu trữ và duy trì thông tin các nhà cung cấp hàng hóa (tên, địa chỉ, điện thoại, email, người liên hệ). Thông tin NCC được dùng khi lập phiếu nhập kho, giúp truy vết hàng đến từ ai.
+\textbf{Mô tả}: Lưu trữ và duy trì thông tin các nhà cung cấp hàng hóa (tên, địa chỉ, điện thoại, email, người liên hệ). Thông tin NCC được dùng khi lập phiếu nhập kho, giúp truy vết hàng đến từ ai. Nghiệp vụ này \textbf{không} gói thành một use case duy nhất mà tách thành các mục tiêu: thêm, sửa, xóa, tìm kiếm, xem danh sách.
 
 \textbf{Người thực hiện}: Nhân viên kho, Quản lý kho.
 
-\textbf{Quy trình} (thao tác tiêu biểu -- thêm nhà cung cấp):
+\textbf{Các thao tác (mỗi thao tác = một use case)}:
 \begin{enumerate}[leftmargin=1.5cm]
-    \item Người dùng chọn chức năng quản lý nhà cung cấp, xem danh sách hiện có.
-    \item Chọn ``Thêm mới'', nhập mã NCC, tên, địa chỉ, số điện thoại, email, người liên hệ, mô tả (nếu có).
-    \item Hệ thống kiểm tra mã NCC không trùng.
-    \item Lưu vào cơ sở dữ liệu; có thể sửa hoặc đánh dấu ngừng hoạt động nếu NCC không còn giao dịch (không xóa cứng khi đã có phiếu nhập liên quan).
+    \item \textbf{Xem danh sách NCC (UC08)}: Mở chức năng quản lý NCC, hệ thống hiển thị toàn bộ (hoặc phân trang) danh sách nhà cung cấp đang có.
+    \item \textbf{Tìm kiếm NCC (UC07)}: Nhập mã/tên (hoặc SĐT), hệ thống lọc và trả về các bản ghi khớp.
+    \item \textbf{Thêm NCC (UC04)}: Chọn ``Thêm mới'', nhập mã, tên, địa chỉ, SĐT, email, người liên hệ; kiểm tra mã không trùng; lưu.
+    \item \textbf{Sửa NCC (UC05)}: Chọn một NCC trên danh sách, mở form sửa, thay đổi thông tin (trừ mã nếu quy ước khóa cố định), lưu.
+    \item \textbf{Xóa NCC (UC06)}: Chọn NCC cần xóa. Nếu \textbf{chưa} có phiếu nhập liên quan thì xóa (hoặc đánh dấu ngừng). Nếu \textbf{đã} có phiếu nhập thì \textbf{không xóa cứng}, chỉ cho ngừng hoạt động / ẩn khỏi form chọn mới.
 \end{enumerate}
 
-\textbf{Dữ liệu liên quan}: \texttt{NhaCungCap} (mã, tên, địa chỉ, SĐT, email, người liên hệ, mô tả).
+\textbf{Dữ liệu liên quan}: \texttt{NhaCungCap} (mã, tên, địa chỉ, SĐT, email, người liên hệ, mô tả, trạng thái).
 
-\textbf{Use case tiêu biểu}: UC04 Thêm nhà cung cấp.
+\textbf{Use case}: UC04 Thêm; UC05 Sửa; UC06 Xóa; UC07 Tìm kiếm; UC08 Xem danh sách nhà cung cấp.
 
 \section{Nghiệp vụ 3: Quản lý khách hàng}
 
