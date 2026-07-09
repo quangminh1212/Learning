@@ -1,59 +1,31 @@
 \chapter{SƠ ĐỒ HOẠT ĐỘNG (ACTIVITY DIAGRAM)}
 
-Sau đặc tả use case, bước tiếp theo là vẽ \textbf{Activity diagram} mô tả luồng hoạt động (các bước) để actor đạt mục tiêu của use case.
-
-\textit{Gọn báo cáo}: trình bày activity cho các use case cốt lõi (CRUD mẫu + nhập/xuất). Các UC thêm/sửa/xóa/tìm còn lại có luồng tương tự UC thêm/tìm cùng nhóm.
+Activity mô tả các bước để đạt mục tiêu của use case (sau đặc tả UC).
 
 \section{UC03 -- Thêm tài khoản}
 
-\textbf{Mục tiêu}: QTV tạo tài khoản mới.
+Mở form $\rightarrow$ nhập TT $\rightarrow$ kiểm tra tên ĐN $\rightarrow$ lưu / báo lỗi.
 
-\textbf{Các bước}: Mở form thêm TK $\rightarrow$ nhập thông tin $\rightarrow$ hệ thống kiểm tra tên đăng nhập $\rightarrow$ hợp lệ thì mã hóa MK, lưu; không hợp lệ thì báo lỗi $\rightarrow$ kết thúc.
+\section{UC06 -- Thêm hàng hóa}
 
-\section{UC15 -- Thêm hàng hóa}
+Mở form $\rightarrow$ nhập mã, tên, nhóm, ĐVT, giá $\rightarrow$ kiểm tra mã $\rightarrow$ lưu + tồn = 0.
 
-\textbf{Mục tiêu}: NV/QL thêm mặt hàng mới.
+\section{UC07 -- Tìm kiếm hàng hóa}
 
-\textbf{Các bước}: Mở form thêm hàng $\rightarrow$ nhập mã, tên, nhóm, ĐVT, giá $\rightarrow$ kiểm tra mã $\rightarrow$ lưu HangHoa $\rightarrow$ khởi tạo TonKho = 0 tại các kho $\rightarrow$ thông báo thành công.
+Nhập từ khóa/lọc $\rightarrow$ truy vấn $\rightarrow$ hiện danh sách kèm tồn.
 
-\section{UC18 -- Tìm kiếm hàng hóa}
-
-\textbf{Mục tiêu}: Tìm hàng theo điều kiện.
-
-\textbf{Các bước}: Nhập từ khóa/lọc $\rightarrow$ truy vấn $\rightarrow$ hiển thị danh sách kèm tồn $\rightarrow$ (tuỳ chọn) xem chi tiết.
-
-\section{UC22 -- Lập phiếu nhập kho}
-
-\textbf{Mục tiêu}: NV lập phiếu và gửi duyệt (chưa tăng tồn).
+\section{UC09 -- Lập phiếu nhập kho}
 
 \input{diagrams/tex/2.1_activity_nhapkho}
 
-\textit{Ghi chú}: Phần duyệt/tăng tồn thuộc UC23 (actor QL), có thể xem như nhánh ``Duyệt'' trên sơ đồ quy trình nhập.
-
-\section{UC23 -- Duyệt phiếu nhập kho}
-
-\textbf{Mục tiêu}: QL duyệt hoặc từ chối phiếu chờ duyệt.
-
-\textbf{Các bước}: Xem phiếu chờ duyệt $\rightarrow$ Duyệt: cập nhật trạng thái ``Đã duyệt'', tăng tồn, ghi log / Từ chối: trạng thái ``Từ chối'', ghi lý do, tồn không đổi.
-
-\section{UC24 -- Lập phiếu xuất kho}
-
-\textbf{Mục tiêu}: NV lập phiếu xuất (kiểm tra tồn), gửi duyệt.
+\section{UC10 -- Lập phiếu xuất kho}
 
 \input{diagrams/tex/2.2_activity_xuatkho}
 
-\section{UC25 -- Duyệt phiếu xuất kho}
-
-\textbf{Mục tiêu}: QL duyệt/từ chối; duyệt thì giảm tồn.
-
-\textbf{Các bước}: Tương tự UC23 nhưng giảm \texttt{TonKho} khi duyệt.
-
-\section{Quy trình kiểm kê (bổ sung nghiệp vụ)}
-
-Activity kiểm kê hỗ trợ hiểu luồng vận hành (có thể map sau thành các UC kiểm kê nếu mở rộng phạm vi).
+\section{Kiểm kê (bổ sung)}
 
 \input{diagrams/tex/2.3_activity_kiemke}
 
-\section{Kết luận chương}
+\section{Kết luận}
 
-Activity mô tả \textbf{cách} actor thực hiện từng use case. Bước tiếp: \textbf{Sequence diagram} (Chương 5) -- đối tượng nào gọi ai theo thời gian; rồi \textbf{Class diagram} (Chương 6).
+Tiếp theo: Sequence (Ch.5), Class (Ch.6).

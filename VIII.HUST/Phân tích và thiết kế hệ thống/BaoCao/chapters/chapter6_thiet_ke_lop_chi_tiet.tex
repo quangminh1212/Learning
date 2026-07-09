@@ -1,106 +1,59 @@
 \chapter{SƠ ĐỒ LỚP (CLASS DIAGRAM)}
 
-Sau use case, activity và sequence, \textbf{Class diagram} xác định các lớp, thuộc tính và quan hệ để hệ thống hỗ trợ các use case.
+Class diagram sau use case -- activity -- sequence.
 
 \section{Các lớp chính}
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{NguoiDung}: tài khoản, vai trò, trạng thái (UC01--UC06).
-    \item \textbf{HangHoa}, \textbf{NhomHangHoa}, \textbf{DonViTinh}: danh mục hàng (UC15--UC18).
-    \item \textbf{NhaCungCap}, \textbf{KhachHang}: đối tác (UC07--UC14).
-    \item \textbf{Kho}, \textbf{TonKho}: kho và tồn (UC19--UC21, nhập/xuất).
-    \item \textbf{PhieuNhapKho}, \textbf{ChiTietPhieuNhap}: phiếu nhập (UC22--UC23).
-    \item \textbf{PhieuXuatKho}, \textbf{ChiTietPhieuXuat}: phiếu xuất (UC24--UC25).
-    \item \textbf{PhieuKiemKe}, \textbf{ChiTietKiemKe}: kiểm kê.
-    \item \textbf{LichSuThaoTac}: ghi log.
-\end{itemize}
+NguoiDung; HangHoa, NhomHangHoa, DonViTinh; NhaCungCap, KhachHang; Kho, TonKho; PhieuNhapKho, ChiTietPhieuNhap; PhieuXuatKho, ChiTietPhieuXuat; PhieuKiemKe, ChiTietKiemKe; LichSuThaoTac.
 
 \section{Sơ đồ lớp tổng thể}
 
-\subsection{Danh mục (Master)}
-
 \input{diagrams/tex/4.1_classdiagram_master}
-
-\subsection{Nghiệp vụ nhập xuất}
 
 \input{diagrams/tex/4.2_classdiagram_nhapxuat}
 
-\subsection{Kiểm kê và log}
-
 \input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
 
-\section{Class diagram trong use case}
+\section{Class trong use case}
 
-\subsection{UC15 -- Thêm hàng hóa}
-
-Lớp: NguoiDung, HangHoa, NhomHangHoa, DonViTinh, TonKho.
-
+\subsection{UC06 -- Thêm hàng hóa}
 \input{diagrams/tex/4.4_class_uc05}
 
-\subsection{UC22 -- Lập phiếu nhập}
-
-Lớp: NguoiDung, PhieuNhapKho, ChiTietPhieuNhap, NhaCungCap, Kho, HangHoa, TonKho.
-
+\subsection{UC09 -- Lập phiếu nhập}
 \input{diagrams/tex/4.5_class_uc09}
 
-\subsection{UC24 -- Lập phiếu xuất}
-
-Lớp: NguoiDung, PhieuXuatKho, ChiTietPhieuXuat, KhachHang, Kho, HangHoa, TonKho.
-
+\subsection{UC10 -- Lập phiếu xuất}
 \input{diagrams/tex/4.6_class_uc10}
 
-\section{Bảng mô tả lớp (thiết kế chi tiết)}
+\section{Bảng thuộc tính chính}
 
-\begin{longtable}{|p{3cm}|p{5cm}|p{5cm}|}
+\begin{longtable}{|p{3cm}|p{5.5cm}|p{4.5cm}|}
 \hline
-\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
+\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Lớp} & \textbf{Thuộc tính chính} & \textbf{Mô tả} \\
+\textbf{Lớp} & \textbf{Thuộc tính} & \textbf{Ghi chú} \\
 \hline
 \endhead
-NguoiDung & MaNguoiDung, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & Tài khoản, phân quyền. \\
+NguoiDung & Ma, TenDangNhap, MatKhau, HoTen, VaiTro, TrangThai & UC01--03 \\
 \hline
-HangHoa & MaHangHoa, TenHangHoa, MaNhomHang, MaDonViTinh, GiaNhap, GiaXuat, MoTa, TrangThai & Danh mục hàng. \\
+HangHoa & Ma, Ten, Nhom, DVT, GiaNhap, GiaXuat & UC06--07 \\
 \hline
-NhomHangHoa & MaNhomHang, TenNhomHang, MoTa & Nhóm hàng. \\
+NhaCungCap / KhachHang & Ma, Ten, DiaChi, SDT, Email & UC04--05 \\
 \hline
-DonViTinh & MaDonViTinh, TenDonViTinh & Đơn vị tính. \\
+Kho & Ma, Ten, DiaChi, PhuTrach & UC08 \\
 \hline
-NhaCungCap & MaNhaCungCap, TenNhaCungCap, DiaChi, SoDienThoai, Email & NCC. \\
+PhieuNhap / ChiTiet & MaPhieu, NCC, Kho, SoLuong, DonGia & UC09 \\
 \hline
-KhachHang & MaKhachHang, TenKhachHang, DiaChi, SoDienThoai, Email, MaSoThue & Khách hàng. \\
+PhieuXuat / ChiTiet & MaPhieu, KH, Kho, SoLuong, DonGia & UC10 \\
 \hline
-Kho & MaKho, TenKho, DiaChi, NguoiPhuTrach, TrangThai & Kho. \\
-\hline
-PhieuNhapKho & MaPhieuNhap, MaNhaCungCap, MaKho, MaNguoiDung, NgayNhap, TongTien, TrangThai & Phiếu nhập. \\
-\hline
-ChiTietPhieuNhap & MaChiTiet, MaPhieuNhap, MaHangHoa, SoLuong, DonGia, ThanhTien & Dòng nhập. \\
-\hline
-PhieuXuatKho & MaPhieuXuat, MaKhachHang, MaKho, MaNguoiDung, NgayXuat, TongTien, TrangThai & Phiếu xuất. \\
-\hline
-ChiTietPhieuXuat & MaChiTiet, MaPhieuXuat, MaHangHoa, SoLuong, DonGia, ThanhTien & Dòng xuất. \\
-\hline
-TonKho & MaKho, MaHangHoa, SoLuongTon, NgayCapNhat & Tồn theo kho--hàng. \\
-\hline
-LichSuThaoTac & MaLog, MaNguoiDung, HanhDong, ThoiGian, DoiTuong & Log. \\
+TonKho & MaKho, MaHang, SoLuongTon & Cập nhật khi duyệt \\
 \hline
 \end{longtable}
 
-\section{Quan hệ chính}
-
-\begin{itemize}[leftmargin=1.5cm]
-    \item NguoiDung 1--n PhieuNhapKho / PhieuXuatKho.
-    \item NhaCungCap 1--n PhieuNhapKho; KhachHang 1--n PhieuXuatKho.
-    \item Phieu 1--n ChiTiet; ChiTiet n--1 HangHoa.
-    \item Kho 1--n TonKho; HangHoa 1--n TonKho.
-\end{itemize}
-
-\section{Component (kiến trúc)}
-
+\section{Component}
 \input{diagrams/tex/6.1_component}
 
-\section{Kết luận chương}
-
-Class diagram hoàn thiện bước phân tích/thiết kế hướng đối tượng sau use case -- activity -- sequence. Chương 7: CSDL và giao diện.
+\section{Kết luận}
+Tiếp: CSDL và giao diện (Ch.7).

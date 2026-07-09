@@ -2,36 +2,29 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.85,
+    scale=0.9,
     transform shape,
     actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.0cm, minimum height=0.6cm, font=\scriptsize, align=center},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=13cm, minimum height=9cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,4.1) {Phân rã: Quản lý NCC \& Khách hàng};
+\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,2.6) {Phân rã: Đối tác};
 
-\node[usecase] (uc07) at (-3.3,2.5) {UC07: Thêm NCC};
-\node[usecase] (uc08) at (-3.3,1.3) {UC08: Sửa NCC};
-\node[usecase] (uc09) at (-3.3,0.1) {UC09: Xóa NCC};
-\node[usecase] (uc10) at (-3.3,-1.1) {UC10: Tìm kiếm NCC};
+\node[usecase] (uc04) at (-2.8,0.3) {UC04: Thêm nhà cung cấp};
+\node[usecase] (uc05) at (2.8,0.3) {UC05: Thêm khách hàng};
 
-\node[usecase] (uc11) at (3.3,2.5) {UC11: Thêm KH};
-\node[usecase] (uc12) at (3.3,1.3) {UC12: Sửa KH};
-\node[usecase] (uc13) at (3.3,0.1) {UC13: Xóa KH};
-\node[usecase] (uc14) at (3.3,-1.1) {UC14: Tìm kiếm KH};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7.2,0.7) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7.2,0.7) {};
-
-\foreach \u in {uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14} {
-  \draw (nvk) -- (\u);
-  \draw (qlk) -- (\u);
-}
+\draw (nvk) -- (uc04);
+\draw (nvk) -- (uc05);
+\draw (qlk) -- (uc04);
+\draw (qlk) -- (uc05);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- NCC và KH (mỗi hành động = 1 UC)}
+\caption{Use case phân rã -- Thêm NCC, Thêm khách hàng}
 \label{fig:usecase-partner-management}
 \end{figure}

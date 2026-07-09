@@ -2,38 +2,31 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.88,
+    scale=0.9,
     transform shape,
     actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.3cm, minimum height=0.65cm, font=\scriptsize, align=center},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.2cm, minimum height=0.7cm, font=\footnotesize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=11.5cm, minimum height=9.5cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,4.3) {Phân rã: Xác thực \& Quản lý tài khoản};
-\node[font=\scriptsize\itshape] at (0,3.75) {(mỗi oval = 1 use case = 1 mục tiêu)};
+\node[system, minimum width=10cm, minimum height=7.5cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.3) {Phân rã: Xác thực \& tài khoản};
 
-\node[usecase] (uc01) at (-2.8,2.5) {UC01: Đăng nhập};
-\node[usecase] (uc02) at (2.8,2.5) {UC02: Đăng xuất};
-\node[usecase] (uc03) at (-2.8,1.0) {UC03: Thêm tài khoản};
-\node[usecase] (uc04) at (2.8,1.0) {UC04: Sửa tài khoản};
-\node[usecase] (uc05) at (-2.8,-0.5) {UC05: Xóa/khóa tài khoản};
-\node[usecase] (uc06) at (2.8,-0.5) {UC06: Tìm kiếm tài khoản};
+\node[usecase] (uc01) at (0,1.8) {UC01: Đăng nhập};
+\node[usecase] (uc02) at (0,0.4) {UC02: Đăng xuất};
+\node[usecase] (uc03) at (0,-1.0) {UC03: Thêm tài khoản};
 
-\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-6.3,0.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Người dùng}] (user) at (6.3,0.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-5.2,0.4) {};
+\node[actor, label=below:{\scriptsize\bfseries Người dùng}] (user) at (5.2,0.4) {};
 
 \draw (admin) -- (uc01);
 \draw (admin) -- (uc02);
 \draw (admin) -- (uc03);
-\draw (admin) -- (uc04);
-\draw (admin) -- (uc05);
-\draw (admin) -- (uc06);
 \draw (user) -- (uc01);
 \draw (user) -- (uc02);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- Tài khoản (Thêm, Sửa, Xóa/khóa, Tìm -- mỗi cái 1 UC)}
+\caption{Use case phân rã -- Xác thực và thêm tài khoản}
 \label{fig:usecase-user-management}
 \end{figure}

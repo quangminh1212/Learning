@@ -2,39 +2,31 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.85,
+    scale=0.9,
     transform shape,
     actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.2cm, minimum height=0.6cm, font=\scriptsize, align=center},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.3cm, minimum height=0.7cm, font=\footnotesize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=12.5cm, minimum height=9cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,4.1) {Phân rã: Quản lý hàng hóa \& kho};
+\node[system, minimum width=11cm, minimum height=7.5cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.3) {Phân rã: Hàng hóa \& kho};
 
-\node[usecase] (uc15) at (-3.2,2.5) {UC15: Thêm hàng hóa};
-\node[usecase] (uc16) at (-3.2,1.3) {UC16: Sửa hàng hóa};
-\node[usecase] (uc17) at (-3.2,0.1) {UC17: Ngừng hàng hóa};
-\node[usecase] (uc18) at (-3.2,-1.1) {UC18: Tìm kiếm hàng hóa};
+\node[usecase] (uc06) at (0,1.8) {UC06: Thêm hàng hóa};
+\node[usecase] (uc07) at (0,0.4) {UC07: Tìm kiếm hàng hóa};
+\node[usecase] (uc08) at (0,-1.0) {UC08: Thêm kho};
 
-\node[usecase] (uc19) at (3.2,2.5) {UC19: Thêm kho};
-\node[usecase] (uc20) at (3.2,1.3) {UC20: Sửa kho};
-\node[usecase] (uc21) at (3.2,0.1) {UC21: Tìm kiếm kho};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-5.8,0.4) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (5.8,0.4) {};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7,0.7) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7,0.7) {};
-
-\foreach \u in {uc15,uc16,uc17,uc18} {
-  \draw (nvk) -- (\u);
-  \draw (qlk) -- (\u);
-}
-\draw (qlk) -- (uc19);
-\draw (qlk) -- (uc20);
-\draw (qlk) -- (uc21);
-\draw (nvk) -- (uc21);
+\draw (nvk) -- (uc06);
+\draw (nvk) -- (uc07);
+\draw (qlk) -- (uc06);
+\draw (qlk) -- (uc07);
+\draw (qlk) -- (uc08);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- Hàng hóa và kho}
+\caption{Use case phân rã -- Hàng hóa và kho}
 \label{fig:usecase-item-management}
 \end{figure}

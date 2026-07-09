@@ -1,72 +1,37 @@
 \chapter{SƠ ĐỒ TRÌNH TỰ (SEQUENCE DIAGRAM)}
 
-Sau activity, \textbf{Sequence diagram} mô tả tương tác giữa các đối tượng (actor, giao diện, controller, DAO, CSDL) theo thời gian để hoàn thành use case.
+Sequence: tương tác đối tượng theo thời gian cho các use case chính.
 
-\section{UC15 -- Thêm hàng hóa}
+\section{UC06 -- Thêm hàng hóa}
 
-\textbf{Mục tiêu}: Thêm một mặt hàng mới.
-
-\textbf{Đối tượng}: NV kho, Giao diện, HangHoaController, HangHoaDAO, TonKhoDAO, CSDL.
-
-\textbf{Luồng}:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item NV gửi ``Thêm hàng hóa'' qua giao diện.
-    \item Giao diện $\rightarrow$ HangHoaController.
-    \item Controller $\rightarrow$ HangHoaDAO kiểm tra mã trùng.
-    \item Không trùng: DAO lưu HangHoa.
-    \item Controller $\rightarrow$ TonKhoDAO khởi tạo tồn = 0 các kho.
-    \item Trả thông báo thành công ra giao diện.
-\end{enumerate}
+NV $\rightarrow$ Giao diện $\rightarrow$ HangHoaController $\rightarrow$ HangHoaDAO (kiểm tra mã, lưu) $\rightarrow$ TonKhoDAO (tồn = 0) $\rightarrow$ thông báo.
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
-\section{UC18 -- Tìm kiếm hàng hóa}
+\section{UC07 -- Tìm kiếm hàng hóa}
 
-\textbf{Mục tiêu}: Tìm hàng theo điều kiện.
-
-\textbf{Luồng}: Nhập từ khóa $\rightarrow$ HangHoaController $\rightarrow$ HangHoaDAO tìm $\rightarrow$ TonKhoDAO lấy tồn $\rightarrow$ hiển thị danh sách.
+Nhập điều kiện $\rightarrow$ HangHoaController $\rightarrow$ HangHoaDAO + TonKhoDAO $\rightarrow$ danh sách.
 
 \input{diagrams/tex/5.2_sequence_uc06}
 
-\section{UC22 -- Lập phiếu nhập kho}
+\section{UC09 -- Lập phiếu nhập kho}
 
-\textbf{Mục tiêu}: Lập phiếu + gửi duyệt (tăng tồn khi UC23).
-
-\textbf{Đối tượng}: NV, (QL ở bước duyệt), Giao diện, PhieuNhapController, PhieuNhapDAO, ChiTietPhieuNhapDAO, TonKhoDAO, LichSuDAO, CSDL.
-
-\textbf{Luồng}:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item NV tạo phiếu, thêm chi tiết dòng hàng.
-    \item Gửi duyệt (trạng thái Chờ duyệt).
-    \item QL duyệt $\rightarrow$ cập nhật trạng thái, tăng tồn, ghi log (UC23 trên cùng sequence tổng quát).
-\end{enumerate}
+NV lập phiếu, thêm chi tiết, gửi duyệt; QL duyệt $\rightarrow$ tăng tồn, log.
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
-\section{UC24 -- Lập phiếu xuất kho}
+\section{UC10 -- Lập phiếu xuất kho}
 
-\textbf{Mục tiêu}: Lập phiếu xuất (kiểm tra tồn) + gửi duyệt; giảm tồn khi UC25.
-
-\textbf{Luồng}: Tạo phiếu $\rightarrow$ thêm dòng (TonKhoDAO kiểm tra đủ) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ giảm tồn, log.
+NV lập phiếu (kiểm tra tồn), gửi duyệt; QL duyệt $\rightarrow$ giảm tồn, log.
 
 \input{diagrams/tex/5.4_sequence_uc10}
 
-\section{Biểu đồ trạng thái phiếu (bổ sung)}
-
-State machine mô tả vòng đời phiếu (hỗ trợ hiểu sequence duyệt).
-
-\subsection{Phiếu nhập}
-
-Trạng thái: Mới tạo $\rightarrow$ Chờ duyệt $\rightarrow$ Đã duyệt / Từ chối; có thể Hủy từ Mới tạo/Từ chối.
+\section{State machine phiếu}
 
 \input{diagrams/tex/5.5_state_phieu_nhap}
 
-\subsection{Phiếu xuất}
-
-Tương tự phiếu nhập.
-
 \input{diagrams/tex/5.6_state_phieu_xuat}
 
-\section{Kết luận chương}
+\section{Kết luận}
 
-Sequence gắn \textbf{use case} với các đối tượng phần mềm. Chương 6: \textbf{Class diagram} tổng hợp các lớp đã xuất hiện.
+Tiếp: Class diagram (Ch.6).

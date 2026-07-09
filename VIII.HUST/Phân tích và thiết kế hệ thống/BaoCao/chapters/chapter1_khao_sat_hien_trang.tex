@@ -110,23 +110,23 @@ Hệ thống được đề xuất triển khai theo mô hình ứng dụng web 
     \item \textbf{Framework}: Django -- framework Python đầy đủ tính năng, hỗ trợ ORM, phân quyền, bảo mật.
     \item \textbf{Cơ sở dữ liệu}: PostgreSQL -- hệ quản trị CSDL quan hệ mã nguồn mở, ổn định, hiệu năng cao.
     \item \textbf{Giao diện}: HTML5, CSS3, JavaScript kết hợp Bootstrap để tạo giao diện responsive.
-    \item \textbf{Báo cáo}: Thư viện ReportLab (PDF), pandas/openpyxl (Excel) để xuất báo cáo.
+    \item \textbf{Xuất danh sách}: pandas/openpyxl (Excel) khi cần.
 \end{itemize}
 
-\subsection{Lựa chọn công cụ biểu diễn UML}
+\subsection{Hướng phân tích -- thiết kế: hướng đối tượng (OO)}
 
-Trong báo cáo này, các sơ đồ UML được biểu diễn bằng gói \texttt{TikZ} và các gói mở rộng \texttt{pgf-umlcd}, \texttt{pgf-umlsd} trên nền LaTeX. Các loại sơ đồ sử dụng bao gồm:
+Báo cáo theo \textbf{phân tích và thiết kế hướng đối tượng} (UML):
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Use Case Diagram}: Mô tả các tác nhân và ca sử dụng của hệ thống.
-    \item \textbf{Activity Diagram}: Mô tả luồng hoạt động của các nghiệp vụ chính.
-    \item \textbf{Class Diagram}: Mô tả các lớp đối tượng và quan hệ giữa chúng.
-    \item \textbf{Sequence Diagram}: Mô tả luồng tương tác giữa các đối tượng theo thời gian.
-    \item \textbf{State Machine Diagram}: Mô tả trạng thái và chuyển tiếp của các đối tượng.
-    \item \textbf{Component Diagram}: Mô tả các thành phần phần mềm và quan hệ giữa chúng.
-    \item \textbf{ERD}: Mô tả mô hình cơ sở dữ liệu quan hệ.
-\end{itemize}
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nghiệp vụ $\rightarrow$ \textbf{Use Case} (tổng quát, phân rã, đặc tả).
+    \item \textbf{Activity} (luồng bước của use case).
+    \item \textbf{Sequence} (tương tác giữa các đối tượng).
+    \item \textbf{Class} (lớp đối tượng và quan hệ).
+    \item \textbf{State} / \textbf{Component} (bổ sung); \textbf{ERD} + giao diện (thiết kế).
+\end{enumerate}
+
+Sơ đồ vẽ bằng TikZ / pgf-umlcd / pgf-umlsd trên LaTeX.
 
 \section{Kết luận chương}
 
-Chương 1: bối cảnh, phạm vi, yêu cầu. Các chương sau theo quy trình: \textbf{Nghiệp vụ} $\rightarrow$ \textbf{UC tổng quát} $\rightarrow$ \textbf{UC phân rã} $\rightarrow$ \textbf{Đặc tả UC} $\rightarrow$ \textbf{Activity} $\rightarrow$ \textbf{Sequence} $\rightarrow$ \textbf{Class} $\rightarrow$ CSDL/Giao diện.
+Chương 1: bối cảnh, phạm vi, yêu cầu; \textbf{hướng đối tượng}. Tiếp: Nghiệp vụ $\rightarrow$ UC $\rightarrow$ Activity $\rightarrow$ Sequence $\rightarrow$ Class $\rightarrow$ CSDL/UI.
