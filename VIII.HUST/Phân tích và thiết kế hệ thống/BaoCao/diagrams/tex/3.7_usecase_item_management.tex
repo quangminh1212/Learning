@@ -24,8 +24,9 @@
 \node[usecase] (k21) at (3.3,-0.3) {UC21: Tìm kho};
 \node[usecase] (k22) at (3.3,-1.4) {UC22: Xem DS kho};
 
-\node[actor, label=below:{\scriptsize\bfseries NV / QL}] (nv) at (-7.5,0.8) {};
-\node[actor, label=below:{\scriptsize\bfseries QL / QTV}] (ql) at (7.5,0.8) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nv) at (-7.5,0.8) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (ql) at (7.5,0.8) {};
+% Hàng: NV + QL; Kho: chỉ QL (QTV không quản lý kho)
 \foreach \u in {h13,h14,h15,h16,h17} { \draw (nv) -- (\u); \draw (ql) -- (\u); }
 \foreach \u in {k18,k19,k20,k21,k22} { \draw (ql) -- (\u); }
 \end{tikzpicture}}

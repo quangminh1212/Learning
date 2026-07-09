@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Grok-BaoCao-QLKH" version="24.0.0">
+  <diagram id="4a5e8050" name="Sequence UC13 Thêm hàng">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="720" pageHeight="430" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+<mxCell id="2" value="NV kho" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="30" width="130" height="44" as="geometry"/></mxCell>
+<mxCell id="3" value="Giao diện HH" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="190" y="30" width="130" height="44" as="geometry"/></mxCell>
+<mxCell id="4" value="Hệ thống" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="340" y="30" width="130" height="44" as="geometry"/></mxCell>
+<mxCell id="5" value="CSDL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="490" y="30" width="130" height="44" as="geometry"/></mxCell>
+<mxCell id="6" value="1. Chọn thêm hàng" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="105" y="100" width="150" height="28" as="geometry"/></mxCell>
+<mxCell id="7" value="2. Nhập thông tin" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="105" y="148" width="150" height="28" as="geometry"/></mxCell>
+<mxCell id="8" value="3. Gửi dữ liệu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="255" y="196" width="150" height="28" as="geometry"/></mxCell>
+<mxCell id="9" value="4. Lưu HangHoa" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="405" y="244" width="150" height="28" as="geometry"/></mxCell>
+<mxCell id="10" value="5. KhoiTaoTon = 0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="405" y="292" width="150" height="28" as="geometry"/></mxCell>
+<mxCell id="11" value="6. Thông báo thành công" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="255" y="340" width="150" height="28" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

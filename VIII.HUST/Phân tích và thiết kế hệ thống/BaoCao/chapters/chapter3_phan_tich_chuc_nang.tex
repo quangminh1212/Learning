@@ -36,9 +36,9 @@ Tác nhân là vai trò bên ngoài hệ thống, chủ động khởi tạo tư
 \textbf{Tác nhân} & \textbf{Mô tả} \\
 \hline
 \endhead
-Quản trị viên & Quản lý tài khoản, phân quyền; quản lý kho; xem báo cáo nhập xuất tồn. \\
+Quản trị viên & Chỉ quản lý tài khoản (thêm/sửa/xóa/tìm/xem DS) và đăng nhập/đăng xuất. Không thao tác kho, phiếu, báo cáo. \\
 \hline
-Quản lý kho & Duyệt phiếu; quản lý NCC, hàng, kho (đủ thêm/sửa/xóa/tìm/xem); xem báo cáo. \\
+Quản lý kho & Duyệt phiếu; quản lý NCC, hàng, kho; xem báo cáo tồn. \\
 \hline
 Nhân viên kho & Lập/sửa/xóa/tìm/xem phiếu nhập--xuất--kiểm kê; CRUD+tìm/xem DS NCC, hàng hóa. \\
 \hline
@@ -63,7 +63,7 @@ Giải thích sơ đồ:
     \item \textbf{Hộp nét đứt}: ranh giới hệ thống quản lý kho -- mọi use case nằm trong hệ thống.
     \item \textbf{Ba actor} (hình người): Quản trị viên (trái), Quản lý kho (phải), Nhân viên kho (dưới) -- vai trò bên ngoài chủ động gọi chức năng.
     \item \textbf{Các oval}: nhóm chức năng mức tổng quát (Đăng nhập/Đăng xuất, Quản lý tài khoản, NCC, hàng hóa, kho, nhập, xuất, kiểm kê, báo cáo tồn -- \textbf{không} có khách hàng). Đây \textbf{chưa} phải use case chi tiết.
-    \item \textbf{Đường nối} actor--oval: actor đó được quyền tham gia nhóm chức năng tương ứng (ví dụ NV không nối ``Báo cáo tồn'' nếu chỉ QL/QTV xem báo cáo; QTV nối tài khoản và kho).
+    \item \textbf{Đường nối} actor--oval: \textbf{QTV chỉ nối} Đăng nhập/Đăng xuất và Quản lý tài khoản; \textbf{không} nối kho hay báo cáo. QL nối các nghiệp vụ kho + báo cáo; NV nối danh mục/phiếu (không báo cáo, không quản lý kho master).
     \item \textbf{Ý nghĩa phân tích}: xác định \textit{ai dùng gì} ở mức toàn hệ thống trước khi đi sâu từng mục tiêu.
 \end{itemize}
 
@@ -84,7 +84,7 @@ Giải thích sơ đồ: Nhóm NCC phân rã đủ năm mục tiêu \textbf{UC08
 \subsection{Nhóm hàng hóa và kho}
 \input{diagrams/tex/3.7_usecase_item_management}
 
-Giải thích sơ đồ: Cột trái -- \textbf{hàng hóa UC13--UC17} (Thêm/Sửa/Xóa/Tìm/Xem DS), NV+QL. Cột phải -- \textbf{kho UC18--UC22} cùng năm thao tác, chủ yếu QL/QTV. Nguyên tắc: thêm được thì phải sửa/xóa/tìm/xem được.
+Giải thích sơ đồ: Cột trái -- \textbf{hàng hóa UC13--UC17} (Thêm/Sửa/Xóa/Tìm/Xem DS), NV và QL. Cột phải -- \textbf{kho UC18--UC22}, \textbf{chỉ Quản lý kho} (QTV không tham gia). Nguyên tắc: thêm được thì phải sửa/xóa/tìm/xem được.
 
 \subsection{Nhóm nhập, xuất, kiểm kê, báo cáo}
 \input{diagrams/tex/3.8_usecase_inventory_management}
@@ -136,15 +136,15 @@ UC16 & Tìm kiếm hàng hóa & NV, QL & Hàng hóa \\
 \hline
 UC17 & Xem danh sách hàng hóa & NV, QL & Hàng hóa \\
 \hline
-UC18 & Thêm kho & QL, QTV & Kho \\
+UC18 & Thêm kho & QL & Kho \\
 \hline
-UC19 & Sửa kho & QL, QTV & Kho \\
+UC19 & Sửa kho & QL & Kho \\
 \hline
-UC20 & Xóa kho & QL, QTV & Kho \\
+UC20 & Xóa kho & QL & Kho \\
 \hline
-UC21 & Tìm kiếm kho & QL, QTV & Kho \\
+UC21 & Tìm kiếm kho & QL & Kho \\
 \hline
-UC22 & Xem danh sách kho & QL, QTV & Kho \\
+UC22 & Xem danh sách kho & QL & Kho \\
 \hline
 UC23 & Lập phiếu nhập kho & NV, QL & Nhập kho \\
 \hline
@@ -168,7 +168,7 @@ UC32 & Xem danh sách phiếu xuất & NV, QL & Xuất kho \\
 \hline
 UC33 & Lập phiếu kiểm kê & NV, QL & Kiểm kê \\
 \hline
-UC34 & Xem báo cáo nhập xuất tồn & QL, QTV & Báo cáo \\
+UC34 & Xem báo cáo nhập xuất tồn & QL & Báo cáo \\
 \hline
 \end{longtable}
 
@@ -581,7 +581,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Thêm kho.
     \item \textbf{Mã}: UC18.
-    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Tác nhân chính}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Bổ sung bản ghi kho mới vào hệ thống.
     \item \textbf{Mục tiêu}: Lưu được bản ghi mới, dùng được ở các chức năng liên quan.
     \item \textbf{Điều kiện trước}: Actor đã đăng nhập với quyền phù hợp.
@@ -602,7 +602,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Sửa kho.
     \item \textbf{Mã}: UC19.
-    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Tác nhân chính}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Cập nhật thông tin bản ghi đã có.
     \item \textbf{Mục tiêu}: Dữ liệu phản ánh đúng thông tin mới nhất.
     \item \textbf{Điều kiện trước}: Đã có bản ghi (chọn từ UC22 hoặc UC21). 
@@ -622,7 +622,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xóa kho.
     \item \textbf{Mã}: UC20.
-    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Tác nhân chính}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Gỡ bản ghi khỏi danh mục đang dùng.
     \item \textbf{Mục tiêu}: Bản ghi không còn dùng cho thao tác mới (đã xóa hoặc đã ngừng).
     \item \textbf{Điều kiện trước}: Đã chọn một bản ghi.
@@ -642,7 +642,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Tìm kiếm kho.
     \item \textbf{Mã}: UC21.
-    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Tác nhân chính}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Lọc nhanh theo mã/tên (hoặc điều kiện liên quan).
     \item \textbf{Mục tiêu}: Nhận danh sách khớp điều kiện.
     \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
@@ -662,7 +662,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xem danh sách kho.
     \item \textbf{Mã}: UC22.
-    \item \textbf{Tác nhân chính}: QL, QTV.
+    \item \textbf{Tác nhân chính}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Mở màn hình quản lý và xem toàn bộ (hoặc phân trang) danh sách -- điểm vào trước khi thêm/sửa/xóa/tìm.
     \item \textbf{Mục tiêu}: Nhìn được danh mục hiện tại.
     \item \textbf{Điều kiện trước}: Actor đã đăng nhập.
@@ -818,7 +818,7 @@ Phần đặc tả mô tả chi tiết từng use case: bối cảnh, điều ki
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Tên use case}: Xem báo cáo nhập xuất tồn.
     \item \textbf{Mã}: UC34.
-    \item \textbf{Tác nhân}: QL, QTV.
+    \item \textbf{Tác nhân}: Quản lý kho.
     \item \textbf{Mô tả tóm tắt}: Xem tồn hiện tại hoặc tổng hợp nhập--xuất--tồn theo kỳ/kho/hàng; có thể xuất Excel.
 \end{itemize}
 

@@ -26,9 +26,12 @@
 \node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7.4,2.0) {};
 \node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (0,-3.2) {};
 
-\draw (admin) -- (g1); \draw (admin) -- (g2); \draw (admin) -- (g6); \draw (admin) -- (g10);
+% QTV chỉ quản lý tài khoản (+ đăng nhập/đăng xuất)
+\draw (admin) -- (g1); \draw (admin) -- (g2);
+% QL: nghiệp vụ kho (không quản lý tài khoản)
 \draw (qlk) -- (g1); \draw (qlk) -- (g3); \draw (qlk) -- (g5); \draw (qlk) -- (g6);
 \draw (qlk) -- (g7); \draw (qlk) -- (g8); \draw (qlk) -- (g9); \draw (qlk) -- (g10);
+% NV: thao tác danh mục/phiếu (không kho master, không báo cáo, không TK)
 \draw (nvk) -- (g1); \draw (nvk) -- (g3); \draw (nvk) -- (g5);
 \draw (nvk) -- (g7); \draw (nvk) -- (g8); \draw (nvk) -- (g9);
 \end{tikzpicture}}

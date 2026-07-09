@@ -119,7 +119,8 @@ NgayCapNhat & DATETIME & Lần cập nhật gần nhất. \\
 Giải thích sơ đồ: Sơ đồ điều hướng (navigation) cho thấy người dùng \textbf{đi từ màn nào sang màn nào} sau khi đăng nhập:
 \begin{itemize}[leftmargin=1.5cm]
     \item Điểm vào: \textbf{Đăng nhập (UC01)} $\rightarrow$ \textbf{Trang chủ (Dashboard)}.
-    \item Từ trang chủ tỏa ra các màn chức năng: Hàng hóa (UC13--UC17), NCC (UC08--UC12), Kho (UC18--UC22), Tài khoản (UC03--UC07), Báo cáo (UC34), Phiếu nhập (UC23--UC27), Phiếu xuất (UC28--UC32), Kiểm kê (UC33).
+    \item Từ trang chủ tỏa ra các màn chức năng (theo \textbf{vai trò}): QTV chủ yếu thấy \textbf{Tài khoản (UC03--UC07)}; QL/NV thấy hàng, NCC, kho, phiếu, báo cáo tương ứng quyền.
+    \item Sơ đồ vẽ đủ các màn hệ thống; khi triển khai, menu ẩn mục không thuộc quyền actor (QTV không vào kho/báo cáo).
     \item Mỗi hộp gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 \end{itemize}
 Sơ đồ không mô tả layout chi tiết từng form, mà mô tả \textbf{cấu trúc menu/luồng màn hình} phục vụ triển khai UI.
