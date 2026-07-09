@@ -1,98 +1,100 @@
 \chapter{MÔ TẢ NGHIỆP VỤ}
 
-\section{Tổng quan các nghiệp vụ}
+\section{Quy trình phân tích -- thiết kế (tóm tắt)}
 
-Hệ thống quản lý kho kiểm soát hàng hóa từ nhập đến xuất, quản lý đối tác, kho và người dùng.
+Báo cáo đi theo chuỗi chuẩn:
 
-\textbf{Lưu ý}: \textit{Nghiệp vụ} là gói công việc ở mức doanh nghiệp. \textit{Use case} là \textbf{một mục tiêu cụ thể} của actor (Chương 3). Một nghiệp vụ có thể gồm nhiều use case; trong báo cáo chọn \textbf{10 use case} tiêu biểu để phân tích.
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Nghiệp vụ} (chương này) -- mô tả công việc doanh nghiệp.
+    \item \textbf{Use case tổng quát} -- các nhóm chức năng hệ thống hỗ trợ.
+    \item \textbf{Use case phân rã} -- mỗi hành động/mục tiêu của actor = 1 use case.
+    \item \textbf{Đặc tả use case} -- actor, mục tiêu, luồng chính/thay thế.
+    \item \textbf{Activity diagram} -- luồng hoạt động của từng use case (hoặc use case chính).
+    \item \textbf{Sequence diagram} -- tương tác đối tượng theo thời gian.
+    \item \textbf{Class diagram} -- lớp và quan hệ phục vụ các use case.
+\end{enumerate}
 
-Các nghiệp vụ chính:
+\textit{Lưu ý}: Nghiệp vụ \textbf{không} đồng nhất với use case. Ví dụ nghiệp vụ ``Quản lý tài khoản'' gồm nhiều use case: thêm, sửa, xóa/khóa, tìm kiếm tài khoản.
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item Xác thực: đăng nhập, đăng xuất.
-    \item Quản lý tài khoản: thêm (và duy trì) tài khoản người dùng.
-    \item Quản lý đối tác: thêm nhà cung cấp, thêm khách hàng.
-    \item Quản lý hàng hóa \& kho: thêm hàng, tìm hàng, thêm kho.
-    \item Nhập / xuất kho: lập phiếu nhập, lập phiếu xuất (có duyệt).
-\end{itemize}
+\section{Tổng quan nghiệp vụ hệ thống}
 
-\begin{longtable}{|p{4.5cm}|p{8.5cm}|}
+Hệ thống quản lý kho phục vụ: xác thực người dùng; duy trì danh mục (tài khoản, NCC, khách hàng, hàng hóa, kho); nhập kho; xuất kho.
+
+\begin{longtable}{|p{4.2cm}|p{8.8cm}|}
 \hline
-\textbf{Nghiệp vụ} & \textbf{Use case tiêu biểu (Ch.3)} \\
+\textbf{Nghiệp vụ (chung)} & \textbf{Sẽ phân rã thành các use case (mục tiêu)} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Nghiệp vụ} & \textbf{Use case tiêu biểu (Ch.3)} \\
+\textbf{Nghiệp vụ (chung)} & \textbf{Sẽ phân rã thành các use case (mục tiêu)} \\
 \hline
 \endhead
-Xác thực & UC01 Đăng nhập; UC02 Đăng xuất \\
+Xác thực & Đăng nhập; Đăng xuất \\
 \hline
-Quản lý tài khoản & UC03 Thêm tài khoản \\
+Quản lý tài khoản & Thêm TK; Sửa TK; Xóa/khóa TK; Tìm TK \\
 \hline
-Quản lý đối tác & UC04 Thêm nhà cung cấp; UC05 Thêm khách hàng \\
+Quản lý nhà cung cấp & Thêm; Sửa; Xóa; Tìm NCC \\
 \hline
-Quản lý hàng hóa \& kho & UC06 Thêm hàng hóa; UC07 Tìm kiếm hàng hóa; UC08 Thêm kho \\
+Quản lý khách hàng & Thêm; Sửa; Xóa; Tìm KH \\
 \hline
-Nhập / xuất kho & UC09 Lập phiếu nhập kho; UC10 Lập phiếu xuất kho \\
+Quản lý hàng hóa & Thêm; Sửa; Ngừng; Tìm hàng \\
+\hline
+Quản lý kho & Thêm; Sửa; Tìm kho \\
+\hline
+Nhập kho & Lập phiếu nhập; Duyệt phiếu nhập \\
+\hline
+Xuất kho & Lập phiếu xuất; Duyệt phiếu xuất \\
 \hline
 \end{longtable}
 
 \section{Nghiệp vụ 1: Xác thực người dùng}
 
-Người dùng đăng nhập bằng tên đăng nhập và mật khẩu; khi xong thì đăng xuất (xóa phiên).
+Người dùng đăng nhập bằng tên đăng nhập và mật khẩu để sử dụng hệ thống; khi kết thúc thì đăng xuất (xóa phiên).
 
 \textbf{Dữ liệu}: \texttt{NguoiDung}, \texttt{LichSuThaoTac}.
 
 \section{Nghiệp vụ 2: Quản lý tài khoản}
 
-Quản trị viên thêm tài khoản, gán vai trò (QTV / QL kho / NV kho). Các thao tác sửa, khóa có thể mô tả mở rộng khi bảo vệ (cùng nhóm với UC03).
+Quản trị viên duy trì tài khoản và phân quyền (QTV / QL kho / NV kho). Gồm các hành động: thêm mới, sửa thông tin, khóa/xóa, xem/tìm danh sách.
 
 \textbf{Dữ liệu}: \texttt{NguoiDung}.
 
-\section{Nghiệp vụ 3: Quản lý đối tác}
+\section{Nghiệp vụ 3: Quản lý nhà cung cấp}
 
-Duy trì nhà cung cấp (phục vụ nhập) và khách hàng (phục vụ xuất). Use case tiêu biểu: \textbf{Thêm NCC}, \textbf{Thêm KH}.
+Duy trì danh mục NCC phục vụ lập phiếu nhập: thêm, sửa, xóa, tìm kiếm.
 
-\textbf{Dữ liệu}: \texttt{NhaCungCap}, \texttt{KhachHang}.
+\textbf{Dữ liệu}: \texttt{NhaCungCap}.
 
-\section{Nghiệp vụ 4: Quản lý hàng hóa và kho}
+\section{Nghiệp vụ 4: Quản lý khách hàng}
 
-Danh mục hàng (mã, tên, nhóm, ĐVT, giá) và thông tin kho. Use case tiêu biểu: \textbf{Thêm hàng}, \textbf{Tìm hàng}, \textbf{Thêm kho}.
+Duy trì danh mục KH phục vụ lập phiếu xuất: thêm, sửa, xóa, tìm kiếm.
 
-\textbf{Dữ liệu}: \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{Kho}, \texttt{TonKho}.
+\textbf{Dữ liệu}: \texttt{KhachHang}.
 
-\section{Nghiệp vụ 5: Nhập kho}
+\section{Nghiệp vụ 5: Quản lý hàng hóa}
 
-Nhân viên lập phiếu nhập (NCC, kho, dòng hàng) $\rightarrow$ gửi duyệt $\rightarrow$ quản lý duyệt $\rightarrow$ tăng tồn.
+Danh mục hàng (mã, tên, nhóm, ĐVT, giá): thêm, sửa, ngừng sử dụng, tìm kiếm.
+
+\textbf{Dữ liệu}: \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{TonKho}.
+
+\section{Nghiệp vụ 6: Quản lý kho}
+
+Thông tin kho: thêm, sửa, tìm kiếm / xem tồn tại kho.
+
+\textbf{Dữ liệu}: \texttt{Kho}, \texttt{TonKho}.
+
+\section{Nghiệp vụ 7: Nhập kho}
+
+Khi hàng về: nhân viên \textbf{lập phiếu nhập} (NCC, kho, dòng hàng) và gửi duyệt; quản lý \textbf{duyệt} thì hệ thống tăng tồn. Hai mục tiêu khác actor $\rightarrow$ hai use case (Chương 3).
 
 \textbf{Dữ liệu}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{TonKho}.
 
-\section{Nghiệp vụ 6: Xuất kho}
+\section{Nghiệp vụ 8: Xuất kho}
 
-Nhân viên lập phiếu xuất (KH, kho, dòng hàng, kiểm tra tồn) $\rightarrow$ gửi duyệt $\rightarrow$ quản lý duyệt $\rightarrow$ giảm tồn.
+Nhân viên \textbf{lập phiếu xuất} (KH, kho, dòng hàng, kiểm tra tồn), gửi duyệt; quản lý \textbf{duyệt} thì giảm tồn.
 
 \textbf{Dữ liệu}: \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}.
 
-\section{Sơ đồ hoạt động (Activity Diagram)}
-
-\subsection{Quy trình nhập kho}
-
-Hàng đến $\rightarrow$ kiểm tra $\rightarrow$ lập phiếu nhập $\rightarrow$ duyệt $\rightarrow$ cập nhật tồn.
-
-\input{diagrams/tex/2.1_activity_nhapkho}
-
-\subsection{Quy trình xuất kho}
-
-Yêu cầu xuất $\rightarrow$ lập phiếu (kiểm tra tồn) $\rightarrow$ duyệt $\rightarrow$ giảm tồn.
-
-\input{diagrams/tex/2.2_activity_xuatkho}
-
-\subsection{Quy trình kiểm kê}
-
-Tạo phiếu kiểm kê $\rightarrow$ nhập số thực tế $\rightarrow$ chênh lệch $\rightarrow$ điều chỉnh tồn (nếu có).
-
-\input{diagrams/tex/2.3_activity_kiemke}
-
 \section{Kết luận chương}
 
-Chương 2 mô tả nghiệp vụ cốt lõi và ánh xạ sang \textbf{10 use case} mục tiêu ở Chương 3. Ba sơ đồ hoạt động hỗ trợ hiểu quy trình nhập, xuất, kiểm kê.
+Chương 2 mô tả \textbf{nghiệp vụ}. Bước tiếp theo (Chương 3): use case tổng quát $\rightarrow$ phân rã $\rightarrow$ đặc tả. Activity, sequence, class trình bày sau khi đã có use case.

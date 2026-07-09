@@ -1,105 +1,59 @@
-\chapter{PHÂN TÍCH HÀNH VI}
+\chapter{SƠ ĐỒ HOẠT ĐỘNG (ACTIVITY DIAGRAM)}
 
-\section{Sơ đồ lớp tổng thể}
+Sau đặc tả use case, bước tiếp theo là vẽ \textbf{Activity diagram} mô tả luồng hoạt động (các bước) để actor đạt mục tiêu của use case.
 
-Dựa trên các thực thể nghiệp vụ đã phân tích ở Chương 2 và Chương 3, hệ thống được thiết kế với các lớp chính sau:
+\textit{Gọn báo cáo}: trình bày activity cho các use case cốt lõi (CRUD mẫu + nhập/xuất). Các UC thêm/sửa/xóa/tìm còn lại có luồng tương tự UC thêm/tìm cùng nhóm.
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{NguoiDung}: Lưu thông tin tài khoản người dùng, bao gồm tên đăng nhập, mật khẩu (đã mã hóa), họ tên, vai trò và trạng thái. Quản lý xác thực và phân quyền.
-    \item \textbf{HangHoa}: Lưu thông tin hàng hóa: mã, tên, nhóm hàng, đơn vị tính, giá nhập, giá xuất, mô tả, trạng thái. Là lớp trung tâm của hệ thống.
-    \item \textbf{NhomHangHoa}: Lưu thông tin nhóm hàng hóa để phân loại. Một nhóm hàng có nhiều hàng hóa.
-    \item \textbf{DonViTinh}: Lưu đơn vị đo lường hàng hóa (cái, kg, hộp, thùng...). Một đơn vị tính dùng cho nhiều hàng hóa.
-    \item \textbf{NhaCungCap}: Lưu thông tin nhà cung cấp: mã, tên, địa chỉ, liên hệ, email. Liên kết với phiếu nhập kho.
-    \item \textbf{KhachHang}: Lưu thông tin khách hàng: mã, tên, địa chỉ, liên hệ, email, mã số thuế. Liên kết với phiếu xuất kho.
-    \item \textbf{Kho}: Lưu thông tin kho hàng: mã, tên, địa chỉ, người phụ trách, diện tích. Một hệ thống có nhiều kho.
-    \item \textbf{PhieuNhapKho}: Lưu thông tin phiếu nhập: mã, nhà cung cấp, kho, người lập, ngày nhập, tổng tiền, trạng thái.
-    \item \textbf{ChiTietPhieuNhap}: Lưu chi tiết hàng hóa trong phiếu nhập: mã phiếu, mã hàng, số lượng, đơn giá, thành tiền.
-    \item \textbf{PhieuXuatKho}: Lưu thông tin phiếu xuất: mã, khách hàng, kho, người lập, ngày xuất, tổng tiền, trạng thái.
-    \item \textbf{ChiTietPhieuXuat}: Lưu chi tiết hàng hóa trong phiếu xuất: mã phiếu, mã hàng, số lượng, đơn giá, thành tiền.
-    \item \textbf{PhieuKiemKe}: Lưu thông tin phiếu kiểm kê: mã, kho, người kiểm, ngày kiểm, trạng thái.
-    \item \textbf{ChiTietKiemKe}: Lưu chi tiết kiểm kê: mã phiếu, mã hàng, số lượng thực tế, số lượng sổ sách, chênh lệch.
-    \item \textbf{TonKho}: Lưu số lượng tồn kho của từng hàng hóa tại từng kho. Được cập nhật khi nhập/xuất/kiểm kê.
-    \item \textbf{LichSuThaoTac}: Lưu log thao tác: mã, người dùng, hành động, thời gian, đối tượng.
-\end{itemize}
+\section{UC03 -- Thêm tài khoản}
 
-Sơ đồ lớp tổng thể được trình bày thành ba sơ đồ con để dễ quan sát, tránh chồng chéo và đảm bảo chữ hiển thị rõ ràng:
+\textbf{Mục tiêu}: QTV tạo tài khoản mới.
 
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Sơ đồ lớp danh mục (Master Data)}: bao gồm các lớp lưu thông tin cơ bản, ít thay đổi của hệ thống: \texttt{NguoiDung}, \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{NhaCungCap}, \texttt{KhachHang}, \texttt{Kho}, \texttt{TonKho}.
-    \item \textbf{Sơ đồ lớp nghiệp vụ nhập xuất}: bao gồm các lớp liên quan đến phiếu nhập kho và phiếu xuất kho: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}.
-    \item \textbf{Sơ đồ lớp kiểm kê và log}: bao gồm các lớp liên quan đến kiểm kê và ghi nhận thao tác: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{LichSuThaoTac}.
-\end{itemize}
+\textbf{Các bước}: Mở form thêm TK $\rightarrow$ nhập thông tin $\rightarrow$ hệ thống kiểm tra tên đăng nhập $\rightarrow$ hợp lệ thì mã hóa MK, lưu; không hợp lệ thì báo lỗi $\rightarrow$ kết thúc.
 
-\input{diagrams/tex/4.1_classdiagram_master}
+\section{UC15 -- Thêm hàng hóa}
 
-\newpage
+\textbf{Mục tiêu}: NV/QL thêm mặt hàng mới.
 
-\input{diagrams/tex/4.2_classdiagram_nhapxuat}
+\textbf{Các bước}: Mở form thêm hàng $\rightarrow$ nhập mã, tên, nhóm, ĐVT, giá $\rightarrow$ kiểm tra mã $\rightarrow$ lưu HangHoa $\rightarrow$ khởi tạo TonKho = 0 tại các kho $\rightarrow$ thông báo thành công.
 
-\newpage
+\section{UC18 -- Tìm kiếm hàng hóa}
 
-\input{diagrams/tex/4.3_classdiagram_kiemke_donhang}
+\textbf{Mục tiêu}: Tìm hàng theo điều kiện.
 
-\section{Biểu đồ lớp trong ca sử dụng}
+\textbf{Các bước}: Nhập từ khóa/lọc $\rightarrow$ truy vấn $\rightarrow$ hiển thị danh sách kèm tồn $\rightarrow$ (tuỳ chọn) xem chi tiết.
 
-\subsection{UC06 -- Thêm hàng hóa}
+\section{UC22 -- Lập phiếu nhập kho}
 
-Ca sử dụng \textbf{Thêm hàng hóa} liên quan đến các lớp: \texttt{NguoiDung}, \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh} và \texttt{TonKho}.
+\textbf{Mục tiêu}: NV lập phiếu và gửi duyệt (chưa tăng tồn).
 
-\textbf{Quan hệ giữa các lớp}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item \texttt{NguoiDung} quản lý \texttt{HangHoa}: quan hệ 1..n.
-    \item \texttt{HangHoa} thuộc \texttt{NhomHangHoa}: quan hệ n..1.
-    \item \texttt{HangHoa} đo bằng \texttt{DonViTinh}: quan hệ n..1.
-    \item \texttt{HangHoa} có \texttt{TonKho} tại nhiều \texttt{Kho}: quan hệ 1..n.
-\end{itemize}
+\input{diagrams/tex/2.1_activity_nhapkho}
 
-Khi thêm hàng hóa mới, hệ thống tự động tạo bản ghi \texttt{TonKho} bằng 0 tại tất cả các kho đang hoạt động. Khi cập nhật giá hoặc thông tin, chỉ bảng \texttt{HangHoa} thay đổi.
+\textit{Ghi chú}: Phần duyệt/tăng tồn thuộc UC23 (actor QL), có thể xem như nhánh ``Duyệt'' trên sơ đồ quy trình nhập.
 
-\newpage
+\section{UC23 -- Duyệt phiếu nhập kho}
 
-\input{diagrams/tex/4.4_class_uc05}
+\textbf{Mục tiêu}: QL duyệt hoặc từ chối phiếu chờ duyệt.
 
-\subsection{UC09 -- Lập phiếu nhập kho}
+\textbf{Các bước}: Xem phiếu chờ duyệt $\rightarrow$ Duyệt: cập nhật trạng thái ``Đã duyệt'', tăng tồn, ghi log / Từ chối: trạng thái ``Từ chối'', ghi lý do, tồn không đổi.
 
-Ca sử dụng lập phiếu nhập kho liên quan đến các lớp: \texttt{NguoiDung}, \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa} và \texttt{TonKho}.
+\section{UC24 -- Lập phiếu xuất kho}
 
-\textbf{Quan hệ giữa các lớp}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item \texttt{NguoiDung} lập \texttt{PhieuNhapKho}: quan hệ 1..n.
-    \item \texttt{NhaCungCap} cung cấp cho \texttt{PhieuNhapKho}: quan hệ 1..n.
-    \item \texttt{Kho} nhận \texttt{PhieuNhapKho}: quan hệ 1..n.
-    \item \texttt{PhieuNhapKho} có nhiều \texttt{ChiTietPhieuNhap}: quan hệ 1..n.
-    \item \texttt{ChiTietPhieuNhap} tham chiếu \texttt{HangHoa}: quan hệ n..1.
-    \item Khi duyệt phiếu: \texttt{TonKho} được cập nhật (tăng số lượng).
-\end{itemize}
+\textbf{Mục tiêu}: NV lập phiếu xuất (kiểm tra tồn), gửi duyệt.
 
-Sau khi phiếu nhập được duyệt, lớp \texttt{TonKho} được cập nhật để phản ánh số lượng hàng mới nhập. Nếu bản ghi tồn kho chưa có, hệ thống tạo mới; nếu đã có, hệ thống cộng thêm số lượng.
+\input{diagrams/tex/2.2_activity_xuatkho}
 
-\newpage
+\section{UC25 -- Duyệt phiếu xuất kho}
 
-\input{diagrams/tex/4.5_class_uc09}
+\textbf{Mục tiêu}: QL duyệt/từ chối; duyệt thì giảm tồn.
 
-\subsection{UC10 -- Lập phiếu xuất kho}
+\textbf{Các bước}: Tương tự UC23 nhưng giảm \texttt{TonKho} khi duyệt.
 
-Ca sử dụng lập phiếu xuất kho liên quan đến các lớp: \texttt{NguoiDung}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa} và \texttt{TonKho}.
+\section{Quy trình kiểm kê (bổ sung nghiệp vụ)}
 
-\textbf{Quan hệ giữa các lớp}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item \texttt{NguoiDung} lập \texttt{PhieuXuatKho}: quan hệ 1..n.
-    \item \texttt{KhachHang} nhận \texttt{PhieuXuatKho}: quan hệ 1..n.
-    \item \texttt{Kho} xuất \texttt{PhieuXuatKho}: quan hệ 1..n.
-    \item \texttt{PhieuXuatKho} có nhiều \texttt{ChiTietPhieuXuat}: quan hệ 1..n.
-    \item \texttt{ChiTietPhieuXuat} tham chiếu \texttt{HangHoa}: quan hệ n..1.
-    \item Khi duyệt phiếu: \texttt{TonKho} được cập nhật (giảm số lượng).
-\end{itemize}
+Activity kiểm kê hỗ trợ hiểu luồng vận hành (có thể map sau thành các UC kiểm kê nếu mở rộng phạm vi).
 
-Hệ thống kiểm tra \texttt{TonKho} trước khi cho phép xuất: nếu số lượng tồn tại kho không đủ, hệ thống từ chối thêm dòng hàng đó. Sau khi duyệt, tồn kho được giảm tương ứng.
-
-\newpage
-
-\input{diagrams/tex/4.6_class_uc10}
+\input{diagrams/tex/2.3_activity_kiemke}
 
 \section{Kết luận chương}
 
-Chương 4 trình bày 15 lớp chính và biểu đồ lớp trong UC06 (Thêm hàng hóa), UC09 (Lập phiếu nhập), UC10 (Lập phiếu xuất).
+Activity mô tả \textbf{cách} actor thực hiện từng use case. Bước tiếp: \textbf{Sequence diagram} (Chương 5) -- đối tượng nào gọi ai theo thời gian; rồi \textbf{Class diagram} (Chương 6).

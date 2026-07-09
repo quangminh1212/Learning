@@ -2,59 +2,57 @@
 \centering
 \begin{tikzpicture}[
     box/.style={rectangle, draw=black, rounded corners, align=center, font=\small,
-        minimum width=1.0cm, minimum height=0.6cm, fill=white, inner sep=0.2mm},
-    rootbox/.style={box, fill=gray!20, minimum width=1.5cm, minimum height=0.8cm},
+        minimum width=1.0cm, minimum height=0.55cm, fill=white, inner sep=0.2mm},
+    rootbox/.style={box, fill=gray!20, minimum width=1.5cm, minimum height=0.75cm},
     arrow/.style={draw, -{Stealth[scale=0.4]}, thick}
 ]
 
-% Gốc
-\node[rootbox] (root) at (0,0) {Hệ thống\\quản lý kho hàng};
+\node[rootbox] (root) at (0,0) {Hệ thống\\QL kho};
 
-% Cấp 1 - 5 nhóm chức năng (bỏ đơn hàng/thanh toán và báo cáo)
-\node[box] (l1-1) at (2.5,6) {Quản lý\\người dùng};
-\node[box] (l1-2) at (2.5,3) {Quản lý\\danh mục};
-\node[box] (l1-3) at (2.5,0) {Quản lý\\nhập kho};
-\node[box] (l1-4) at (2.5,-3) {Quản lý\\xuất kho};
-\node[box] (l1-5) at (2.5,-6) {Tồn kho\\và kiểm kê};
+\node[box] (l1-1) at (2.2,5) {QL tài\\khoản};
+\node[box] (l1-2) at (2.2,2.5) {QL đối\\tác};
+\node[box] (l1-3) at (2.2,0) {QL hàng\\\& kho};
+\node[box] (l1-4) at (2.2,-2.5) {Nhập\\kho};
+\node[box] (l1-5) at (2.2,-5) {Xuất\\kho};
 
-% Cấp 2 - ngang
-\node[box] (l2-1a) at (4.5,7) {Phân\\quyền};
-\node[box] (l2-1b) at (6.5,7) {Đăng nhập/\\Đăng xuất};
+\node[box] (a) at (4.5,6.2) {Thêm};
+\node[box] (b) at (6.2,6.2) {Sửa};
+\node[box] (c) at (7.9,6.2) {Xóa};
+\node[box] (d) at (9.6,6.2) {Tìm};
 
-\node[box] (l2-2a) at (4.5,4) {Hàng\\hóa};
-\node[box] (l2-2b) at (6.5,4) {Nhà\\cung cấp};
-\node[box] (l2-2c) at (8.5,4) {Khách\\hàng};
-\node[box] (l2-2d) at (10.5,4) {Kho};
+\node[box] (e) at (4.5,3.5) {Thêm};
+\node[box] (f) at (6.2,3.5) {Sửa};
+\node[box] (g) at (7.9,3.5) {Xóa};
+\node[box] (h) at (9.6,3.5) {Tìm};
 
-\node[box] (l2-3a) at (4.5,1) {Lập\\phiếu};
-\node[box] (l2-3b) at (6.5,1) {Duyệt\\phiếu};
-\node[box] (l2-3c) at (8.5,1) {Cập nhật\\tồn kho};
+\node[box] (i) at (4.5,1.0) {Thêm};
+\node[box] (j) at (6.2,1.0) {Sửa};
+\node[box] (k) at (7.9,1.0) {Tìm};
 
-\node[box] (l2-4a) at (4.5,-2) {Lập\\phiếu};
-\node[box] (l2-4b) at (6.5,-2) {Duyệt\\phiếu};
-\node[box] (l2-4c) at (8.5,-2) {Giảm\\tồn kho};
+\node[box] (m) at (4.5,-1.5) {Lập\\phiếu};
+\node[box] (n) at (6.5,-1.5) {Duyệt\\phiếu};
 
-\node[box] (l2-5a) at (4.5,-5) {Kiểm\\kê};
-\node[box] (l2-5b) at (6.5,-5) {Cảnh\\báo};
+\node[box] (o) at (4.5,-4.0) {Lập\\phiếu};
+\node[box] (p) at (6.5,-4.0) {Duyệt\\phiếu};
 
-% Mũi tên
 \foreach \n in {1,...,5} {\draw[arrow] (root) -- (l1-\n);}
-\draw[arrow] (l1-1) -- (l2-1a);
-\draw[arrow] (l1-1) -- (l2-1b);
-\draw[arrow] (l1-2) -- (l2-2a);
-\draw[arrow] (l1-2) -- (l2-2b);
-\draw[arrow] (l1-2) -- (l2-2c);
-\draw[arrow] (l1-2) -- (l2-2d);
-\draw[arrow] (l1-3) -- (l2-3a);
-\draw[arrow] (l1-3) -- (l2-3b);
-\draw[arrow] (l1-3) -- (l2-3c);
-\draw[arrow] (l1-4) -- (l2-4a);
-\draw[arrow] (l1-4) -- (l2-4b);
-\draw[arrow] (l1-4) -- (l2-4c);
-\draw[arrow] (l1-5) -- (l2-5a);
-\draw[arrow] (l1-5) -- (l2-5b);
+\draw[arrow] (l1-1) -- (a);
+\draw[arrow] (l1-1) -- (b);
+\draw[arrow] (l1-1) -- (c);
+\draw[arrow] (l1-1) -- (d);
+\draw[arrow] (l1-2) -- (e);
+\draw[arrow] (l1-2) -- (f);
+\draw[arrow] (l1-2) -- (g);
+\draw[arrow] (l1-2) -- (h);
+\draw[arrow] (l1-3) -- (i);
+\draw[arrow] (l1-3) -- (j);
+\draw[arrow] (l1-3) -- (k);
+\draw[arrow] (l1-4) -- (m);
+\draw[arrow] (l1-4) -- (n);
+\draw[arrow] (l1-5) -- (o);
+\draw[arrow] (l1-5) -- (p);
 
 \end{tikzpicture}
-\caption{Sơ đồ phân cấp chức năng (BFD) hệ thống quản lý kho hàng}
+\caption{BFD: cấp 1 = nghiệp vụ chung; cấp 2 = hành động (use case)}
 \label{fig:bfd}
 \end{figure}

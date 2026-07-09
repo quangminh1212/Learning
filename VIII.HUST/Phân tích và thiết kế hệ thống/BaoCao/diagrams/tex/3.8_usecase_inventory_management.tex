@@ -4,27 +4,29 @@
 \begin{tikzpicture}[
     scale=0.9,
     transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.75cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.7cm, font=\scriptsize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,2.6) {Nhập / xuất kho};
+\node[system, minimum width=12cm, minimum height=7cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.1) {Phân rã: Nhập kho \& Xuất kho};
 
-\node[usecase] (uc09) at (-2.8,0.3) {UC09: Lập phiếu nhập};
-\node[usecase] (uc10) at (2.8,0.3) {UC10: Lập phiếu xuất};
+\node[usecase] (uc22) at (-3.0,1.3) {UC22: Lập phiếu nhập};
+\node[usecase] (uc23) at (3.0,1.3) {UC23: Duyệt phiếu nhập};
+\node[usecase] (uc24) at (-3.0,-0.5) {UC24: Lập phiếu xuất};
+\node[usecase] (uc25) at (3.0,-0.5) {UC25: Duyệt phiếu xuất};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6.5,0.4) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6.5,0.4) {};
 
-\draw (nvk) -- (uc09);
-\draw (nvk) -- (uc10);
-\draw (qlk) -- (uc09);
-\draw (qlk) -- (uc10);
+\draw (nvk) -- (uc22);
+\draw (nvk) -- (uc24);
+\draw (qlk) -- (uc23);
+\draw (qlk) -- (uc25);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case phân rã -- Nhập xuất}
+\caption{Sơ đồ use case phân rã -- Nhập/xuất (lập và duyệt là 2 UC khác nhau)}
 \label{fig:usecase-inventory-management}
 \end{figure}

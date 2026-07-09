@@ -4,54 +4,51 @@
 \begin{tikzpicture}[
     scale=0.88,
     transform shape,
-    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.75cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.3cm, minimum height=0.7cm, font=\footnotesize, align=center},
+    actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=12cm, minimum height=11cm] (system) at (0,0.3) {};
-\node[font=\bfseries\small] at (0,5.5) {Hệ thống quản lý kho hàng (10 UC)};
+% Tổng quát: nhóm chức năng (mức nghiệp vụ) -- sẽ phân rã ở sơ đồ sau
+\node[system, minimum width=12cm, minimum height=11cm] (system) at (0,0.2) {};
+\node[font=\bfseries\small] at (0,5.4) {Hệ thống quản lý kho hàng};
+\node[font=\scriptsize\itshape] at (0,4.85) {(sơ đồ tổng quát -- nhóm chức năng)};
 
-\node[usecase] (uc01) at (-3.4,4.4) {UC01: Đăng nhập};
-\node[usecase] (uc02) at (-3.4,3.1) {UC02: Đăng xuất};
-\node[usecase] (uc03) at (-3.4,1.8) {UC03: Thêm tài khoản};
-\node[usecase] (uc04) at (-3.4,0.5) {UC04: Thêm nhà cung cấp};
-\node[usecase] (uc05) at (-3.4,-0.8) {UC05: Thêm khách hàng};
+\node[usecase] (g1) at (-3.3,3.8) {Đăng nhập / Đăng xuất};
+\node[usecase] (g2) at (-3.3,2.3) {Quản lý tài khoản};
+\node[usecase] (g3) at (-3.3,0.8) {Quản lý nhà cung cấp};
+\node[usecase] (g4) at (-3.3,-0.7) {Quản lý khách hàng};
 
-\node[usecase] (uc06) at (3.4,4.4) {UC06: Thêm hàng hóa};
-\node[usecase] (uc07) at (3.4,3.1) {UC07: Tìm kiếm hàng hóa};
-\node[usecase] (uc08) at (3.4,1.8) {UC08: Thêm kho};
-\node[usecase] (uc09) at (3.4,0.5) {UC09: Lập phiếu nhập};
-\node[usecase] (uc10) at (3.4,-0.8) {UC10: Lập phiếu xuất};
+\node[usecase] (g5) at (3.3,3.8) {Quản lý hàng hóa};
+\node[usecase] (g6) at (3.3,2.3) {Quản lý kho};
+\node[usecase] (g7) at (3.3,0.8) {Nhập kho};
+\node[usecase] (g8) at (3.3,-0.7) {Xuất kho};
 
-\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-7.5,2.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7.5,2.5) {};
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7.5,-1.5) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản trị viên}] (admin) at (-7.3,2.0) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7.3,2.0) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (0,-3.2) {};
 
-\draw (admin) -- (uc01);
-\draw (admin) -- (uc02);
-\draw (admin) -- (uc03);
-\draw (admin) -- (uc08);
+\draw (admin) -- (g1);
+\draw (admin) -- (g2);
+\draw (admin) -- (g6);
 
-\draw (qlk) -- (uc01);
-\draw (qlk) -- (uc04);
-\draw (qlk) -- (uc05);
-\draw (qlk) -- (uc06);
-\draw (qlk) -- (uc07);
-\draw (qlk) -- (uc08);
-\draw (qlk) -- (uc09);
-\draw (qlk) -- (uc10);
+\draw (qlk) -- (g1);
+\draw (qlk) -- (g3);
+\draw (qlk) -- (g4);
+\draw (qlk) -- (g5);
+\draw (qlk) -- (g6);
+\draw (qlk) -- (g7);
+\draw (qlk) -- (g8);
 
-\draw (nvk) -- (uc01);
-\draw (nvk) -- (uc04);
-\draw (nvk) -- (uc05);
-\draw (nvk) -- (uc06);
-\draw (nvk) -- (uc07);
-\draw (nvk) -- (uc09);
-\draw (nvk) -- (uc10);
+\draw (nvk) -- (g1);
+\draw (nvk) -- (g3);
+\draw (nvk) -- (g4);
+\draw (nvk) -- (g5);
+\draw (nvk) -- (g7);
+\draw (nvk) -- (g8);
 
 \end{tikzpicture}
 }
-\caption{Sơ đồ use case tổng quát (10 use case -- mỗi UC một mục tiêu)}
+\caption{Sơ đồ use case tổng quát -- các nhóm chức năng (chưa phải use case chi tiết)}
 \label{fig:usecase-tongquat}
 \end{figure}
