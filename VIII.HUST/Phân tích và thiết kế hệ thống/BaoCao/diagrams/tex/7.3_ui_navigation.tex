@@ -2,27 +2,31 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.92, transform shape,
-    scr/.style={rectangle, draw=black, rounded corners=3pt, minimum width=2.6cm, minimum height=1.0cm, font=\scriptsize\bfseries, align=center, fill=white, line width=0.7pt},
-    arrow/.style={-{Stealth[scale=0.7]}, line width=0.55pt}
+    scale=0.88, transform shape,
+    scr/.style={rectangle, draw=black, rounded corners=3pt, minimum width=2.4cm, minimum height=0.95cm, font=\scriptsize\bfseries, align=center, fill=white, line width=0.7pt},
+    arrow/.style={-{Stealth[scale=0.65]}, line width=0.5pt}
 ]
 
-\node[scr, fill=gray!15] (login) at (0,3.5) {Đăng nhập\\(UC01)};
-\node[scr] (home) at (0,1.5) {Trang chủ\\Dashboard};
-\node[scr] (hh) at (-5,0) {Hàng hóa\\(UC06, UC07)};
-\node[scr] (dt) at (-1.7,0) {Đối tác\\(UC04, UC05)};
-\node[scr] (kho) at (1.7,0) {Kho\\(UC08)};
-\node[scr] (tk) at (5,0) {Tài khoản\\(UC03)};
-\node[scr] (pn) at (-2.5,-2) {Phiếu nhập\\(UC09)};
-\node[scr] (px) at (2.5,-2) {Phiếu xuất\\(UC10)};
+\node[scr, fill=gray!15] (login) at (0,4) {Đăng nhập\\UC01};
+\node[scr] (home) at (0,2.2) {Trang chủ};
+\node[scr] (hh) at (-5.2,0.6) {Hàng hóa\\UC06--07};
+\node[scr] (dt) at (-2.6,0.6) {Đối tác\\UC04--05};
+\node[scr] (kho) at (0,0.6) {Kho\\UC08};
+\node[scr] (tk) at (2.6,0.6) {Tài khoản\\UC03};
+\node[scr] (bc) at (5.2,0.6) {Báo cáo tồn\\UC12};
+\node[scr] (pn) at (-3.2,-1.4) {Phiếu nhập\\UC09};
+\node[scr] (px) at (0,-1.4) {Phiếu xuất\\UC10};
+\node[scr] (kk) at (3.2,-1.4) {Kiểm kê\\UC11};
 
 \draw[arrow] (login) -- (home);
 \draw[arrow] (home) -- (hh);
 \draw[arrow] (home) -- (dt);
 \draw[arrow] (home) -- (kho);
 \draw[arrow] (home) -- (tk);
+\draw[arrow] (home) -- (bc);
 \draw[arrow] (home) -- (pn);
 \draw[arrow] (home) -- (px);
+\draw[arrow] (home) -- (kk);
 
 \end{tikzpicture}
 }

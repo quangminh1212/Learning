@@ -2,7 +2,7 @@
 
 Theo \textbf{hướng đối tượng}: xuất phát từ actor và mục tiêu (use case).
 
-Thứ tự: tác nhân $\rightarrow$ UC tổng quát $\rightarrow$ UC phân rã $\rightarrow$ đặc tả (10 UC).
+Thứ tự: tác nhân $\rightarrow$ UC tổng quát $\rightarrow$ UC phân rã $\rightarrow$ đặc tả (12 UC).
 
 \section{Tác nhân}
 
@@ -28,7 +28,7 @@ Nhân viên kho & Lập phiếu nhập/xuất; thêm/tìm hàng, đối tác. \\
 \begin{itemize}[leftmargin=1.5cm]
     \item Use case = \textbf{một mục tiêu cụ thể} (vd.\ Thêm hàng hóa), không phải ``Quản lý hàng hóa''.
     \item \textbf{Tổng quát}: nhóm chức năng từ nghiệp vụ.
-    \item \textbf{Phân rã}: các use case cụ thể thuộc nhóm (báo cáo chọn 10 UC tiêu biểu).
+    \item \textbf{Phân rã}: các use case cụ thể thuộc nhóm (12 UC tiêu biểu).
 \end{itemize}
 
 \section{Sơ đồ use case tổng quát}
@@ -45,9 +45,9 @@ Nhân viên kho & Lập phiếu nhập/xuất; thêm/tìm hàng, đối tác. \\
 
 \input{diagrams/tex/3.8_usecase_inventory_management}
 
-\section{Danh sách 10 use case}
+\section{Danh sách 12 use case}
 
-\begin{longtable}{|p{1.2cm}|p{5cm}|p{6.5cm}|}
+\begin{longtable}{|p{1.2cm}|p{5.2cm}|p{6.3cm}|}
 \hline
 \textbf{Mã} & \textbf{Use case (mục tiêu)} & \textbf{Actor} \\
 \hline
@@ -75,6 +75,10 @@ UC08 & Thêm kho & QL kho, QTV \\
 UC09 & Lập phiếu nhập kho & NV (lập), QL (duyệt) \\
 \hline
 UC10 & Lập phiếu xuất kho & NV (lập), QL (duyệt) \\
+\hline
+UC11 & Lập phiếu kiểm kê & NV (lập), QL (duyệt) \\
+\hline
+UC12 & Xem báo cáo nhập xuất tồn & QL kho, QTV \\
 \hline
 \end{longtable}
 
@@ -149,6 +153,22 @@ UC10 & Lập phiếu xuất kho & NV (lập), QL (duyệt) \\
     \item \textbf{Chính}: NV chọn KH, kho, thêm dòng (tồn đủ) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ giảm tồn.
 \end{itemize}
 
+\subsection{UC11 -- Lập phiếu kiểm kê}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Actor}: NV lập, QL duyệt điều chỉnh.
+    \item \textbf{Mục tiêu}: Đối chiếu tồn thực tế với sổ, điều chỉnh chênh lệch.
+    \item \textbf{Chính}: Chọn kho $\rightarrow$ nhập số thực tế $\rightarrow$ tính chênh lệch $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ cập nhật \texttt{TonKho}.
+\end{itemize}
+
+\subsection{UC12 -- Xem báo cáo nhập xuất tồn}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Actor}: QL kho, QTV.
+    \item \textbf{Mục tiêu}: Xem tổng hợp tồn / nhập--xuất--tồn theo điều kiện.
+    \item \textbf{Chính}: Chọn kỳ, kho, hàng $\rightarrow$ hệ thống tổng hợp $\rightarrow$ hiển thị bảng (có thể xuất Excel).
+\end{itemize}
+
 \section{Kết luận chương}
 
-10 use case mục tiêu đã đặc tả. Tiếp: Activity (Ch.4) $\rightarrow$ Sequence (Ch.5) $\rightarrow$ Class (Ch.6).
+12 use case mục tiêu đã đặc tả (gồm kiểm kê và báo cáo tồn). Tiếp: Activity $\rightarrow$ Sequence $\rightarrow$ Class.

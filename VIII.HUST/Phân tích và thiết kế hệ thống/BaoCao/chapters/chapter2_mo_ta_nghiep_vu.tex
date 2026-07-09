@@ -2,18 +2,20 @@
 
 \section{Quy trình phân tích -- thiết kế (hướng đối tượng)}
 
-Báo cáo theo \textbf{hướng đối tượng} (UML).
+Báo cáo theo \textbf{hướng đối tượng} (UML):
 
 \begin{enumerate}[leftmargin=1.5cm]
-    \item Nghiệp vụ (chương này).
-    \item Use case tổng quát $\rightarrow$ phân rã $\rightarrow$ đặc tả (Ch.3).
-    \item Activity (Ch.4) $\rightarrow$ Sequence (Ch.5) $\rightarrow$ Class (Ch.6).
-    \item CSDL \& giao diện (Ch.7).
+    \item \textbf{Nghiệp vụ} (chương này) -- mô tả công việc thực tế của doanh nghiệp.
+    \item \textbf{Use case} tổng quát $\rightarrow$ phân rã $\rightarrow$ đặc tả (Ch.3).
+    \item \textbf{Activity} (Ch.4) $\rightarrow$ \textbf{Sequence} (Ch.5) $\rightarrow$ \textbf{Class} (Ch.6).
+    \item \textbf{CSDL \& giao diện} (Ch.7).
 \end{enumerate}
 
-\textit{Nguyên tắc UC}: Nghiệp vụ ``Quản lý \ldots'' \textbf{không} phải 1 use case. Use case = \textbf{một mục tiêu cụ thể} của actor. Chọn \textbf{10 UC} tiêu biểu.
+\textit{Lưu ý}: Nghiệp vụ ``Quản lý \ldots'' là gói công việc \textbf{chung}, không phải một use case. Use case là \textbf{một mục tiêu cụ thể} của actor. Chọn \textbf{12 use case} tiêu biểu; sửa/xóa/tìm cùng nhóm có luồng tương tự.
 
 \section{Tổng quan nghiệp vụ}
+
+Hệ thống quản lý kho hỗ trợ kiểm soát hàng hóa từ khi nhập vào đến khi xuất ra, đồng thời duy trì danh mục người dùng, đối tác, hàng hóa và kho. Các nghiệp vụ chính và use case tiêu biểu:
 
 \begin{longtable}{|p{4cm}|p{9cm}|}
 \hline
@@ -40,40 +42,214 @@ Nhập kho & UC09 Lập phiếu nhập kho \\
 \hline
 Xuất kho & UC10 Lập phiếu xuất kho \\
 \hline
+Kiểm kê & UC11 Lập phiếu kiểm kê \\
+\hline
+Báo cáo tồn kho & UC12 Xem báo cáo nhập xuất tồn \\
+\hline
 \end{longtable}
 
 \section{Nghiệp vụ 1: Xác thực}
 
-Đăng nhập / đăng xuất để mở và kết thúc phiên làm việc.
+\textbf{Mô tả}: Nghiệp vụ xác thực đảm bảo chỉ người có tài khoản hợp lệ mới được sử dụng hệ thống. Người dùng đăng nhập bằng tên đăng nhập và mật khẩu; hệ thống kiểm tra và tạo phiên làm việc (session). Khi kết thúc, người dùng đăng xuất để xóa phiên, tránh người khác dùng tiếp máy.
+
+\textbf{Người thực hiện}: Tất cả người dùng (quản trị viên, quản lý kho, nhân viên kho).
+
+\textbf{Quy trình}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng mở trang đăng nhập, nhập tên đăng nhập và mật khẩu.
+    \item Hệ thống kiểm tra tài khoản tồn tại, mật khẩu đúng, trạng thái đang hoạt động.
+    \item Nếu hợp lệ: tạo phiên, ghi nhận thời gian đăng nhập, chuyển đến trang chủ theo vai trò.
+    \item Nếu không hợp lệ: thông báo lỗi (sai thông tin hoặc tài khoản bị khóa), yêu cầu nhập lại.
+    \item Khi đăng xuất: hệ thống xóa phiên và quay về trang đăng nhập.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: Bảng \texttt{NguoiDung} (tên đăng nhập, mật khẩu mã hóa, trạng thái); bảng \texttt{LichSuThaoTac} (ghi log đăng nhập/đăng xuất).
+
+\textbf{Use case liên quan}: UC01 Đăng nhập; UC02 Đăng xuất.
 
 \section{Nghiệp vụ 2: Quản lý tài khoản}
 
-QTV duy trì tài khoản, phân quyền. Use case tiêu biểu: \textbf{Thêm tài khoản} (sửa/khóa/tìm: luồng tương tự khi bảo vệ).
+\textbf{Mô tả}: Quản trị viên duy trì danh sách tài khoản trên hệ thống, gán vai trò (quản trị viên, quản lý kho, nhân viên kho) để phân quyền. Chỉ người được cấp quyền tương ứng mới thực hiện được các thao tác nhập/xuất, duyệt phiếu, quản lý danh mục.
+
+\textbf{Người thực hiện}: Quản trị viên.
+
+\textbf{Quy trình} (thao tác tiêu biểu -- thêm tài khoản):
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Quản trị viên đăng nhập và chọn chức năng quản lý tài khoản.
+    \item Chọn ``Thêm tài khoản'', nhập họ tên, tên đăng nhập, mật khẩu, email (nếu có), vai trò, trạng thái.
+    \item Hệ thống kiểm tra tên đăng nhập chưa tồn tại.
+    \item Nếu hợp lệ: mã hóa mật khẩu, lưu vào cơ sở dữ liệu, hiển thị thông báo thành công.
+    \item Nếu trùng tên đăng nhập: báo lỗi, yêu cầu đổi tên.
+\end{enumerate}
+
+Ngoài ra, quản trị viên có thể \textbf{sửa} thông tin/vai trò, \textbf{khóa/mở} tài khoản, \textbf{tìm kiếm} danh sách -- các thao tác này có luồng tương tự (chọn bản ghi $\rightarrow$ thực hiện $\rightarrow$ lưu) và không đặc tả riêng trong 10 UC tiêu biểu.
+
+\textbf{Dữ liệu liên quan}: \texttt{NguoiDung} (mã, tên đăng nhập, mật khẩu, họ tên, vai trò, trạng thái).
+
+\textbf{Use case tiêu biểu}: UC03 Thêm tài khoản.
 
 \section{Nghiệp vụ 3: Quản lý nhà cung cấp}
 
-Danh mục NCC phục vụ nhập kho. UC tiêu biểu: \textbf{Thêm nhà cung cấp}.
+\textbf{Mô tả}: Lưu trữ và duy trì thông tin các nhà cung cấp hàng hóa (tên, địa chỉ, điện thoại, email, người liên hệ). Thông tin NCC được dùng khi lập phiếu nhập kho, giúp truy vết hàng đến từ ai.
+
+\textbf{Người thực hiện}: Nhân viên kho, Quản lý kho.
+
+\textbf{Quy trình} (thao tác tiêu biểu -- thêm nhà cung cấp):
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng chọn chức năng quản lý nhà cung cấp, xem danh sách hiện có.
+    \item Chọn ``Thêm mới'', nhập mã NCC, tên, địa chỉ, số điện thoại, email, người liên hệ, mô tả (nếu có).
+    \item Hệ thống kiểm tra mã NCC không trùng.
+    \item Lưu vào cơ sở dữ liệu; có thể sửa hoặc đánh dấu ngừng hoạt động nếu NCC không còn giao dịch (không xóa cứng khi đã có phiếu nhập liên quan).
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{NhaCungCap} (mã, tên, địa chỉ, SĐT, email, người liên hệ, mô tả).
+
+\textbf{Use case tiêu biểu}: UC04 Thêm nhà cung cấp.
 
 \section{Nghiệp vụ 4: Quản lý khách hàng}
 
-Danh mục KH phục vụ xuất kho. UC tiêu biểu: \textbf{Thêm khách hàng}.
+\textbf{Mô tả}: Tương tự nhà cung cấp, nghiệp vụ này quản lý danh mục khách hàng nhận hàng khi xuất kho (tên, địa chỉ, liên hệ, mã số thuế nếu là doanh nghiệp). Phục vụ lập phiếu xuất và theo dõi lịch sử giao dịch theo khách.
+
+\textbf{Người thực hiện}: Nhân viên kho, Quản lý kho.
+
+\textbf{Quy trình} (thao tác tiêu biểu -- thêm khách hàng):
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng chọn quản lý khách hàng, xem danh sách.
+    \item Thêm mới: nhập mã KH, tên, địa chỉ, SĐT, email, mã số thuế, người liên hệ.
+    \item Hệ thống kiểm tra mã không trùng và lưu.
+    \item Có thể sửa thông tin; nếu đã có phiếu xuất liên quan thì không xóa cứng, chỉ ngừng sử dụng.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{KhachHang} (mã, tên, địa chỉ, SĐT, email, MST, người liên hệ).
+
+\textbf{Use case tiêu biểu}: UC05 Thêm khách hàng.
 
 \section{Nghiệp vụ 5: Quản lý hàng hóa}
 
-Danh mục hàng. UC tiêu biểu: \textbf{Thêm hàng hóa}, \textbf{Tìm kiếm hàng hóa}.
+\textbf{Mô tả}: Duy trì danh mục hàng hóa trong hệ thống: mã, tên, nhóm hàng, đơn vị tính, giá nhập, giá xuất, mô tả, trạng thái. Hàng hóa là trung tâm của hệ thống -- mọi phiếu nhập/xuất và tồn kho đều tham chiếu đến mã hàng. Khi thêm hàng mới, hệ thống tự khởi tạo số lượng tồn bằng 0 tại các kho đang hoạt động.
+
+\textbf{Người thực hiện}: Nhân viên kho, Quản lý kho.
+
+\textbf{Quy trình thêm hàng hóa}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Chọn quản lý hàng hóa, chọn ``Thêm mới''.
+    \item Nhập mã hàng, tên; chọn nhóm hàng và đơn vị tính; nhập giá nhập, giá xuất, mô tả.
+    \item Hệ thống kiểm tra mã không trùng, nhóm và ĐVT hợp lệ.
+    \item Lưu bản ghi \texttt{HangHoa}; tạo các bản ghi \texttt{TonKho} với số lượng = 0 cho từng kho.
+\end{enumerate}
+
+\textbf{Quy trình tìm kiếm hàng hóa}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người dùng nhập từ khóa (mã hoặc tên) và/hoặc chọn bộ lọc (nhóm hàng, kho, trạng thái).
+    \item Hệ thống truy vấn, trả về danh sách hàng kèm số lượng tồn tại các kho.
+    \item Người dùng có thể xem chi tiết, sắp xếp hoặc xuất danh sách.
+\end{enumerate}
+
+Có thể sửa thông tin/giá hoặc đánh dấu ngừng sử dụng hàng không còn kinh doanh (không xóa nếu đã phát sinh phiếu).
+
+\textbf{Dữ liệu liên quan}: \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{TonKho}, \texttt{Kho}.
+
+\textbf{Use case tiêu biểu}: UC06 Thêm hàng hóa; UC07 Tìm kiếm hàng hóa.
 
 \section{Nghiệp vụ 6: Quản lý kho}
 
-Thông tin kho. UC tiêu biểu: \textbf{Thêm kho}.
+\textbf{Mô tả}: Doanh nghiệp có thể có nhiều kho (địa điểm khác nhau). Nghiệp vụ này duy trì thông tin từng kho: mã, tên, địa chỉ, người phụ trách, diện tích, trạng thái hoạt động. Tồn kho được theo dõi theo từng cặp (kho, hàng hóa).
+
+\textbf{Người thực hiện}: Quản lý kho, Quản trị viên.
+
+\textbf{Quy trình} (thao tác tiêu biểu -- thêm kho):
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Người có quyền chọn quản lý kho, chọn ``Thêm mới''.
+    \item Nhập mã kho, tên kho, địa chỉ, người phụ trách, diện tích, mô tả.
+    \item Hệ thống kiểm tra mã kho không trùng và lưu.
+    \item Có thể sửa thông tin hoặc đánh dấu kho ngừng hoạt động.
+    \item Tra cứu kho: xem thông tin kho và danh sách hàng đang tồn trong kho đó.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{Kho}, \texttt{TonKho}, \texttt{HangHoa}.
+
+\textbf{Use case tiêu biểu}: UC08 Thêm kho.
 
 \section{Nghiệp vụ 7: Nhập kho}
 
-NV lập phiếu nhập (NCC, kho, dòng hàng), gửi duyệt; QL duyệt thì tăng tồn. Gói trong UC09 (lập + duyệt trên cùng use case với 2 actor).
+\textbf{Mô tả}: Khi hàng từ nhà cung cấp về kho, nhân viên lập \textbf{phiếu nhập kho} ghi nhận NCC, kho nhận, ngày nhập và từng dòng hàng (mã hàng, số lượng, đơn giá). Phiếu được gửi \textbf{duyệt}; chỉ khi quản lý kho duyệt, hệ thống mới \textbf{tăng tồn kho} và khóa phiếu. Nếu từ chối, tồn không đổi.
+
+\textbf{Người thực hiện}: Nhân viên kho (lập phiếu); Quản lý kho (duyệt phiếu).
+
+\textbf{Quy trình}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên kho chọn lập phiếu nhập: chọn nhà cung cấp, kho nhập, ngày nhập, ghi chú.
+    \item Thêm từng dòng chi tiết: chọn hàng hóa, nhập số lượng, đơn giá; hệ thống tính thành tiền và tổng tiền phiếu.
+    \item Kiểm tra dữ liệu hợp lệ (đã chọn NCC, kho, có ít nhất một dòng hàng).
+    \item Gửi duyệt -- trạng thái phiếu: ``Chờ duyệt''.
+    \item Quản lý kho xem phiếu, kiểm tra và \textbf{duyệt} hoặc \textbf{từ chối} (kèm lý do).
+    \item Nếu duyệt: trạng thái ``Đã duyệt''; với mỗi dòng hàng, \texttt{TonKho} tại kho nhập được \textbf{cộng} số lượng; ghi log thao tác.
+    \item Nếu từ chối: trạng thái ``Từ chối''; tồn kho không thay đổi.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{TonKho}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
+
+\textbf{Use case tiêu biểu}: UC09 Lập phiếu nhập kho (bao gồm luồng lập và duyệt với hai actor).
 
 \section{Nghiệp vụ 8: Xuất kho}
 
-NV lập phiếu xuất (kiểm tra tồn), QL duyệt thì giảm tồn. UC10.
+\textbf{Mô tả}: Khi xuất hàng cho khách hàng hoặc sử dụng nội bộ, nhân viên lập \textbf{phiếu xuất kho}. Hệ thống \textbf{kiểm tra tồn đủ} trước khi cho phép thêm dòng hàng. Sau khi quản lý duyệt, tồn kho được \textbf{giảm} tương ứng.
+
+\textbf{Người thực hiện}: Nhân viên kho (lập phiếu); Quản lý kho (duyệt phiếu).
+
+\textbf{Quy trình}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên kho chọn lập phiếu xuất: chọn khách hàng, kho xuất, ngày xuất, lý do xuất.
+    \item Thêm dòng hàng: chọn hàng, nhập số lượng. Hệ thống kiểm tra \texttt{TonKho} tại kho xuất.
+    \item Nếu tồn \textbf{không đủ}: thông báo, không cho thêm dòng đó.
+    \item Nếu đủ: hiển thị đơn giá xuất, tính thành tiền và tổng tiền phiếu.
+    \item Gửi duyệt -- trạng thái ``Chờ duyệt''.
+    \item Quản lý kho duyệt: trạng thái ``Đã duyệt''; \textbf{giảm} tồn kho từng dòng; ghi log.
+    \item Nếu từ chối: tồn không đổi, ghi lý do từ chối.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{KhachHang}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
+
+\textbf{Use case tiêu biểu}: UC10 Lập phiếu xuất kho (lập + duyệt).
+
+\section{Nghiệp vụ 9: Kiểm kê tồn kho}
+
+\textbf{Mô tả}: Định kỳ (tháng/quý), đối chiếu số lượng hàng \textbf{thực tế} trong kho với số lượng trên hệ thống (sổ sách). Nếu có chênh lệch, quản lý duyệt điều chỉnh để \texttt{TonKho} khớp thực tế.
+
+\textbf{Người thực hiện}: Nhân viên kho (lập phiếu, nhập số thực tế); Quản lý kho (duyệt điều chỉnh).
+
+\textbf{Quy trình}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Nhân viên tạo phiếu kiểm kê: chọn kho, ngày kiểm.
+    \item Hệ thống hiển thị danh sách hàng và \textbf{số lượng theo sổ} (từ \texttt{TonKho}).
+    \item Nhân viên kiểm đếm thực tế, nhập \textbf{số lượng thực tế} từng mặt hàng.
+    \item Hệ thống tính \textbf{chênh lệch} = thực tế $-$ sổ sách.
+    \item Gửi duyệt. Quản lý xem chênh lệch, \textbf{duyệt điều chỉnh} hoặc yêu cầu kiểm lại.
+    \item Nếu duyệt: cập nhật \texttt{TonKho} = số thực tế; ghi log; trạng thái phiếu ``Đã duyệt''.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{TonKho}, \texttt{Kho}, \texttt{HangHoa}, \texttt{LichSuThaoTac}.
+
+\textbf{Use case tiêu biểu}: UC11 Lập phiếu kiểm kê.
+
+\section{Nghiệp vụ 10: Báo cáo nhập -- xuất -- tồn}
+
+\textbf{Mô tả}: Quản lý kho / quản trị viên xem \textbf{báo cáo tồn kho} và tổng hợp nhập--xuất--tồn theo khoảng thời gian, theo kho hoặc theo hàng, phục vụ theo dõi vận hành (không bao gồm module tài chính/thanh toán phức tạp).
+
+\textbf{Người thực hiện}: Quản lý kho, Quản trị viên.
+
+\textbf{Quy trình}:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Chọn loại xem: tồn hiện tại, hoặc nhập--xuất--tồn theo kỳ.
+    \item Nhập điều kiện: khoảng ngày, kho (tùy chọn), nhóm hàng / mã hàng (tùy chọn).
+    \item Hệ thống tổng hợp từ \texttt{PhieuNhapKho}, \texttt{PhieuXuatKho}, \texttt{TonKho}, \texttt{HangHoa}.
+    \item Hiển thị bảng kết quả; có thể xuất Excel để lưu trữ.
+\end{enumerate}
+
+\textbf{Dữ liệu liên quan}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{TonKho}, \texttt{HangHoa}, \texttt{Kho}.
+
+\textbf{Use case tiêu biểu}: UC12 Xem báo cáo nhập xuất tồn.
 
 \section{Kết luận chương}
 
-Đã mô tả nghiệp vụ và ánh xạ sang \textbf{10 use case} mục tiêu (Chương 3).
+Chương 2 mô tả 10 nghiệp vụ (gồm \textbf{kiểm kê} và \textbf{báo cáo tồn}). Ánh xạ sang 12 use case tiêu biểu ở Chương 3. Tiếp: đặc tả UC, activity, sequence, class.

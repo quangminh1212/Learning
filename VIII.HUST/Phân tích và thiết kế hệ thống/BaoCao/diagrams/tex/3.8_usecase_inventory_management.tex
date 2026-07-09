@@ -2,29 +2,34 @@
 \centering
 \makebox[\textwidth][c]{%
 \begin{tikzpicture}[
-    scale=0.9,
+    scale=0.88,
     transform shape,
     actor/.style={circle, draw=black, fill=white, line width=0.8pt, minimum size=0.7cm},
-    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.4cm, minimum height=0.75cm, font=\footnotesize, align=center},
+    usecase/.style={ellipse, draw=black, fill=white, line width=0.55pt, minimum width=3.5cm, minimum height=0.7cm, font=\scriptsize, align=center},
     system/.style={rectangle, draw=black!50, dashed, fill=white, line width=0.4pt, inner sep=8pt, rounded corners=3pt}
 ]
 
-\node[system, minimum width=11cm, minimum height=6cm] (system) at (0,0) {};
-\node[font=\bfseries\small] at (0,2.6) {Phân rã: Nhập / xuất kho};
+\node[system, minimum width=12.5cm, minimum height=8cm] (system) at (0,0) {};
+\node[font=\bfseries\small] at (0,3.5) {Phân rã: Nhập / xuất / kiểm kê / báo cáo};
 
-\node[usecase] (uc09) at (-2.8,0.3) {UC09: Lập phiếu nhập};
-\node[usecase] (uc10) at (2.8,0.3) {UC10: Lập phiếu xuất};
+\node[usecase] (uc09) at (-3.5,1.6) {UC09: Lập phiếu nhập};
+\node[usecase] (uc10) at (3.5,1.6) {UC10: Lập phiếu xuất};
+\node[usecase] (uc11) at (-3.5,-0.4) {UC11: Lập phiếu kiểm kê};
+\node[usecase] (uc12) at (3.5,-0.4) {UC12: Xem BC nhập xuất tồn};
 
-\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-6,0.3) {};
-\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (6,0.3) {};
+\node[actor, label=below:{\scriptsize\bfseries Nhân viên kho}] (nvk) at (-7,0.6) {};
+\node[actor, label=below:{\scriptsize\bfseries Quản lý kho}] (qlk) at (7,0.6) {};
 
 \draw (nvk) -- (uc09);
 \draw (nvk) -- (uc10);
+\draw (nvk) -- (uc11);
 \draw (qlk) -- (uc09);
 \draw (qlk) -- (uc10);
+\draw (qlk) -- (uc11);
+\draw (qlk) -- (uc12);
 
 \end{tikzpicture}
 }
-\caption{Use case phân rã -- Lập phiếu nhập / xuất}
+\caption{Use case phân rã -- Nhập, xuất, kiểm kê, báo cáo tồn}
 \label{fig:usecase-inventory-management}
 \end{figure}
