@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nhóm 1 — Quản trị dự án · CNTT20261_N01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #C81028;
+      --red-d: #9D1D1F;
+      --gold: #F0C008;
+      --navy: #9D1D1F;
+      --ink: #1A1A1A;
+      --muted: #5C5C5C;
+      --line: #E8D9DC;
+      --paper: #FDFAFB;
+      --card: #ffffff;
+      --ok: #1f7a4d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0e141d; }
+    body { font-family: "Be Vietnam Pro", "Segoe UI", sans-serif; color: var(--ink); }
+    #stage { width: 100vw; height: 100vh; display: grid; place-items: center; }
+    #canvas { width: 1920px; height: 1080px; position: relative; transform-origin: center center; background: var(--paper); box-shadow: 0 24px 80px rgba(0,0,0,.45); }
+    .slide {
+      position: absolute; inset: 0; display: none; padding: 56px 80px 70px;
+      background: var(--paper);
+    }
+    .slide.on { display: flex; flex-direction: column; gap: 16px; }
+    .slide.cover, .slide.end { padding: 0; }
+    .kicker { font-size: 18px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--red); }
+    h1 { font-size: 46px; font-weight: 800; line-height: 1.18; letter-spacing: -.02em; }
+    h2 { font-size: 38px; font-weight: 800; letter-spacing: -.02em; }
+    p, li { font-size: 21px; line-height: 1.42; }
+    .muted { color: var(--muted); }
+    .bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+    .bar .rule { flex: 1; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold) 55%, transparent); margin-left: 24px; }
+    .foot {
+      position: absolute; left: 80px; right: 80px; bottom: 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px;
+    }
+    .foot b { color: var(--red); font-weight: 700; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+      padding: 18px 22px; box-shadow: 0 8px 24px rgba(157,29,31,.05);
+    }
+    .card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .num { font-size: 32px; font-weight: 800; color: var(--red); letter-spacing: -.03em; line-height: 1; }
+    .tag {
+      display: inline-flex; align-items: center;
+      background: #f3e6e9; color: var(--red); font-size: 14px; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .tag.gold { background: #FFF6CC; color: #7A5C00; }
+    .tag.ok { background: #e5f4ea; color: var(--ok); }
+    table { width: 100%; border-collapse: collapse; font-size: 17px; }
+    th { text-align: left; background: var(--red); color: #fff; font-weight: 600; padding: 9px 12px; }
+    td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    tr:nth-child(even) td { background: #fbfaf7; }
+    ul.clean { list-style: none; }
+    ul.clean li { position: relative; padding-left: 22px; margin: 6px 0; }
+    ul.clean li::before { content: ""; position: absolute; left: 0; top: 10px; width: 10px; height: 10px; background: var(--red); border-radius: 2px; }
+    .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .cols-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .progress { position: absolute; left: 0; right: 0; top: 0; height: 6px; background: #e8e2d6; z-index: 5; }
+    .progress > i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); width: 0; }
+    #hud, .hint { display: none !important; }
+    .cover-bg { display: grid; grid-template-columns: 1.15fr .85fr; height: 100%; }
+    .cover-l { background: var(--red); color: #fff; padding: 72px 80px; display: flex; flex-direction: column; }
+    .cover-r { background: var(--paper); padding: 72px 64px; display: flex; flex-direction: column; }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .brand img { width: 78px; height: 78px; }
+    .brand .uni { font-size: 15px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+    .brand .sch { font-size: 18px; font-weight: 700; }
+    .cover-l h1 { font-size: 42px; margin-top: 40px; color: #fff; }
+    .cover-l .sub { margin-top: 20px; font-size: 22px; color: #FFE8EA; max-width: 820px; }
+    .meta-row { margin-top: auto; display: flex; gap: 36px; }
+    .meta-row .lab { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+    .meta-row .val { font-size: 20px; font-weight: 700; margin-top: 4px; }
+    .member { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .av {
+      width: 46px; height: 46px; border-radius: 50%; background: var(--red); color: #fff;
+      display: grid; place-items: center; font-weight: 800; font-size: 15px; flex-shrink: 0;
+    }
+    .av.g { background: var(--gold); color: #1A1A1A; }
+    .member .nm { font-weight: 700; font-size: 20px; }
+    .member .role { font-size: 15px; color: var(--muted); }
+    .tl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; position: relative; }
+    .tl::before {
+      content: ""; position: absolute; left: 8px; right: 8px; top: 18px; height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+    }
+    .tl .ph { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 34px 12px 14px; position: relative; }
+    .tl .dot {
+      position: absolute; top: 10px; left: 16px; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--red);
+    }
+    .tl .ph b { display: block; font-size: 22px; }
+    .tl .ph span { display: block; font-size: 15px; color: var(--muted); margin-top: 4px; }
+    .flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .chip { background: var(--red-d); color: #fff; padding: 9px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; }
+    .chip.alt { background: var(--red); }
+    .arr { color: var(--gold); font-size: 24px; font-weight: 800; }
+    .prob { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px 14px; }
+    .prob .from, .prob .to { padding: 7px 12px; border-radius: 10px; font-size: 16px; }
+    .prob .from { background: #f8e9ec; color: var(--red-d); }
+    .prob .to { background: #e7f4ec; color: #145a38; }
+    .prob .arrow { display: grid; place-items: center; color: var(--gold); font-weight: 800; font-size: 20px; }
+    .end-bg { height: 100%; background: var(--red); color: #fff; display: flex; flex-direction: column; padding: 90px 100px; }
+    .end-bg h1 { color: #fff; font-size: 72px; }
+    .q { font-size: 28px; color: var(--gold); margin-top: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="progress"><i id="bar"></i></div>
+  <div id="stage"><div id="canvas"></div></div>
+  <div class="hint">← → Space · F toàn màn hình</div>
+  <div id="hud">
+    <button type="button" id="prev">‹</button>
+    <button type="button" id="next">›</button>
+  </div>
+
+  <template id="slides">
+    <!-- 1 -->
+    <section class="slide cover">
+      <div class="cover-bg">
+        <div class="cover-l">
+          <div class="brand">
+            <img src="hust-logo.png" alt="Logo ĐHBK Hà Nội" />
+            <div>
+              <div class="uni">Đại học Bách khoa Hà Nội</div>
+              <div class="sch">Trường Công nghệ Thông tin và Truyền thông</div>
+            </div>
+          </div>
+          <div class="tag gold" style="margin-top:44px;align-self:flex-start;">Học phần Quản trị dự án · Bài tập lớn nhóm</div>
+          <h1>Quản lý dự án xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang</h1>
+          <p class="sub">Hồ sơ QLDA: khảo sát hiện trạng · tôn chỉ &amp; WBS · phân tích thiết kế · dự toán kinh phí · kế hoạch quản lý chất lượng.</p>
+          <div class="meta-row">
+            <div><div class="lab">Mã số</div><div class="val">CNTT20261_N01</div></div>
+            <div><div class="lab">Thời gian</div><div class="val">01/09/2026 – 31/03/2027</div></div>
+            <div><div class="lab">Kinh phí</div><div class="val">408.196.650 ₫</div></div>
+          </div>
+        </div>
+        <div class="cover-r">
+          <div class="kicker">Nhóm 1 · K6901 CNTT VB2CQ</div>
+          <h2 style="margin:10px 0 24px;">Thành viên</h2>
+          <div class="member"><div class="av">TA</div><div><div class="nm">Bùi Tuấn Anh · 202490032</div><div class="role">Giám đốc dự án · Phân tích nghiệp vụ</div></div></div>
+          <div class="member"><div class="av g">QL</div><div><div class="nm">Bùi Quốc Luýt · 202490069</div><div class="role">Trưởng nhóm kỹ thuật · Back-end</div></div></div>
+          <div class="member"><div class="av">QM</div><div><div class="nm">Vũ Quang Minh · 202490071</div><div class="role">Lập trình Back-end</div></div></div>
+          <div class="member"><div class="av g">MQ</div><div><div class="nm">Bạch Minh Quang · 202490077</div><div class="role">Thiết kế UI/UX · Front-end</div></div></div>
+          <div class="member"><div class="av">BT</div><div><div class="nm">Phạm Đoàn Bảo Thiên · 202490090</div><div class="role">Thiết kế CSDL · Kiểm thử</div></div></div>
+          <p class="muted" style="margin-top:auto;font-size:16px;">Hà Nội, tháng 9 năm 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">Đề bài</div><h2>Năm sản phẩm hồ sơ quản trị dự án</h2></div><div class="rule"></div></div>
+      <p>Bài tập lớn yêu cầu lập <b>hồ sơ quản lý dự án phần mềm</b> cho đề tài kho thời trang. Nhóm giao nộp đúng 5 sản phẩm:</p>
+      <table>
+        <thead><tr><th>#</th><th>Sản phẩm theo đề</th><th>File nộp</th><th>Slide</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Báo cáo khảo sát hiện trạng</td><td>Nhóm 1 - Báo cáo khảo sát.docx</td><td>3 – 4</td></tr>
+          <tr><td>2</td><td>Tôn chỉ dự án + bảng phân rã công việc (WBS)</td><td>ton-chi-DA-va-phan-ra-cong-viec.xlsx</td><td>5 – 10</td></tr>
+          <tr><td>3</td><td>Báo cáo phân tích và thiết kế hệ thống</td><td>bao-cao-phan-tich-thiet-ke.docx</td><td>nền tảng mục tiêu / phạm vi</td></tr>
+          <tr><td>4</td><td>Bảng dự toán kinh phí</td><td>kinh-phi-du-an.xlsx</td><td>11 – 12</td></tr>
+          <tr><td>5</td><td>Kế hoạch quản lý chất lượng</td><td>quan-ly-chat-luong.docx</td><td>13 – 14</td></tr>
+        </tbody>
+      </table>
+      <div class="cols-3">
+        <div class="card"><h3>Thời gian</h3><p>07 tháng, nghiệm thu 31/03/2027</p></div>
+        <div class="card"><h3>Chi phí</h3><p>408.196.650 ₫, không vượt ngân sách</p></div>
+        <div class="card"><h3>Chất lượng</h3><p>Sai lệch tồn &lt; 1% · 0 tồn âm · NXT &lt; 1 phút</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>2</b> / 15</span></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">1. Khảo sát hiện trạng</div><h2>Mục đích, quy trình và biểu mẫu</h2></div><div class="rule"></div></div>
+      <div class="cols-2">
+        <div class="card">
+          <h3>Mục đích khảo sát (theo báo cáo)</h3>
+          <p>Tìm hiểu cách doanh nghiệp đang quản lý hàng hóa và vận hành kho: nghiệp vụ, đối tượng dữ liệu, khó khăn, nhu cầu tin học hóa.</p>
+          <p style="margin-top:10px;">Đơn vị khảo sát: kho tổng + kho cửa hàng, nhập nhiều NCC, bán quầy và trực tuyến. Ghi nhận bằng sổ sách và nhiều file Excel rời.</p>
+        </div>
+        <div class="card">
+          <h3>Đặc thù hàng thời trang</h3>
+          <ul class="clean">
+            <li>Một mẫu có nhiều màu, size → quản lý theo <b>biến thể</b></li>
+            <li>Mẫu mã đổi theo mùa; hàng lỗi thời, đổi trả, hàng lỗi</li>
+            <li>SKU ví dụ: AT001-DEN-M (mẫu · màu · size)</li>
+            <li>AT01 tổng 6.500 SP không cho biết còn Đen/M hay không</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow">
+        <div class="chip">Nhập hàng</div><span class="arr">→</span>
+        <div class="chip">Xuất hàng</div><span class="arr">→</span>
+        <div class="chip">Kiểm kê</div><span class="arr">→</span>
+        <div class="chip">Đổi trả</div><span class="arr">+</span>
+        <div class="chip alt">Chuyển kho · Hủy hàng</div>
+      </div>
+      <div class="cols-4">
+        <div class="card"><div class="num">13</div><p style="margin-top:6px;">biểu mẫu: 7 phiếu + 6 báo cáo</p></div>
+        <div class="card"><div class="num">4</div><p style="margin-top:6px;">quy trình cốt lõi đang làm thủ công</p></div>
+        <div class="card"><div class="num">3</div><p style="margin-top:6px;">tác nhân: QL · NV kho · NV bán hàng</p></div>
+        <div class="card"><div class="num">Kho</div><p style="margin-top:6px;">là trung tâm: mọi nghiệp vụ đổi tồn</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>3</b> / 15</span></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">1. Khảo sát</div><h2>Mười vấn đề → nhu cầu hệ thống</h2></div><div class="rule"></div></div>
+      <div class="prob">
+        <div class="from">Dữ liệu phân tán, không đồng nhất</div><div class="arrow">→</div><div class="to">Một hệ thống tập trung</div>
+        <div class="from">Khó quản lý màu / size</div><div class="arrow">→</div><div class="to">Biến thể + mã SKU</div>
+        <div class="from">Tồn sai, không realtime</div><div class="arrow">→</div><div class="to">Cập nhật khi phiếu hoàn tất</div>
+        <div class="from">Khó truy vết biến động</div><div class="arrow">→</div><div class="to">Thẻ kho chỉ thêm, không sửa</div>
+        <div class="from">Tìm kiếm thông tin chậm</div><div class="arrow">→</div><div class="to">Lọc theo SP, màu, size, kho</div>
+        <div class="from">Kiểm kê, đối chiếu thủ công</div><div class="arrow">→</div><div class="to">Tự tính chênh lệch, có duyệt</div>
+        <div class="from">Báo cáo thủ công cả ngày</div><div class="arrow">→</div><div class="to">Tự tổng hợp, xuất Excel</div>
+        <div class="from">Khó kiểm soát thao tác NV</div><div class="arrow">→</div><div class="to">RBAC, ghi người thực hiện</div>
+        <div class="from">Khó phát hiện hàng sắp hết</div><div class="arrow">→</div><div class="to">Cảnh báo so với tồn tối thiểu</div>
+        <div class="from">Hàng tồn lâu không thấy</div><div class="arrow">→</div><div class="to">Báo cáo số ngày tồn kho</div>
+      </div>
+      <div class="card">
+        <p><b>Kết luận khảo sát:</b> kho là trung tâm. Hệ thống mới phải quản lý tồn theo cặp (kho, biến thể); mọi thay đổi tồn đi qua phiếu kho hoàn thành và thẻ kho.</p>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>4</b> / 15</span></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. Tôn chỉ dự án</div><h2>Project Charter — CNTT20261_N01</h2></div><div class="rule"></div></div>
+      <div class="cols-4">
+        <div class="card"><div class="kicker">Bắt đầu</div><div class="num" style="font-size:26px;margin-top:8px;">01/09/2026</div></div>
+        <div class="card"><div class="kicker">Kết thúc</div><div class="num" style="font-size:26px;margin-top:8px;">31/03/2027</div></div>
+        <div class="card"><div class="kicker">Giám đốc DA</div><div class="num" style="font-size:26px;margin-top:8px;">Bùi Tuấn Anh</div></div>
+        <div class="card"><div class="kicker">Quyết định</div><div class="num" style="font-size:26px;margin-top:8px;">Số 01 · 31/07/2026</div></div>
+      </div>
+      <div class="cols-2">
+        <div class="card">
+          <h3>Mô tả dự án</h3>
+          <ul class="clean">
+            <li>Tên: Xây dựng HTQL hàng hóa và kho bãi SP thời trang</li>
+            <li>Chủ đầu tư: doanh nghiệp được khảo sát</li>
+            <li>Kinh phí: 408.196.650 ₫</li>
+            <li>Quy mô vừa, 5 thành viên, 7 tháng</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Mục tiêu tổng quát (trích tôn chỉ)</h3>
+          <p>Xây dựng ứng dụng web quản lý tập trung, thay sổ sách/Excel, <b>lấy kho làm trung tâm</b>, quản lý tồn đến từng biến thể (sản phẩm + màu + size).</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Yêu cầu kỹ thuật trong tôn chỉ</h3>
+        <p>Web 3 tầng React / Java 21 Spring Boot 3 / PostgreSQL 16 · Docker + Nginx · RBAC, bcrypt, HTTPS · tra cứu &lt; 2s với 50.000 biến thể · sẵn sàng 99% giờ 7h–22h.</p>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>5</b> / 15</span></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. Tôn chỉ</div><h2>Mục tiêu đo được và phạm vi</h2></div><div class="rule"></div></div>
+      <div class="cols-5">
+        <div class="card"><div class="num">&lt; 1%</div><p style="margin-top:8px;font-size:16px;">Sai lệch tồn sau kiểm kê định kỳ</p></div>
+        <div class="card"><div class="num">0</div><p style="margin-top:8px;font-size:16px;">Trường hợp tồn âm, kể cả xuất đồng thời</p></div>
+        <div class="card"><div class="num">vài giây</div><p style="margin-top:8px;font-size:16px;">Truy vết đủ lịch sử một biến thể</p></div>
+        <div class="card"><div class="num">&lt; 1 phút</div><p style="margin-top:8px;font-size:16px;">Báo cáo NXT tháng (trước: cả ngày)</p></div>
+        <div class="card"><div class="num">tự động</div><p style="margin-top:8px;font-size:16px;">Cảnh báo hết hàng / sắp hết</p></div>
+      </div>
+      <div class="cols-2">
+        <div class="card" style="border-top:5px solid var(--ok);">
+          <span class="tag ok">In-scope</span>
+          <ul class="clean">
+            <li>Phân tích, thiết kế, phát triển, kiểm thử hệ thống kho</li>
+            <li>Tài khoản, danh mục, nhập/xuất/chuyển/hủy, kiểm kê có duyệt, đổi trả, tra cứu, báo cáo, thẻ kho</li>
+            <li>Chuyển đổi tồn đầu kỳ, triển khai, đào tạo, bàn giao</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top:5px solid var(--red);">
+          <span class="tag">Out-of-scope</span>
+          <ul class="clean">
+            <li>POS, thanh toán, hóa đơn điện tử</li>
+            <li>Đặt hàng NCC, công nợ, kế toán giá vốn</li>
+            <li>Sàn TMĐT, vận chuyển, CSKH, khuyến mãi</li>
+            <li>App di động riêng; mua sắm máy tính bảng, máy quét</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>6</b> / 15</span></div>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. Tôn chỉ</div><h2>Tổ chức dự án và người sử dụng</h2></div><div class="rule"></div></div>
+      <table>
+        <thead><tr><th>Vai trò</th><th>Họ tên</th><th>Tổ chức / vị trí</th></tr></thead>
+        <tbody>
+          <tr><td>Khách hàng</td><td>Ban Giám đốc</td><td>Doanh nghiệp thời trang (đơn vị khảo sát)</td></tr>
+          <tr><td>Người sử dụng</td><td>Quản lý, NV kho, NV bán hàng</td><td>Kho tổng, kho cửa hàng, bộ phận bán hàng</td></tr>
+          <tr><td>Giám đốc dự án</td><td>Bùi Tuấn Anh</td><td>Trường CNTT&amp;TT · phân tích nghiệp vụ</td></tr>
+          <tr><td>Trưởng nhóm kỹ thuật</td><td>Bùi Quốc Luýt</td><td>Trường CNTT&amp;TT · back-end</td></tr>
+          <tr><td>Thành viên</td><td>Vũ Quang Minh</td><td>Lập trình back-end</td></tr>
+          <tr><td>Thành viên</td><td>Bạch Minh Quang</td><td>UI/UX, front-end</td></tr>
+          <tr><td>Thành viên</td><td>Phạm Đoàn Bảo Thiên</td><td>CSDL, kiểm thử</td></tr>
+        </tbody>
+      </table>
+      <div class="cols-3">
+        <div class="card"><h3>Rà soát chéo</h3><p>5 người, không tách bộ phận QA. Người tạo ≠ người rà soát từng sản phẩm.</p></div>
+        <div class="card"><h3>Công PERT</h3><p>Tổng 221,8 ngày-người; công gần đều 42–49 ngày/người.</p></div>
+        <div class="card"><h3>Chủ trì</h3><p>Hệ số 0,75 (GĐDA); thành viên chính hệ số 0,45. Lương cơ sở 2.530.000 ₫.</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>7</b> / 15</span></div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. WBS</div><h2>Sáu giai đoạn · 52 công việc</h2></div><div class="rule"></div></div>
+      <div class="tl">
+        <div class="ph"><i class="dot"></i><b>A</b><span>01/09 – 25/09</span><p style="margin-top:8px;font-size:16px;">Khảo sát &amp; yêu cầu<br>27,1 ngày · Task 1–8</p></div>
+        <div class="ph"><i class="dot"></i><b>B</b><span>26/09 – 20/11</span><p style="margin-top:8px;font-size:16px;">Phân tích &amp; thiết kế<br>41,1 ngày · Task 9–17</p></div>
+        <div class="ph"><i class="dot"></i><b>C</b><span>21/11 – 25/12</span><p style="margin-top:8px;font-size:16px;">CSDL &amp; giao diện<br>29,9 ngày · Task 18–25</p></div>
+        <div class="ph"><i class="dot"></i><b>D</b><span>26/12 – 15/02</span><p style="margin-top:8px;font-size:16px;">Xây dựng chương trình<br>69,3 ngày · Task 26–39</p></div>
+        <div class="ph"><i class="dot"></i><b>E</b><span>16/02 – 15/03</span><p style="margin-top:8px;font-size:16px;">Tích hợp &amp; kiểm thử<br>41,1 ngày · Task 40–47</p></div>
+        <div class="ph"><i class="dot"></i><b>F</b><span>16/03 – 31/03</span><p style="margin-top:8px;font-size:16px;">Triển khai &amp; bàn giao<br>13,4 ngày · Task 48–52</p></div>
+      </div>
+      <table>
+        <thead><tr><th>Giai đoạn</th><th>Sản phẩm WBS</th><th>Phụ thuộc</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>Báo cáo khảo sát &amp; đặc tả yêu cầu (19 FR, 11 NFR, QT-01…06)</td><td>Từ đầu</td></tr>
+          <tr><td>B</td><td>Báo cáo phân tích thiết kế UML</td><td>Sau Task 8</td></tr>
+          <tr><td>C</td><td>Lược đồ 15 bảng, prototype 10 màn hình</td><td>Sau Task 17</td></tr>
+          <tr><td>D–E</td><td>Mã nguồn, báo cáo kiểm thử</td><td>Sau CSDL / sau lập trình</td></tr>
+          <tr><td>F</td><td>Biên bản nghiệm thu, tài liệu hướng dẫn, xác nhận bàn giao</td><td>Sau Task 47</td></tr>
+        </tbody>
+      </table>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>8</b> / 15</span></div>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. WBS</div><h2>Phân công công (ngày PERT) theo thành viên</h2></div><div class="rule"></div></div>
+      <table>
+        <thead><tr><th>Thành viên</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>Tổng</th></tr></thead>
+        <tbody>
+          <tr><td>Bùi Tuấn Anh</td><td>12,3</td><td>11,0</td><td>4,2</td><td>5,7</td><td>7,9</td><td>2,2</td><td><b>43,3</b></td></tr>
+          <tr><td>Bùi Quốc Luýt</td><td>8,1</td><td>10,1</td><td>—</td><td>19,4</td><td>9,2</td><td>2,2</td><td><b>49,0</b></td></tr>
+          <tr><td>Vũ Quang Minh</td><td>—</td><td>8,8</td><td>3,5</td><td>18,2</td><td>8,1</td><td>3,5</td><td><b>42,0</b></td></tr>
+          <tr><td>Bạch Minh Quang</td><td>2,4</td><td>4,6</td><td>13,4</td><td>13,6</td><td>7,9</td><td>2,2</td><td><b>44,0</b></td></tr>
+          <tr><td>Phạm Đoàn Bảo Thiên</td><td>4,4</td><td>6,6</td><td>8,8</td><td>12,5</td><td>8,1</td><td>3,3</td><td><b>43,6</b></td></tr>
+          <tr><td><b>Tổng giai đoạn</b></td><td>27,1</td><td>41,1</td><td>29,9</td><td>69,3</td><td>41,1</td><td>13,4</td><td><b>221,8</b></td></tr>
+        </tbody>
+      </table>
+      <div class="cols-3">
+        <div class="card"><h3>PERT trên WBS</h3><p>Mỗi task có a, m, b → TE = (a+4m+b)/6. Tổng TE = 201,7 ngày; dự phòng σ ≈ 20,2 → kế hoạch 221,8.</p></div>
+        <div class="card"><h3>Cân tải</h3><p>Không ai vượt 50 ngày. Giai đoạn D (code) chiếm 69,3 ngày — điểm nghẽn tiến độ.</p></div>
+        <div class="card"><h3>Logic phụ thuộc</h3><p>A → B → C; D sau CSDL (Task 20); E sau D; F sau kiểm thử (Task 47).</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>9</b> / 15</span></div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">2. WBS</div><h2>Sáu mốc kiểm soát tiến độ</h2></div><div class="rule"></div></div>
+      <table>
+        <thead><tr><th>Mốc</th><th>Ngày</th><th>Điều kiện đạt</th><th>Phê duyệt</th></tr></thead>
+        <tbody>
+          <tr><td>M1 Chốt yêu cầu</td><td>25/09/2026</td><td>Đặc tả yêu cầu được doanh nghiệp xác nhận</td><td>GĐDA + đại diện DN</td></tr>
+          <tr><td>M2 Chốt PTTK</td><td>20/11/2026</td><td>Mô hình UML, kiến trúc qua rà soát</td><td>GĐDA + Tech Lead</td></tr>
+          <tr><td>M3 Chốt CSDL/UI</td><td>25/12/2026</td><td>Script CSDL chạy được; 10 MH được duyệt</td><td>GĐDA + đại diện DN</td></tr>
+          <tr><td>M4 Xong lập trình</td><td>15/02/2027</td><td>Đủ chức năng WBS; unit test; 0 Blocker tĩnh</td><td>Tech Lead</td></tr>
+          <tr><td>M5 Xong kiểm thử</td><td>15/03/2027</td><td>≥ 95% test đạt; 0 Blocker/Critical; đạt NFR</td><td>GĐDA</td></tr>
+          <tr><td>M6 Nghiệm thu</td><td>31/03/2027</td><td>Đạt mục tiêu tôn chỉ; biên bản được ký</td><td>GĐDA + đại diện DN</td></tr>
+        </tbody>
+      </table>
+      <div class="cols-2">
+        <div class="card"><h3>Đường găng (logic)</h3><p>Khảo sát → chốt yêu cầu → thiết kế → CSDL → dịch vụ tồn kho → nghiệp vụ phiếu → kiểm thử → UAT → nghiệm thu. Trễ M4/M5 trực tiếp đẩy M6.</p></div>
+        <div class="card"><h3>Sản phẩm cuối (Task 48–52)</h3><p>Môi trường HTTPS + sao lưu 30 ngày; tồn đầu kỳ khớp 100% Excel gốc; tài liệu 3 vai trò; đào tạo; xác nhận bàn giao.</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>10</b> / 15</span></div>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">4. Kinh phí</div><h2>Dự toán 408.196.650 ₫</h2></div><div class="rule"></div></div>
+      <div class="cols-3">
+        <div class="card" style="border-top:5px solid var(--red);"><div class="kicker">1. Công lao động</div><div class="num" style="margin-top:10px;">285,40 tr</div><p class="muted" style="margin-top:6px;">69,9% · sheet CongLaoDong / ChuyenDe</p></div>
+        <div class="card" style="border-top:5px solid var(--red-d);"><div class="kicker">2. Vật tư, thiết bị</div><div class="num" style="margin-top:10px;">73,80 tr</div><p class="muted" style="margin-top:6px;">18,1% · sheet ThietBiVatTu</p></div>
+        <div class="card" style="border-top:5px solid var(--gold);"><div class="kicker">3. Chi khác</div><div class="num" style="margin-top:10px;">49,00 tr</div><p class="muted" style="margin-top:6px;">12,0% · sheet ChiKhac</p></div>
+      </div>
+      <table>
+        <thead><tr><th>Thành viên</th><th>Nhiệm vụ</th><th>Hệ số</th><th>Ngày công</th><th>Thành tiền</th></tr></thead>
+        <tbody>
+          <tr><td>Bùi Tuấn Anh</td><td>Chủ trì</td><td>0,75</td><td>43,3</td><td>82,10 tr</td></tr>
+          <tr><td>Bùi Quốc Luýt</td><td>Thành viên chính</td><td>0,45</td><td>49,0</td><td>55,73 tr</td></tr>
+          <tr><td>Vũ Quang Minh</td><td>Thành viên chính</td><td>0,45</td><td>42,0</td><td>47,80 tr</td></tr>
+          <tr><td>Bạch Minh Quang</td><td>Thành viên chính</td><td>0,45</td><td>44,0</td><td>50,09 tr</td></tr>
+          <tr><td>Phạm Đoàn Bảo Thiên</td><td>Thành viên chính</td><td>0,45</td><td>43,6</td><td>49,68 tr</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Định mức ngày công = hệ số × lương cơ sở 2.530.000 ₫. Bằng chữ: bốn trăm linh tám triệu một trăm chín mươi sáu nghìn sáu trăm năm mươi đồng.</p>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>11</b> / 15</span></div>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">4. Kinh phí</div><h2>Thiết bị và chi khác theo giai đoạn</h2></div><div class="rule"></div></div>
+      <div class="cols-2">
+        <div class="card">
+          <h3>Vật tư, thiết bị — 73,80 tr</h3>
+          <ul class="clean">
+            <li>Thuê máy làm việc theo giai đoạn (không mua)</li>
+            <li>Laptop khảo sát tại kho: 4,0 tr</li>
+            <li>Figma Professional: 1,6 tr</li>
+            <li>Cloud Dev/Staging 2 tháng + Test 50.000 biến thể</li>
+            <li>2 máy quét USB + 2 tablet 10" kiểm thử tại kho</li>
+            <li>Production tháng đầu: app 3,5 tr + DB 4,5 tr + backup + tên miền .vn</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Chi khác — 49,00 tr</h3>
+          <ul class="clean">
+            <li>A: VPP + đi khảo sát kho 5,5 tr</li>
+            <li>B: In đặc tả + workshop QT-01…06 4,5 tr</li>
+            <li>C: Duyệt prototype + OT CSDL 8,0 tr</li>
+            <li>D: Tem SKU + OT lập trình 11,0 tr</li>
+            <li>E: UAT tại kho + OT sửa lỗi 11,0 tr</li>
+            <li>F: In tài liệu + đào tạo + OT chuyển đổi 9,0 tr</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <p><b>Nguyên tắc:</b> thuê theo giai đoạn, không mua sắm phần cứng cho doanh nghiệp (nằm ngoài phạm vi). Chi OT tập trung giai đoạn D–E — đúng điểm nghẽn WBS.</p>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>12</b> / 15</span></div>
+    </section>
+
+    <!-- 13 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">5. Chất lượng</div><h2>Sáu nội dung quản lý chất lượng</h2></div><div class="rule"></div></div>
+      <table>
+        <thead><tr><th>#</th><th>Nội dung (theo đề / KHCL)</th><th>Tiêu chí then chốt</th><th>Phụ trách</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Quản lý yêu cầu</td><td>10 vấn đề khảo sát đều có FR; 19/19 FR truy vết UC</td><td>Bùi Tuấn Anh</td></tr>
+          <tr><td>2</td><td>Quản lý thiết kế</td><td>3NF, CHECK tồn ≥ 0, prototype 10 MH được duyệt</td><td>Bùi Quốc Luýt</td></tr>
+          <tr><td>3</td><td>Kiểm soát lập trình</td><td>100% PR review; unit test tồn kho ≥ 80%; 0 Blocker</td><td>Bùi Quốc Luýt</td></tr>
+          <tr><td>4</td><td>Kiểm thử phần mềm</td><td>100% FR có test; ≥ 95% đạt; 2 kênh cùng trừ 1 SP</td><td>Phạm Đoàn Bảo Thiên</td></tr>
+          <tr><td>5</td><td>Quản lý lỗi</td><td>Blocker 1 ngày · Critical 2 ngày · High 3 ngày</td><td>Luýt · Thiên</td></tr>
+          <tr><td>6</td><td>Nghiệm thu và bàn giao</td><td>Sai lệch tồn thử &lt; 1%; tồn đầu kỳ khớp 100% file gốc</td><td>Bùi Tuấn Anh</td></tr>
+        </tbody>
+      </table>
+      <div class="cols-3">
+        <div class="card"><h3>Kịch bản vàng</h3><p>AT001 Đen/M còn 1 SP: 1 đơn quầy + 1 đơn online cùng lúc → một phiếu thành công, tồn không âm.</p></div>
+        <div class="card"><h3>Đổi size</h3><p>Đổi Đen/M → Đen/L: tồn M +1, L −1, tiền chênh = 0. Hàng lỗi không cộng tồn bán.</p></div>
+        <div class="card"><h3>Mục tiêu chất lượng</h3><p>8 chỉ tiêu nghiệm thu chuyển từ mục 1.3.1 báo cáo PTTK (tồn, không âm, thẻ kho, NXT, cảnh báo, biến thể, tồn lâu, RBAC).</p></div>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>13</b> / 15</span></div>
+    </section>
+
+    <!-- 14 -->
+    <section class="slide">
+      <div class="bar"><div><div class="kicker">5. Chất lượng</div><h2>Chỉ số theo dõi đến nghiệm thu</h2></div><div class="rule"></div></div>
+      <table>
+        <thead><tr><th>Chỉ số</th><th>Ngưỡng</th><th>Tần suất</th></tr></thead>
+        <tbody>
+          <tr><td>Tỷ lệ FR truy vết tới UC và test case</td><td>100%</td><td>Mỗi mốc</td></tr>
+          <tr><td>Tỷ lệ pull request được review</td><td>100%</td><td>Hằng tuần (giai đoạn D)</td></tr>
+          <tr><td>Độ phủ unit test dịch vụ tồn kho</td><td>≥ 80%</td><td>Mỗi lần build</td></tr>
+          <tr><td>Tỷ lệ test case đạt</td><td>≥ 95%</td><td>Hằng tuần (giai đoạn E)</td></tr>
+          <tr><td>Lỗi Blocker / Critical mở</td><td>= 0 tại M5</td><td>2 lần/tuần (E)</td></tr>
+          <tr><td>Tỷ lệ lỗi mở lại</td><td>&lt; 10%</td><td>Hằng tuần (E)</td></tr>
+          <tr><td>Sai lệch tồn sau kiểm kê thử</td><td>&lt; 1%</td><td>Tại M6</td></tr>
+        </tbody>
+      </table>
+      <div class="card">
+        <p><b>Tam giác QLDA:</b> Thời gian chốt 31/03/2027 · Chi phí chốt 408.196.650 ₫ · Chất lượng đo bằng 8 mục tiêu tôn chỉ. Trễ mốc phải có hành động khắc phục trước buổi họp kế tiếp.</p>
+      </div>
+      <div class="foot"><span>QLDA · Nhóm 1 · CNTT20261_N01</span><span>Trang <b>14</b> / 15</span></div>
+    </section>
+
+    <!-- 15 -->
+    <section class="slide end">
+      <div class="end-bg">
+        <div class="brand">
+          <img src="hust-logo.png" alt="Logo ĐHBK Hà Nội" />
+          <div>
+            <div class="uni">Đại học Bách khoa Hà Nội</div>
+            <div class="sch">Quản trị dự án · Nhóm 1</div>
+          </div>
+        </div>
+        <h1 style="margin-top:48px;">Xin cảm ơn</h1>
+        <div class="q">Thảo luận &amp; câu hỏi</div>
+        <div class="cols-3" style="margin-top:40px;">
+          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
+            <h3 style="color:#F0C008;">Hồ sơ đủ 5 sản phẩm</h3>
+            <p>Khảo sát · Tôn chỉ &amp; WBS · PTTK · Kinh phí · Chất lượng.</p>
+          </div>
+          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
+            <h3 style="color:#F0C008;">Cam kết T–C–Q</h3>
+            <p>31/03/2027 · 408,2 triệu ₫ · tồn lệch &lt; 1% · 0 tồn âm.</p>
+          </div>
+          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
+            <h3 style="color:#F0C008;">Một câu</h3>
+            <p>Kho là trung tâm. Tồn theo biến thể. Mọi thay đổi đi qua phiếu hoàn thành.</p>
+          </div>
+        </div>
+        <p style="margin-top:auto;color:#FFD6DA;font-size:18px;">CNTT20261_N01 · K6901 CNTT VB2CQ · Hà Nội, 09/2026</p>
+      </div>
+    </section>
+  </template>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const tpl = document.getElementById("slides");
+    tpl.content.querySelectorAll(".slide").forEach((s) => canvas.appendChild(s.cloneNode(true)));
+    const slides = [...canvas.querySelectorAll(".slide")];
+    let i = 0;
+    const bar = document.getElementById("bar");
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle("on", k === i));
+      bar.style.width = ((i + 1) / slides.length * 100) + "%";
+      history.replaceState(null, "", "#" + (i + 1));
+    }
+    function fit() {
+      const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      canvas.style.transform = "scale(" + s + ")";
+    }
+    window.addEventListener("resize", fit);
+    window.addEventListener("keydown", (e) => {
+      if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); go(i + 1); }
+      if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); go(i - 1); }
+      if (e.key === "Home") go(0);
+      if (e.key === "End") go(slides.length - 1);
+      if (e.key === "f" || e.key === "F") document.documentElement.requestFullscreen?.();
+    });
+    document.getElementById("next").onclick = () => go(i + 1);
+    document.getElementById("prev").onclick = () => go(i - 1);
+    canvas.addEventListener("click", (e) => {
+      if (e.target.closest("a,button")) return;
+      go(e.clientX > window.innerWidth / 2 ? i + 1 : i - 1);
+    });
+    let tx = 0;
+    canvas.addEventListener("touchstart", (e) => { tx = e.changedTouches[0].clientX; }, { passive: true });
+    canvas.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
+    });
+    fit();
+    const hash = parseInt((location.hash || "#1").slice(1), 10);
+    go(Number.isFinite(hash) ? hash - 1 : 0);
+  </script>
+</body>
+</html>
