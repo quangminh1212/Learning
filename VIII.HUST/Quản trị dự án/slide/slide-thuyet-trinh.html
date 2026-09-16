@@ -6,83 +6,94 @@
   <title>Nhóm 1 — Hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
-      --red: #C81028; --red-d: #9D1D1F; --gold: #F0C008; --navy: #9D1D1F;
-      --ink: #1A1A1A; --muted: #5C5C5C; --line: #E8D9DC; --paper: #FDFAFB;
-      --card: #ffffff; --ok: #1f7a4d;
+      --red: #C81028; --red-d: #9D1D1F; --gold: #F0C008;
+      --ink: #1A1A1A; --muted: #5C5C5C; --line: #E8D9DC;
+      --paper: #FDFAFB; --card: #fff; --ok: #1f7a4d;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #0e141d; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #111; }
     body { font-family: "Be Vietnam Pro", "Segoe UI", sans-serif; color: var(--ink); }
     #stage { width: 100vw; height: 100vh; display: grid; place-items: center; }
-    #canvas { width: 1920px; height: 1080px; position: relative; transform-origin: center center; background: var(--paper); box-shadow: 0 24px 80px rgba(0,0,0,.45); }
-    .slide { position: absolute; inset: 0; display: none; padding: 52px 76px 68px; background: var(--paper); }
-    .slide.on { display: flex; flex-direction: column; gap: 14px; }
-    .slide.cover, .slide.end { padding: 0; }
-    .kicker { font-size: 17px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
-    h1 { font-size: 42px; font-weight: 800; line-height: 1.16; letter-spacing: -.02em; }
-    h2 { font-size: 36px; font-weight: 800; letter-spacing: -.02em; }
-    p, li { font-size: 20px; line-height: 1.4; }
+    #canvas { width: 1920px; height: 1080px; position: relative; transform-origin: center center; background: var(--paper); }
+    .slide {
+      position: absolute; inset: 0; display: none;
+      flex-direction: column; padding: 40px 56px 58px; gap: 14px;
+      background: var(--paper);
+    }
+    .slide.on { display: flex; }
+    .slide.cover, .slide.end { padding: 0; gap: 0; }
+    .kicker { font-size: 15px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+    h2 { font-size: 34px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+    p, li { font-size: 18px; line-height: 1.38; }
     .muted { color: var(--muted); }
-    .bar { display: flex; align-items: center; justify-content: space-between; }
-    .bar .rule { flex: 1; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold) 55%, transparent); margin-left: 24px; }
-    .foot { position: absolute; left: 76px; right: 76px; bottom: 20px; display: flex; justify-content: space-between; font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
-    .foot b { color: var(--red); }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
-    .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
-    .num { font-size: 30px; font-weight: 800; color: var(--red); line-height: 1; }
-    .tag { display: inline-flex; background: #f3e6e9; color: var(--red); font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+    .bar { display: flex; align-items: flex-end; gap: 20px; flex: 0 0 auto; }
+    .bar .rule { flex: 1; height: 3px; margin-bottom: 8px; background: linear-gradient(90deg, var(--red), var(--gold) 60%, transparent); }
+    .fill { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .g6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .rows { grid-auto-rows: 1fr; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+      padding: 16px 18px; display: flex; flex-direction: column; min-height: 0;
+    }
+    .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .num { font-size: 28px; font-weight: 800; color: var(--red); line-height: 1.05; }
+    .tag { display: inline-flex; background: #f3e6e9; color: var(--red); font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; width: fit-content; }
     .tag.gold { background: #FFF6CC; color: #7A5C00; }
     .tag.ok { background: #e5f4ea; color: var(--ok); }
     table { width: 100%; border-collapse: collapse; font-size: 16px; }
-    th { text-align: left; background: var(--red); color: #fff; font-weight: 600; padding: 8px 12px; }
-    td { padding: 7px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    tr:nth-child(even) td { background: #fbfaf7; }
+    .fill > table { flex: 0 1 auto; }
+    .card table { width: 100%; }
+    th { text-align: left; background: var(--red); color: #fff; font-weight: 600; padding: 10px 12px; }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    tr:nth-child(even) td { background: #fbf8f8; }
     ul.clean { list-style: none; }
-    ul.clean li { position: relative; padding-left: 20px; margin: 5px 0; }
-    ul.clean li::before { content: ""; position: absolute; left: 0; top: 9px; width: 9px; height: 9px; background: var(--red); border-radius: 2px; }
-    .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-    .cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .progress { position: absolute; left: 0; right: 0; top: 0; height: 6px; background: #e8e2d6; z-index: 5; }
-    .progress > i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); width: 0; }
-    #hud, .hint { display: none !important; }
-    .cover-bg { display: grid; grid-template-columns: 1.15fr .85fr; height: 100%; }
-    .cover-l { background: var(--red); color: #fff; padding: 72px 80px; display: flex; flex-direction: column; }
-    .cover-r { background: var(--paper); padding: 72px 64px; display: flex; flex-direction: column; }
-    .brand { display: flex; align-items: center; gap: 16px; }
-    .brand img { width: 78px; height: 78px; }
-    .brand .uni { font-size: 15px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
-    .brand .sch { font-size: 18px; font-weight: 700; }
-    .cover-l h1 { font-size: 40px; margin-top: 36px; color: #fff; }
-    .cover-l .sub { margin-top: 18px; font-size: 21px; color: #FFE8EA; }
-    .meta-row { margin-top: auto; display: flex; gap: 32px; }
-    .meta-row .lab { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-    .meta-row .val { font-size: 19px; font-weight: 700; margin-top: 4px; }
-    .member { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-    .av { width: 44px; height: 44px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+    ul.clean li { position: relative; padding-left: 18px; margin: 5px 0; }
+    ul.clean li::before { content: ""; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; background: var(--red); border-radius: 1px; }
+    .foot {
+      position: absolute; left: 56px; right: 56px; bottom: 16px;
+      display: flex; justify-content: space-between; font-size: 14px; color: var(--muted);
+      border-top: 1px solid var(--line); padding-top: 8px;
+    }
+    .foot b { color: var(--red); }
+    .progress { position: absolute; left: 0; right: 0; top: 0; height: 5px; background: #eadfe1; z-index: 5; }
+    .progress > i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
+    #hud { display: none !important; }
+    .cover-bg { display: grid; grid-template-columns: 1.12fr .88fr; height: 100%; }
+    .cover-l { background: var(--red); color: #fff; padding: 56px 64px; display: flex; flex-direction: column; }
+    .cover-r { background: var(--paper); padding: 56px 52px; display: flex; flex-direction: column; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand img { width: 72px; height: 72px; }
+    .brand .uni { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+    .brand .sch { font-size: 17px; font-weight: 700; }
+    .cover-l h1 { font-size: 38px; margin-top: 28px; color: #fff; font-weight: 800; line-height: 1.18; }
+    .cover-l .sub { margin-top: 16px; font-size: 19px; color: #FFE8EA; line-height: 1.4; }
+    .meta-row { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .meta-row .lab { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+    .meta-row .val { font-size: 18px; font-weight: 700; margin-top: 4px; }
+    .member { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .av { width: 42px; height: 42px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; flex-shrink: 0; }
     .av.g { background: var(--gold); color: #1A1A1A; }
-    .member .nm { font-weight: 700; font-size: 19px; }
+    .member .nm { font-weight: 700; font-size: 18px; }
     .member .role { font-size: 14px; color: var(--muted); }
     .tl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; position: relative; }
-    .tl::before { content: ""; position: absolute; left: 8px; right: 8px; top: 16px; height: 3px; background: linear-gradient(90deg, var(--red), var(--gold)); }
-    .tl .ph { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 32px 10px 12px; position: relative; }
-    .tl .dot { position: absolute; top: 8px; left: 14px; width: 16px; height: 16px; border-radius: 50%; background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--red); }
-    .tl .ph b { display: block; font-size: 20px; }
-    .tl .ph span { display: block; font-size: 14px; color: var(--muted); margin-top: 3px; }
-    .chip { background: var(--red-d); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 17px; }
-    .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .arr { color: var(--gold); font-size: 22px; font-weight: 800; }
-    .prob { display: grid; grid-template-columns: 1fr auto 1fr; gap: 7px 12px; }
-    .prob .from, .prob .to { padding: 6px 12px; border-radius: 8px; font-size: 16px; }
+    .tl::before { content: ""; position: absolute; left: 6px; right: 6px; top: 14px; height: 3px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+    .tl .ph { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 28px 10px 12px; position: relative; }
+    .tl .dot { position: absolute; top: 6px; left: 12px; width: 15px; height: 15px; border-radius: 50%; background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--red); }
+    .prob { display: grid; grid-template-columns: 1fr 22px 1fr; gap: 6px 8px; flex: 1; align-content: stretch; }
+    .prob .from, .prob .to { padding: 8px 12px; border-radius: 8px; font-size: 16px; display: flex; align-items: center; }
     .prob .from { background: #f8e9ec; color: var(--red-d); }
     .prob .to { background: #e7f4ec; color: #145a38; }
     .prob .arrow { display: grid; place-items: center; color: var(--gold); font-weight: 800; }
-    .end-bg { height: 100%; background: var(--red); color: #fff; display: flex; flex-direction: column; padding: 88px 96px; }
-    .end-bg h1 { color: #fff; font-size: 68px; }
-    .q { font-size: 26px; color: var(--gold); margin-top: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
+    .end-bg { height: 100%; background: var(--red); color: #fff; display: flex; flex-direction: column; padding: 56px 64px 40px; }
+    .end-bg h1 { color: #fff; font-size: 56px; font-weight: 800; }
+    .q { font-size: 22px; color: var(--gold); margin-top: 8px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+    .qt { font-size: 15px; line-height: 1.35; }
   </style>
 </head>
 <body>
@@ -102,9 +113,13 @@
               <div class="sch">Trường Công nghệ Thông tin và Truyền thông</div>
             </div>
           </div>
-          <div class="tag gold" style="margin-top:40px;align-self:flex-start;">Bài tập lớn</div>
+          <div class="tag gold" style="margin-top:32px;">Bài tập lớn</div>
           <h1>Hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang</h1>
           <p class="sub">Dự án: Quản lý dự án xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang. Báo cáo phân tích và thiết kế hệ thống. Mã số CNTT20261_N01.</p>
+          <div class="card" style="margin-top:22px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);color:#fff;">
+            <h3 style="color:#F0C008;">Mục tiêu tổng quát (Tôn chỉ)</h3>
+            <p>Xây dựng thành công hệ thống phần mềm quản lý hàng hóa và kho bãi cho doanh nghiệp kinh doanh thời trang, thay thế việc quản lý bằng sổ sách và nhiều file Excel rời rạc, lấy kho làm trung tâm và quản lý tồn kho đến từng biến thể (sản phẩm + màu + size).</p>
+          </div>
           <div class="meta-row">
             <div><div class="lab">Thời gian</div><div class="val">01/09/2026 – 31/03/2027</div></div>
             <div><div class="lab">Kinh phí</div><div class="val">408.196.650 VNĐ</div></div>
@@ -113,98 +128,166 @@
         </div>
         <div class="cover-r">
           <div class="kicker">Nhóm 1 · Lớp K6901 CNTT VB2CQ</div>
-          <h2 style="margin:10px 0 22px;">Thành viên</h2>
+          <h2 style="margin:8px 0 8px;">Thành viên</h2>
           <div class="member"><div class="av">TA</div><div><div class="nm">Bùi Tuấn Anh · 202490032</div><div class="role">Giám đốc dự án, Phân tích nghiệp vụ</div></div></div>
           <div class="member"><div class="av g">QL</div><div><div class="nm">Bùi Quốc Luýt · 202490069</div><div class="role">Trưởng nhóm kỹ thuật, Lập trình Back-end</div></div></div>
           <div class="member"><div class="av">QM</div><div><div class="nm">Vũ Quang Minh · 202490071</div><div class="role">Lập trình Back-end</div></div></div>
           <div class="member"><div class="av g">MQ</div><div><div class="nm">Bạch Minh Quang · 202490077</div><div class="role">Thiết kế UI/UX, Lập trình Front-end</div></div></div>
           <div class="member"><div class="av">BT</div><div><div class="nm">Phạm Đoàn Bảo Thiên · 202490090</div><div class="role">Thiết kế CSDL, Kiểm thử</div></div></div>
-          <p class="muted" style="margin-top:auto;font-size:16px;">Hà Nội, tháng 9 năm 2026</p>
+          <div class="card" style="margin-top:16px;">
+            <h3>Bộ hồ sơ quản lý dự án</h3>
+            <ul class="clean">
+              <li>Báo cáo khảo sát hiện trạng</li>
+              <li>Báo cáo phân tích và thiết kế hệ thống</li>
+              <li>Bảng phân rã công việc và tôn chỉ dự án</li>
+              <li>Bảng dự toán kinh phí</li>
+              <li>Kế hoạch quản lý chất lượng</li>
+            </ul>
+          </div>
+          <p class="muted" style="margin-top:12px;font-size:14px;">Hà Nội, tháng 9 năm 2026</p>
         </div>
       </div>
     </section>
 
     <!-- 2 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Bộ hồ sơ Nhóm 1</div><h2>Các tài liệu đã lập</h2></div><div class="rule"></div></div>
-      <p>Kế hoạch quản lý chất lượng ghi: đây là một phần trong bộ hồ sơ quản lý dự án của Nhóm 1, gồm các tài liệu sau.</p>
-      <table>
-        <thead><tr><th>Tài liệu</th><th>Nội dung (trích kế hoạch chất lượng)</th></tr></thead>
-        <tbody>
-          <tr><td>Báo cáo khảo sát hiện trạng</td><td>Bối cảnh doanh nghiệp, quy trình kho hiện tại và các vấn đề khách hàng gặp phải</td></tr>
-          <tr><td>Báo cáo phân tích và thiết kế hệ thống</td><td>FR, NFR, quy tắc nghiệp vụ QT, use case, kiến trúc, cơ sở dữ liệu và giao diện</td></tr>
-          <tr><td>Bảng phân rã công việc và tôn chỉ dự án</td><td>Danh sách công việc, tiến độ, phân công và tôn chỉ dự án</td></tr>
-          <tr><td>Bảng dự toán kinh phí</td><td>Chi phí thực hiện</td></tr>
-          <tr><td>Kế hoạch quản lý chất lượng</td><td>Cách kiểm soát chất lượng cho từng giai đoạn</td></tr>
-        </tbody>
-      </table>
-      <div class="cols-3">
-        <div class="card"><div class="kicker">Mã số</div><p style="margin-top:6px;">CNTT20261_N01</p></div>
-        <div class="card"><div class="kicker">Chủ trì / Giám đốc dự án</div><p style="margin-top:6px;">Bùi Tuấn Anh</p></div>
-        <div class="card"><div class="kicker">Quy mô</div><p style="margin-top:6px;">Dự án phần mềm quy mô vừa, 5 thành viên, 07 tháng</p></div>
+      <div class="bar"><div><div class="kicker">Bộ hồ sơ Nhóm 1</div><h2>Năm tài liệu và sáu chương PTTK</h2></div><div class="rule"></div></div>
+      <div class="fill">
+        <p>Kế hoạch quản lý chất lượng: đây là một phần trong bộ hồ sơ quản lý dự án của Nhóm 1.</p>
+        <table>
+          <thead><tr><th style="width:34%">Tài liệu</th><th>Nội dung</th></tr></thead>
+          <tbody>
+            <tr><td>Báo cáo khảo sát hiện trạng</td><td>Bối cảnh doanh nghiệp, quy trình kho hiện tại và các vấn đề khách hàng gặp phải</td></tr>
+            <tr><td>Báo cáo phân tích và thiết kế hệ thống</td><td>FR, NFR, quy tắc nghiệp vụ QT, use case, kiến trúc, cơ sở dữ liệu và giao diện</td></tr>
+            <tr><td>Bảng phân rã công việc và tôn chỉ dự án</td><td>Danh sách công việc, tiến độ, phân công và tôn chỉ dự án</td></tr>
+            <tr><td>Bảng dự toán kinh phí</td><td>Chi phí thực hiện</td></tr>
+            <tr><td>Kế hoạch quản lý chất lượng</td><td>Cách kiểm soát chất lượng cho từng giai đoạn</td></tr>
+          </tbody>
+        </table>
+        <div class="g3" style="flex:1">
+          <div class="card"><div class="kicker">Mã số / Chủ trì</div><p class="num" style="font-size:22px;margin-top:8px;">CNTT20261_N01</p><p>Chủ trì / Giám đốc dự án: Bùi Tuấn Anh. Quy mô vừa, 5 thành viên, 07 tháng.</p></div>
+          <div class="card"><div class="kicker">Báo cáo PTTK — 6 chương</div>
+            <ul class="clean">
+              <li>Ch.1 Khảo sát hiện trạng và mô tả bài toán</li>
+              <li>Ch.2 Phân tích yêu cầu</li>
+              <li>Ch.3 Phân tích</li>
+              <li>Ch.4 Thiết kế kiến trúc và triển khai</li>
+              <li>Ch.5 Thiết kế chi tiết</li>
+              <li>Ch.6 Kết luận</li>
+            </ul>
+          </div>
+          <div class="card"><div class="kicker">Kết quả đạt được (mục 6.1)</div>
+            <p>19 yêu cầu chức năng, 11 yêu cầu phi chức năng, 19 use case có đặc tả, 4 biểu đồ tuần tự, 4 biểu đồ hoạt động, 2 biểu đồ trạng thái, lược đồ CSDL 15 bảng, danh sách 10 màn hình.</p>
+          </div>
+        </div>
       </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>2</b> / 15</span></div>
     </section>
 
     <!-- 3 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.1</div><h2>Mục đích khảo sát và đặc thù ngành</h2></div><div class="rule"></div></div>
-      <div class="card">
-        <p>Khảo sát hiện trạng nhằm tìm hiểu cách thức doanh nghiệp đang quản lý hàng hóa và vận hành kho, từ đó xác định các nghiệp vụ chính, các đối tượng dữ liệu cần quản lý, những khó khăn trong quá trình vận hành và nhu cầu xây dựng hệ thống phần mềm quản lý kho.</p>
-      </div>
-      <div class="card">
-        <h3>Đối với ngành hàng thời trang quần áo, việc quản lý kho có một số đặc thù:</h3>
-        <div class="cols-2">
-          <ul class="clean">
-            <li>Một sản phẩm có nhiều màu sắc, kích thước (size).</li>
-            <li>Cùng một mẫu quần áo có thể tồn tại dưới nhiều biến thể.</li>
-            <li>Số lượng và mẫu mã hàng hóa thường xuyên thay đổi.</li>
-            <li>Hàng hóa được nhập từ nhiều nhà cung cấp.</li>
-          </ul>
-          <ul class="clean">
-            <li>Hàng được xuất bán tại cửa hàng hoặc qua các kênh bán hàng trực tuyến.</li>
-            <li>Cần theo dõi số lượng tồn kho theo từng sản phẩm và từng biến thể.</li>
-            <li>Có các trường hợp đổi trả, hàng lỗi, hàng hỏng hoặc hàng cần thanh lý.</li>
-          </ul>
+      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.1 – 1.5</div><h2>Mục đích, đặc thù và đối tượng</h2></div><div class="rule"></div></div>
+      <div class="fill">
+        <div class="card">
+          <p>Khảo sát hiện trạng nhằm tìm hiểu cách thức doanh nghiệp đang quản lý hàng hóa và vận hành kho, từ đó xác định các nghiệp vụ chính, các đối tượng dữ liệu cần quản lý, những khó khăn trong quá trình vận hành và nhu cầu xây dựng hệ thống phần mềm quản lý kho.</p>
         </div>
+        <div class="g2 rows">
+          <div class="card">
+            <h3>Đặc thù ngành hàng thời trang quần áo</h3>
+            <ul class="clean">
+              <li>Một sản phẩm có nhiều màu sắc, kích thước (size).</li>
+              <li>Cùng một mẫu quần áo có thể tồn tại dưới nhiều biến thể.</li>
+              <li>Số lượng và mẫu mã hàng hóa thường xuyên thay đổi.</li>
+              <li>Hàng hóa được nhập từ nhiều nhà cung cấp.</li>
+              <li>Hàng được xuất bán tại cửa hàng hoặc qua các kênh bán hàng trực tuyến.</li>
+              <li>Cần theo dõi số lượng tồn kho theo từng sản phẩm và từng biến thể.</li>
+              <li>Có các trường hợp đổi trả, hàng lỗi, hàng hỏng hoặc hàng cần thanh lý.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Phương thức hiện tại (mục 1.4)</h3>
+            <p>Thông tin kho thường được ghi nhận bằng Excel, sổ sách hoặc nhiều file riêng biệt. Điều này dẫn đến:</p>
+            <ul class="clean">
+              <li>Khó kiểm soát số lượng tồn kho theo thời gian thực.</li>
+              <li>Dễ xảy ra sai sót khi nhập hoặc xuất hàng.</li>
+              <li>Khó kiểm tra lịch sử biến động của một sản phẩm.</li>
+              <li>Khó quản lý nhiều biến thể màu sắc/kích thước.</li>
+              <li>Việc tìm kiếm thông tin mất nhiều thời gian.</li>
+              <li>Dễ xảy ra tình trạng dữ liệu giữa các file không đồng nhất.</li>
+              <li>Khó phát hiện hàng sắp hết hoặc tồn kho quá lâu; lập báo cáo thủ công; khó phân quyền.</li>
+            </ul>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Đối tượng</th><th>Vai trò</th></tr></thead>
+          <tbody>
+            <tr><td>Quản lý</td><td>Quản lý hàng hóa, kho, nhân viên và xem báo cáo</td></tr>
+            <tr><td>Nhân viên kho</td><td>Nhập, xuất, kiểm kê và sắp xếp hàng hóa</td></tr>
+            <tr><td>Nhân viên bán hàng</td><td>Tạo đơn bán và yêu cầu xuất hàng</td></tr>
+            <tr><td>Nhà cung cấp</td><td>Cung cấp hàng hóa cho doanh nghiệp</td></tr>
+            <tr><td>Khách hàng</td><td>Mua hoặc đổi trả sản phẩm</td></tr>
+          </tbody>
+        </table>
       </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>3</b> / 15</span></div>
     </section>
 
     <!-- 4 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.2</div><h2>Quy trình vận hành kho hiện tại</h2></div><div class="rule"></div></div>
-      <p>Qua khảo sát, quy trình quản lý kho có thể được mô tả như sau:</p>
-      <div class="cols-2">
-        <div class="card"><h3>Nhập hàng</h3>
-          <ul class="clean">
-            <li>Nhân viên nhận hàng từ nhà cung cấp.</li>
-            <li>Kiểm tra số lượng, mẫu mã, màu sắc và kích thước.</li>
-            <li>Đối chiếu với đơn đặt hàng hoặc hóa đơn nhập hàng.</li>
-            <li>Ghi nhận thông tin hàng hóa nhập kho; sắp xếp vị trí; cập nhật tồn kho.</li>
-          </ul>
-        </div>
-        <div class="card"><h3>Xuất hàng</h3>
-          <ul class="clean">
-            <li>Nhận yêu cầu xuất hàng từ bộ phận bán hàng/đơn hàng.</li>
-            <li>Kiểm tra số lượng hàng tồn; lấy hàng từ kho.</li>
-            <li>Kiểm tra sản phẩm trước khi xuất.</li>
-            <li>Ghi nhận thông tin xuất kho; cập nhật lại số lượng tồn kho.</li>
-          </ul>
-        </div>
-        <div class="card"><h3>Kiểm kê</h3>
-          <ul class="clean">
-            <li>Kiểm tra số lượng hàng thực tế trong kho.</li>
-            <li>Đối chiếu với sổ sách hoặc file quản lý.</li>
-            <li>Xác định chênh lệch; điều chỉnh tồn kho nếu cần; lập báo cáo kiểm kê.</li>
-          </ul>
-        </div>
-        <div class="card"><h3>Đổi trả hàng</h3>
-          <ul class="clean">
-            <li>Tiếp nhận thông tin sản phẩm được trả lại.</li>
-            <li>Kiểm tra tình trạng sản phẩm.</li>
-            <li>Xác định đủ điều kiện nhập lại kho hay không; cập nhật tồn; ghi nhận nguyên nhân.</li>
-          </ul>
+      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.2</div><h2>Bốn quy trình vận hành kho hiện tại</h2></div><div class="rule"></div></div>
+      <div class="fill">
+        <p>Qua khảo sát, quy trình quản lý kho có thể được mô tả như sau. Kế hoạch chất lượng: khảo sát trực tiếp 4 quy trình cốt lõi và 2 nghiệp vụ phụ (chuyển kho, hủy hàng) tại kho tổng và kho cửa hàng.</p>
+        <div class="g2 rows">
+          <div class="card"><h3>Nhập hàng</h3>
+            <ul class="clean">
+              <li>Nhân viên nhận hàng từ nhà cung cấp.</li>
+              <li>Kiểm tra số lượng, mẫu mã, màu sắc và kích thước.</li>
+              <li>Đối chiếu với đơn đặt hàng hoặc hóa đơn nhập hàng.</li>
+              <li>Ghi nhận thông tin hàng hóa nhập kho.</li>
+              <li>Sắp xếp hàng hóa vào vị trí tương ứng trong kho.</li>
+              <li>Cập nhật số lượng tồn kho.</li>
+            </ul>
+          </div>
+          <div class="card"><h3>Xuất hàng</h3>
+            <ul class="clean">
+              <li>Nhận yêu cầu xuất hàng từ bộ phận bán hàng/đơn hàng.</li>
+              <li>Kiểm tra số lượng hàng tồn.</li>
+              <li>Nhân viên lấy hàng từ kho.</li>
+              <li>Kiểm tra sản phẩm trước khi xuất.</li>
+              <li>Ghi nhận thông tin xuất kho.</li>
+              <li>Cập nhật lại số lượng tồn kho.</li>
+            </ul>
+          </div>
+          <div class="card"><h3>Kiểm kê</h3>
+            <ul class="clean">
+              <li>Nhân viên kiểm tra số lượng hàng thực tế trong kho.</li>
+              <li>Đối chiếu với số lượng được ghi nhận trên sổ sách hoặc file quản lý.</li>
+              <li>Xác định các trường hợp chênh lệch.</li>
+              <li>Điều chỉnh số lượng tồn kho nếu cần.</li>
+              <li>Lập báo cáo kiểm kê.</li>
+            </ul>
+          </div>
+          <div class="card"><h3>Đổi trả hàng</h3>
+            <ul class="clean">
+              <li>Tiếp nhận thông tin sản phẩm được trả lại.</li>
+              <li>Kiểm tra tình trạng sản phẩm.</li>
+              <li>Xác định sản phẩm có đủ điều kiện nhập lại kho hay không.</li>
+              <li>Cập nhật số lượng tồn kho.</li>
+              <li>Ghi nhận nguyên nhân đổi/trả.</li>
+            </ul>
+          </div>
+          <div class="card"><h3>Chuyển kho (nghiệp vụ phụ)</h3>
+            <ul class="clean">
+              <li>Phiếu chuyển kho: ghi nhận chuyển hàng giữa các kho.</li>
+              <li>Chuyển hàng giữa kho tổng và kho cửa hàng qua hai bước xuất đi và xác nhận nhận hàng tại kho đích (UC-3.4).</li>
+            </ul>
+          </div>
+          <div class="card"><h3>Hủy hàng (nghiệp vụ phụ)</h3>
+            <ul class="clean">
+              <li>Phiếu hủy hàng: ghi nhận hàng lỗi, hỏng hoặc không còn khả năng bán.</li>
+              <li>Lập phiếu hủy hàng lỗi, hỏng; phiếu chỉ trừ tồn sau khi Quản lý duyệt (UC-3.8).</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>4</b> / 15</span></div>
@@ -212,10 +295,11 @@
 
     <!-- 5 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.3 – 2.2</div><h2>Thực trạng biến thể và 10 vấn đề</h2></div><div class="rule"></div></div>
-      <div class="cols-2">
+      <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.3 – 2.2</div><h2>Biến thể AT01 và mười vấn đề</h2></div><div class="rule"></div></div>
+      <div class="fill g2">
         <div class="card">
-          <h3>Áo thun AT01 — quản lý ở cấp biến thể</h3>
+          <h3>Màu sắc và kích thước quản lý ở cấp biến thể</h3>
+          <p class="muted" style="margin-bottom:10px;">Ví dụ Áo thun AT01:</p>
           <table>
             <thead><tr><th>Biến thể</th><th>Số lượng</th></tr></thead>
             <tbody>
@@ -226,10 +310,10 @@
               <tr><td>Trắng / M</td><td>2000 sản phẩm</td></tr>
             </tbody>
           </table>
-          <p class="muted" style="margin-top:8px;">Màu sắc và kích thước cần được quản lý ở cấp biến thể sản phẩm, thay vì chỉ quản lý ở cấp sản phẩm.</p>
+          <p style="margin-top:auto;padding-top:12px;">Cách quản lý này phù hợp hơn với đặc thù hàng thời trang.</p>
         </div>
-        <div>
-          <p style="margin-bottom:8px;">Từ kết quả khảo sát, hệ thống cần giải quyết:</p>
+        <div class="card">
+          <h3>Vấn đề → nhu cầu hệ thống</h3>
           <div class="prob">
             <div class="from">Dữ liệu phân tán</div><div class="arrow">→</div><div class="to">Tập trung dữ liệu trên một hệ thống</div>
             <div class="from">Khó quản lý biến thể</div><div class="arrow">→</div><div class="to">Quản lý sản phẩm theo màu và size</div>
@@ -250,52 +334,78 @@
     <!-- 6 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 2.4 – 3.1</div><h2>Kết luận khảo sát và 13 biểu mẫu</h2></div><div class="rule"></div></div>
-      <div class="card">
-        <p>Qua quá trình khảo sát và hợp nhất hiện trạng, có thể xác định <b>kho là trung tâm</b> của hệ thống quản lý hàng hóa. Mọi nghiệp vụ nhập hàng, xuất hàng, kiểm kê và đổi trả đều làm thay đổi trạng thái tồn kho.</p>
-        <p style="margin-top:8px;">Do đặc thù ngành thời trang, hệ thống không chỉ cần quản lý sản phẩm mà phải quản lý biến thể sản phẩm theo màu sắc và kích thước. Đồng thời, hệ thống cần lưu lại lịch sử biến động kho.</p>
-        <p style="margin-top:8px;">Chức năng cốt lõi: Quản lý sản phẩm → Quản lý biến thể → Nhập kho → Xuất kho → Tồn kho → Kiểm kê/điều chỉnh → Đổi trả → Báo cáo và thống kê.</p>
+      <div class="fill">
+        <div class="g2">
+          <div class="card">
+            <h3>Kết luận khảo sát</h3>
+            <p>Kho là trung tâm của hệ thống quản lý hàng hóa. Mọi nghiệp vụ nhập hàng, xuất hàng, kiểm kê và đổi trả đều làm thay đổi trạng thái tồn kho.</p>
+            <p style="margin-top:10px;">Hệ thống không chỉ cần quản lý sản phẩm mà phải quản lý biến thể sản phẩm theo màu sắc và kích thước, đồng thời lưu lại lịch sử biến động kho.</p>
+            <p style="margin-top:10px;"><b>Chuỗi chức năng cốt lõi:</b> Quản lý sản phẩm → Quản lý biến thể → Nhập kho → Xuất kho → Tồn kho → Kiểm kê/điều chỉnh → Đổi trả → Báo cáo và thống kê.</p>
+          </div>
+          <div class="card">
+            <h3>Sáu quy tắc nghiệp vụ (QT-01 … QT-06)</h3>
+            <ul class="clean qt">
+              <li>QT-01: Tồn kho theo cặp (kho, biến thể); số lượng tồn không bao giờ âm.</li>
+              <li>QT-02: Tồn chỉ thay đổi khi phiếu chuyển sang Hoàn thành.</li>
+              <li>QT-03: Chênh lệch = thực tế − tồn hệ thống; điều chỉnh phải được Quản lý duyệt.</li>
+              <li>QT-04: Hàng tốt nhập lại kho bán; hàng lỗi vào kho hàng lỗi, không tăng tồn bán.</li>
+              <li>QT-05: Hết hàng = 0; Sắp hết khi 0 &lt; tồn ≤ tồn tối thiểu; Bình thường khi tồn &gt; tối thiểu.</li>
+              <li>QT-06: Tồn cuối = Tồn đầu + Nhập − Xuất ± Điều chỉnh.</li>
+            </ul>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>STT</th><th>Biểu mẫu</th><th>Nghiệp vụ</th><th>STT</th><th>Biểu mẫu</th><th>Nghiệp vụ</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Phiếu nhập kho</td><td>Nhập hàng</td><td>8</td><td>Báo cáo tồn kho</td><td>Quản lý tồn kho</td></tr>
+            <tr><td>2</td><td>Phiếu xuất kho</td><td>Xuất hàng</td><td>9</td><td>Báo cáo nhập kho</td><td>Nhập kho</td></tr>
+            <tr><td>3</td><td>Phiếu kiểm kê kho</td><td>Kiểm kê</td><td>10</td><td>Báo cáo xuất kho</td><td>Xuất kho</td></tr>
+            <tr><td>4</td><td>Phiếu điều chỉnh tồn kho</td><td>Điều chỉnh</td><td>11</td><td>Báo cáo nhập – xuất – tồn</td><td>Tổng hợp biến động kho</td></tr>
+            <tr><td>5</td><td>Phiếu đổi/trả hàng</td><td>Đổi trả</td><td>12</td><td>Báo cáo kiểm kê</td><td>Kiểm kê kho</td></tr>
+            <tr><td>6</td><td>Phiếu chuyển kho</td><td>Chuyển kho</td><td>13</td><td>Báo cáo biến động hàng hóa</td><td>Truy xuất lịch sử</td></tr>
+            <tr><td>7</td><td>Phiếu hủy hàng</td><td>Hủy hàng</td><td></td><td>7 phiếu + 6 báo cáo</td><td>Thu thập đủ 13 biểu mẫu</td></tr>
+          </tbody>
+        </table>
       </div>
-      <table>
-        <thead><tr><th>STT</th><th>Biểu mẫu</th><th>Nghiệp vụ</th><th>STT</th><th>Biểu mẫu</th><th>Nghiệp vụ</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Phiếu nhập kho</td><td>Nhập hàng</td><td>8</td><td>Báo cáo tồn kho</td><td>Quản lý tồn kho</td></tr>
-          <tr><td>2</td><td>Phiếu xuất kho</td><td>Xuất hàng</td><td>9</td><td>Báo cáo nhập kho</td><td>Nhập kho</td></tr>
-          <tr><td>3</td><td>Phiếu kiểm kê kho</td><td>Kiểm kê</td><td>10</td><td>Báo cáo xuất kho</td><td>Xuất kho</td></tr>
-          <tr><td>4</td><td>Phiếu điều chỉnh tồn kho</td><td>Điều chỉnh</td><td>11</td><td>Báo cáo nhập – xuất – tồn</td><td>Tổng hợp biến động kho</td></tr>
-          <tr><td>5</td><td>Phiếu đổi/trả hàng</td><td>Đổi trả</td><td>12</td><td>Báo cáo kiểm kê</td><td>Kiểm kê kho</td></tr>
-          <tr><td>6</td><td>Phiếu chuyển kho</td><td>Chuyển kho</td><td>13</td><td>Báo cáo biến động hàng hóa</td><td>Truy xuất lịch sử</td></tr>
-          <tr><td>7</td><td>Phiếu hủy hàng</td><td>Hủy hàng</td><td></td><td></td><td></td></tr>
-        </tbody>
-      </table>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>6</b> / 15</span></div>
     </section>
 
     <!-- 7 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Tôn chỉ dự án</div><h2>Project Charter · CNTT20261_N01</h2></div><div class="rule"></div></div>
-      <div class="cols-4">
-        <div class="card"><div class="kicker">Ngày bắt đầu</div><div class="num" style="font-size:24px;margin-top:6px;">01/09/2026</div></div>
-        <div class="card"><div class="kicker">Ngày kết thúc</div><div class="num" style="font-size:24px;margin-top:6px;">31/03/2027</div></div>
-        <div class="card"><div class="kicker">Giám đốc dự án</div><div class="num" style="font-size:24px;margin-top:6px;">Bùi Tuấn Anh</div></div>
-        <div class="card"><div class="kicker">Quyết định khởi công</div><div class="num" style="font-size:24px;margin-top:6px;">Số 01 · 31/07/2026</div></div>
-      </div>
-      <div class="cols-2">
-        <div class="card">
-          <h3>Mô tả dự án</h3>
-          <ul class="clean">
-            <li>Tên: Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang</li>
-            <li>Chủ đầu tư: Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát)</li>
-            <li>Kinh phí: 408.196.650 VND</li>
-            <li>Quản trị viên: Bùi Tuấn Anh</li>
-          </ul>
+      <div class="fill">
+        <div class="g4">
+          <div class="card"><div class="kicker">Ngày bắt đầu</div><div class="num" style="margin-top:8px;">01/09/2026</div></div>
+          <div class="card"><div class="kicker">Ngày kết thúc</div><div class="num" style="margin-top:8px;">31/03/2027</div></div>
+          <div class="card"><div class="kicker">Giám đốc dự án</div><div class="num" style="margin-top:8px;font-size:24px;">Bùi Tuấn Anh</div></div>
+          <div class="card"><div class="kicker">Quyết định khởi công</div><div class="num" style="margin-top:8px;font-size:24px;">Số 01 · 31/07/2026</div></div>
+        </div>
+        <div class="g2 rows">
+          <div class="card">
+            <h3>Mô tả dự án</h3>
+            <ul class="clean">
+              <li>Tên: Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang</li>
+              <li>Chủ đầu tư: Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát)</li>
+              <li>Kinh phí: 408.196.650 VND (Bốn trăm linh tám triệu một trăm chín mươi sáu nghìn sáu trăm năm mươi đồng)</li>
+              <li>Quản trị viên: Bùi Tuấn Anh</li>
+              <li>Qui mô: dự án phần mềm quy mô vừa, 5 thành viên, 07 tháng</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Yêu cầu kỹ thuật</h3>
+            <ul class="clean">
+              <li>Web 3 tầng; ReactJS/TypeScript, REST API Java 21 - Spring Boot 3, PostgreSQL 16, Docker và Nginx.</li>
+              <li>Giao diện tiếng Việt; máy tính và máy tính bảng 10 inch; máy quét mã vạch; Chrome, Edge.</li>
+              <li>Hoàn tất phiếu là giao dịch nguyên tử; khóa dòng tồn; thẻ kho chỉ thêm, lưu tối thiểu 5 năm.</li>
+              <li>Tra cứu tồn dưới 2 giây với 50.000 biến thể và 100 người dùng; NXT tháng dưới 10 giây.</li>
+              <li>RBAC, mật khẩu bcrypt, HTTPS, phiên hết hạn 30 phút; sẵn sàng 99% giờ 7h–22h; sao lưu hằng ngày, khôi phục trong 4 giờ.</li>
+            </ul>
+          </div>
         </div>
         <div class="card">
-          <h3>Mục tiêu tổng quát</h3>
-          <p>Xây dựng thành công hệ thống phần mềm quản lý hàng hóa và kho bãi cho doanh nghiệp kinh doanh thời trang, thay thế việc quản lý bằng sổ sách và nhiều file Excel rời rạc, lấy kho làm trung tâm và quản lý tồn kho đến từng biến thể (sản phẩm + màu + size).</p>
+          <h3>Công bố dự án — mục tiêu và các yêu cầu</h3>
+          <p>Xây dựng ứng dụng web quản lý tập trung hàng hóa và kho bãi sản phẩm thời trang, quản lý tồn kho theo biến thể màu/size, bảo đảm tồn kho chính xác và truy vết được mọi biến động; đáp ứng các yêu cầu toàn vẹn dữ liệu, hiệu năng, bảo mật, bàn giao đúng hạn ngày 31/03/2027 và tuân thủ ngân sách phê duyệt.</p>
         </div>
-      </div>
-      <div class="card">
-        <p>Mục tiêu và các yêu cầu (công bố dự án): Xây dựng ứng dụng web quản lý tập trung hàng hóa và kho bãi sản phẩm thời trang, quản lý tồn kho theo biến thể màu/size, bảo đảm tồn kho chính xác và truy vết được mọi biến động; đáp ứng các yêu cầu toàn vẹn dữ liệu, hiệu năng, bảo mật, bàn giao đúng hạn ngày 31/03/2027 và tuân thủ ngân sách phê duyệt.</p>
       </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>7</b> / 15</span></div>
     </section>
@@ -303,7 +413,7 @@
     <!-- 8 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Tôn chỉ dự án</div><h2>Mục tiêu cụ thể và phạm vi</h2></div><div class="rule"></div></div>
-      <div class="cols-2">
+      <div class="fill g2">
         <div class="card">
           <h3>Mục tiêu cụ thể</h3>
           <ul class="clean">
@@ -313,9 +423,10 @@
             <li>Rút thời gian lập báo cáo nhập - xuất - tồn tháng từ khoảng một ngày làm việc xuống dưới 1 phút.</li>
             <li>Cảnh báo tự động các biến thể hết hàng hoặc sắp hết để quản lý chủ động nhập bổ sung.</li>
           </ul>
+          <p style="margin-top:12px;" class="muted">Yêu cầu khác: dữ liệu kho tập trung trên một hệ thống duy nhất; mọi thay đổi tồn đi qua phiếu kho và ghi nhận người thực hiện; giao diện trực quan, thao tác quét mã nhanh.</p>
         </div>
-        <div>
-          <div class="card" style="border-top:5px solid var(--ok);margin-bottom:14px;">
+        <div style="display:flex;flex-direction:column;gap:12px;min-height:0;">
+          <div class="card" style="flex:1;border-top:5px solid var(--ok);">
             <span class="tag ok">In-Scope</span>
             <ul class="clean">
               <li>Phân tích, thiết kế, phát triển và kiểm thử hệ thống quản lý hàng hóa và kho bãi.</li>
@@ -323,7 +434,7 @@
               <li>Chuyển đổi dữ liệu tồn đầu kỳ từ các file Excel hiện có, triển khai, đào tạo và bàn giao cho doanh nghiệp.</li>
             </ul>
           </div>
-          <div class="card" style="border-top:5px solid var(--red);">
+          <div class="card" style="flex:1;border-top:5px solid var(--red);">
             <span class="tag">Out-of-Scope</span>
             <ul class="clean">
               <li>Bán hàng tại quầy (POS), thanh toán, hóa đơn điện tử.</li>
@@ -340,105 +451,128 @@
     <!-- 9 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Tôn chỉ · WBS</div><h2>Tổ chức dự án và phân công công</h2></div><div class="rule"></div></div>
-      <table>
-        <thead><tr><th>Vai trò</th><th>Họ tên</th><th>Tổ chức / vị trí</th></tr></thead>
-        <tbody>
-          <tr><td>Khách hàng</td><td>Ban Giám đốc</td><td>Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát)</td></tr>
-          <tr><td>Người sử dụng</td><td>Quản lý, Nhân viên kho, Nhân viên bán hàng</td><td>Kho tổng, kho cửa hàng và bộ phận bán hàng của doanh nghiệp</td></tr>
-          <tr><td>Giám đốc dự án</td><td>Bùi Tuấn Anh</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Giám đốc dự án, Phân tích nghiệp vụ</td></tr>
-          <tr><td>Trưởng nhóm Kỹ thuật (Tech Lead)</td><td>Bùi Quốc Luýt</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Trưởng nhóm kỹ thuật, Lập trình Back-end</td></tr>
-          <tr><td>Thành viên</td><td>Vũ Quang Minh</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Lập trình Back-end</td></tr>
-          <tr><td>Thành viên</td><td>Bạch Minh Quang</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Thiết kế UI/UX, Lập trình Front-end</td></tr>
-          <tr><td>Thành viên</td><td>Phạm Đoàn Bảo Thiên</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Thiết kế CSDL, Kiểm thử</td></tr>
-        </tbody>
-      </table>
-      <table>
-        <thead><tr><th>Thành viên</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>Tổng cộng</th></tr></thead>
-        <tbody>
-          <tr><td>Bùi Tuấn Anh</td><td>12,28</td><td>11,00</td><td>4,22</td><td>5,68</td><td>7,88</td><td>2,20</td><td>43,27</td></tr>
-          <tr><td>Bùi Quốc Luýt</td><td>8,07</td><td>10,08</td><td>0</td><td>19,43</td><td>9,17</td><td>2,20</td><td>48,95</td></tr>
-          <tr><td>Vũ Quang Minh</td><td>0</td><td>8,80</td><td>3,48</td><td>18,15</td><td>8,07</td><td>3,48</td><td>41,98</td></tr>
-          <tr><td>Bạch Minh Quang</td><td>2,38</td><td>4,58</td><td>13,38</td><td>13,57</td><td>7,88</td><td>2,20</td><td>44,00</td></tr>
-          <tr><td>Phạm Đoàn Bảo Thiên</td><td>4,40</td><td>6,60</td><td>8,80</td><td>12,47</td><td>8,07</td><td>3,30</td><td>43,63</td></tr>
-          <tr><td><b>Tổng</b></td><td>27,13</td><td>41,07</td><td>29,88</td><td>69,30</td><td>41,07</td><td>13,38</td><td><b>221,83</b></td></tr>
-        </tbody>
-      </table>
+      <div class="fill">
+        <table>
+          <thead><tr><th>Vai trò</th><th>Họ tên</th><th>Tổ chức / vị trí</th></tr></thead>
+          <tbody>
+            <tr><td>Khách hàng</td><td>Ban Giám đốc</td><td>Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát)</td></tr>
+            <tr><td>Người sử dụng</td><td>Quản lý, Nhân viên kho, Nhân viên bán hàng</td><td>Kho tổng, kho cửa hàng và bộ phận bán hàng của doanh nghiệp</td></tr>
+            <tr><td>Giám đốc dự án</td><td>Bùi Tuấn Anh</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Giám đốc dự án, Phân tích nghiệp vụ</td></tr>
+            <tr><td>Trưởng nhóm Kỹ thuật (Tech Lead)</td><td>Bùi Quốc Luýt</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Trưởng nhóm kỹ thuật, Lập trình Back-end</td></tr>
+            <tr><td>Thành viên</td><td>Vũ Quang Minh</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Lập trình Back-end</td></tr>
+            <tr><td>Thành viên</td><td>Bạch Minh Quang</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Thiết kế UI/UX, Lập trình Front-end</td></tr>
+            <tr><td>Thành viên</td><td>Phạm Đoàn Bảo Thiên</td><td>Trường CNTT&amp;TT - ĐHBK Hà Nội / Thiết kế CSDL, Kiểm thử</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead><tr><th>Thành viên</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>Tổng cộng</th></tr></thead>
+          <tbody>
+            <tr><td>Bùi Tuấn Anh</td><td>12,28</td><td>11,00</td><td>4,22</td><td>5,68</td><td>7,88</td><td>2,20</td><td>43,27</td></tr>
+            <tr><td>Bùi Quốc Luýt</td><td>8,07</td><td>10,08</td><td>0</td><td>19,43</td><td>9,17</td><td>2,20</td><td>48,95</td></tr>
+            <tr><td>Vũ Quang Minh</td><td>0</td><td>8,80</td><td>3,48</td><td>18,15</td><td>8,07</td><td>3,48</td><td>41,98</td></tr>
+            <tr><td>Bạch Minh Quang</td><td>2,38</td><td>4,58</td><td>13,38</td><td>13,57</td><td>7,88</td><td>2,20</td><td>44,00</td></tr>
+            <tr><td>Phạm Đoàn Bảo Thiên</td><td>4,40</td><td>6,60</td><td>8,80</td><td>12,47</td><td>8,07</td><td>3,30</td><td>43,63</td></tr>
+            <tr><td><b>Tổng</b></td><td>27,13</td><td>41,07</td><td>29,88</td><td>69,30</td><td>41,07</td><td>13,38</td><td><b>221,83</b></td></tr>
+          </tbody>
+        </table>
+        <div class="g3">
+          <div class="card"><h3>Trách nhiệm chất lượng</h3><p>Nhóm có 5 thành viên nên không tách riêng một bộ phận QA. Mỗi sản phẩm được người khác với người tạo ra nó rà soát.</p></div>
+          <div class="card"><h3>Hệ số nhân công</h3><p>Chủ trì 0,75; thành viên chính 0,45. Lương cơ sở 2.530.000 VNĐ.</p></div>
+          <div class="card"><h3>EST chốt WBS</h3><p>MO 134 · ML 197 · MP 288 · EST PERT 201,67 · Buffer 20,17 · EST chốt 221,83 ngày-người.</p></div>
+        </div>
+      </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>9</b> / 15</span></div>
     </section>
 
     <!-- 10 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">WBS</div><h2>Sáu giai đoạn, Task 1–52</h2></div><div class="rule"></div></div>
-      <div class="tl">
-        <div class="ph"><i class="dot"></i><b>A</b><span>01/09 – 25/09/2026</span><p style="margin-top:6px;font-size:15px;">Khảo sát &amp; yêu cầu<br>Task 1–8 · 27,13 ngày</p></div>
-        <div class="ph"><i class="dot"></i><b>B</b><span>26/09 – 20/11/2026</span><p style="margin-top:6px;font-size:15px;">Phân tích &amp; thiết kế<br>Task 9–17 · 41,07 ngày</p></div>
-        <div class="ph"><i class="dot"></i><b>C</b><span>21/11 – 25/12/2026</span><p style="margin-top:6px;font-size:15px;">CSDL &amp; giao diện<br>Task 18–25 · 29,88 ngày</p></div>
-        <div class="ph"><i class="dot"></i><b>D</b><span>26/12 – 15/02/2027</span><p style="margin-top:6px;font-size:15px;">Xây dựng chương trình<br>Task 26–39 · 69,30 ngày</p></div>
-        <div class="ph"><i class="dot"></i><b>E</b><span>16/02 – 15/03/2027</span><p style="margin-top:6px;font-size:15px;">Tích hợp &amp; kiểm thử<br>Task 40–47 · 41,07 ngày</p></div>
-        <div class="ph"><i class="dot"></i><b>F</b><span>16/03 – 31/03/2027</span><p style="margin-top:6px;font-size:15px;">Triển khai &amp; bàn giao<br>Task 48–52 · 13,38 ngày</p></div>
+      <div class="fill">
+        <div class="tl">
+          <div class="ph"><i class="dot"></i><b>A</b><span>01/09 – 25/09/2026</span><p style="margin-top:6px;font-size:14px;">Khảo sát &amp; yêu cầu<br>Task 1–8 · 27,13 ngày</p></div>
+          <div class="ph"><i class="dot"></i><b>B</b><span>26/09 – 20/11/2026</span><p style="margin-top:6px;font-size:14px;">Phân tích &amp; thiết kế<br>Task 9–17 · 41,07 ngày</p></div>
+          <div class="ph"><i class="dot"></i><b>C</b><span>21/11 – 25/12/2026</span><p style="margin-top:6px;font-size:14px;">CSDL &amp; giao diện<br>Task 18–25 · 29,88 ngày</p></div>
+          <div class="ph"><i class="dot"></i><b>D</b><span>26/12 – 15/02/2027</span><p style="margin-top:6px;font-size:14px;">Xây dựng chương trình<br>Task 26–39 · 69,30 ngày</p></div>
+          <div class="ph"><i class="dot"></i><b>E</b><span>16/02 – 15/03/2027</span><p style="margin-top:6px;font-size:14px;">Tích hợp &amp; kiểm thử<br>Task 40–47 · 41,07 ngày</p></div>
+          <div class="ph"><i class="dot"></i><b>F</b><span>16/03 – 31/03/2027</span><p style="margin-top:6px;font-size:14px;">Triển khai &amp; bàn giao<br>Task 48–52 · 13,38 ngày</p></div>
+        </div>
+        <table>
+          <thead><tr><th>Giai đoạn</th><th>Sản phẩm</th><th>Thứ tự thực hiện (mẫu)</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Báo cáo khảo sát &amp; đặc tả yêu cầu</td><td>Task 1–4 từ đầu; Task 5 sau 1–4; Task 8 sau Task 7</td></tr>
+            <tr><td>B</td><td>Báo cáo phân tích thiết kế (UML)</td><td>Sau Task 8</td></tr>
+            <tr><td>C</td><td>Lược đồ CSDL &amp; từ điển dữ liệu; Thiết kế UI/UX hệ thống</td><td>Sau Task 17</td></tr>
+            <tr><td>D</td><td>Mã nguồn &amp; module chạy được</td><td>Sau Task 20 (khung dự án)</td></tr>
+            <tr><td>E</td><td>Báo cáo kiểm thử</td><td>Sau Task 39; UAT sau Task 41–45</td></tr>
+            <tr><td>F</td><td>Tài liệu cấu hình; Biên bản nghiệm thu; Tài liệu hướng dẫn; Báo cáo nghiệm thu; Xác nhận bàn giao</td><td>Sau Task 47</td></tr>
+          </tbody>
+        </table>
+        <div class="g3" style="flex:1">
+          <div class="card"><h3>Task 30 — Dịch vụ tồn kho</h3><p>Tăng, trừ, điều chỉnh tồn có khóa dòng (SELECT … FOR UPDATE), ghi thẻ kho chỉ thêm không sửa, dùng chung cho mọi nghiệp vụ.</p></div>
+          <div class="card"><h3>Task 42 — Kiểm thử đồng thời</h3><p>Hai phiếu xuất đồng thời trên cùng biến thể không làm tồn âm (NFR-04).</p></div>
+          <div class="card"><h3>Task 49 — Chuyển đổi dữ liệu</h3><p>Chuyển danh mục và tồn đầu kỳ từ các file Excel hiện có; triển khai tại kho tổng và cửa hàng.</p></div>
+        </div>
       </div>
-      <table>
-        <thead><tr><th>Giai đoạn</th><th>Sản phẩm (cột Sản phẩm trên WBS)</th></tr></thead>
-        <tbody>
-          <tr><td>A</td><td>Báo cáo khảo sát &amp; đặc tả yêu cầu</td></tr>
-          <tr><td>B</td><td>Báo cáo phân tích thiết kế (UML)</td></tr>
-          <tr><td>C</td><td>Lược đồ CSDL &amp; từ điển dữ liệu; Thiết kế UI/UX hệ thống</td></tr>
-          <tr><td>D</td><td>Mã nguồn &amp; module chạy được</td></tr>
-          <tr><td>E</td><td>Báo cáo kiểm thử</td></tr>
-          <tr><td>F</td><td>Tài liệu cấu hình hệ thống; Biên bản nghiệm thu; Tài liệu hướng dẫn; Báo cáo nghiệm thu; Xác nhận bàn giao</td></tr>
-        </tbody>
-      </table>
-      <p>Dòng Tổng WBS: MO 134 · ML 197 · MP 288 · EST PERT 201,67 · Buffer 20,17 · EST chốt <b>221,83</b> ngày-người.</p>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>10</b> / 15</span></div>
     </section>
 
     <!-- 11 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Bảng dự toán kinh phí</div><h2>Tổng 408.196.650 VNĐ</h2></div><div class="rule"></div></div>
-      <div class="cols-3">
-        <div class="card" style="border-top:5px solid var(--red);"><div class="kicker">1. Công lao động</div><div class="num" style="margin-top:8px;font-size:26px;">285.396.650</div><p class="muted" style="margin-top:6px;">Bằng chữ: Hai trăm tám mươi lăm triệu ba trăm chín mươi sáu nghìn sáu trăm năm mươi đồng</p></div>
-        <div class="card" style="border-top:5px solid var(--red-d);"><div class="kicker">2. Vật tư, thiết bị</div><div class="num" style="margin-top:8px;font-size:26px;">73.800.000</div><p class="muted" style="margin-top:6px;">Bằng chữ: Bảy mươi ba triệu tám trăm nghìn đồng</p></div>
-        <div class="card" style="border-top:5px solid var(--gold);"><div class="kicker">3. Chi khác</div><div class="num" style="margin-top:8px;font-size:26px;">49.000.000</div><p class="muted" style="margin-top:6px;">Bằng chữ: Bốn mươi chín triệu đồng</p></div>
+      <div class="fill">
+        <div class="g3">
+          <div class="card" style="border-top:5px solid var(--red);"><div class="kicker">1. Công lao động</div><div class="num" style="margin-top:8px;">285.396.650</div><p class="muted" style="margin-top:8px;">Hai trăm tám mươi lăm triệu ba trăm chín mươi sáu nghìn sáu trăm năm mươi đồng</p></div>
+          <div class="card" style="border-top:5px solid var(--red-d);"><div class="kicker">2. Vật tư, thiết bị</div><div class="num" style="margin-top:8px;">73.800.000</div><p class="muted" style="margin-top:8px;">Bảy mươi ba triệu tám trăm nghìn đồng</p></div>
+          <div class="card" style="border-top:5px solid var(--gold);"><div class="kicker">3. Chi khác</div><div class="num" style="margin-top:8px;">49.000.000</div><p class="muted" style="margin-top:8px;">Bốn mươi chín triệu đồng</p></div>
+        </div>
+        <table>
+          <thead><tr><th>Họ và tên</th><th>Nhiệm vụ</th><th>Hệ số nhiệm vụ</th><th>Số ngày công (EST chốt)</th></tr></thead>
+          <tbody>
+            <tr><td>Bùi Tuấn Anh</td><td>Chủ trì</td><td>0,75</td><td>43,27</td></tr>
+            <tr><td>Bùi Quốc Luýt</td><td>Thành viên chính</td><td>0,45</td><td>48,95</td></tr>
+            <tr><td>Vũ Quang Minh</td><td>Thành viên chính</td><td>0,45</td><td>41,98</td></tr>
+            <tr><td>Bạch Minh Quang</td><td>Thành viên chính</td><td>0,45</td><td>44,00</td></tr>
+            <tr><td>Phạm Đoàn Bảo Thiên</td><td>Thành viên chính</td><td>0,45</td><td>43,63</td></tr>
+          </tbody>
+        </table>
+        <div class="card">
+          <p>Công lao động khoa học thực hiện theo mức lương cơ sở <b>2.530.000 VNĐ</b>. Đề tài: Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang. Mã số CNTT20261_N01. Chủ nhiệm đề tài / Người lập bảng: Bùi Tuấn Anh. Hà Nội, ngày 25 tháng 7 năm 2026. Bằng chữ tổng: Bốn trăm linh tám triệu một trăm chín mươi sáu nghìn sáu trăm năm mươi đồng.</p>
+        </div>
       </div>
-      <table>
-        <thead><tr><th>Họ và tên</th><th>Nhiệm vụ</th><th>Hệ số nhiệm vụ</th><th>Số ngày công (EST chốt)</th></tr></thead>
-        <tbody>
-          <tr><td>Bùi Tuấn Anh</td><td>Chủ trì</td><td>0,75</td><td>43,27</td></tr>
-          <tr><td>Bùi Quốc Luýt</td><td>Thành viên chính</td><td>0,45</td><td>48,95</td></tr>
-          <tr><td>Vũ Quang Minh</td><td>Thành viên chính</td><td>0,45</td><td>41,98</td></tr>
-          <tr><td>Bạch Minh Quang</td><td>Thành viên chính</td><td>0,45</td><td>44,00</td></tr>
-          <tr><td>Phạm Đoàn Bảo Thiên</td><td>Thành viên chính</td><td>0,45</td><td>43,63</td></tr>
-        </tbody>
-      </table>
-      <p>Công lao động khoa học thực hiện theo mức lương cơ sở 2.530.000 VNĐ. Chủ nhiệm đề tài / Người lập bảng: Bùi Tuấn Anh. Hà Nội, ngày 25 tháng 7 năm 2026.</p>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>11</b> / 15</span></div>
     </section>
 
     <!-- 12 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Bảng dự toán kinh phí</div><h2>Thiết bị vật tư và chi khác</h2></div><div class="rule"></div></div>
-      <div class="cols-2">
+      <div class="bar"><div><div class="kicker">Bảng dự toán kinh phí</div><h2>Thiết bị vật tư và chi khác theo giai đoạn</h2></div><div class="rule"></div></div>
+      <div class="fill g2">
         <div class="card">
           <h3>Thiết bị vật tư — 73.800.000 VNĐ</h3>
-          <ul class="clean">
-            <li>A: Thuê laptop khảo sát tại kho (2 bộ × 2.000.000)</li>
-            <li>B: Thuê máy tính nhóm (10 bộ/tháng × 1.500.000)</li>
-            <li>C: Thuê máy (5 × 1.500.000); Figma Professional (4 × 400.000)</li>
-            <li>D: Thuê máy (10 × 1.500.000); Cloud Dev/Staging (2 × 1.800.000); máy quét USB (2 × 1.200.000)</li>
-            <li>E: Thuê máy (5 × 1.500.000); Cloud Testing 50.000 biến thể (2.500.000); tablet 10 inch (2 × 800.000)</li>
-            <li>F: Thuê máy nửa tháng (5 × 750.000); máy chủ ứng dụng 3.500.000; máy chủ CSDL 4.500.000; Object Storage 500.000; tên miền .vn 850.000</li>
-          </ul>
+          <table>
+            <thead><tr><th>GĐ</th><th>Hạng mục</th><th>SL</th><th>Đơn giá</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>Thuê laptop khảo sát tại kho (1 tháng)</td><td>2</td><td>2.000.000</td></tr>
+              <tr><td>B</td><td>Thuê bộ máy tính nhóm (2 tháng)</td><td>10</td><td>1.500.000</td></tr>
+              <tr><td>C</td><td>Thuê máy (1 tháng) / Figma Professional</td><td>5 / 4</td><td>1.500.000 / 400.000</td></tr>
+              <tr><td>D</td><td>Thuê máy; Cloud Dev/Staging; máy quét USB</td><td>10 / 2 / 2</td><td>1.500.000 / 1.800.000 / 1.200.000</td></tr>
+              <tr><td>E</td><td>Thuê máy; Cloud Testing 50.000 biến thể; tablet 10"</td><td>5 / 1 / 2</td><td>1.500.000 / 2.500.000 / 800.000</td></tr>
+              <tr><td>F</td><td>Thuê máy nửa tháng; app 4vCPU/8GB; DB 4vCPU/16GB SSD 200GB; Object Storage 30 ngày; tên miền .vn</td><td>5 / 1 / 1 / 1 / 1</td><td>750.000 / 3.500.000 / 4.500.000 / 500.000 / 850.000</td></tr>
+            </tbody>
+          </table>
         </div>
         <div class="card">
           <h3>Chi khác — 49.000.000 VNĐ</h3>
-          <ul class="clean">
-            <li>A: VPP 1.500.000; khảo sát đi lại 4.000.000</li>
-            <li>B: VPP 1.500.000; workshop QT-01…06 3.000.000</li>
-            <li>C: Duyệt prototype 3.000.000; OT CSDL 5.000.000</li>
-            <li>D: In tem mã vạch 1.000.000; OT lập trình 10.000.000</li>
-            <li>E: UAT tại kho 3.000.000; OT sửa lỗi 8.000.000</li>
-            <li>F: In tài liệu 2.000.000; đào tạo 4.000.000; OT chuyển đổi dữ liệu 3.000.000</li>
-          </ul>
+          <table>
+            <thead><tr><th>GĐ</th><th>Nội dung</th><th>Số tiền</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>VPP in phiếu khảo sát, 13 biểu mẫu, Tôn chỉ; đi lại kho</td><td>1.500.000 + 4.000.000</td></tr>
+              <tr><td>B</td><td>In đặc tả 19 FR, 11 NFR; workshop QT-01…06</td><td>1.500.000 + 3.000.000</td></tr>
+              <tr><td>C</td><td>Duyệt prototype 10 MH; OT lược đồ 15 bảng</td><td>3.000.000 + 5.000.000</td></tr>
+              <tr><td>D</td><td>In tem mã vạch SKU; OT dịch vụ tồn kho</td><td>1.000.000 + 10.000.000</td></tr>
+              <tr><td>E</td><td>UAT tại kho tổng và cửa hàng; OT sửa lỗi</td><td>3.000.000 + 8.000.000</td></tr>
+              <tr><td>F</td><td>In tài liệu 3 vai trò; đào tạo; OT chuyển đổi Excel</td><td>2.000.000 + 4.000.000 + 3.000.000</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>12</b> / 15</span></div>
@@ -447,48 +581,58 @@
     <!-- 13 -->
     <section class="slide">
       <div class="bar"><div><div class="kicker">Kế hoạch quản lý chất lượng · Bảng 1</div><h2>Tám mục tiêu chất lượng</h2></div><div class="rule"></div></div>
-      <p>Các mục tiêu được chuyển trực tiếp từ mục 1.3.1 báo cáo phân tích thiết kế thành chỉ tiêu kiểm tra khi nghiệm thu.</p>
-      <table>
-        <thead><tr><th>STT</th><th>Mục tiêu chất lượng</th><th>Chỉ tiêu</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Tồn kho chính xác</td><td>Sai lệch giữa tồn hệ thống và tồn thực tế sau đợt kiểm kê thử dưới 1%</td></tr>
-          <tr><td>2</td><td>Không xuất vượt tồn</td><td>0 trường hợp tồn âm, kể cả khi nhiều phiếu xuất cùng trừ một biến thể</td></tr>
-          <tr><td>3</td><td>Truy vết đầy đủ</td><td>100% thay đổi tồn có dòng thẻ kho gắn với phiếu và người thực hiện; thẻ kho không sửa, không xóa được</td></tr>
-          <tr><td>4</td><td>Báo cáo nhanh và đúng</td><td>Báo cáo nhập - xuất - tồn một tháng sinh ra dưới 10 giây, số liệu thỏa Tồn cuối = Tồn đầu + Nhập − Xuất ± Điều chỉnh</td></tr>
-          <tr><td>5</td><td>Cảnh báo tồn thấp đúng</td><td>100% biến thể được phân loại đúng Hết hàng / Sắp hết / Bình thường theo QT-05</td></tr>
-          <tr><td>6</td><td>Quản lý biến thể đúng</td><td>100% biến thể sinh đúng tổ hợp màu × size của mẫu; không trùng SKU; tồn các biến thể cùng mẫu độc lập</td></tr>
-          <tr><td>7</td><td>Phát hiện hàng tồn lâu</td><td>100% biến thể quá ngưỡng số ngày tồn xuất hiện trong báo cáo hàng tồn lâu với số ngày đúng</td></tr>
-          <tr><td>8</td><td>An toàn và phân quyền</td><td>100% chức năng tuân theo ma trận phân quyền; không còn lỗ hổng mức Critical</td></tr>
-        </tbody>
-      </table>
+      <div class="fill">
+        <p>Các mục tiêu được chuyển trực tiếp từ mục 1.3.1 báo cáo phân tích thiết kế thành chỉ tiêu kiểm tra khi nghiệm thu.</p>
+        <table>
+          <thead><tr><th>STT</th><th>Mục tiêu chất lượng</th><th>Chỉ tiêu</th><th>Cách kiểm tra</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Tồn kho chính xác</td><td>Sai lệch tồn hệ thống và thực tế sau kiểm kê thử dưới 1%</td><td>Kiểm kê thử một kho cửa hàng trong UAT</td></tr>
+            <tr><td>2</td><td>Không xuất vượt tồn</td><td>0 trường hợp tồn âm, kể cả nhiều phiếu xuất cùng trừ một biến thể</td><td>Kiểm thử đồng thời (NFR-04); CHECK so_luong ≥ 0</td></tr>
+            <tr><td>3</td><td>Truy vết đầy đủ</td><td>100% thay đổi tồn có dòng thẻ kho gắn phiếu và người thực hiện; không sửa, không xóa</td><td>Đối chiếu tổng thẻ kho với bảng tồn; thử sửa/xóa qua API</td></tr>
+            <tr><td>4</td><td>Báo cáo nhanh và đúng</td><td>NXT một tháng dưới 10 giây; Tồn cuối = Tồn đầu + Nhập − Xuất ± Điều chỉnh</td><td>Kiểm thử hiệu năng (NFR-02); đối chiếu dữ liệu mẫu</td></tr>
+            <tr><td>5</td><td>Cảnh báo tồn thấp đúng</td><td>100% biến thể phân loại đúng Hết hàng / Sắp hết / Bình thường theo QT-05</td><td>Giá trị biên: tồn = 0, = tối thiểu, = tối thiểu + 1</td></tr>
+            <tr><td>6</td><td>Quản lý biến thể đúng</td><td>100% biến thể sinh đúng màu × size; không trùng SKU; tồn độc lập</td><td>Áo size chữ và quần size số; nhập/xuất từng biến thể</td></tr>
+            <tr><td>7</td><td>Phát hiện hàng tồn lâu</td><td>100% biến thể quá ngưỡng ngày tồn có trong báo cáo với số ngày đúng</td><td>Test case ngày nhập gần nhất khác nhau</td></tr>
+            <tr><td>8</td><td>An toàn và phân quyền</td><td>100% chức năng theo ma trận phân quyền; không lỗ hổng Critical</td><td>Kiểm thử từng vai trò; NFR-06, NFR-07</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>13</b> / 15</span></div>
     </section>
 
     <!-- 14 -->
     <section class="slide">
-      <div class="bar"><div><div class="kicker">Kế hoạch quản lý chất lượng</div><h2>Sáu nội dung và sáu mốc kiểm soát</h2></div><div class="rule"></div></div>
-      <table>
-        <thead><tr><th>STT</th><th>Nội dung quản lý</th><th>Người phụ trách</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Quản lý yêu cầu — 10 vấn đề đều có yêu cầu đáp ứng; 100% trong 19 FR được xác nhận và truy vết tới use case</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
-          <tr><td>2</td><td>Quản lý thiết kế — đủ 19 use case; CSDL ràng buộc chống tồn âm; 10 màn hình được người dùng duyệt</td><td>Bùi Quốc Luýt, đại diện doanh nghiệp</td></tr>
-          <tr><td>3</td><td>Kiểm soát lập trình — mã nguồn qua review; độ phủ unit test ≥ 80% với dịch vụ tồn kho</td><td>Bùi Quốc Luýt, nhóm phát triển</td></tr>
-          <tr><td>4</td><td>Kiểm thử phần mềm — 100% FR có test case; ≥ 95% test case đạt; 0 trường hợp tồn âm</td><td>Phạm Đoàn Bảo Thiên, nhóm phát triển</td></tr>
-          <tr><td>5</td><td>Quản lý lỗi — không còn lỗi Blocker/Critical trước nghiệm thu</td><td>Bùi Quốc Luýt, Phạm Đoàn Bảo Thiên</td></tr>
-          <tr><td>6</td><td>Nghiệm thu và bàn giao — dữ liệu tồn đầu kỳ khớp 100% file gốc; tài liệu đủ cho 3 vai trò</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
-        </tbody>
-      </table>
-      <table>
-        <thead><tr><th>Mốc</th><th>Thời điểm</th><th>Điều kiện đạt</th><th>Người phê duyệt</th></tr></thead>
-        <tbody>
-          <tr><td>M1 - Chốt yêu cầu</td><td>25/09/2026</td><td>Tài liệu đặc tả yêu cầu được doanh nghiệp xác nhận</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
-          <tr><td>M2 - Chốt phân tích thiết kế</td><td>20/11/2026</td><td>Mô hình UML và kiến trúc qua rà soát, không còn ý kiến nghiêm trọng</td><td>Bùi Tuấn Anh, Bùi Quốc Luýt</td></tr>
-          <tr><td>M3 - Chốt CSDL và giao diện</td><td>25/12/2026</td><td>Lược đồ CSDL và script chạy được; prototype 10 màn hình được người dùng duyệt</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
-          <tr><td>M4 - Hoàn thành lập trình</td><td>15/02/2027</td><td>Đủ chức năng theo WBS; unit test đạt độ phủ yêu cầu; không lỗi Blocker/Critical từ phân tích tĩnh</td><td>Bùi Quốc Luýt</td></tr>
-          <tr><td>M5 - Hoàn thành kiểm thử</td><td>15/03/2027</td><td>≥ 95% test case đạt; không còn lỗi Blocker/Critical; đạt NFR-01, NFR-02</td><td>Bùi Tuấn Anh</td></tr>
-          <tr><td>M6 - Nghiệm thu</td><td>31/03/2027</td><td>Đạt các tiêu chí mục 4.6; biên bản nghiệm thu được ký</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
-        </tbody>
-      </table>
+      <div class="bar"><div><div class="kicker">Kế hoạch quản lý chất lượng</div><h2>Sáu nội dung, sáu mốc, bảy chỉ số</h2></div><div class="rule"></div></div>
+      <div class="fill">
+        <table>
+          <thead><tr><th>STT</th><th>Nội dung quản lý</th><th>Người phụ trách</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Quản lý yêu cầu — 10 vấn đề đều có yêu cầu đáp ứng; 100% trong 19 FR được xác nhận và truy vết tới use case</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
+            <tr><td>2</td><td>Quản lý thiết kế — đủ 19 use case; CSDL ràng buộc chống tồn âm; 10 màn hình được người dùng duyệt</td><td>Bùi Quốc Luýt, đại diện doanh nghiệp</td></tr>
+            <tr><td>3</td><td>Kiểm soát lập trình — mã nguồn qua review; độ phủ unit test ≥ 80% với dịch vụ tồn kho</td><td>Bùi Quốc Luýt, nhóm phát triển</td></tr>
+            <tr><td>4</td><td>Kiểm thử phần mềm — 100% FR có test case; ≥ 95% test case đạt; 0 trường hợp tồn âm</td><td>Phạm Đoàn Bảo Thiên, nhóm phát triển</td></tr>
+            <tr><td>5</td><td>Quản lý lỗi — không còn lỗi Blocker/Critical trước nghiệm thu (Blocker 1 ngày, Critical 2 ngày, High 3 ngày)</td><td>Bùi Quốc Luýt, Phạm Đoàn Bảo Thiên</td></tr>
+            <tr><td>6</td><td>Nghiệm thu và bàn giao — tồn đầu kỳ khớp 100% file gốc; tài liệu đủ cho 3 vai trò</td><td>Bùi Tuấn Anh, đại diện doanh nghiệp</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead><tr><th>Mốc</th><th>Thời điểm</th><th>Điều kiện đạt</th><th>Người phê duyệt</th></tr></thead>
+          <tbody>
+            <tr><td>M1 - Chốt yêu cầu</td><td>25/09/2026</td><td>Tài liệu đặc tả yêu cầu được doanh nghiệp xác nhận</td><td>Bùi Tuấn Anh, đại diện DN</td></tr>
+            <tr><td>M2 - Chốt phân tích thiết kế</td><td>20/11/2026</td><td>Mô hình UML và kiến trúc qua rà soát, không còn ý kiến nghiêm trọng</td><td>Bùi Tuấn Anh, Bùi Quốc Luýt</td></tr>
+            <tr><td>M3 - Chốt CSDL và giao diện</td><td>25/12/2026</td><td>Lược đồ CSDL và script chạy được; prototype 10 MH được duyệt</td><td>Bùi Tuấn Anh, đại diện DN</td></tr>
+            <tr><td>M4 - Hoàn thành lập trình</td><td>15/02/2027</td><td>Đủ chức năng WBS; unit test đạt độ phủ; 0 Blocker/Critical tĩnh</td><td>Bùi Quốc Luýt</td></tr>
+            <tr><td>M5 - Hoàn thành kiểm thử</td><td>15/03/2027</td><td>≥ 95% test case đạt; 0 Blocker/Critical; đạt NFR-01, NFR-02</td><td>Bùi Tuấn Anh</td></tr>
+            <tr><td>M6 - Nghiệm thu</td><td>31/03/2027</td><td>Đạt các tiêu chí mục 4.6; biên bản nghiệm thu được ký</td><td>Bùi Tuấn Anh, đại diện DN</td></tr>
+          </tbody>
+        </table>
+        <div class="g4" style="flex:0 0 auto;">
+          <div class="card"><div class="kicker">Truy vết FR</div><p>100% · mỗi mốc</p></div>
+          <div class="card"><div class="kicker">PR được review</div><p>100% · hằng tuần (D)</p></div>
+          <div class="card"><div class="kicker">Unit test tồn kho</div><p>≥ 80% · mỗi lần build</p></div>
+          <div class="card"><div class="kicker">Test case đạt</div><p>≥ 95% · hằng tuần (E)</p></div>
+        </div>
+      </div>
       <div class="foot"><span>Nhóm 1 · CNTT20261_N01</span><span>Trang <b>14</b> / 15</span></div>
     </section>
 
@@ -502,23 +646,45 @@
             <div class="sch">Trường CNTT&amp;TT · Nhóm 1</div>
           </div>
         </div>
-        <h1 style="margin-top:40px;">Xin cảm ơn</h1>
+        <h1 style="margin-top:28px;">Xin cảm ơn</h1>
         <div class="q">Thảo luận</div>
-        <div class="cols-3" style="margin-top:36px;">
-          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
+        <div class="g3" style="margin-top:28px;">
+          <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
             <h3 style="color:#F0C008;">Kết luận khảo sát</h3>
             <p>Kho là trung tâm. Hệ thống phải quản lý biến thể theo màu sắc và kích thước, lưu lịch sử biến động kho.</p>
           </div>
-          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
+          <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
             <h3 style="color:#F0C008;">Công bố dự án</h3>
             <p>Bàn giao đúng hạn 31/03/2027 và tuân thủ ngân sách 408.196.650 VNĐ.</p>
           </div>
-          <div class="card" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;">
-            <h3 style="color:#F0C008;">Kết quả PTTK</h3>
-            <p>19 FR, 11 NFR, 19 use case, lược đồ CSDL 15 bảng, 10 màn hình.</p>
+          <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
+            <h3 style="color:#F0C008;">Kết quả PTTK (6.1)</h3>
+            <p>19 FR, 11 NFR, 19 use case, 4 biểu đồ tuần tự, 4 hoạt động, 2 trạng thái, CSDL 15 bảng, 10 màn hình.</p>
           </div>
         </div>
-        <p style="margin-top:auto;color:#FFD6DA;font-size:18px;">CNTT20261_N01 · K6901 CNTT VB2CQ · GVHD ThS. Lê Thị Hoa · Hà Nội, tháng 9 năm 2026</p>
+        <div class="g2" style="margin-top:14px;flex:1;">
+          <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
+            <h3 style="color:#F0C008;">Hạn chế (mục 6.2)</h3>
+            <ul class="clean">
+              <li>Chưa tích hợp tự động với phần mềm bán hàng và sàn TMĐT; mã đơn nhập tay.</li>
+              <li>Chưa quản lý đơn đặt hàng NCC và công nợ.</li>
+              <li>Chưa quản lý tồn theo lô hoặc vị trí chi tiết.</li>
+              <li>Giá trị tồn theo giá nhập hiện hành, chưa bình quân / FIFO.</li>
+              <li>Giao diện mới ở mức phác thảo, chưa kiểm thử với người dùng thực tế.</li>
+            </ul>
+          </div>
+          <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
+            <h3 style="color:#F0C008;">Hướng phát triển (mục 6.3)</h3>
+            <ul class="clean">
+              <li>API tích hợp phần mềm bán hàng để tạo yêu cầu xuất/đổi trả tự động.</li>
+              <li>Phân hệ đặt hàng NCC, gợi ý số lượng nhập.</li>
+              <li>Tồn theo nhiều vị trí và theo lô nhập, tính giá vốn.</li>
+              <li>Ứng dụng di động quét mã, làm việc khi mất kết nối tạm thời.</li>
+              <li>Dự báo nhu cầu theo mùa từ thẻ kho; điều chuyển hàng tồn lâu.</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:18px;color:#FFD6DA;font-size:16px;">CNTT20261_N01 · K6901 CNTT VB2CQ · GVHD ThS. Lê Thị Hoa · Hà Nội, tháng 9 năm 2026</p>
       </div>
     </section>
   </template>
@@ -553,8 +719,7 @@
       go(e.clientX > innerWidth / 2 ? i + 1 : i - 1);
     });
     fit();
-    const hash = parseInt((location.hash || "#1").slice(1), 10);
-    go(Number.isFinite(hash) ? hash - 1 : 0);
+    go(parseInt((location.hash || "#1").slice(1), 10) - 1 || 0);
   </script>
 </body>
 </html>
