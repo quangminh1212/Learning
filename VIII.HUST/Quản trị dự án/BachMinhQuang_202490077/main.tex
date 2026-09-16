@@ -1,0 +1,212 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Times New Roman}
+\setsansfont{Calibri}
+\setmathfont{Cambria Math}
+\usepackage{geometry}
+\geometry{top=2.2cm,bottom=2.2cm,left=2.4cm,right=2.0cm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black}
+\usepackage{titlesec}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\emergencystretch=3em
+\renewcommand{\arraystretch}{1.18}
+\renewcommand{\contentsname}{Mục lục}
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+
+\definecolor{criticalbar}{RGB}{211,47,47}
+\definecolor{normalbar}{RGB}{63,125,190}
+\definecolor{weekend}{RGB}{235,235,235}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Quản trị dự án}
+\rhead{\small Bach Minh Quang - 202490077}
+\cfoot{\thepage}
+\setlength{\headheight}{15pt}
+
+\titleformat{\section}{\Large\bfseries\color{blue!55!black}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{blue!45!black}}{\thesubsection}{0.5em}{}
+
+\tikzset{
+  event/.style={circle,draw=black,thick,minimum size=8mm,inner sep=1pt,
+    font=\scriptsize,align=center},
+  arc/.style={-{Latex[length=2mm]},thick,blue!65!black},
+  criticalarc/.style={-{Latex[length=2mm]},very thick,criticalbar},
+  dummyarc/.style={-{Latex[length=2mm]},dashed,gray!70!black},
+  arclabel/.style={font=\scriptsize,fill=white,inner sep=1pt}
+}
+
+\newcommand{\ganttrowseven}[5]{%
+  \node[anchor=east,font=\scriptsize] at (-0.25,-#1+0.18) {#2};%
+  \pgfmathtruncatemacro{\gLast}{#4-1}%
+  \foreach \gK in {0,...,\gLast}{%
+    \pgfmathtruncatemacro{\gStart}{#3+\gK}%
+    \fill[#5] (\gStart,-#1) rectangle ++(1,0.34);%
+  }%
+}
+
+\newcommand{\ganttrowfive}[5]{%
+  \node[anchor=east,font=\scriptsize] at (-0.25,-#1+0.18) {#2};%
+  \pgfmathtruncatemacro{\gLast}{#4-1}%
+  \foreach \gK in {0,...,\gLast}{%
+    \pgfmathtruncatemacro{\gWork}{#3+\gK}%
+    \pgfmathtruncatemacro{\gWeek}{int(\gWork/5)}%
+    \pgfmathtruncatemacro{\gCal}{\gWork+2*\gWeek}%
+    \fill[#5] (\gCal,-#1) rectangle ++(1,0.34);%
+  }%
+}
+
+\newcommand{\ganttlegend}[1]{%
+  \fill[criticalbar] (0,-#1) rectangle +(0.55,0.28);
+  \node[anchor=west,font=\tiny] at (0.7,-#1+0.14) {Công việc găng};
+  \fill[normalbar] (8.8,-#1) rectangle +(0.55,0.28);
+  \node[anchor=west,font=\tiny] at (9.5,-#1+0.14) {Công việc không găng};
+}
+
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+  {\large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI}\\[4pt]
+  {\large\bfseries TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG}\\[1.5cm]
+  \rule{\textwidth}{0.8pt}\\[0.55cm]
+  {\Large\bfseries BÁO CÁO BÀI TẬP}\\[0.35cm]
+  {\LARGE\bfseries QUẢN TRỊ DỰ ÁN}\\[0.55cm]
+  \rule{\textwidth}{0.8pt}\\[1.5cm]
+  \begin{tikzpicture}
+    \draw[blue!55!black,very thick] (0,0) circle (1.25cm);
+    \draw[criticalbar,very thick] (-0.62,0.45) -- (0.18,0.45) -- (0.62,-0.35);
+    \draw[normalbar,very thick] (-0.62,-0.25) -- (-0.05,-0.25) -- (0.62,0.35);
+    \node[font=\small\bfseries] at (0,-1.65) {PERT - CPM - GANTT};
+  \end{tikzpicture}\\[1.5cm]
+  \begin{tabular}{rl}
+    \textbf{Sinh viên:} & Bach Minh Quang\\
+    \textbf{Mã sinh viên:} & 202490077\\
+    \textbf{Học phần:} & Quản trị dự án\\
+  \end{tabular}\\[2.0cm]
+  {\large Hà Nội, tháng 09 năm 2026}
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\section*{Lời mở đầu}
+\addcontentsline{toc}{section}{Lời mở đầu}
+
+Báo cáo này trình bày lời giải cho năm bài tập PERT/CPM theo mẫu tham khảo
+trong thư mục học phần. Mỗi bài gồm dữ liệu công việc, mạng PERT, thời điểm
+sớm nhất và muộn nhất của các sự kiện, đường găng, dự trữ và biểu đồ Gantt theo
+hai loại lịch: tuần làm việc 7 ngày và tuần làm việc 5 ngày.
+
+Đề bài không quy định ngày bắt đầu cụ thể. Vì vậy, các biểu đồ Gantt dùng mốc
+tương đối: ngày công việc thứ 0 là ngày khởi động dự án và trong biểu đồ 5 ngày,
+mốc này được xem là thứ Hai. Khi nhập dữ liệu vào MS Project, chỉ cần thay ngày
+bắt đầu hoặc chọn lịch \texttt{Standard} (thứ Hai đến thứ Sáu) và \texttt{7 Days};
+quan hệ trước - sau và số ngày công việc không thay đổi.
+
+\section{Cơ sở tính toán}
+
+\subsection{Ký hiệu và công thức}
+
+Với một cung công việc $i \rightarrow j$ có thời gian $d_{ij}$, ký hiệu:
+
+\begin{itemize}[leftmargin=1.8em]
+  \item $t_s(i)$: thời điểm sớm nhất của sự kiện $i$;
+  \item $t_m(i)$: thời điểm muộn nhất của sự kiện $i$ mà không làm trễ dự án;
+  \item $ES,EF$: thời điểm bắt đầu và kết thúc sớm của công việc;
+  \item $LS,LF$: thời điểm bắt đầu và kết thúc muộn của công việc.
+\end{itemize}
+
+Tính tiến:
+\[
+  t_s(j)=\max_{i\rightarrow j}\{t_s(i)+d_{ij}\},\qquad
+  ES_{ij}=t_s(i),\qquad EF_{ij}=t_s(i)+d_{ij}.
+\]
+Tính lùi từ sự kiện kết thúc có thời điểm bằng thời gian dự án:
+\[
+  t_m(i)=\min_{i\rightarrow j}\{t_m(j)-d_{ij}\},\qquad
+  LS_{ij}=t_m(j)-d_{ij},\qquad LF_{ij}=t_m(j).
+\]
+
+Ba loại dự trữ được dùng trong báo cáo:
+\[
+\begin{aligned}
+  TF_{ij}&=LF_{ij}-ES_{ij}-d_{ij},\\
+  FF_{ij}&=t_s(j)-t_s(i)-d_{ij},\\
+  IF_{ij}&=\max\{0,\ t_s(j)-t_m(i)-d_{ij}\}.
+\end{aligned}
+\]
+
+Trong đó $TF$ là dự trữ toàn phần, $FF$ là dự trữ tự do và $IF$ là dự trữ
+độc lập theo định nghĩa PERT. Công việc có $TF=0$ được gọi là công việc găng.
+Để trả lời ý "có thể đồng thời kéo dài tất cả các công việc không găng",
+báo cáo lấy mức kéo dài chung bằng giá trị nhỏ nhất của $TF$ trong tập các
+công việc không găng. Mức này không làm thay đổi thời gian hoàn thành dự án.
+
+\subsection{Quy ước biểu đồ}
+
+Trong các sơ đồ PERT, số trong vòng tròn là số hiệu sự kiện; dòng dưới là
+$t_s/t_m$. Cung màu đỏ là cung găng, cung màu xanh là cung không găng, còn
+cung nét đứt là công việc giả có thời gian bằng 0, dùng để thể hiện quan hệ
+trước - sau. Trong các biểu đồ Gantt, mỗi ô màu tương ứng một ngày công việc;
+phần màu xám ở biểu đồ 5 ngày là thứ Bảy và Chủ nhật.
+
+\clearpage
+\input{bai1}
+\clearpage
+\input{bai2}
+\clearpage
+\input{bai3}
+\clearpage
+\input{bai4}
+\clearpage
+\input{bai5}
+\clearpage
+
+\section{Tổng hợp kết quả}
+
+\begin{table}[H]\centering
+\caption{Tổng hợp thời gian và đường găng}
+\small
+\begin{tabular}{c|c|>{\centering\arraybackslash}p{7.2cm}|c}
+\toprule
+\textbf{Bài} & \textbf{Thời gian dự án} & \textbf{Đường găng} & \textbf{Kéo dài đồng thời}\\
+\midrule
+1 & 9 ngày & $A-B-D-H-I$ & 1 ngày\\
+2 & 24 ngày & $B-E-F-H-I-J$ & 0 ngày\\
+3 & 42 ngày & \parbox[c]{7.2cm}{\centering $A-D-G-F-L-P$;\\[-1pt] $A-D-G-F-K-N-P$} & 1 ngày\\
+4 & 37 ngày & $A-C-G-H-I-K-N$ & 3 ngày\\
+5 & 21 ngày & $B-D-H-K$ & 1 ngày\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Kết luận.} Các kết quả trong bảng tổng hợp được suy ra trực tiếp từ
+quan hệ trước - sau và thời gian của từng công việc. Khi lập tiến độ trên
+MS Project, cần đánh dấu công việc có $TF=0$ là công việc găng và bật chế độ
+hiển thị Critical Path. Lịch 5 ngày chỉ làm thay đổi số ngày lịch do có hai
+ngày nghỉ cuối tuần; lịch 7 ngày sử dụng liên tục các ngày lịch. Vì đề chưa
+cho ngày bắt đầu, các biểu đồ trong báo cáo dùng trục thời gian tương đối để
+giữ kết quả độc lập với ngày lập kế hoạch.
+
+\end{document}
