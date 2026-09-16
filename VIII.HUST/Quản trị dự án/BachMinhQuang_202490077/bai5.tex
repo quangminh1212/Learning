@@ -1,0 +1,149 @@
+\section{Bài tập 5}
+
+\subsection{Dữ liệu}
+
+\begin{table}[H]\centering
+\caption{Dữ liệu công việc của Bài tập 5}
+\begin{tabular}{c c c}
+\toprule
+\textbf{Công việc} & \textbf{Trình tự} & \textbf{Thời gian (ngày)}\\
+\midrule
+A & Từ đầu & 2\\
+B & Từ đầu & 6\\
+C & Sau A & 3\\
+D & Sau B, C & 4\\
+G & Sau A & 5\\
+H & Sau D, G & 5\\
+F & Sau D & 4\\
+I & Sau B, C & 7\\
+K & Sau H, F & 6\\
+L & Sau I & 6\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sơ đồ PERT và chỉ tiêu sự kiện}
+
+\begin{figure}[H]\centering
+\resizebox{0.99\linewidth}{!}{%
+\begin{tikzpicture}[x=1.05cm,y=0.72cm]
+  \node[event] (p1)  at (0.00, 2.15) {1\\[-1pt]{\tiny\normalfont $0/0$}};
+  \node[event] (p2)  at (2.20, 4.35) {2\\[-1pt]{\tiny\normalfont $2/3$}};
+  \node[event] (p3)  at (4.25, 4.35) {3\\[-1pt]{\tiny\normalfont $5/6$}};
+  \node[event] (p4)  at (4.25, 2.15) {4\\[-1pt]{\tiny\normalfont $6/6$}};
+  \node[event] (p5)  at (6.05, 5.05) {5\\[-1pt]{\tiny\normalfont $7/10$}};
+  \node[event] (p6)  at (7.15, 2.15) {6\\[-1pt]{\tiny\normalfont $10/10$}};
+  \node[event] (p7)  at (7.15,-0.35) {7\\[-1pt]{\tiny\normalfont $13/15$}};
+  \node[event] (p8)  at (9.40, 4.35) {8\\[-1pt]{\tiny\normalfont $14/15$}};
+  \node[event] (p9)  at (9.40, 2.15) {9\\[-1pt]{\tiny\normalfont $15/15$}};
+  \node[event] (p10) at (11.80,-0.35) {10\\[-1pt]{\tiny\normalfont $19/21$}};
+  \node[event] (p11) at (13.05, 2.15) {11\\[-1pt]{\tiny\normalfont $21/21$}};
+  \draw[arc] (p1) to[out=75,in=180] node[arclabel,above left] {$A$ (2)} (p2);
+  \draw[criticalarc] (p1) -- node[arclabel,above] {$B$ (6)} (p4);
+  \draw[arc] (p2) -- node[arclabel,above] {$C$ (3)} (p3);
+  \draw[dummyarc] (p3) -- node[arclabel,right] {$e_1$ (0)} (p4);
+  \draw[arc] (p2) to[out=35,in=180] node[arclabel,above] {$G$ (5)} (p5);
+  \draw[dummyarc] (p5) to[out=-5,in=100] node[arclabel,left] {$e_2$ (0)} (p6);
+  \draw[criticalarc] (p4) -- node[arclabel,above] {$D$ (4)} (p6);
+  \draw[arc] (p4) to[out=-70,in=180] node[arclabel,below left] {$I$ (7)} (p7);
+  \draw[criticalarc] (p6) -- node[arclabel,above] {$H$ (5)} (p9);
+  \draw[arc] (p6) to[out=25,in=180] node[arclabel,above] {$F$ (4)} (p8);
+  \draw[dummyarc] (p8) -- node[arclabel,right] {$e_3$ (0)} (p9);
+  \draw[arc] (p7) -- node[arclabel,below] {$L$ (6)} (p10);
+  \draw[criticalarc] (p9) -- node[arclabel,above] {$K$ (6)} (p11);
+  \draw[dummyarc] (p10) to[out=8,in=-95] node[arclabel,below right] {$e_4$ (0)} (p11);
+\end{tikzpicture}}
+\caption{Mạng PERT của Bài tập 5. Đường găng $B$--$D$--$H$--$K$.}
+\end{figure}
+
+\begin{table}[H]\centering
+\caption{Thời điểm sớm và muộn của các sự kiện - Bài tập 5}
+\begin{tabular}{c|rrrrrrrrrrr}
+\toprule
+Sự kiện&1&2&3&4&5&6&7&8&9&10&11\\
+\midrule
+$t_s$&0&2&5&6&7&10&13&14&15&19&21\\
+$t_m$&0&3&6&6&10&10&15&15&15&21&21\\
+$R$&0&1&1&0&3&0&2&1&0&2&0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tính dự trữ và đường găng}
+
+\begin{longtable}{c|r|rr|rr|rrr}
+\caption{Các chỉ tiêu thời gian của công việc - Bài tập 5}\\
+\toprule
+\textbf{CV}&\textbf{$d$}&\textbf{ES}&\textbf{EF}&\textbf{LS}&\textbf{LF}&\textbf{TF}&\textbf{FF}&\textbf{IF}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{CV}&\textbf{$d$}&\textbf{ES}&\textbf{EF}&\textbf{LS}&\textbf{LF}&\textbf{TF}&\textbf{FF}&\textbf{IF}\\
+\midrule
+\endhead
+A&2&0&2&1&3&1&0&0\\
+B&6&0&6&0&6&0&0&0\\
+C&3&2&5&3&6&1&0&0\\
+D&4&6&10&6&10&0&0&0\\
+G&5&2&7&5&10&3&0&0\\
+H&5&10&15&10&15&0&0&0\\
+F&4&10&14&11&15&1&0&0\\
+I&7&6&13&8&15&2&0&0\\
+K&6&15&21&15&21&0&0&0\\
+L&6&13&19&15&21&2&0&0\\
+\bottomrule
+\end{longtable}
+
+Thời gian ngắn nhất của dự án là \textbf{21 ngày}. Đỉnh găng: $1,4,6,9,11$.
+Đường găng là
+\[
+  \boxed{B\text{--}D\text{--}H\text{--}K\qquad (6+4+5+6=21\ \text{ngày})}.
+\]
+Các công việc không găng là $A,C,G,F,I,L$, có $TF$ lần lượt là 1, 1, 3,
+1, 2 và 2 ngày. Không lấy $\min TF=1$ làm mức kéo dài đồng thời, vì $A$ và
+$C$ nằm cùng chuỗi $A$--$C$--$D$--$H$--$K$ dài $20+2x\le 21\Rightarrow x\le 0{,}5$.
+Mức kéo dài đồng thời lớn nhất là \textbf{0,5 ngày}. Dự trữ độc lập PERT
+của mọi công việc bằng 0.
+
+\subsection{Biểu đồ Gantt}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.34cm,y=0.36cm]
+  \draw[gray!25] (0,0) grid (21,-10);
+  \foreach \x in {0,5,...,20} \node[font=\tiny,anchor=south] at (\x,0.05) {\x};
+  \ganttrowseven{0}{A}{0}{2}{normalbar}
+  \ganttrowseven{1}{B}{0}{6}{criticalbar}
+  \ganttrowseven{2}{C}{2}{3}{normalbar}
+  \ganttrowseven{3}{D}{6}{4}{criticalbar}
+  \ganttrowseven{4}{G}{2}{5}{normalbar}
+  \ganttrowseven{5}{H}{10}{5}{criticalbar}
+  \ganttrowseven{6}{F}{10}{4}{normalbar}
+  \ganttrowseven{7}{I}{6}{7}{normalbar}
+  \ganttrowseven{8}{K}{15}{6}{criticalbar}
+  \ganttrowseven{9}{L}{13}{6}{normalbar}
+  \ganttlegend{10.8}
+  \node[font=\tiny,anchor=west] at (0,-11.45) {Tuần làm việc 7 ngày; dự án hoàn thành sau 21 ngày.};
+\end{tikzpicture}
+\caption{Gantt Bài tập 5 - lịch 7 ngày}
+\end{figure}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.22cm,y=0.36cm]
+  \foreach \w in {0,1,2,3,4} {\fill[weekend] ({7*\w+5},0) rectangle ({7*\w+7},-10);}
+  \draw[gray!25] (0,0) grid (35,-10);
+  \foreach \x in {0,5,...,35} \node[font=\tiny,anchor=south] at (\x,0.05) {\x};
+  \ganttrowfive{0}{A}{0}{2}{normalbar}
+  \ganttrowfive{1}{B}{0}{6}{criticalbar}
+  \ganttrowfive{2}{C}{2}{3}{normalbar}
+  \ganttrowfive{3}{D}{6}{4}{criticalbar}
+  \ganttrowfive{4}{G}{2}{5}{normalbar}
+  \ganttrowfive{5}{H}{10}{5}{criticalbar}
+  \ganttrowfive{6}{F}{10}{4}{normalbar}
+  \ganttrowfive{7}{I}{6}{7}{normalbar}
+  \ganttrowfive{8}{K}{15}{6}{criticalbar}
+  \ganttrowfive{9}{L}{13}{6}{normalbar}
+  \ganttlegend{10.8}
+  \node[font=\tiny,anchor=west] at (0,-11.45) {Tuần làm việc 5 ngày; cuối tuần là khoảng trống trên trục ngày lịch.};
+\end{tikzpicture}
+\caption{Gantt Bài tập 5 - lịch 5 ngày}
+\end{figure}
