@@ -84,6 +84,9 @@
     .tl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; position: relative; }
     .tl::before { content: ""; position: absolute; left: 6px; right: 6px; top: 14px; height: 3px; background: linear-gradient(90deg, var(--red), var(--gold)); }
     .tl .ph { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 28px 10px 12px; position: relative; }
+    .tl .ph b { display: block; font-size: 22px; line-height: 1.1; }
+    .tl .ph span { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+    .tl .ph p { margin-top: 6px; font-size: 14px; line-height: 1.35; }
     .tl .dot { position: absolute; top: 6px; left: 12px; width: 15px; height: 15px; border-radius: 50%; background: var(--red); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--red); }
     .prob { display: grid; grid-template-columns: 1fr 22px 1fr; gap: 6px 8px; flex: 1; align-content: stretch; }
     .prob .from, .prob .to { padding: 8px 12px; border-radius: 8px; font-size: 16px; display: flex; align-items: center; }
