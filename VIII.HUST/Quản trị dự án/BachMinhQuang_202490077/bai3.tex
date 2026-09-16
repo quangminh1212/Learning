@@ -1,0 +1,176 @@
+\section{Bài tập 3}
+
+\subsection{Dữ liệu}
+
+\begin{table}[H]\centering
+\caption{Dữ liệu công việc của Bài tập 3}
+\begin{tabular}{c c c}
+\toprule
+\textbf{Công việc} & \textbf{Trình tự} & \textbf{Thời gian (ngày)}\\
+\midrule
+A & Từ đầu & 3\\
+B & Từ đầu & 4\\
+C & Từ đầu & 4\\
+D & Sau A & 5\\
+G & Sau D & 5\\
+H & Sau A & 9\\
+F & Sau B, G & 7\\
+I & Sau C & 6\\
+K & Sau F & 3\\
+L & Sau F & 10\\
+M & Sau F, I & 9\\
+N & Sau H, K & 7\\
+P & Sau L, M, N & 12\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sơ đồ PERT và chỉ tiêu sự kiện}
+
+\begin{figure}[H]\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1.02cm,y=0.85cm]
+  \node[event] (p1) at (0,2) {1\\[-2pt]\tiny $0/0$};
+  \node[event] (p2) at (1,3.2) {2\\[-2pt]\tiny $3/3$};
+  \node[event] (p3) at (1,2) {3\\[-2pt]\tiny $4/13$};
+  \node[event] (p4) at (1,0.8) {4\\[-2pt]\tiny $4/15$};
+  \node[event] (p5) at (2.2,3.2) {5\\[-2pt]\tiny $8/8$};
+  \node[event] (p6) at (2.2,0.8) {6\\[-2pt]\tiny $10/21$};
+  \node[event] (p7) at (3.4,4.2) {7\\[-2pt]\tiny $12/23$};
+  \node[event] (p8) at (3.4,3.2) {8\\[-2pt]\tiny $13/13$};
+  \node[event] (p9) at (4.6,3.2) {9\\[-2pt]\tiny $13/13$};
+  \node[event] (p10) at (5.8,3.2) {10\\[-2pt]\tiny $20/20$};
+  \node[event] (p11) at (7.0,4.2) {11\\[-2pt]\tiny $23/23$};
+  \node[event] (p12) at (7.0,2.2) {12\\[-2pt]\tiny $30/30$};
+  \node[event] (p13) at (7.0,0.8) {13\\[-2pt]\tiny $20/21$};
+  \node[event] (p14) at (8.2,0.8) {14\\[-2pt]\tiny $29/30$};
+  \node[event] (p15) at (8.2,4.2) {15\\[-2pt]\tiny $23/23$};
+  \node[event] (p16) at (9.4,4.2) {16\\[-2pt]\tiny $30/30$};
+  \node[event] (p17) at (10.6,3.0) {17\\[-2pt]\tiny $30/30$};
+  \node[event] (p18) at (11.8,3.0) {18\\[-2pt]\tiny $42/42$};
+  \draw[criticalarc] (p1) -- node[arclabel,above] {A (3)} (p2);
+  \draw[arc] (p1) -- node[arclabel,above] {B (4)} (p3);
+  \draw[arc] (p1) -- node[arclabel,below] {C (4)} (p4);
+  \draw[criticalarc] (p2) -- node[arclabel,above] {D (5)} (p5);
+  \draw[arc] (p4) -- node[arclabel,below] {I (6)} (p6);
+  \draw[arc] (p2) to[bend left=20] node[arclabel,above] {H (9)} (p7);
+  \draw[criticalarc] (p5) -- node[arclabel,above] {G (5)} (p8);
+  \draw[dummyarc] (p3) to[bend left=17] node[arclabel,above] {$e_1$ (0)} (p9);
+  \draw[dummyarc] (p8) -- node[arclabel,above] {$e_2$ (0)} (p9);
+  \draw[criticalarc] (p9) -- node[arclabel,above] {F (7)} (p10);
+  \draw[criticalarc] (p10) -- node[arclabel,above] {K (3)} (p11);
+  \draw[criticalarc] (p10) -- node[arclabel,below] {L (10)} (p12);
+  \draw[dummyarc] (p10) to[bend right=22] node[arclabel,below] {$e_3$ (0)} (p13);
+  \draw[dummyarc] (p6) -- node[arclabel,below] {$e_4$ (0)} (p13);
+  \draw[arc] (p13) -- node[arclabel,below] {M (9)} (p14);
+  \draw[dummyarc] (p7) -- node[arclabel,above] {$e_5$ (0)} (p15);
+  \draw[dummyarc] (p11) -- node[arclabel,above] {$e_6$ (0)} (p15);
+  \draw[criticalarc] (p15) -- node[arclabel,above] {N (7)} (p16);
+  \draw[dummyarc] (p12) to[bend left=17] node[arclabel,above] {$e_7$ (0)} (p17);
+  \draw[dummyarc] (p14) -- node[arclabel,below] {$e_8$ (0)} (p17);
+  \draw[dummyarc] (p16) to[bend right=17] node[arclabel,below] {$e_9$ (0)} (p17);
+  \draw[criticalarc] (p17) -- node[arclabel,above] {P (12)} (p18);
+\end{tikzpicture}}
+\caption{Mạng PERT của Bài tập 3}
+\end{figure}
+
+\begin{table}[H]\centering
+\caption{Thời điểm sớm và muộn của các sự kiện - Bài tập 3}
+\scriptsize
+\begin{tabular}{c|rrrrrrrrrrrrrrrrrr}
+\toprule
+Sự kiện&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18\\
+\midrule
+$t_s$&0&3&4&4&8&10&12&13&13&20&23&30&20&29&23&30&30&42\\
+$t_m$&0&3&13&15&8&21&23&13&13&20&23&30&21&30&23&30&30&42\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tính dự trữ và đường găng}
+
+\begin{longtable}{c|r|rr|rr|rrr}
+\caption{Các chỉ tiêu thời gian của công việc - Bài tập 3}\\
+\toprule
+\textbf{CV}&\textbf{$d$}&\textbf{ES}&\textbf{EF}&\textbf{LS}&\textbf{LF}&\textbf{TF}&\textbf{FF}&\textbf{IF}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{CV}&\textbf{$d$}&\textbf{ES}&\textbf{EF}&\textbf{LS}&\textbf{LF}&\textbf{TF}&\textbf{FF}&\textbf{IF}\\
+\midrule
+\endhead
+A&3&0&3&0&3&0&0&0\\
+B&4&0&4&9&13&9&0&0\\
+C&4&0&4&11&15&11&0&0\\
+D&5&3&8&3&8&0&0&0\\
+G&5&8&13&8&13&0&0&0\\
+H&9&3&12&14&23&11&0&0\\
+F&7&13&20&13&20&0&0&0\\
+I&6&4&10&15&21&11&0&0\\
+K&3&20&23&20&23&0&0&0\\
+L&10&20&30&20&30&0&0&0\\
+M&9&20&29&21&30&1&0&0\\
+N&7&23&30&23&30&0&0&0\\
+P&12&30&42&30&42&0&0&0\\
+\bottomrule
+\end{longtable}
+
+Thời gian ngắn nhất của dự án là \textbf{42 ngày}. Do có hai nhánh cùng đạt
+thời gian lớn nhất, dự án có hai đường găng:
+\[
+\boxed{A-D-G-F-L-P}
+\qquad\text{và}\qquad
+\boxed{A-D-G-F-K-N-P}.
+\]
+Các công việc không găng là $B,C,H,I,M$; $TF$ tương ứng là 9, 11, 11, 11
+và 1 ngày. Mức kéo dài đồng thời lớn nhất của tất cả công việc không găng là
+\textbf{1 ngày}. Các $IF$ của công việc không găng đều bằng 0.
+
+\subsection{Biểu đồ Gantt}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.30cm,y=0.30cm]
+  \draw[gray!25] (0,0) grid (42,-13);
+  \foreach \x in {0,5,...,40} \node[font=\tiny,anchor=south] at (\x,0.05) {\x};
+  \ganttrowseven{0}{A}{0}{3}{criticalbar}
+  \ganttrowseven{1}{B}{0}{4}{normalbar}
+  \ganttrowseven{2}{C}{0}{4}{normalbar}
+  \ganttrowseven{3}{D}{3}{5}{criticalbar}
+  \ganttrowseven{4}{G}{8}{5}{criticalbar}
+  \ganttrowseven{5}{H}{3}{9}{normalbar}
+  \ganttrowseven{6}{F}{13}{7}{criticalbar}
+  \ganttrowseven{7}{I}{4}{6}{normalbar}
+  \ganttrowseven{8}{K}{20}{3}{criticalbar}
+  \ganttrowseven{9}{L}{20}{10}{criticalbar}
+  \ganttrowseven{10}{M}{20}{9}{normalbar}
+  \ganttrowseven{11}{N}{23}{7}{criticalbar}
+  \ganttrowseven{12}{P}{30}{12}{criticalbar}
+  \ganttlegend{13.8}
+  \node[font=\tiny,anchor=west] at (0,-14.45) {Tuần làm việc 7 ngày; có hai nhánh găng cùng kết thúc ở ngày 42.};
+\end{tikzpicture}
+\caption{Gantt Bài tập 3 - lịch 7 ngày}
+\end{figure}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=0.21cm,y=0.30cm]
+  \foreach \w in {0,1,2,3,4,5,6,7,8} {\fill[weekend] ({7*\w+5},0) rectangle ({7*\w+7},-13);}
+  \draw[gray!25] (0,0) grid (63,-13);
+  \foreach \x in {0,5,...,60} \node[font=\tiny,anchor=south] at (\x,0.05) {\x};
+  \ganttrowfive{0}{A}{0}{3}{criticalbar}
+  \ganttrowfive{1}{B}{0}{4}{normalbar}
+  \ganttrowfive{2}{C}{0}{4}{normalbar}
+  \ganttrowfive{3}{D}{3}{5}{criticalbar}
+  \ganttrowfive{4}{G}{8}{5}{criticalbar}
+  \ganttrowfive{5}{H}{3}{9}{normalbar}
+  \ganttrowfive{6}{F}{13}{7}{criticalbar}
+  \ganttrowfive{7}{I}{4}{6}{normalbar}
+  \ganttrowfive{8}{K}{20}{3}{criticalbar}
+  \ganttrowfive{9}{L}{20}{10}{criticalbar}
+  \ganttrowfive{10}{M}{20}{9}{normalbar}
+  \ganttrowfive{11}{N}{23}{7}{criticalbar}
+  \ganttrowfive{12}{P}{30}{12}{criticalbar}
+  \ganttlegend{13.8}
+  \node[font=\tiny,anchor=west] at (0,-14.45) {Tuần làm việc 5 ngày; thứ Bảy và Chủ nhật được để trống.};
+\end{tikzpicture}
+\caption{Gantt Bài tập 3 - lịch 5 ngày}
+\end{figure}

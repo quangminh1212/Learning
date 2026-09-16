@@ -1,0 +1,1831 @@
+================================================================================
+FILE: bao-cao-phan-tich-thiet-ke.docx
+================================================================================
+[] ĐẠI HỌC BÁCH KHOA HÀ NỘI
+[] TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG
+[] BÀI TẬP LỚN
+[] BÁO CÁO PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+[] HỆ THỐNG QUẢN LÝ HÀNG HÓA VÀ KHO BÃI SẢN PHẨM THỜI TRANG
+[] Hà Nội, tháng 9 năm 2026
+[] LỜI NÓI ĐẦU
+[] Ngành bán lẻ thời trang có tốc độ thay đổi mẫu mã rất nhanh. Một mẫu áo có thể được sản xuất với hàng chục tổ hợp màu sắc và kích thước, được nhập từ nhiều nhà cung cấp và bán song song ở cửa hàng lẫn kênh trực tuyến. Trong bối cảnh đó, việc quản lý kho bằng sổ sách hoặc các file Excel rời rạc khiến số liệu tồn kho thường xuyên sai lệch, khó truy vết và tốn nhiều công sức lập báo cáo.
+[] Báo cáo này trình bày kết quả phân tích và thiết kế hướng đối tượng cho Hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang, được xây dựng trên cơ sở báo cáo khảo sát hiện trạng mà Nhóm 1 đã thực hiện trước đó. Toàn bộ mô hình được biểu diễn bằng ngôn ngữ mô hình hóa thống nhất UML, đi qua các bước: khảo sát và mô tả bài toán, phân tích yêu cầu, phân tích, thiết kế kiến trúc và triển khai, thiết kế chi tiết lớp, cơ sở dữ liệu và giao diện.
+[] Nhóm xin chân thành cảm ơn giảng viên hướng dẫn đã định hướng và góp ý trong suốt quá trình thực hiện học phần. Do thời gian và kinh nghiệm còn hạn chế, báo cáo khó tránh khỏi thiếu sót, nhóm rất mong nhận được ý kiến đóng góp để hoàn thiện hơn.
+[] Nhóm 1
+[] MỤC LỤC
+[] DANH MỤC THUẬT NGỮ VÀ TỪ VIẾT TẮT
+[] Bảng 0.1. Danh mục thuật ngữ và từ viết tắt
+[Heading 1] Chương 1. Khảo sát hiện trạng và mô tả bài toán
+[] Chương này tóm lược kết quả khảo sát hiện trạng vận hành kho của doanh nghiệp kinh doanh quần áo [6], chỉ ra những hạn chế của cách quản lý hiện tại, từ đó xác định mục tiêu, phạm vi của hệ thống mới, mô tả các nghiệp vụ cần tin học hóa và các tác nhân tham gia.
+[Heading 2] 1.1. Giới thiệu đề tài
+[] Doanh nghiệp được khảo sát kinh doanh sản phẩm thời trang (áo, quần, váy, áo khoác) với mô hình một kho tổng và các kho tại cửa hàng. Hàng hóa được nhập từ nhiều nhà cung cấp, xuất bán tại cửa hàng hoặc qua các kênh trực tuyến. Hiện toàn bộ thông tin kho được ghi nhận bằng sổ sách và nhiều file Excel riêng biệt do từng nhân viên tự cập nhật.
+[] Khác với nhiều ngành hàng khác, mặt hàng thời trang có đơn vị quản lý tồn kho không phải là sản phẩm mà là biến thể: cùng mẫu Áo thun Basic AT001 nhưng bản Đen size M và bản Đen size L là hai mặt hàng có số lượng tồn, vị trí lưu trữ và tốc độ bán hoàn toàn khác nhau. Khi số biến thể lên đến hàng nghìn, việc theo dõi thủ công trở nên không khả thi. Đó là lý do nhóm chọn đề tài xây dựng Hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang, trong đó kho là trung tâm và mọi nghiệp vụ đều xoay quanh việc làm thay đổi tồn kho của từng biến thể.
+[Heading 2] 1.2. Khảo sát hiện trạng nghiệp vụ
+[Heading 3] 1.2.1. Đặc thù quản lý kho hàng thời trang
+[] Qua khảo sát, việc quản lý kho quần áo có các đặc thù chính: một sản phẩm có nhiều màu sắc và kích thước nên tồn kho phải theo dõi ở cấp biến thể; mẫu mã thay đổi liên tục theo mùa nên danh mục biến động nhiều; hàng được nhập từ nhiều nhà cung cấp; hàng được bán đồng thời tại cửa hàng và trực tuyến nên dễ phát sinh xuất vượt tồn; có đổi trả, hàng lỗi, hàng thanh lý; và mẫu mã dễ lỗi thời nên cần phát hiện sớm hàng tồn lâu.
+[] Ví dụ với mẫu Áo thun AT01, số lượng tồn được ghi nhận theo từng biến thể như sau: Đen/S 1.000 sản phẩm, Đen/M 1.500 sản phẩm, Đen/L 800 sản phẩm, Trắng/S 1.200 sản phẩm, Trắng/M 2.000 sản phẩm. Tổng tồn của mẫu là 6.500 sản phẩm nhưng con số tổng này không giúp nhân viên kho biết còn đủ size M màu đen để giao cho một đơn hàng hay không.
+[Heading 3] 1.2.2. Quy trình vận hành kho hiện tại
+[] Bốn quy trình cốt lõi đang được thực hiện thủ công như sau.
+[] Quy trình nhập hàng: (1) nhân viên kho nhận hàng từ nhà cung cấp; (2) kiểm tra số lượng, mẫu mã, màu sắc, kích thước; (3) đối chiếu với đơn đặt hàng hoặc hóa đơn nhập; (4) ghi thông tin hàng nhập vào sổ hoặc file Excel; (5) sắp xếp hàng vào vị trí trong kho; (6) cập nhật số lượng tồn.
+[] Quy trình xuất hàng: (1) nhận yêu cầu xuất hàng từ bộ phận bán hàng; (2) kiểm tra số lượng tồn; (3) lấy hàng từ kệ; (4) kiểm tra sản phẩm trước khi xuất; (5) ghi nhận thông tin xuất; (6) cập nhật lại số lượng tồn.
+[] Quy trình kiểm kê: (1) nhân viên đếm số lượng thực tế trong kho; (2) đối chiếu với số liệu trên sổ sách hoặc file; (3) xác định các trường hợp chênh lệch; (4) điều chỉnh tồn kho nếu cần; (5) lập báo cáo kiểm kê.
+[] Quy trình đổi trả: (1) tiếp nhận sản phẩm khách trả lại; (2) kiểm tra tình trạng sản phẩm; (3) xác định sản phẩm có đủ điều kiện nhập lại kho hay không; (4) cập nhật tồn kho; (5) ghi nhận nguyên nhân đổi trả.
+[] Ngoài bốn quy trình trên, doanh nghiệp còn phát sinh nghiệp vụ chuyển hàng giữa các kho và hủy hàng lỗi, hỏng hoặc không còn khả năng bán.
+[Heading 3] 1.2.3. Thông tin hàng hóa đang được quản lý
+[] Thông tin hàng hóa hiện được ghi theo các thuộc tính trong Bảng 1.1. Điểm đáng chú ý là màu sắc, kích thước và số lượng tồn đang được ghi chung trên một dòng sản phẩm, trong khi về bản chất chúng thuộc về cấp biến thể.
+[] Bảng 1.1. Thông tin hàng hóa trong quản lý hiện tại
+[Heading 3] 1.2.4. Các biểu mẫu đang sử dụng
+[] Nhóm đã thu thập 13 biểu mẫu nghiệp vụ, gồm 7 phiếu chứng từ và 6 mẫu báo cáo, liệt kê trong Bảng 1.2. Các biểu mẫu này là nguồn chính để xác định thuộc tính của lớp thực thể và cột trong cơ sở dữ liệu ở các chương sau.
+[] Bảng 1.2. Danh sách biểu mẫu thu thập được
+[] Ngoài ra doanh nghiệp có nhu cầu bổ sung hai báo cáo chưa có biểu mẫu chính thức là báo cáo hàng tồn kho thấp (hết hàng khi tồn bằng 0, sắp hết khi 0 < tồn ≤ tồn tối thiểu) và báo cáo hàng tồn lâu (số ngày kể từ lần nhập gần nhất).
+[Heading 3] 1.2.5. Hạn chế của phương thức quản lý hiện tại
+[] Việc quản lý bằng Excel, sổ sách và nhiều file riêng biệt dẫn đến các vấn đề trong Bảng 1.3, mỗi vấn đề tương ứng một nhu cầu mà hệ thống mới phải đáp ứng.
+[] Bảng 1.3. Vấn đề hiện tại và nhu cầu đối với hệ thống
+[Heading 2] 1.3. Mục tiêu và phạm vi
+[Heading 3] 1.3.1. Mục tiêu
+[] Hệ thống mới hướng tới các mục tiêu đo được sau:
+[List Paragraph] Số lượng tồn của mọi biến thể tại mọi kho được cập nhật ngay khi phiếu kho hoàn tất; sai lệch giữa tồn hệ thống và thực tế sau kiểm kê định kỳ dưới 1%.
+[List Paragraph] Không thể xuất kho vượt quá số lượng tồn trong bất kỳ trường hợp nào, kể cả khi nhiều yêu cầu xuất được xử lý đồng thời.
+[List Paragraph] Truy xuất được toàn bộ lịch sử biến động của một biến thể (ai, khi nào, chứng từ nào, thay đổi bao nhiêu) trong vòng vài giây.
+[List Paragraph] Rút thời gian lập báo cáo nhập - xuất - tồn tháng từ khoảng một ngày làm việc xuống dưới 1 phút.
+[List Paragraph] Cảnh báo tự động các biến thể hết hàng hoặc sắp hết để quản lý chủ động nhập bổ sung.
+[Heading 3] 1.3.2. Phạm vi
+[] Phạm vi của hệ thống được xác định trong Bảng 1.4.
+[] Bảng 1.4. Phạm vi hệ thống
+[] Hệ thống nhận mã đơn hàng từ bộ phận bán hàng dưới dạng thông tin tham chiếu nhập tay; việc tích hợp tự động với phần mềm bán hàng thuộc hướng phát triển.
+[Heading 2] 1.4. Mô tả nghiệp vụ
+[] Kết quả hợp nhất hiện trạng cho thấy kho là trung tâm: nhập hàng và đổi trả làm tăng tồn, xuất hàng và hủy hàng làm giảm tồn, kiểm kê dẫn tới điều chỉnh tồn theo cả hai chiều. Hệ thống mới chuẩn hóa các nghiệp vụ này thành một nguyên tắc chung: mọi thay đổi số lượng tồn đều phải đi qua một phiếu kho, và mỗi phiếu kho khi hoàn tất sinh ra các dòng thẻ kho tương ứng. Nhờ vậy báo cáo nhập - xuất - tồn và báo cáo biến động có thể tổng hợp hoàn toàn từ thẻ kho.
+[] Các nhóm nghiệp vụ được hệ thống hỗ trợ gồm: (1) quản lý danh mục sản phẩm, biến thể, nhà cung cấp, kho và vị trí; (2) nghiệp vụ kho gồm nhập, xuất, chuyển kho, đổi trả, hủy hàng; (3) kiểm kê và điều chỉnh tồn kho; (4) tra cứu tồn kho, cảnh báo và báo cáo. Hình 1.1 mô tả luồng nghiệp vụ tổng quát mức nghiệp vụ, trong đó mỗi làn tương ứng một bộ phận.
+[] Hình 1.1. Biểu đồ hoạt động mức nghiệp vụ của hệ thống quản lý kho
+[] Một số quy tắc nghiệp vụ quan trọng rút ra từ khảo sát, được dùng xuyên suốt các chương sau:
+[List Paragraph] QT-01: Tồn kho được quản lý theo cặp (kho, biến thể); số lượng tồn không bao giờ âm.
+[List Paragraph] QT-02: Tồn kho chỉ thay đổi khi phiếu kho chuyển sang trạng thái Hoàn thành; phiếu đang lập hoặc chờ duyệt không ảnh hưởng tồn.
+[List Paragraph] QT-03: Chênh lệch kiểm kê = Số lượng thực tế - Tồn hệ thống tại thời điểm kiểm kê; mọi điều chỉnh tồn phải được Quản lý duyệt.
+[List Paragraph] QT-04: Hàng trả lại có tình trạng Còn tốt được nhập lại kho bán; hàng lỗi, hỏng được nhập vào kho hàng lỗi để chờ lập phiếu hủy, không làm tăng tồn có thể bán.
+[List Paragraph] QT-05: Trạng thái tồn của biến thể: Hết hàng khi tồn = 0, Sắp hết khi 0 < tồn ≤ tồn tối thiểu, Bình thường khi tồn > tồn tối thiểu.
+[List Paragraph] QT-06: Tồn cuối kỳ = Tồn đầu kỳ + Nhập - Xuất ± Điều chỉnh, trong đó nhập gồm nhập mua, nhận chuyển kho, hàng trả nhập lại; xuất gồm xuất bán, chuyển đi, hủy, hàng đổi sang.
+[Heading 2] 1.5. Tác nhân của hệ thống
+[] Từ các đối tượng tham gia vận hành kho, nhóm xác định ba tác nhân trực tiếp sử dụng hệ thống và một tác nhân trừu tượng Người dùng làm tổng quát hóa của cả ba (Bảng 1.5). Nhà cung cấp và khách hàng là các đối tượng nghiệp vụ bên ngoài, không trực tiếp thao tác trên hệ thống; thông tin của họ được nhân viên nhập vào phiếu kho nên không được mô hình hóa thành tác nhân.
+[] Bảng 1.5. Tác nhân của hệ thống
+[] Nhà cung cấp được lưu trong danh mục NCC và xuất hiện trên phiếu nhập kho; tên khách hàng và mã đơn hàng được ghi trên phiếu xuất và phiếu đổi trả.
+[] Như vậy bài toán đã được xác định rõ về bối cảnh, quy trình, phạm vi và tác nhân. Chương 2 sẽ chuyển các nhu cầu này thành danh sách yêu cầu chức năng, phi chức năng và mô hình use case.
+[Heading 1] Chương 2. Phân tích yêu cầu
+[] Chương này đặc tả các yêu cầu mà hệ thống phải đáp ứng. Yêu cầu chức năng được đánh mã FR để truy vết tới use case, yêu cầu phi chức năng được đánh mã NFR. Tiếp đó mô hình use case được xây dựng ở hai mức: biểu đồ tổng quát và biểu đồ phân rã theo gói, kèm đặc tả kịch bản cho toàn bộ 19 use case.
+[Heading 2] 2.1. Yêu cầu chức năng
+[] Các yêu cầu chức năng được tổng hợp từ bảng nhu cầu ở Bảng 1.3 và các biểu mẫu ở Bảng 1.2, trình bày trong Bảng 2.1. Cột Use case cho biết use case hiện thực hóa yêu cầu đó.
+[] Bảng 2.1. Danh sách yêu cầu chức năng
+[Heading 2] 2.2. Yêu cầu phi chức năng
+[] Bảng 2.2 liệt kê các yêu cầu phi chức năng. Mỗi yêu cầu có tiêu chí đo để kiểm thử nghiệm thu.
+[] Bảng 2.2. Danh sách yêu cầu phi chức năng
+[Heading 2] 2.3. Biểu đồ use case tổng quát
+[] Biểu đồ use case tổng quát ở Hình 2.1 thể hiện bốn tác nhân và năm chức năng tổng quát của hệ thống. Ba tác nhân Quản lý, Nhân viên kho, Nhân viên bán hàng đều kế thừa tác nhân trừu tượng Người dùng nên cùng có use case Đăng nhập. Mỗi chức năng tổng quát tương ứng một gói use case được phân rã chi tiết ở mục 2.4.
+[] Hình 2.1. Biểu đồ use case tổng quát
+[Heading 2] 2.4. Danh sách và phân rã use case
+[Heading 3] 2.4.1. Danh sách use case
+[] Use case được đặt mã theo dạng UC-gói.thứ tự, trong đó gói 1 là Quản trị hệ thống, gói 2 là Quản lý danh mục, gói 3 là Nghiệp vụ kho, gói 4 là Tồn kho và báo cáo. Danh sách đầy đủ ở Bảng 2.3.
+[] Bảng 2.3. Danh sách use case
+[] Bảng 2.4 là ma trận phân quyền, đồng thời là căn cứ để cấu hình RBAC theo NFR-06. Ký hiệu X là được thực hiện, X(duyệt) là chỉ thực hiện bước phê duyệt.
+[] Bảng 2.4. Ma trận phân quyền vai trò và use case
+[Heading 3] 2.4.2. Phân rã gói Quản trị hệ thống và Quản lý danh mục
+[] Hình 2.2 phân rã hai chức năng tổng quát Đăng nhập, Quản trị tài khoản và Quản lý danh mục hàng hóa thành các use case chi tiết. Các use case quản lý danh mục đều bao gồm các thao tác thêm, sửa, tìm kiếm và ngừng sử dụng.
+[] Hình 2.2. Phân rã gói Quản trị hệ thống và gói Quản lý danh mục
+[Heading 3] 2.4.3. Phân rã gói Nghiệp vụ kho
+[] Gói Nghiệp vụ kho (Hình 2.3) chứa các use case làm thay đổi tồn kho. UC-3.8 Hủy hàng mở rộng (extend) UC-3.7 Xử lý đổi trả hàng tại điểm mở rộng khi hàng trả về bị lỗi hoặc hỏng. UC-3.2 Tạo yêu cầu xuất kho bao gồm (include) UC-4.1 Tra cứu tồn kho vì nhân viên bán hàng luôn phải xem tồn khả dụng trước khi gửi yêu cầu.
+[] Hình 2.3. Phân rã gói Nghiệp vụ kho
+[Heading 3] 2.4.4. Phân rã gói Tồn kho và báo cáo
+[] Gói Tồn kho và báo cáo (Hình 2.4) gồm các use case chỉ đọc dữ liệu, không làm thay đổi tồn kho.
+[] Hình 2.4. Phân rã gói Tồn kho và báo cáo
+[Heading 2] 2.5. Đặc tả use case
+[] Mục này đặc tả kịch bản cho toàn bộ 19 use case. Bốn use case trọng tâm UC-3.1, UC-3.3, UC-3.6, UC-3.7 được đặc tả chi tiết nhất vì chúng làm thay đổi tồn kho và có nhiều luồng ngoại lệ; số bước trong luồng chính của các use case này ánh xạ trực tiếp với các thông điệp trong biểu đồ tuần tự ở mục 3.3.1.
+[Heading 3] 2.5.1. Gói Nghiệp vụ kho: các use case trọng tâm
+[Heading 4] UC-3.1 Nhập kho
+[] Bảng 2.5. Đặc tả use case UC-3.1 Nhập kho
+[Heading 4] UC-3.3 Xuất kho
+[] Bảng 2.6. Đặc tả use case UC-3.3 Xuất kho
+[Heading 4] UC-3.6 Duyệt điều chỉnh tồn kho
+[] Bảng 2.7. Đặc tả use case UC-3.6 Duyệt điều chỉnh tồn kho
+[Heading 4] UC-3.7 Xử lý đổi trả hàng
+[] Bảng 2.8. Đặc tả use case UC-3.7 Xử lý đổi trả hàng
+[] Số tiền chênh lệch ở bước 9 được tính bằng tổng (giá bán × số lượng) của hàng đổi sang trừ tổng (giá bán × số lượng) của hàng trả. Ví dụ khách trả 1 Áo thun Basic Đen/M giá 199.000 đồng và đổi sang 1 Quần jean Slim Xanh/32 giá 399.000 đồng thì chênh lệch là 399.000 - 199.000 = 200.000 đồng, khách trả thêm; nếu không đổi sang sản phẩm nào, chênh lệch là -199.000 đồng, tức hoàn tiền cho khách.
+[Heading 3] 2.5.2. Gói Nghiệp vụ kho: các use case còn lại
+[] Bảng 2.9. Đặc tả use case UC-3.2 Tạo yêu cầu xuất kho
+[] Bảng 2.10. Đặc tả use case UC-3.4 Chuyển kho
+[] Bảng 2.11. Đặc tả use case UC-3.5 Kiểm kê kho
+[] Bảng 2.12. Đặc tả use case UC-3.8 Hủy hàng
+[Heading 3] 2.5.3. Gói Quản trị hệ thống và Quản lý danh mục
+[] Bảng 2.13. Đặc tả use case UC-1.1 Đăng nhập
+[] Bảng 2.14. Đặc tả use case UC-1.2 Quản lý tài khoản
+[] Bảng 2.15. Đặc tả use case UC-2.1 Quản lý sản phẩm
+[] Bảng 2.16. Đặc tả use case UC-2.2 Quản lý biến thể sản phẩm
+[] Bảng 2.17. Đặc tả gộp các use case UC-2.3, UC-2.4, UC-2.5
+[Heading 3] 2.5.4. Gói Tồn kho và báo cáo
+[] Bảng 2.18. Đặc tả use case UC-4.1 Tra cứu tồn kho và UC-4.2 Xem cảnh báo tồn kho thấp
+[] Bảng 2.19. Đặc tả use case UC-4.3 Lập báo cáo kho
+[] Bảng 2.20. Đặc tả use case UC-4.4 Truy xuất biến động hàng hóa
+[] Ví dụ kiểm chứng với biểu mẫu báo cáo biến động đã khảo sát: biến thể AT001-DEN-M có tồn đầu kỳ 10, sau các phiếu PN001 (+20), PX001 (-5), DC001 (-1) thì tồn cuối là 10 + 20 - 5 - 1 = 24, trùng với số tồn hiện tại của biến thể.
+[] Như vậy toàn bộ 19 yêu cầu chức năng đã được phủ bởi 19 use case có đặc tả. Chương 3 sẽ phân tích các use case trọng tâm để tìm ra các lớp và hành vi của hệ thống.
+[Heading 1] Chương 3. Phân tích
+[] Chương này chuyển mô hình use case thành mô hình đối tượng. Đầu tiên mô hình lĩnh vực xác định các khái niệm nghiệp vụ và quan hệ giữa chúng. Sau đó các use case trọng tâm được phân tích theo mẫu Biên - Điều khiển - Thực thể để tìm ra lớp phân tích, và hành vi của hệ thống được mô tả bằng biểu đồ tuần tự, hoạt động và trạng thái. Quy trình và ký pháp tuân theo bài giảng của học phần [1] và đặc tả UML 2.5.1 [2].
+[Heading 2] 3.1. Mô hình hóa lĩnh vực
+[] Các khái niệm nghiệp vụ được rút ra từ danh từ trong biểu mẫu (Bảng 1.2) và đặc tả use case. Hình 3.1 trình bày mô hình lĩnh vực, trong đó có ba quyết định mô hình hóa quan trọng:
+[List Paragraph] Tách SanPham (mẫu sản phẩm) và BienTheSanPham (tổ hợp màu, size). Tồn kho gắn với biến thể, đúng đặc thù đã khảo sát ở mục 1.2.1.
+[List Paragraph] TonKho là lớp liên kết giữa Kho và BienTheSanPham, mỗi cặp (kho, biến thể) có đúng một bản ghi tồn.
+[List Paragraph] Sáu loại phiếu nhập, xuất, chuyển kho, điều chỉnh, hủy, đổi trả có cấu trúc chung (đầu phiếu và dòng hàng) nên được tổng quát hóa thành lớp trừu tượng PhieuKho. Mọi PhieuKho khi hoàn tất sinh ra các LichSuBienDong (thẻ kho). Phiếu kiểm kê có cấu trúc dòng khác (tồn hệ thống, thực tế, chênh lệch) và không trực tiếp làm đổi tồn nên được mô hình hóa riêng.
+[] Hình 3.1. Mô hình lĩnh vực của hệ thống quản lý kho thời trang
+[Heading 2] 3.2. Biểu đồ lớp phân tích
+[] Bốn use case trọng tâm UC-3.1, UC-3.3, UC-3.6, UC-3.7 được phân tích theo mẫu BCE [3], [4]. Với mỗi use case, một lớp biên (giao diện) nhận thao tác của tác nhân, một lớp điều khiển điều phối kịch bản, còn các lớp thực thể lấy từ mô hình lĩnh vực. Tên lớp được giữ nguyên ở biểu đồ tuần tự (mục 3.3.1) và biểu đồ lớp thiết kế (mục 5.1). Hình 3.2 thể hiện các lớp phân tích của nhóm nhập, xuất kho.
+[] Hình 3.2. Biểu đồ lớp phân tích cho UC-3.1 Nhập kho và UC-3.3 Xuất kho
+[] Hình 3.3 thể hiện các lớp phân tích của nhóm kiểm kê điều chỉnh và đổi trả. Lớp TonKho và LichSuBienDong xuất hiện ở cả bốn use case, cho thấy đây là hai lớp lõi của hệ thống.
+[] Hình 3.3. Biểu đồ lớp phân tích cho UC-3.6 Duyệt điều chỉnh tồn kho và UC-3.7 Xử lý đổi trả hàng
+[Heading 2] 3.3. Phân tích hành vi
+[Heading 3] 3.3.1. Biểu đồ tuần tự
+[] Các biểu đồ tuần tự dưới đây mô tả luồng chính của bốn use case trọng tâm. Ghi chú B1, B2... trên biểu đồ ứng với số bước trong bảng đặc tả ở mục 2.5.1; mỗi thông điệp gọi tới một đối tượng đều tương ứng một phương thức của lớp đó trong các biểu đồ lớp thiết kế (Hình 5.1, Hình 5.2) hoặc của lớp biên, lớp điều khiển đã phân loại ở Hình 3.2, Hình 3.3.
+[] Hình 3.4 là biểu đồ tuần tự của UC-3.1 Nhập kho. Việc cập nhật tồn và ghi thẻ kho nằm trong một vòng lặp theo dòng hàng và cùng thuộc một giao dịch với việc đổi trạng thái phiếu.
+[] Hình 3.4. Biểu đồ tuần tự UC-3.1 Nhập kho
+[] Hình 3.5 là biểu đồ tuần tự của UC-3.3 Xuất kho. Khối alt tách hai nhánh: đủ tồn thì hoàn tất xuất, thiếu tồn thì nhân viên kho từ chối phiếu (luồng ngoại lệ 3a).
+[] Hình 3.5. Biểu đồ tuần tự UC-3.3 Xuất kho
+[] Hình 3.6 là biểu đồ tuần tự của UC-3.6 Duyệt điều chỉnh tồn kho. Lớp điều khiển điều chỉnh tồn theo giá trị chênh lệch (cộng hoặc trừ) thay vì ghi đè số tồn, nhờ đó các phiếu nhập, xuất phát sinh sau khi phiếu kiểm kê được gửi duyệt vẫn được giữ đúng.
+[] Hình 3.6. Biểu đồ tuần tự UC-3.6 Duyệt điều chỉnh tồn kho
+[] Hình 3.7 là biểu đồ tuần tự của UC-3.7 Xử lý đổi trả hàng. Khối opt thể hiện bước đổi sang sản phẩm khác là tùy chọn; khối alt thể hiện kho nhận hàng trả phụ thuộc tình trạng hàng theo quy tắc QT-04.
+[] Hình 3.7. Biểu đồ tuần tự UC-3.7 Xử lý đổi trả hàng
+[Heading 3] 3.3.2. Biểu đồ hoạt động
+[] Biểu đồ hoạt động được dùng cho các quy trình trải qua nhiều tác nhân hoặc có nhiều điểm rẽ nhánh. Quy trình nhập kho (UC-3.1) tương đối tuyến tính và đã được thể hiện đầy đủ ở Hình 3.4 nên không vẽ lại. Hình 3.8 mô tả quy trình xuất kho xuyên suốt hai use case UC-3.2 và UC-3.3, được chia làn theo tác nhân.
+[] Hình 3.8. Biểu đồ hoạt động quy trình yêu cầu và xuất kho
+[] Hình 3.9 mô tả quy trình kiểm kê và điều chỉnh tồn kho, nối UC-3.5 của nhân viên kho với UC-3.6 của Quản lý.
+[] Hình 3.9. Biểu đồ hoạt động quy trình kiểm kê và điều chỉnh tồn kho
+[] Hình 3.10 mô tả quy trình đổi trả (UC-3.7), bao gồm điểm mở rộng sang UC-3.8 Hủy hàng khi hàng trả bị lỗi.
+[] Hình 3.10. Biểu đồ hoạt động quy trình đổi trả hàng
+[Heading 3] 3.3.3. Biểu đồ trạng thái
+[] Hai đối tượng có vòng đời rõ rệt là phiếu kho và phiếu kiểm kê; trạng thái tồn của biến thể (Hết hàng, Sắp hết, Bình thường) chỉ là giá trị suy ra từ số lượng tồn theo QT-05 nên không cần biểu đồ riêng. Hình 3.11 là biểu đồ trạng thái chung của PhieuKho; tùy loại phiếu mà chỉ một số nhánh được sử dụng: phiếu nhập và đổi trả đi từ Đang lập tới Hoàn thành, phiếu xuất bắt đầu ở Chờ xuất, phiếu chuyển kho qua Đang vận chuyển, phiếu điều chỉnh và phiếu hủy phải qua Chờ duyệt. Tồn kho chỉ thay đổi trên các chuyển trạng thái đi vào Hoàn thành hoặc Đang vận chuyển (QT-02).
+[] Hình 3.11. Biểu đồ trạng thái của PhieuKho
+[] Hình 3.12 là biểu đồ trạng thái của PhieuKiemKe. Trong trạng thái DANG_KIEM, các biến thể thuộc phạm vi kiểm kê bị tạm khóa nhập, xuất để số thực tế đếm được so sánh với đúng tồn hệ thống đã chụp.
+[] Hình 3.12. Biểu đồ trạng thái của PhieuKiemKe
+[] Kết quả phân tích đã xác định được các lớp và hành vi cốt lõi. Chương 4 sẽ tổ chức các lớp này thành kiến trúc hệ thống và mô tả cách triển khai trên hạ tầng.
+[Heading 1] Chương 4. Thiết kế kiến trúc và triển khai
+[] Chương này xác định khung giải pháp cho hệ thống: lựa chọn kiến trúc tổng thể, chia hệ thống thành các hệ thống con, tổ chức các lớp đã phân tích vào các gói, mô tả các thành phần phần mềm và cách bố trí chúng trên hạ tầng phần cứng, mạng.
+[Heading 2] 4.1. Thiết lập khung giải pháp
+[Heading 3] 4.1.1. Lựa chọn kiến trúc
+[] Hệ thống được xây dựng theo mô hình ứng dụng web ba tầng. Tầng trình bày là ứng dụng một trang (SPA) chạy trên trình duyệt của máy tính văn phòng và máy tính bảng tại kho, giao tiếp với máy quét mã vạch như một bàn phím. Tầng ứng dụng là dịch vụ cung cấp REST API, bên trong tổ chức theo mẫu BCE: lớp biên tiếp nhận yêu cầu HTTP, lớp điều khiển thực thi kịch bản use case và quản lý giao dịch, lớp thực thể chứa quy tắc nghiệp vụ. Tầng dữ liệu là hệ quản trị CSDL quan hệ.
+[] Lý do lựa chọn: (1) nhân viên kho và cửa hàng ở nhiều địa điểm chỉ cần trình duyệt, không phải cài đặt; (2) nghiệp vụ kho đòi hỏi giao dịch ACID và khóa dòng để thỏa NFR-03, NFR-04, phù hợp với CSDL quan hệ; (3) REST API tách biệt giao diện với nghiệp vụ, thuận lợi cho việc tích hợp phần mềm bán hàng sau này (NFR-11). Công nghệ dự kiến được liệt kê trong Bảng 4.1.
+[] Bảng 4.1. Công nghệ dự kiến sử dụng
+[Heading 3] 4.1.2. Các hệ thống con
+[] Dựa trên bốn gói use case và mức độ gắn kết của các lớp, hệ thống được chia thành sáu hệ thống con trong Bảng 4.2. Hệ thống con Tồn kho và thẻ kho được tách riêng vì là điểm duy nhất được phép thay đổi số lượng tồn; mọi hệ thống con khác muốn đổi tồn đều phải gọi qua nó, giúp đảm bảo QT-01, QT-02 ở một chỗ.
+[] Bảng 4.2. Các hệ thống con
+[] Quan hệ phụ thuộc giữa các hệ thống con được thể hiện ở Hình 4.1. Các phụ thuộc đều một chiều, không có vòng lặp.
+[] Hình 4.1. Biểu đồ phụ thuộc giữa các hệ thống con
+[] Hệ thống con Kiểm kê phụ thuộc Nghiệp vụ kho vì khi duyệt kiểm kê cần tạo PhieuDieuChinh, một lớp con của PhieuKho thuộc hệ thống con Nghiệp vụ kho.
+[Heading 2] 4.2. Biểu đồ gói
+[] Bên trong tầng ứng dụng, mã nguồn được tổ chức theo hai chiều: chiều dọc theo lớp kiến trúc BCE và truy cập dữ liệu, chiều ngang theo hệ thống con. Hình 4.2 thể hiện các gói theo lớp kiến trúc và phụ thuộc giữa chúng; lớp trên chỉ được phụ thuộc lớp ngay dưới hoặc lớp thực thể.
+[] Hình 4.2. Biểu đồ gói của tầng ứng dụng
+[] Trách nhiệm của từng gói được mô tả trong Bảng 4.3.
+[] Bảng 4.3. Mô tả các gói
+[Heading 2] 4.3. Biểu đồ thành phần
+[] Hình 4.3 mô tả các thành phần phần mềm vật lý và giao diện mà chúng cung cấp, sử dụng. Ứng dụng web chỉ giao tiếp với máy chủ qua REST API; các thành phần nghiệp vụ trong máy chủ ứng dụng giao tiếp với nhau qua giao diện dịch vụ nội bộ.
+[] Hình 4.3. Biểu đồ thành phần
+[] Bảng 4.4. Mô tả các thành phần
+[Heading 2] 4.4. Biểu đồ triển khai
+[] Hình 4.4 mô tả cách bố trí hệ thống trên hạ tầng. Doanh nghiệp có quy mô vừa nên toàn bộ phần máy chủ đặt tại một máy chủ ảo đám mây, các cửa hàng và kho truy cập qua Internet bằng HTTPS.
+[] Hình 4.4. Biểu đồ triển khai
+[] Bảng 4.5. Mô tả các nút triển khai
+[] Với kiến trúc và hạ tầng đã xác định, Chương 5 sẽ đi vào thiết kế chi tiết từng lớp, cơ sở dữ liệu và giao diện người dùng.
+[Heading 1] Chương 5. Thiết kế chi tiết
+[] Chương này chi tiết hóa kết quả phân tích thành bản thiết kế có thể lập trình được: biểu đồ lớp thiết kế với đầy đủ kiểu dữ liệu, tầm vực và phương thức; lược đồ cơ sở dữ liệu cùng từ điển dữ liệu; và thiết kế giao diện cho các màn hình chính.
+[Heading 2] 5.1. Thiết kế lớp chi tiết
+[Heading 3] 5.1.1. Biểu đồ lớp thiết kế
+[] Biểu đồ lớp thiết kế được tách thành hai hình theo nhóm lớp thực thể để mỗi hình vừa một trang và đọc được chữ. Ký hiệu tầm vực: + public, - private, # protected. Mọi thông điệp gọi phương thức trong các biểu đồ tuần tự ở Hình 3.4 đến Hình 3.7 đều có phương thức tương ứng trong một trong hai hình này, hoặc thuộc lớp biên và lớp điều khiển được mô tả ở mục 5.1.2. Các lớp chỉ vẽ tên (không có ngăn thuộc tính, phương thức) là lớp đã được đặc tả đầy đủ ở hình khác, đưa vào để giữ quan hệ.
+[] Hình 5.1 là nhóm chứng từ kho: lớp trừu tượng PhieuKho giữ phần đầu phiếu và quy tắc chuyển trạng thái chung, sáu lớp con bổ sung thuộc tính và phương thức riêng của từng loại phiếu, mỗi phiếu gồm nhiều dòng ChiTietPhieuKho trỏ tới biến thể.
+[] Hình 5.1. Biểu đồ lớp thiết kế nhóm chứng từ kho
+[] Hình 5.2 là nhóm tồn kho, kiểm kê và các lớp danh mục được nghiệp vụ kho dùng trực tiếp. TonKho và LichSuBienDong là hai lớp lõi: mọi thay đổi số lượng đều đi qua TonKho và sinh một dòng LichSuBienDong.
+[] Hình 5.2. Biểu đồ lớp thiết kế nhóm tồn kho, kiểm kê và danh mục liên quan
+[] Hình 5.3 là biểu đồ lớp thiết kế của hệ thống con Danh mục hàng hóa và Quản trị. Các lớp này chủ yếu chứa dữ liệu và thao tác thêm, sửa, ngừng sử dụng thông qua lớp điều khiển danh mục chung.
+[] Hình 5.3. Biểu đồ lớp thiết kế hệ thống con Danh mục hàng hóa và Quản trị
+[] Các kiểu liệt kê dùng trong thiết kế được định nghĩa ở Bảng 5.1; mỗi kiểu được lưu trong CSDL dưới dạng varchar có ràng buộc CHECK.
+[] Bảng 5.1. Các kiểu liệt kê
+[Heading 3] 5.1.2. Mô tả chi tiết các lớp
+[] Mục này mô tả các lớp lõi. Cột Ý nghĩa của phương thức ghi kèm mã use case sử dụng phương thức để truy vết.
+[Heading 4] Lớp PhieuKho và các lớp con
+[] Lớp trừu tượng PhieuKho chứa phần đầu phiếu chung và quy tắc chuyển trạng thái theo Hình 3.11. Thuộc tính của PhieuKho và các lớp con tương ứng 1-1 với các cột của bảng phieu_kho (Bảng 5.13) nên không lặp lại ở đây; bảng dưới mô tả các phương thức.
+[] Bảng 5.2. Phương thức lớp PhieuKho và các lớp con
+[Heading 4] Lớp TonKho
+[] TonKho đại diện số lượng một biến thể tại một kho. Các phương thức thay đổi số lượng đều khóa bản ghi trước khi cập nhật để thỏa NFR-04 và từ chối kết quả âm (QT-01).
+[] Bảng 5.3. Thuộc tính và phương thức lớp TonKho
+[Heading 4] Lớp LichSuBienDong
+[] LichSuBienDong là một dòng thẻ kho. Lớp chỉ có phương thức thêm và truy vấn, không có phương thức sửa, xóa (NFR-05).
+[] Bảng 5.4. Thuộc tính và phương thức lớp LichSuBienDong
+[Heading 4] Lớp PhieuKiemKe và ChiTietKiemKe
+[] Bảng 5.5. Thuộc tính và phương thức lớp PhieuKiemKe, ChiTietKiemKe
+[] Các lớp biên và lớp điều khiển chỉ tiếp nhận thao tác và điều phối kịch bản nên không có thuộc tính nghiệp vụ; chữ ký phương thức cùng thứ tự gọi của chúng được thể hiện đầy đủ trong các biểu đồ tuần tự ở Hình 3.4 đến Hình 3.7, và tên lớp đã được phân loại theo mẫu BCE ở Hình 3.2, Hình 3.3. Mỗi phương thức hoanTat... của lớp điều khiển là ranh giới một giao dịch CSDL.
+[Heading 2] 5.2. Thiết kế cơ sở dữ liệu
+[Heading 3] 5.2.1. Lược đồ cơ sở dữ liệu
+[] Lớp thiết kế được ánh xạ sang CSDL quan hệ theo các nguyên tắc: mỗi lớp thực thể thành một bảng, thuộc tính camelCase thành cột snake_case (ví dụ maSku thành ma_sku); cây kế thừa PhieuKho dùng chiến lược một bảng cho cả cây (single table inheritance [5]) với cột phân biệt loai_phieu, vì sáu loại phiếu dùng chung hầu hết cột và báo cáo cần truy vấn gộp mọi loại phiếu; các cột riêng của lớp con được cho phép rỗng và được ràng buộc bằng CHECK theo loại phiếu. Theo các nguyên tắc trên, 15 lớp thực thể NguoiDung, LoaiSanPham, MauSac, KichThuoc, SanPham, BienTheSanPham, NhaCungCap, Kho, ViTriKho, TonKho, ChiTietPhieuKho, PhieuKiemKe, ChiTietKiemKe, LichSuBienDong và cây kế thừa PhieuKho lần lượt ánh xạ tới 15 bảng cùng tên dạng snake_case (nguoi_dung, loai_san_pham, ..., phieu_kho). Hình 5.4 là lược đồ quan hệ.
+[] Hình 5.4. Lược đồ cơ sở dữ liệu
+[Heading 3] 5.2.2. Từ điển dữ liệu
+[] Các bảng dưới đây đặc tả chi tiết từng cột. Kiểu dữ liệu theo PostgreSQL; tiền tệ dùng numeric(12,0) vì đơn vị là đồng, không có phần lẻ.
+[] Bảng 5.6. Bảng nguoi_dung
+[] Bảng 5.7. Các bảng loai_san_pham, mau_sac, kich_thuoc
+[] Bảng 5.8. Bảng san_pham
+[] Bảng 5.9. Bảng bien_the_san_pham
+[] Bảng 5.10. Bảng nha_cung_cap
+[] Bảng 5.11. Các bảng kho, vi_tri_kho
+[] Bảng 5.12. Bảng ton_kho
+[] Bảng 5.13. Bảng phieu_kho
+[] Bảng 5.14. Bảng chi_tiet_phieu_kho
+[] Bảng 5.15. Các bảng phieu_kiem_ke, chi_tiet_kiem_ke
+[] Bảng 5.16. Bảng lich_su_bien_dong
+[Heading 2] 5.3. Thiết kế giao diện
+[Heading 3] 5.3.1. Danh sách màn hình và luồng chuyển màn hình
+[] Giao diện được thiết kế cho màn hình từ 10 inch trở lên, bố cục gồm thanh menu trái (hiển thị theo quyền ở Bảng 2.4), thanh tiêu đề chứa ô tìm kiếm SKU và vùng nội dung. Các ô nhập SKU luôn nhận dữ liệu từ máy quét mã vạch: sau khi quét, con trỏ tự chuyển sang ô số lượng. Bảng 5.17 liệt kê các màn hình và use case tương ứng.
+[] Bảng 5.17. Danh sách màn hình
+[] Hình 5.5 là luồng chuyển giữa các màn hình chính.
+[] Hình 5.5. Luồng chuyển màn hình
+[Heading 3] 5.3.2. Thiết kế các màn hình chính
+[Heading 4] MH-04 Lập phiếu nhập kho
+[] Phần đầu phiếu gồm kho nhập (mặc định kho phụ trách), nhà cung cấp (chỉ liệt kê NCC Đang hợp tác), người giao, ghi chú. Bảng dòng hàng cho phép quét SKU liên tiếp; quét lại SKU đã có trong phiếu thì tăng số lượng thay vì thêm dòng mới. Ràng buộc: số lượng là số nguyên lớn hơn 0, đơn giá mặc định lấy giá nhập của biến thể và không âm. Nút Hoàn tất bị vô hiệu khi phiếu chưa có dòng; hệ thống hỏi xác nhận trước khi cập nhật tồn.
+[] Hình 5.6. Phác thảo màn hình MH-04 Lập phiếu nhập kho
+[Heading 4] MH-07 Duyệt kiểm kê
+[] Màn hình dành cho Quản lý. Mặc định chỉ hiển thị các dòng có chênh lệch khác 0, có tùy chọn xem tất cả. Phần tổng hợp cuối trang tính tổng thiếu, tổng thừa và giá trị chênh lệch theo giá nhập. Ô lý do là bắt buộc cho cả Duyệt và Từ chối.
+[] Hình 5.7. Phác thảo màn hình MH-07 Duyệt kiểm kê
+[Heading 4] MH-09 Tra cứu tồn kho và thẻ kho
+[] Thanh bộ lọc gồm kho, loại sản phẩm, màu, size, trạng thái tồn; ô tìm kiếm nhận tên sản phẩm hoặc SKU. Kết quả phân trang 50 dòng. Cột giá trị tồn chỉ hiển thị với Quản lý. Bấm biểu tượng thẻ kho trên một dòng mở bảng lịch sử biến động (UC-4.4) ngay bên dưới, gồm tồn đầu kỳ, từng dòng biến động có liên kết tới phiếu, và tồn cuối kỳ.
+[] Hình 5.8. Phác thảo màn hình MH-09 Tra cứu tồn kho và thẻ kho
+[Heading 4] Các màn hình khác
+[] MH-02 Tổng quan hiển thị bốn thẻ số liệu Hết hàng, Sắp hết, Phiếu chờ xuất, Kiểm kê chờ duyệt; bấm thẻ sẽ mở MH-09 hoặc danh sách phiếu đã lọc sẵn. MH-05 Xử lý phiếu xuất gồm danh sách phiếu Chờ xuất và chi tiết phiếu kèm tồn, vị trí lấy hàng; dòng thiếu tồn được tô đỏ và chỉ cho phép Từ chối. MH-08 Đổi trả hàng gồm hai bảng Hàng khách trả (bắt buộc chọn tình trạng) và Hàng đổi sang (hiển thị tồn khả dụng), số tiền chênh lệch cập nhật ngay khi thêm dòng.
+[] Các biểu đồ tuần tự ở mục 3.3.1 đã dùng đúng tên lớp và chữ ký phương thức ở Hình 5.1 và Hình 5.2 nên đồng thời đóng vai trò biểu đồ tuần tự mức thiết kế (mục 5.4 tùy chọn không trình bày riêng).
+[Heading 1] Chương 6. Kết luận
+[] Chương cuối đối chiếu kết quả với mục tiêu đặt ra ở Chương 1, nêu các hạn chế còn tồn tại và hướng phát triển của hệ thống.
+[Heading 2] 6.1. Kết quả đạt được
+[] Báo cáo đã hoàn thành phân tích và thiết kế hướng đối tượng cho Hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang, gồm 19 yêu cầu chức năng, 11 yêu cầu phi chức năng, 19 use case có đặc tả, 4 biểu đồ tuần tự, 4 biểu đồ hoạt động, 2 biểu đồ trạng thái, biểu đồ lớp ở ba mức lĩnh vực, phân tích và thiết kế, bộ biểu đồ kiến trúc gói, thành phần, triển khai, lược đồ CSDL 15 bảng kèm từ điển dữ liệu và danh sách 10 màn hình kèm phác thảo 3 màn hình chính. Bảng 6.1 đối chiếu thiết kế với các mục tiêu ở mục 1.3.1.
+[] Bảng 6.1. Đối chiếu kết quả với mục tiêu
+[] Về mặt mô hình, các biểu đồ được giữ đồng bộ: mỗi yêu cầu FR truy vết tới use case; bước trong đặc tả use case trọng tâm ánh xạ tới thông điệp tuần tự; thông điệp ánh xạ tới phương thức của lớp thiết kế; lớp thực thể ánh xạ tới bảng CSDL theo mục 5.2.1.
+[Heading 2] 6.2. Hạn chế
+[List Paragraph] Chưa tích hợp tự động với phần mềm bán hàng và sàn thương mại điện tử; mã đơn hàng vẫn được nhập tay.
+[List Paragraph] Chưa quản lý đơn đặt hàng với nhà cung cấp và công nợ, nên chưa đối chiếu được số lượng giao với số lượng đặt.
+[List Paragraph] Chưa quản lý tồn theo lô hoặc theo từng vị trí chi tiết; mỗi biến thể tại một kho chỉ có một vị trí mặc định.
+[List Paragraph] Giá trị tồn kho tính theo giá nhập hiện hành của biến thể, chưa áp dụng phương pháp tính giá vốn bình quân hay nhập trước xuất trước.
+[List Paragraph] Thiết kế giao diện mới ở mức phác thảo, chưa được kiểm thử với người dùng thực tế.
+[Heading 2] 6.3. Hướng phát triển
+[List Paragraph] Xây dựng API tích hợp với phần mềm bán hàng để yêu cầu xuất kho và đổi trả được tạo tự động từ đơn hàng.
+[List Paragraph] Bổ sung phân hệ đặt hàng nhà cung cấp, gợi ý số lượng nhập dựa trên tốc độ bán và tồn tối thiểu.
+[List Paragraph] Quản lý tồn theo nhiều vị trí và theo lô nhập, hỗ trợ tính giá vốn.
+[List Paragraph] Phát triển ứng dụng di động cho nhân viên kho dùng camera quét mã, làm việc được khi mất kết nối tạm thời.
+[List Paragraph] Phân tích dữ liệu thẻ kho để dự báo nhu cầu theo mùa, đề xuất điều chuyển hàng tồn lâu giữa các cửa hàng.
+[Heading 1] Tài liệu tham khảo
+[] [1] Nguyễn Nhật Quang, Bài giảng Phân tích và thiết kế hệ thống, Trường Công nghệ Thông tin và Truyền thông, Đại học Bách khoa Hà Nội.
+[] [2] Object Management Group, OMG Unified Modeling Language (OMG UML), Version 2.5.1, 2017.
+[] [3] C. Larman, Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development, 3rd ed. Prentice Hall, 2004.
+[] [4] I. Jacobson, G. Booch, J. Rumbaugh, The Unified Software Development Process. Addison-Wesley, 1999.
+[] [5] M. Fowler, Patterns of Enterprise Application Architecture. Addison-Wesley, 2002.
+[] [6] Nhóm 1, Báo cáo khảo sát hiện trạng dự án xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang, 2026.
+
+--- TABLES 50 ---
+
+[TABLE 1]
+ | 
+GVHD | ThS. Lê Thị Hoa
+Lớp | K6901 CNTT VB2CQ
+Nhóm 1 | 202490032: Bùi Tuấn Anh / 202490069: Bùi Quốc Luýt / 202490071: Vũ Quang Minh / 202490077: Bạch Minh Quang / 202490090: Phạm Đoàn Bảo Thiên
+
+[TABLE 2]
+Viết tắt / Thuật ngữ | Ý nghĩa
+UML | Unified Modeling Language - Ngôn ngữ mô hình hóa thống nhất
+UC | Use Case - Ca sử dụng
+FR | Functional Requirement - Yêu cầu chức năng
+NFR | Non-Functional Requirement - Yêu cầu phi chức năng
+BCE | Boundary - Control - Entity: mẫu phân loại lớp Biên, Điều khiển, Thực thể
+CSDL | Cơ sở dữ liệu
+ERD | Entity Relationship Diagram - Lược đồ thực thể liên kết
+PK / FK | Primary Key / Foreign Key - Khóa chính / Khóa ngoại
+SKU | Stock Keeping Unit - Mã định danh một biến thể hàng hóa (sản phẩm + màu + size)
+Biến thể | Một tổ hợp cụ thể của sản phẩm theo màu sắc và kích thước, là đơn vị quản lý tồn kho
+NCC | Nhà cung cấp
+NV | Nhân viên
+Phiếu kho | Chứng từ ghi nhận một nghiệp vụ làm thay đổi tồn kho (nhập, xuất, chuyển, điều chỉnh, hủy, đổi trả)
+Thẻ kho | Sổ ghi lịch sử biến động số lượng của từng biến thể tại từng kho
+NXT | Nhập - Xuất - Tồn
+RBAC | Role-Based Access Control - Phân quyền theo vai trò
+REST API | Giao diện lập trình ứng dụng theo kiến trúc REST, trao đổi dữ liệu JSON qua HTTP
+SPA | Single Page Application - Ứng dụng web một trang
+
+[TABLE 3]
+Thông tin | Mô tả | Cấp quản lý đúng
+Mã sản phẩm | Mã định danh mẫu sản phẩm, ví dụ AT001 | Sản phẩm
+Tên sản phẩm | Tên mẫu quần áo | Sản phẩm
+Loại sản phẩm | Áo, quần, váy, áo khoác... | Sản phẩm
+Màu sắc | Đỏ, đen, trắng... | Biến thể
+Kích thước | S, M, L, XL hoặc số 29, 30, 32... | Biến thể
+Giá nhập, giá bán | Giá nhập từ NCC và giá bán cho khách | Biến thể
+Nhà cung cấp | Đơn vị cung cấp sản phẩm | Sản phẩm, phiếu nhập
+Số lượng tồn | Số lượng hiện có trong kho | Biến thể tại từng kho
+Vị trí | Vị trí lưu trữ trong kho (khu, kệ, tầng) | Biến thể tại từng kho
+Trạng thái | Đang bán, ngừng bán, hết hàng | Sản phẩm / biến thể
+
+[TABLE 4]
+STT | Biểu mẫu | Nghiệp vụ | Thông tin chính
+1 | Phiếu nhập kho | Nhập hàng | Mã phiếu, ngày, NCC, kho nhập, dòng hàng (SP, màu, size, SL, đơn giá)
+2 | Phiếu xuất kho | Xuất hàng | Mã phiếu, kho xuất, người nhận, lý do xuất, dòng hàng
+3 | Phiếu kiểm kê kho | Kiểm kê | Kho, phạm vi, tồn hệ thống, thực tế, chênh lệch = thực tế - hệ thống
+4 | Phiếu điều chỉnh tồn kho | Điều chỉnh | Tồn trước, số điều chỉnh, tồn sau, lý do, người duyệt
+5 | Phiếu đổi/trả hàng | Đổi trả | Mã đơn hàng, khách hàng, lý do, tình trạng hàng, hàng đổi sang, tiền chênh lệch
+6 | Phiếu chuyển kho | Chuyển kho | Kho xuất, kho nhận, người chuyển, người nhận
+7 | Phiếu hủy hàng | Hủy hàng | Kho, lý do hủy từng dòng, người duyệt
+8 | Báo cáo tồn kho | Tồn kho | Tồn theo SP, màu, size, kho; trạng thái so với tồn tối thiểu
+9 | Báo cáo nhập kho | Nhập kho | Theo thời gian, NCC; tổng phiếu, tổng SL, tổng giá trị
+10 | Báo cáo xuất kho | Xuất kho | Theo thời gian, lý do xuất; tổng phiếu, tổng SL
+11 | Báo cáo nhập - xuất - tồn | Tổng hợp | Tồn cuối = Tồn đầu + Nhập - Xuất ± Điều chỉnh
+12 | Báo cáo kiểm kê | Kiểm kê | Chênh lệch, nguyên nhân, tổng thiếu/thừa, giá trị chênh lệch
+13 | Báo cáo biến động hàng hóa | Truy xuất | Lịch sử từng lần thay đổi số lượng của một biến thể
+
+[TABLE 5]
+Vấn đề hiện tại | Nhu cầu hệ thống
+Dữ liệu phân tán ở nhiều file, không đồng nhất | Tập trung dữ liệu trên một hệ thống duy nhất
+Khó quản lý nhiều biến thể màu/size | Quản lý sản phẩm theo biến thể, mỗi biến thể một mã SKU
+Tồn kho sai lệch, không theo thời gian thực | Tự động cập nhật tồn khi hoàn tất phiếu nhập, xuất
+Khó kiểm tra lịch sử biến động | Lưu thẻ kho cho mọi thay đổi số lượng
+Tìm kiếm thông tin mất thời gian | Tìm kiếm và lọc theo sản phẩm, màu, size, kho
+Kiểm kê, đối chiếu thủ công | Hỗ trợ kiểm kê, tự tính chênh lệch và điều chỉnh có phê duyệt
+Báo cáo lập thủ công | Tự động tổng hợp báo cáo
+Khó kiểm soát thao tác nhân viên | Phân quyền theo vai trò, ghi nhận người thực hiện
+Khó phát hiện hàng sắp hết | Cảnh báo tồn kho thấp
+Hàng tồn lâu không được phát hiện | Thống kê số ngày tồn kho
+
+[TABLE 6]
+Trong phạm vi | Ngoài phạm vi
+Quản lý tài khoản và phân quyền theo vai trò | Bán hàng tại quầy (POS), thanh toán, hóa đơn điện tử
+Quản lý danh mục: sản phẩm, biến thể, loại, màu, size, NCC, kho, vị trí | Quản lý đơn đặt hàng với nhà cung cấp, công nợ NCC
+Nhập kho, xuất kho, chuyển kho, hủy hàng | Kết nối sàn thương mại điện tử và đơn vị vận chuyển
+Kiểm kê và điều chỉnh tồn kho có phê duyệt | Kế toán giá vốn, định khoản
+Tiếp nhận đổi trả tại kho | Chăm sóc khách hàng, chương trình khuyến mãi
+Tra cứu tồn, cảnh báo tồn thấp, báo cáo và thẻ kho | Ứng dụng di động riêng (chỉ hỗ trợ trình duyệt trên máy tính bảng)
+
+[TABLE 7]
+Tác nhân | Vai trò trong hệ thống
+Người dùng | Tác nhân trừu tượng, đại diện mọi người có tài khoản; thực hiện đăng nhập, đổi mật khẩu
+Quản lý | Quản lý tài khoản, danh mục hàng hóa, nhà cung cấp, kho; duyệt kiểm kê, điều chỉnh, hủy hàng; xem báo cáo
+Nhân viên kho | Lập và hoàn tất phiếu nhập, xuất, chuyển kho, đổi trả, hủy hàng; thực hiện kiểm kê; tra cứu tồn
+Nhân viên bán hàng | Tạo yêu cầu xuất kho cho đơn bán; tra cứu tồn kho để tư vấn khách
+
+[TABLE 8]
+Mã | Yêu cầu chức năng | Use case
+FR-01 | Người dùng đăng nhập, đăng xuất, đổi mật khẩu | UC-1.1
+FR-02 | Quản lý tài khoản người dùng, gán vai trò và kho phụ trách, khóa tài khoản | UC-1.2
+FR-03 | Quản lý sản phẩm: thêm, sửa, ngừng bán, tìm kiếm và lọc theo loại, trạng thái | UC-2.1
+FR-04 | Quản lý biến thể theo màu và size; sinh mã SKU; khai báo giá nhập, giá bán, tồn tối thiểu | UC-2.2
+FR-05 | Quản lý danh mục loại sản phẩm, màu sắc, kích thước | UC-2.3
+FR-06 | Quản lý nhà cung cấp và trạng thái hợp tác | UC-2.4
+FR-07 | Quản lý kho (kho tổng, kho cửa hàng, kho hàng lỗi) và vị trí lưu trữ | UC-2.5
+FR-08 | Lập phiếu nhập kho theo nhà cung cấp; khi hoàn tất tự động cộng tồn và ghi thẻ kho | UC-3.1
+FR-09 | Bộ phận bán hàng tạo yêu cầu xuất kho kèm mã đơn hàng, xem được tồn khả dụng | UC-3.2
+FR-10 | Xử lý xuất kho: kiểm tra đủ tồn, trừ tồn, không cho phép tồn âm, ghi thẻ kho | UC-3.3
+FR-11 | Chuyển hàng giữa các kho qua hai bước xuất đi và xác nhận nhận hàng | UC-3.4
+FR-12 | Kiểm kê kho theo phạm vi, ghi nhận số thực tế, tự tính chênh lệch | UC-3.5
+FR-13 | Quản lý duyệt kết quả kiểm kê hoặc phiếu điều chỉnh; hệ thống điều chỉnh tồn theo chênh lệch | UC-3.6
+FR-14 | Tiếp nhận đổi trả: nhập lại hàng tốt, tách hàng lỗi, xuất hàng đổi sang, tính tiền chênh lệch | UC-3.7
+FR-15 | Lập phiếu hủy hàng lỗi, hỏng; hủy chỉ có hiệu lực sau khi Quản lý duyệt | UC-3.8
+FR-16 | Tra cứu tồn kho theo kho, sản phẩm, màu, size, vị trí, trạng thái tồn | UC-4.1
+FR-17 | Cảnh báo biến thể hết hàng, sắp hết so với tồn tối thiểu | UC-4.2
+FR-18 | Lập báo cáo tồn kho, nhập, xuất, nhập - xuất - tồn, kiểm kê, hàng tồn lâu; xuất ra Excel | UC-4.3
+FR-19 | Truy xuất lịch sử biến động của một biến thể: thời gian, chứng từ, số lượng, người thực hiện | UC-4.4
+
+[TABLE 9]
+Mã | Nhóm | Yêu cầu và tiêu chí đo
+NFR-01 | Hiệu năng | Tra cứu tồn kho trả kết quả dưới 2 giây với 50.000 biến thể và 100 người dùng đồng thời
+NFR-02 | Hiệu năng | Báo cáo nhập - xuất - tồn một tháng cho toàn bộ kho sinh ra dưới 10 giây
+NFR-03 | Toàn vẹn dữ liệu | Hoàn tất phiếu kho là một giao dịch nguyên tử: cập nhật tồn, ghi thẻ kho và đổi trạng thái phiếu cùng thành công hoặc cùng hủy
+NFR-04 | Toàn vẹn dữ liệu | Hai phiếu xuất đồng thời trên cùng biến thể không làm tồn âm (khóa dòng tồn kho khi cập nhật)
+NFR-05 | Truy vết | Thẻ kho chỉ được thêm, không được sửa hoặc xóa; lưu tối thiểu 5 năm
+NFR-06 | Bảo mật | Phân quyền theo vai trò (RBAC) như Bảng 2.4; mật khẩu băm bằng bcrypt; khóa tài khoản 15 phút sau 5 lần đăng nhập sai
+NFR-07 | Bảo mật | Toàn bộ truy cập qua HTTPS; phiên đăng nhập hết hạn sau 30 phút không thao tác
+NFR-08 | Khả dụng | Hệ thống sẵn sàng 99% trong giờ làm việc (7h - 22h); sao lưu CSDL hằng ngày, khôi phục trong 4 giờ
+NFR-09 | Dễ sử dụng | Giao diện tiếng Việt; hỗ trợ máy quét mã vạch nhập SKU; dùng được trên máy tính bảng 10 inch
+NFR-10 | Tương thích | Chạy trên Chrome, Edge phiên bản 2 năm gần nhất; xuất báo cáo định dạng .xlsx
+NFR-11 | Bảo trì | Kiến trúc phân lớp, tách hệ thống con theo nghiệp vụ để có thể mở rộng tích hợp bán hàng
+
+[TABLE 10]
+Mã UC | Tên use case | Tác nhân chính | Yêu cầu
+UC-1.1 | Đăng nhập | Người dùng | FR-01
+UC-1.2 | Quản lý tài khoản | Quản lý | FR-02
+UC-2.1 | Quản lý sản phẩm | Quản lý | FR-03
+UC-2.2 | Quản lý biến thể sản phẩm | Quản lý | FR-04
+UC-2.3 | Quản lý loại, màu sắc, kích thước | Quản lý | FR-05
+UC-2.4 | Quản lý nhà cung cấp | Quản lý | FR-06
+UC-2.5 | Quản lý kho và vị trí kho | Quản lý | FR-07
+UC-3.1 | Nhập kho | Nhân viên kho | FR-08
+UC-3.2 | Tạo yêu cầu xuất kho | Nhân viên bán hàng | FR-09
+UC-3.3 | Xuất kho | Nhân viên kho | FR-10
+UC-3.4 | Chuyển kho | Nhân viên kho | FR-11
+UC-3.5 | Kiểm kê kho | Nhân viên kho | FR-12
+UC-3.6 | Duyệt điều chỉnh tồn kho | Quản lý | FR-13
+UC-3.7 | Xử lý đổi trả hàng | Nhân viên kho | FR-14
+UC-3.8 | Hủy hàng | Nhân viên kho, Quản lý | FR-15
+UC-4.1 | Tra cứu tồn kho | Quản lý, Nhân viên kho, Nhân viên bán hàng | FR-16
+UC-4.2 | Xem cảnh báo tồn kho thấp | Quản lý, Nhân viên kho | FR-17
+UC-4.3 | Lập báo cáo kho | Quản lý | FR-18
+UC-4.4 | Truy xuất biến động hàng hóa | Quản lý, Nhân viên kho | FR-19
+
+[TABLE 11]
+Use case | Quản lý | Nhân viên kho | Nhân viên bán hàng
+UC-1.1 Đăng nhập | X | X | X
+UC-1.2 Quản lý tài khoản | X |  | 
+UC-2.1 đến UC-2.5 Quản lý danh mục | X | Chỉ xem | Chỉ xem sản phẩm
+UC-3.1 Nhập kho | Xem | X | 
+UC-3.2 Tạo yêu cầu xuất kho | Xem |  | X
+UC-3.3 Xuất kho, UC-3.4 Chuyển kho | Xem | X | 
+UC-3.5 Kiểm kê kho | Xem | X | 
+UC-3.6 Duyệt điều chỉnh tồn kho | X |  | 
+UC-3.7 Xử lý đổi trả hàng | Xem | X | 
+UC-3.8 Hủy hàng | X(duyệt) | X | 
+UC-4.1 Tra cứu tồn kho | X | X | X
+UC-4.2 Xem cảnh báo tồn kho thấp | X | X | 
+UC-4.3 Lập báo cáo kho | X |  | 
+UC-4.4 Truy xuất biến động hàng hóa | X | X | 
+
+[TABLE 12]
+Thành phần | Nội dung
+Mã Use Case | UC-3.1
+Tên Use Case | Nhập kho
+Tác nhân chính | Nhân viên kho
+Mô tả tóm tắt | Nhân viên kho lập phiếu nhập cho lô hàng từ nhà cung cấp; khi hoàn tất, tồn kho các biến thể được cộng và ghi thẻ kho
+Điều kiện | Nhân viên kho đã đăng nhập và được phân công kho nhập; hàng đã được giao tới kho
+Thao tác chính | 1. Nhân viên kho chọn lập phiếu nhập, chọn kho nhập và nhà cung cấp. / 2. Hệ thống kiểm tra nhà cung cấp đang hợp tác. / 3. Hệ thống tạo phiếu nhập ở trạng thái Đang lập và sinh mã phiếu (PN...). / 4. Nhân viên kho quét hoặc nhập SKU, số lượng, đơn giá của một dòng hàng. / 5. Hệ thống tìm biến thể theo SKU, thêm dòng chi tiết, tính thành tiền và tổng tiền. Bước 4, 5 lặp lại cho mỗi dòng hàng. / 6. Nhân viên kho kiểm đếm xong và xác nhận hoàn tất phiếu. / 7. Hệ thống cộng số lượng vào tồn kho của từng biến thể tại kho nhập. / 8. Hệ thống ghi một dòng thẻ kho cho mỗi dòng hàng. / 9. Hệ thống chuyển phiếu sang Hoàn thành và thông báo kết quả.
+Luồng ngoại lệ | 2a. Nhà cung cấp đã ngừng hợp tác: hệ thống báo lỗi, không tạo phiếu. / 5a. SKU không tồn tại hoặc biến thể ngừng bán: hệ thống báo lỗi, không thêm dòng. / 5b. Số lượng không lớn hơn 0 hoặc đơn giá âm: hệ thống yêu cầu nhập lại. / 6a. Phiếu chưa có dòng hàng nào: hệ thống không cho hoàn tất. / 6b. Nhân viên kho hủy phiếu: phiếu chuyển Đã hủy, tồn không đổi. / 7a. Lỗi khi ghi dữ liệu: toàn bộ bước 7 - 9 được hoàn tác (NFR-03).
+Hậu điều kiện | Phiếu nhập ở trạng thái Hoàn thành; tồn kho tăng đúng số lượng nhập; có thẻ kho tương ứng
+Yêu cầu liên quan | FR-08, NFR-03, NFR-09
+
+[TABLE 13]
+Thành phần | Nội dung
+Mã Use Case | UC-3.3
+Tên Use Case | Xuất kho
+Tác nhân chính | Nhân viên kho
+Mô tả tóm tắt | Nhân viên kho xử lý yêu cầu xuất do bộ phận bán hàng gửi: kiểm tra tồn, soạn hàng và hoàn tất phiếu xuất
+Điều kiện | Có phiếu xuất ở trạng thái Chờ xuất thuộc kho nhân viên phụ trách (tạo từ UC-3.2)
+Thao tác chính | 1. Nhân viên kho chọn một yêu cầu xuất trong danh sách Chờ xuất. / 2. Hệ thống lấy danh sách dòng hàng của phiếu. / 3. Hệ thống kiểm tra tồn kho đủ cho từng dòng và hiển thị phiếu kèm tồn hiện có, vị trí lấy hàng. / 4. Nhân viên kho soạn hàng, kiểm tra sản phẩm và xác nhận xuất kho. / 5. Hệ thống khóa và trừ tồn kho của từng biến thể. / 6. Hệ thống ghi thẻ kho cho từng dòng. / 7. Hệ thống chuyển phiếu sang Hoàn thành và thông báo kết quả.
+Luồng ngoại lệ | 3a. Có dòng không đủ tồn: hệ thống đánh dấu các dòng thiếu; nhân viên kho chọn Từ chối và nhập lý do; phiếu chuyển Từ chối, nhân viên bán hàng nhận thông báo. / 4a. Biến thể đang thuộc một phiếu kiểm kê Đang kiểm: hệ thống không cho xác nhận xuất. / 5a. Trong lúc soạn hàng, tồn đã bị phiếu khác trừ khiến không còn đủ: giao dịch bị hoàn tác, quay lại bước 3 (NFR-04).
+Hậu điều kiện | Phiếu xuất Hoàn thành hoặc Từ chối; tồn kho không âm
+Yêu cầu liên quan | FR-10, NFR-03, NFR-04
+
+[TABLE 14]
+Thành phần | Nội dung
+Mã Use Case | UC-3.6
+Tên Use Case | Duyệt điều chỉnh tồn kho
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Quản lý xem kết quả kiểm kê, duyệt để hệ thống sinh phiếu điều chỉnh và cập nhật tồn kho theo chênh lệch
+Điều kiện | Quản lý đã đăng nhập; có phiếu kiểm kê ở trạng thái Chờ duyệt (tạo từ UC-3.5)
+Thao tác chính | 1. Quản lý chọn một phiếu kiểm kê Chờ duyệt. / 2. Hệ thống tính và hiển thị các dòng chênh lệch, tổng thiếu, tổng thừa và giá trị chênh lệch theo giá nhập. / 3. Quản lý xem xét nguyên nhân, nhập lý do và chọn Duyệt. / 4. Hệ thống tạo phiếu điều chỉnh (DC...) gồm các dòng có chênh lệch khác 0. / 5. Hệ thống điều chỉnh tồn kho từng biến thể theo đúng giá trị chênh lệch. / 6. Hệ thống ghi thẻ kho cho từng dòng điều chỉnh. / 7. Hệ thống chuyển phiếu điều chỉnh sang Hoàn thành, phiếu kiểm kê sang Đã duyệt và thông báo.
+Luồng thay thế | 1b. Quản lý chọn một phiếu điều chỉnh do nhân viên kho lập thủ công (ví dụ nhận thiếu hàng khi chuyển kho): bước 4 được bỏ qua, các bước 5 - 7 thực hiện như trên.
+Luồng ngoại lệ | 2a. Không có dòng chênh lệch: Quản lý duyệt, hệ thống chỉ chuyển phiếu kiểm kê sang Đã duyệt. / 3a. Quản lý chọn Từ chối kèm lý do: phiếu kiểm kê chuyển Từ chối, nhân viên kho phải kiểm lại. / 5a. Điều chỉnh làm tồn âm (hàng đã được xuất sau thời điểm kiểm kê): hệ thống chặn, báo dòng lỗi và hoàn tác.
+Hậu điều kiện | Tồn kho khớp số thực tế đã kiểm; có phiếu điều chỉnh và thẻ kho truy vết
+Yêu cầu liên quan | FR-13, NFR-03, NFR-05
+
+[TABLE 15]
+Thành phần | Nội dung
+Mã Use Case | UC-3.7
+Tên Use Case | Xử lý đổi trả hàng
+Tác nhân chính | Nhân viên kho
+Mô tả tóm tắt | Nhân viên kho tiếp nhận hàng khách trả, kiểm tra tình trạng, nhập lại kho hoặc tách vào kho hàng lỗi, xuất hàng đổi sang nếu có
+Điều kiện | Nhân viên kho đã đăng nhập; khách hàng mang theo sản phẩm và mã đơn hàng
+Thao tác chính | 1. Nhân viên kho nhập mã đơn hàng, tên khách hàng và lý do đổi trả. / 2. Hệ thống tạo phiếu đổi trả ở trạng thái Đang lập. / 3. Nhân viên kho quét SKU hàng trả, nhập số lượng và tình trạng (Còn tốt, Lỗi, Hỏng). / 4. Hệ thống tìm biến thể và thêm dòng hàng trả. / 5. Nếu khách đổi sang sản phẩm khác, nhân viên kho quét SKU và số lượng hàng đổi sang. / 6. Hệ thống kiểm tra tồn của hàng đổi sang và thêm dòng hàng đổi. / 7. Nhân viên kho xác nhận hoàn tất đổi trả. / 8. Hệ thống cộng tồn hàng trả (Còn tốt vào kho bán, Lỗi hoặc Hỏng vào kho hàng lỗi), trừ tồn hàng đổi sang và ghi thẻ kho. / 9. Hệ thống tính số tiền khách trả thêm hoặc được hoàn, chuyển phiếu sang Hoàn thành và thông báo.
+Luồng ngoại lệ | 3a. Hàng trả có tình trạng Lỗi hoặc Hỏng: sau khi hoàn tất, hệ thống gợi ý lập phiếu hủy (điểm mở rộng tới UC-3.8). / 6a. Hàng đổi sang không đủ tồn: hệ thống báo lỗi, nhân viên chọn biến thể khác hoặc chỉ nhận trả. / 7a. Phiếu chưa có dòng hàng trả: hệ thống không cho hoàn tất.
+Hậu điều kiện | Phiếu đổi trả Hoàn thành; tồn kho bán, kho hàng lỗi được cập nhật; số tiền chênh lệch được ghi nhận
+Yêu cầu liên quan | FR-14, NFR-03
+
+[TABLE 16]
+Thành phần | Nội dung
+Mã Use Case | UC-3.2
+Tên Use Case | Tạo yêu cầu xuất kho
+Tác nhân chính | Nhân viên bán hàng
+Mô tả tóm tắt | Nhân viên bán hàng gửi yêu cầu xuất hàng cho một đơn bán tới kho
+Điều kiện | Nhân viên bán hàng đã đăng nhập
+Thao tác chính | 1. Nhân viên bán hàng chọn kho xuất, lý do xuất, nhập mã đơn hàng và người nhận. / 2. Nhân viên bán hàng tìm biến thể, hệ thống hiển thị tồn khả dụng (include UC-4.1). / 3. Nhân viên bán hàng nhập số lượng cho từng dòng. / 4. Nhân viên bán hàng gửi yêu cầu. / 5. Hệ thống tạo phiếu xuất ở trạng thái Chờ xuất và thông báo tới nhân viên kho phụ trách.
+Luồng ngoại lệ | 3a. Số lượng yêu cầu lớn hơn tồn khả dụng: hệ thống cảnh báo và không cho gửi. / 5a. Nhân viên bán hàng hủy yêu cầu khi phiếu còn Chờ xuất: phiếu chuyển Đã hủy.
+Hậu điều kiện | Phiếu xuất ở trạng thái Chờ xuất; tồn kho chưa thay đổi
+
+[TABLE 17]
+Thành phần | Nội dung
+Mã Use Case | UC-3.4
+Tên Use Case | Chuyển kho
+Tác nhân chính | Nhân viên kho (kho xuất và kho nhận)
+Mô tả tóm tắt | Điều chuyển hàng từ kho này sang kho khác, ví dụ từ kho tổng về cửa hàng
+Điều kiện | Nhân viên kho đã đăng nhập; kho xuất và kho nhận đang hoạt động
+Thao tác chính | 1. Nhân viên kho xuất chọn kho nhận, lý do và các dòng hàng cần chuyển. / 2. Hệ thống kiểm tra đủ tồn và tạo phiếu chuyển kho Đang lập. / 3. Nhân viên kho xuất xác nhận xuất đi. / 4. Hệ thống trừ tồn kho xuất, ghi thẻ kho loại Chuyển đi, phiếu chuyển Đang vận chuyển. / 5. Nhân viên kho nhận kiểm hàng và xác nhận đã nhận. / 6. Hệ thống cộng tồn kho nhận, ghi thẻ kho loại Chuyển đến, phiếu chuyển Hoàn thành.
+Luồng ngoại lệ | 2a. Kho nhận trùng kho xuất: hệ thống báo lỗi. / 5a. Nhận thiếu hàng: nhân viên kho nhận ghi số thực nhận; hệ thống cộng tồn theo số lượng trên phiếu và tạo phiếu điều chỉnh Chờ duyệt cho phần thiếu (xử lý ở UC-3.6).
+Hậu điều kiện | Tổng tồn của hai kho không đổi, trừ phần chênh lệch đã được lập phiếu điều chỉnh
+
+[TABLE 18]
+Thành phần | Nội dung
+Mã Use Case | UC-3.5
+Tên Use Case | Kiểm kê kho
+Tác nhân chính | Nhân viên kho
+Mô tả tóm tắt | Nhân viên kho đếm số lượng thực tế trong một phạm vi kho và ghi nhận chênh lệch với tồn hệ thống
+Điều kiện | Nhân viên kho đã đăng nhập; không có phiếu kiểm kê Đang kiểm khác trùng phạm vi
+Thao tác chính | 1. Nhân viên kho chọn kho và phạm vi kiểm kê (toàn kho, theo loại sản phẩm hoặc theo khu vị trí). / 2. Hệ thống tạo phiếu kiểm kê Đang kiểm và chụp lại tồn hệ thống của mọi biến thể trong phạm vi. / 3. Nhân viên kho quét SKU và nhập số lượng thực tế, ghi nguyên nhân nếu lệch. / 4. Hệ thống tính chênh lệch = thực tế - tồn hệ thống cho từng dòng. / 5. Nhân viên kho gửi kết quả kiểm kê. / 6. Hệ thống chuyển phiếu sang Chờ duyệt và thông báo tới Quản lý.
+Luồng ngoại lệ | 3a. Phát hiện biến thể có trong kho nhưng không có trong danh sách: nhân viên thêm dòng, tồn hệ thống bằng 0. / 5a. Còn dòng chưa nhập số thực tế: hệ thống cảnh báo và không cho gửi.
+Hậu điều kiện | Phiếu kiểm kê Chờ duyệt; trong thời gian Đang kiểm, các biến thể thuộc phạm vi bị tạm khóa nhập, xuất
+
+[TABLE 19]
+Thành phần | Nội dung
+Mã Use Case | UC-3.8
+Tên Use Case | Hủy hàng
+Tác nhân chính | Nhân viên kho (lập phiếu), Quản lý (duyệt)
+Mô tả tóm tắt | Loại bỏ khỏi kho hàng lỗi, hỏng hoặc không còn khả năng bán
+Điều kiện | Hàng cần hủy đang có tồn tại kho được chọn (thường là kho hàng lỗi)
+Thao tác chính | 1. Nhân viên kho chọn kho, thêm các dòng hàng cần hủy kèm lý do từng dòng. / 2. Nhân viên kho gửi duyệt; hệ thống chuyển phiếu hủy sang Chờ duyệt. / 3. Quản lý xem phiếu và chọn Duyệt. / 4. Hệ thống trừ tồn, ghi thẻ kho loại Hủy, chuyển phiếu sang Hoàn thành.
+Luồng ngoại lệ | 1a. Số lượng hủy lớn hơn tồn: hệ thống báo lỗi. / 3a. Quản lý từ chối: phiếu chuyển Từ chối, tồn không đổi.
+Hậu điều kiện | Hàng hủy được trừ khỏi tồn và có thể truy vết qua phiếu hủy
+
+[TABLE 20]
+Thành phần | Nội dung
+Mã Use Case | UC-1.1
+Tên Use Case | Đăng nhập
+Tác nhân chính | Người dùng (Quản lý, Nhân viên kho, Nhân viên bán hàng)
+Mô tả tóm tắt | Người dùng xác thực để sử dụng các chức năng theo vai trò
+Điều kiện | Người dùng có tài khoản ở trạng thái Hoạt động
+Thao tác chính | 1. Người dùng nhập tên đăng nhập và mật khẩu. / 2. Hệ thống kiểm tra thông tin với mật khẩu đã băm. / 3. Hệ thống tạo phiên đăng nhập và hiển thị trang tổng quan theo vai trò.
+Luồng ngoại lệ | 2a. Sai thông tin: hệ thống báo lỗi, tăng bộ đếm; sai 5 lần liên tiếp thì khóa tài khoản 15 phút. / 2b. Tài khoản bị khóa: hệ thống từ chối đăng nhập.
+Hậu điều kiện | Người dùng đăng nhập thành công, menu hiển thị đúng quyền
+
+[TABLE 21]
+Thành phần | Nội dung
+Mã Use Case | UC-1.2
+Tên Use Case | Quản lý tài khoản
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Quản lý tạo, cập nhật, khóa tài khoản và phân vai trò cho nhân viên
+Điều kiện | Quản lý đã đăng nhập
+Thao tác chính | 1. Quản lý mở danh sách tài khoản. / 2. Quản lý chọn Thêm hoặc chọn một tài khoản để sửa, nhập họ tên, email, vai trò, kho phụ trách. / 3. Hệ thống kiểm tra tên đăng nhập duy nhất và lưu; với tài khoản mới, hệ thống sinh mật khẩu tạm. / 4. Quản lý có thể khóa, mở khóa hoặc đặt lại mật khẩu.
+Luồng ngoại lệ | 3a. Tên đăng nhập đã tồn tại: báo lỗi. 4a. Quản lý tự khóa tài khoản của mình: hệ thống không cho phép.
+Hậu điều kiện | Thông tin tài khoản được cập nhật; tài khoản không bị xóa cứng để giữ truy vết
+
+[TABLE 22]
+Thành phần | Nội dung
+Mã Use Case | UC-2.1
+Tên Use Case | Quản lý sản phẩm
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Thêm, sửa, tìm kiếm và ngừng bán mẫu sản phẩm
+Điều kiện | Quản lý đã đăng nhập; đã có loại sản phẩm và nhà cung cấp
+Thao tác chính | 1. Quản lý tìm kiếm, lọc sản phẩm theo tên, loại, trạng thái. / 2. Quản lý chọn Thêm, nhập mã sản phẩm, tên, loại, nhà cung cấp chính, mô tả. / 3. Hệ thống kiểm tra mã sản phẩm duy nhất và lưu với trạng thái Đang bán. / 4. Quản lý có thể sửa thông tin hoặc chuyển trạng thái Ngừng bán.
+Luồng ngoại lệ | 3a. Mã sản phẩm trùng: báo lỗi. 4a. Xóa sản phẩm đã phát sinh phiếu kho: hệ thống không cho xóa, chỉ cho Ngừng bán.
+Hậu điều kiện | Sản phẩm được lưu, sẵn sàng để khai báo biến thể (UC-2.2)
+
+[TABLE 23]
+Thành phần | Nội dung
+Mã Use Case | UC-2.2
+Tên Use Case | Quản lý biến thể sản phẩm
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Khai báo các tổ hợp màu sắc và kích thước của một sản phẩm, mỗi tổ hợp là một biến thể có mã SKU
+Điều kiện | Sản phẩm đã tồn tại và đang bán
+Thao tác chính | 1. Quản lý chọn sản phẩm và mở tab Biến thể. / 2. Quản lý chọn tập màu và tập kích thước. / 3. Hệ thống sinh các tổ hợp chưa có, mã SKU theo mẫu MãSP-MãMàu-MãSize (ví dụ AT001-DEN-M). / 4. Quản lý nhập giá nhập, giá bán, tồn tối thiểu cho từng biến thể (có thể áp dụng hàng loạt) và lưu.
+Luồng ngoại lệ | 3a. Tổ hợp đã tồn tại: hệ thống bỏ qua, không tạo trùng. / 4a. Giá bán nhỏ hơn giá nhập: hệ thống cảnh báo, Quản lý xác nhận mới lưu.
+Hậu điều kiện | Biến thể được tạo; tồn kho ban đầu bằng 0 tại mọi kho
+
+[TABLE 24]
+Thành phần | Nội dung
+Mã Use Case | UC-2.3 / UC-2.4 / UC-2.5
+Tên Use Case | Quản lý loại, màu sắc, kích thước / Quản lý nhà cung cấp / Quản lý kho và vị trí kho
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Duy trì các danh mục nền tảng được dùng bởi sản phẩm, biến thể và phiếu kho
+Điều kiện | Quản lý đã đăng nhập
+Thao tác chính | 1. Quản lý mở danh mục cần quản lý. / 2. Quản lý thêm hoặc sửa bản ghi: loại (mã, tên); màu (mã, tên, mã hex); size (mã, nhóm chữ hoặc số, thứ tự); NCC (mã, tên, mã số thuế, liên hệ); kho (mã, tên, địa chỉ, loại kho); vị trí (mã khu-kệ-tầng, sức chứa). / 3. Hệ thống kiểm tra mã duy nhất trong phạm vi (vị trí duy nhất trong một kho) và lưu. / 4. Quản lý có thể chuyển trạng thái ngừng sử dụng.
+Luồng ngoại lệ | 3a. Mã trùng: báo lỗi. 4a. Ngừng hoạt động kho còn tồn lớn hơn 0: hệ thống không cho phép. 4b. Ngừng hợp tác NCC: các phiếu nhập Đang lập của NCC đó bị cảnh báo.
+Hậu điều kiện | Danh mục được cập nhật, không xóa cứng bản ghi đã được tham chiếu
+
+[TABLE 25]
+Thành phần | Nội dung
+Mã Use Case | UC-4.1 / UC-4.2
+Tên Use Case | Tra cứu tồn kho / Xem cảnh báo tồn kho thấp
+Tác nhân chính | Quản lý, Nhân viên kho, Nhân viên bán hàng (UC-4.2 không áp dụng cho nhân viên bán hàng)
+Mô tả tóm tắt | Xem số lượng tồn theo biến thể và kho; xem danh sách biến thể hết hàng, sắp hết
+Điều kiện | Người dùng đã đăng nhập
+Thao tác chính | UC-4.1: 1. Người dùng nhập từ khóa hoặc quét SKU, chọn bộ lọc kho, loại, màu, size, trạng thái tồn. 2. Hệ thống trả danh sách: SKU, tên, màu, size, kho, vị trí, tồn, trạng thái tồn, giá trị tồn (chỉ Quản lý thấy giá). 3. Người dùng chọn một dòng để xem tồn tại các kho khác. / UC-4.2: 1. Người dùng mở trang tổng quan. 2. Hệ thống tính trạng thái tồn theo QT-05 và hiển thị số biến thể Hết hàng, Sắp hết kèm danh sách chi tiết theo kho phụ trách.
+Luồng ngoại lệ | Không tìm thấy kết quả: hệ thống hiển thị thông báo và gợi ý bỏ bớt bộ lọc
+Hậu điều kiện | Không thay đổi dữ liệu
+
+[TABLE 26]
+Thành phần | Nội dung
+Mã Use Case | UC-4.3
+Tên Use Case | Lập báo cáo kho
+Tác nhân chính | Quản lý
+Mô tả tóm tắt | Tổng hợp các báo cáo tồn kho, nhập kho, xuất kho, nhập - xuất - tồn, kiểm kê, hàng tồn lâu theo biểu mẫu ở Bảng 1.2
+Điều kiện | Quản lý đã đăng nhập
+Thao tác chính | 1. Quản lý chọn loại báo cáo. / 2. Quản lý nhập điều kiện lọc: kỳ báo cáo, kho, loại sản phẩm, NCC, lý do xuất, số ngày tồn tối thiểu tùy loại. / 3. Hệ thống tổng hợp số liệu từ thẻ kho, phiếu kho, phiếu kiểm kê và hiển thị bảng chi tiết cùng số liệu tổng hợp cuối báo cáo. / 4. Quản lý chọn Xuất Excel, hệ thống tạo file .xlsx.
+Luồng ngoại lệ | 2a. Ngày bắt đầu sau ngày kết thúc: báo lỗi. 3a. Không có dữ liệu trong kỳ: hiển thị báo cáo rỗng.
+Hậu điều kiện | Báo cáo hiển thị và tải về được; số liệu thỏa công thức QT-06
+
+[TABLE 27]
+Thành phần | Nội dung
+Mã Use Case | UC-4.4
+Tên Use Case | Truy xuất biến động hàng hóa
+Tác nhân chính | Quản lý, Nhân viên kho
+Mô tả tóm tắt | Xem thẻ kho của một biến thể tại một kho trong khoảng thời gian
+Điều kiện | Người dùng đã đăng nhập
+Thao tác chính | 1. Người dùng chọn biến thể (bắt buộc), kho và khoảng thời gian. / 2. Hệ thống tính tồn đầu kỳ bằng tồn sau của dòng thẻ kho cuối cùng trước ngày bắt đầu. / 3. Hệ thống liệt kê từng dòng thẻ kho: thời gian, loại biến động, mã phiếu, số nhập, xuất, điều chỉnh, tồn sau, người thực hiện. / 4. Người dùng chọn mã phiếu để mở chi tiết chứng từ.
+Luồng ngoại lệ | 1a. Chưa chọn biến thể: hệ thống không cho tra cứu.
+Hậu điều kiện | Không thay đổi dữ liệu
+
+[TABLE 28]
+Tầng | Công nghệ | Vai trò
+Trình bày | ReactJS, TypeScript | Ứng dụng web một trang, responsive cho máy tính bảng
+Ứng dụng | Java 21, Spring Boot 3, Spring Security | REST API, xác thực JWT, phân quyền RBAC, quản lý giao dịch
+Truy cập dữ liệu | Spring Data JPA (Hibernate) | Ánh xạ lớp thực thể sang bảng, khóa bi quan khi cập nhật tồn
+Dữ liệu | PostgreSQL 16 | Lưu trữ dữ liệu nghiệp vụ, ràng buộc toàn vẹn
+Báo cáo | Apache POI | Sinh file Excel .xlsx
+Hạ tầng | Nginx, Docker | Reverse proxy HTTPS, đóng gói triển khai
+
+[TABLE 29]
+Hệ thống con | Trách nhiệm | Use case | Lớp chính
+Quản trị và bảo mật | Xác thực, phiên, tài khoản, phân quyền | UC-1.1, UC-1.2 | NguoiDung
+Danh mục hàng hóa | Sản phẩm, biến thể, loại, màu, size, NCC, kho, vị trí | UC-2.1 đến UC-2.5 | SanPham, BienTheSanPham, NhaCungCap, Kho, ViTriKho
+Nghiệp vụ kho | Vòng đời các phiếu nhập, xuất, chuyển, đổi trả, hủy | UC-3.1 đến UC-3.4, UC-3.7, UC-3.8 | PhieuKho và các lớp con, ChiTietPhieuKho, DieuKhienNhapKho, DieuKhienXuatKho, DieuKhienDoiTra
+Kiểm kê | Phiếu kiểm kê, duyệt, sinh phiếu điều chỉnh | UC-3.5, UC-3.6 | PhieuKiemKe, ChiTietKiemKe, DieuKhienDieuChinhTon
+Tồn kho và thẻ kho | Cập nhật tồn có khóa, ghi thẻ kho, tra cứu tồn, cảnh báo | UC-4.1, UC-4.2, UC-4.4 | TonKho, LichSuBienDong
+Báo cáo | Tổng hợp số liệu, xuất Excel | UC-4.3 | DieuKhienBaoCao
+
+[TABLE 30]
+Gói | Trách nhiệm | Quy tắc phụ thuộc
+giaodien | Nhận yêu cầu HTTP, kiểm tra dữ liệu đầu vào, chuyển đổi JSON, trả mã lỗi | Chỉ gọi dieukhien; không truy cập CSDL
+dieukhien | Điều phối kịch bản use case, mở và kết thúc giao dịch, kiểm tra quyền theo vai trò | Gọi thucthe và truycapdulieu
+thucthe | Thuộc tính và quy tắc nghiệp vụ: chuyển trạng thái phiếu hợp lệ, tồn không âm, tính chênh lệch | Không phụ thuộc gói khác
+truycapdulieu | Đọc ghi CSDL, truy vấn báo cáo, khóa dòng tồn kho (SELECT ... FOR UPDATE) | Chỉ phụ thuộc thucthe
+chung | Cấu hình bảo mật, xử lý ngoại lệ tập trung, ghi log kiểm toán | Được mọi gói sử dụng
+
+[TABLE 31]
+Thành phần | Chức năng | Giao diện cung cấp
+Ứng dụng web SPA | Hiển thị màn hình, nhận dữ liệu từ bàn phím và máy quét | Không
+Xác thực và phân quyền | Kiểm tra JWT, ánh xạ vai trò sang quyền theo Bảng 2.4 | Bộ lọc cho mọi API
+Dịch vụ danh mục | CRUD sản phẩm, biến thể, NCC, kho, vị trí | /api/san-pham, /api/bien-the, /api/nha-cung-cap, /api/kho
+Dịch vụ nghiệp vụ kho | Tạo, sửa, hoàn tất các loại phiếu kho | /api/phieu-nhap, /api/phieu-xuat, /api/phieu-chuyen, /api/doi-tra, /api/phieu-huy
+Dịch vụ kiểm kê | Phiếu kiểm kê, duyệt, sinh phiếu điều chỉnh | /api/kiem-ke
+Dịch vụ tồn kho và thẻ kho | Tăng, trừ, điều chỉnh tồn có khóa; ghi thẻ kho; tra cứu, cảnh báo | /api/ton-kho, /api/the-kho; giao diện nội bộ cho các dịch vụ khác
+Dịch vụ báo cáo | Truy vấn tổng hợp 6 loại báo cáo | /api/bao-cao
+Bộ sinh Excel | Chuyển bảng báo cáo sang .xlsx | Giao diện nội bộ
+Truy cập dữ liệu JPA | Ánh xạ đối tượng - quan hệ, quản lý giao dịch | Repository
+
+[TABLE 32]
+Nút | Cấu hình đề xuất | Ghi chú
+Máy chủ ứng dụng | 4 vCPU, 8 GB RAM, Ubuntu 22.04, Docker | Chỉ mở cổng 443 ra Internet; có thể nhân bản thêm khi tải tăng
+Máy chủ CSDL | 4 vCPU, 16 GB RAM, SSD 200 GB | Chỉ nhận kết nối từ máy chủ ứng dụng trong mạng riêng
+Lưu trữ sao lưu | Object storage | Giữ bản sao lưu 30 ngày gần nhất, đáp ứng NFR-08
+Máy tính bảng tại kho | Màn hình 10 inch, kết nối Wi-Fi | Máy quét mã vạch hoạt động như bàn phím, không cần phần mềm riêng
+
+[TABLE 33]
+Kiểu | Giá trị
+LoaiPhieu | NHAP, XUAT, CHUYEN_KHO, DIEU_CHINH, HUY, DOI_TRA
+TrangThaiPhieu | DANG_LAP, CHO_XUAT, CHO_DUYET, DANG_VAN_CHUYEN, HOAN_THANH, TU_CHOI, DA_HUY
+TrangThaiKiemKe | DANG_KIEM, CHO_DUYET, DA_DUYET, TU_CHOI, DA_HUY
+LoaiBienDong | NHAP, XUAT, CHUYEN_DI, CHUYEN_DEN, DIEU_CHINH, HUY, DOI_TRA_NHAP, DOI_TRA_XUAT
+HuongDong | VAO (hàng trả vào kho), RA (hàng đổi sang ra kho); chỉ dùng cho phiếu đổi trả
+TinhTrangHang | CON_TOT, LOI, HONG
+TrangThaiTon | BINH_THUONG, SAP_HET, HET_HANG
+LoaiKho | KHO_TONG, CUA_HANG, HANG_LOI
+VaiTro | QUAN_LY, NV_KHO, NV_BAN_HANG
+
+[TABLE 34]
+Tên phương thức | Ý nghĩa
+PhieuKho.layChiTiet() | Trả danh sách dòng hàng của phiếu (UC-3.3)
+PhieuKho.capNhatTrangThai(trangThaiMoi) | Đổi trạng thái sau khi kiểm tra hợp lệ; ghi ngày hoàn thành nếu là HOAN_THANH (UC-3.1, 3.3, 3.6, 3.7)
+PhieuKho.kiemTraChuyenTrangThai(trangThaiMoi) | Kiểm tra chuyển trạng thái có nằm trong Hình 3.11, ví dụ không cho từ HOAN_THANH về DANG_LAP
+PhieuNhap.taoPhieu(maKho, maNCC, nguoiLap) | Tạo phiếu nhập DANG_LAP, sinh mã PN (UC-3.1)
+PhieuNhap.themChiTiet(bienThe, soLuong, donGia) | Thêm dòng hàng, trả về tổng tiền mới (UC-3.1)
+PhieuNhap.tinhTongTien() | Tổng số lượng × đơn giá của các dòng (UC-3.1)
+PhieuXuat.taoYeuCau(maKho, lyDo, maDonHang, nguoiLap) | Tạo phiếu xuất CHO_XUAT từ bộ phận bán hàng (UC-3.2)
+PhieuChuyenKho.xacNhanXuatDi(), xacNhanDaNhan() | Hai bước của chuyển kho (UC-3.4)
+PhieuDieuChinh.taoTuKiemKe(phieuKiemKe, lyDo) | Sinh phiếu điều chỉnh từ các dòng chênh lệch khác 0 (UC-3.6)
+PhieuHuy.duyet(maQuanLy) | Ghi người duyệt và chuyển HOAN_THANH (UC-3.8)
+PhieuDoiTra.taoPhieu(maDonHang, tenKhachHang, lyDo, nguoiLap) | Tạo phiếu đổi trả DANG_LAP (UC-3.7)
+PhieuDoiTra.themDongHangTra(bienThe, soLuong, tinhTrang) | Thêm dòng hướng VAO kèm tình trạng (UC-3.7)
+PhieuDoiTra.themDongHangDoi(bienThe, soLuong) | Thêm dòng hướng RA (UC-3.7)
+PhieuDoiTra.tinhChenhLechTien() | Tổng giá bán hàng RA trừ tổng giá bán hàng VAO (UC-3.7)
+
+[TABLE 35]
+Thành phần | Kiểu dữ liệu | Ý nghĩa
+id | Long | Định danh (khóa chính)
+khoId, bienTheId | Long | Cặp (kho, biến thể), duy nhất
+viTriId | Long | Vị trí lưu trữ mặc định trong kho, có thể rỗng
+soLuong | int | Số lượng tồn hiện tại, không âm
+ngayCapNhat | LocalDateTime | Lần thay đổi gần nhất
+tangSoLuong(maKho, maBienThe, soLuong) | int | Cộng tồn, tạo bản ghi nếu chưa có; trả tồn sau (UC-3.1, 3.4, 3.7)
+truSoLuong(maKho, maBienThe, soLuong) | int | Khóa bản ghi, trừ tồn, báo lỗi nếu kết quả âm (UC-3.3, 3.4, 3.7, 3.8)
+dieuChinhSoLuong(maKho, maBienThe, chenhLech) | int | Cộng giá trị có dấu, không cho âm (UC-3.6)
+kiemTraDuTon(maKho, danhSachDong) | List | Trả các dòng có số lượng yêu cầu lớn hơn tồn (UC-3.2, 3.3, 3.7)
+xacDinhTrangThai(tonToiThieu) | TrangThaiTon | BINH_THUONG, SAP_HET hoặc HET_HANG theo QT-05 (UC-4.1, 4.2)
+
+[TABLE 36]
+Thành phần | Kiểu dữ liệu | Ý nghĩa
+id | Long | Định danh (khóa chính)
+khoId, bienTheId, phieuKhoId | Long | Kho, biến thể và phiếu kho phát sinh biến động
+loaiBienDong | LoaiBienDong | Nhập, xuất, chuyển đi, chuyển đến, điều chỉnh, hủy, đổi trả
+soLuongThayDoi | int | Có dấu: dương là tăng, âm là giảm
+tonSau | int | Tồn ngay sau biến động, dùng tính tồn đầu kỳ
+thoiGian | LocalDateTime | Thời điểm ghi nhận
+ghiNhan(maBienThe, maKho, maPhieu, soLuongThayDoi, tonSau) | void | Thêm một dòng thẻ kho (UC-3.1, 3.3, 3.6, 3.7)
+truyVanTheKho(maBienThe, maKho, tuNgay, denNgay) | List | Lấy các dòng thẻ kho theo thời gian (UC-4.3, 4.4)
+
+[TABLE 37]
+Thành phần | Kiểu dữ liệu | Ý nghĩa
+PhieuKiemKe.trangThai | TrangThaiKiemKe | Trạng thái theo Hình 3.12
+ChiTietKiemKe.tonHeThong | int | Tồn được chụp lúc tạo phiếu
+ChiTietKiemKe.soThucTe | Integer | Số đếm được, rỗng khi chưa đếm
+PhieuKiemKe.ghiSoThucTe(maBienThe, soThucTe) | void | Ghi số thực tế cho một dòng (UC-3.5)
+PhieuKiemKe.tinhChenhLech() | List | Trả các dòng kèm chênh lệch (UC-3.6)
+ChiTietKiemKe.tinhChenhLech() | int | soThucTe - tonHeThong (QT-03)
+
+[TABLE 38]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+ten_dang_nhap | varchar | 50 ký tự | NOT NULL, UNIQUE
+mat_khau_bam | varchar | 100 ký tự | NOT NULL, băm bcrypt
+ho_ten | varchar | 100 ký tự | NOT NULL
+email | varchar | 100 ký tự | UNIQUE
+vai_tro | varchar | 20 ký tự | NOT NULL, CHECK IN (QUAN_LY, NV_KHO, NV_BAN_HANG)
+kho_id | bigint |  | Khóa ngoại tới kho, cho phép rỗng với Quản lý
+trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN (HOAT_DONG, KHOA), mặc định HOAT_DONG
+so_lan_sai | int |  | NOT NULL, mặc định 0
+ngay_tao | timestamp |  | NOT NULL, mặc định now()
+
+[TABLE 39]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+loai_san_pham.id | serial |  | Khóa chính
+loai_san_pham.ma_loai | varchar | 20 ký tự | NOT NULL, UNIQUE
+loai_san_pham.ten_loai | varchar | 100 ký tự | NOT NULL
+mau_sac.id | serial |  | Khóa chính
+mau_sac.ma_mau | varchar | 10 ký tự | NOT NULL, UNIQUE (ví dụ DEN, TRANG)
+mau_sac.ten_mau | varchar | 50 ký tự | NOT NULL
+mau_sac.ma_hex | char | 7 ký tự | Định dạng #RRGGBB
+kich_thuoc.id | serial |  | Khóa chính
+kich_thuoc.ma_size | varchar | 10 ký tự | NOT NULL, UNIQUE (S, M, L, 32...)
+kich_thuoc.nhom_size | varchar | 10 ký tự | CHECK IN (CHU, SO)
+kich_thuoc.thu_tu | int |  | NOT NULL, dùng sắp xếp hiển thị
+
+[TABLE 40]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+ma_san_pham | varchar | 20 ký tự | NOT NULL, UNIQUE
+ten_san_pham | varchar | 200 ký tự | NOT NULL
+loai_san_pham_id | int |  | NOT NULL, khóa ngoại tới loai_san_pham
+nha_cung_cap_id | bigint |  | Khóa ngoại tới nha_cung_cap
+mo_ta | text |  | 
+trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN (DANG_BAN, NGUNG_BAN)
+ngay_tao | timestamp |  | NOT NULL
+
+[TABLE 41]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+san_pham_id | bigint |  | NOT NULL, khóa ngoại tới san_pham
+mau_sac_id | int |  | NOT NULL, khóa ngoại tới mau_sac
+kich_thuoc_id | int |  | NOT NULL, khóa ngoại tới kich_thuoc
+ma_sku | varchar | 40 ký tự | NOT NULL, UNIQUE (ví dụ AT001-DEN-M)
+gia_nhap | numeric | 12,0 | NOT NULL, CHECK ≥ 0
+gia_ban | numeric | 12,0 | NOT NULL, CHECK ≥ 0
+ton_toi_thieu | int |  | NOT NULL, mặc định 5, CHECK ≥ 0
+trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN (DANG_BAN, NGUNG_BAN); UNIQUE (san_pham_id, mau_sac_id, kich_thuoc_id) trên bảng
+
+[TABLE 42]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+ma_ncc | varchar | 20 ký tự | NOT NULL, UNIQUE
+ten_ncc | varchar | 200 ký tự | NOT NULL
+ma_so_thue | varchar | 14 ký tự | UNIQUE
+so_dien_thoai | varchar | 15 ký tự | 
+email | varchar | 100 ký tự | 
+dia_chi | varchar | 255 ký tự | 
+trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN (DANG_HOP_TAC, NGUNG_HOP_TAC)
+
+[TABLE 43]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+kho.id | bigserial |  | Khóa chính
+kho.ma_kho | varchar | 20 ký tự | NOT NULL, UNIQUE
+kho.ten_kho | varchar | 100 ký tự | NOT NULL
+kho.dia_chi | varchar | 255 ký tự | 
+kho.loai_kho | varchar | 20 ký tự | NOT NULL, CHECK IN (KHO_TONG, CUA_HANG, HANG_LOI)
+kho.trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN (HOAT_DONG, NGUNG)
+vi_tri_kho.id | bigserial |  | Khóa chính
+vi_tri_kho.kho_id | bigint |  | NOT NULL, khóa ngoại tới kho
+vi_tri_kho.ma_vi_tri | varchar | 20 ký tự | NOT NULL, dạng khu-kệ-tầng (A-01-03); UNIQUE (kho_id, ma_vi_tri)
+vi_tri_kho.suc_chua | int |  | CHECK > 0
+
+[TABLE 44]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+kho_id | bigint |  | NOT NULL, khóa ngoại tới kho
+bien_the_id | bigint |  | NOT NULL, khóa ngoại tới bien_the_san_pham
+vi_tri_id | bigint |  | Khóa ngoại tới vi_tri_kho
+so_luong | int |  | NOT NULL, mặc định 0, CHECK ≥ 0
+ngay_cap_nhat | timestamp |  | NOT NULL; UNIQUE (kho_id, bien_the_id) trên bảng
+
+[TABLE 45]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+ma_phieu | varchar | 20 ký tự | NOT NULL, UNIQUE
+loai_phieu | varchar | 20 ký tự | NOT NULL, CHECK IN giá trị LoaiPhieu
+kho_id | bigint |  | NOT NULL, khóa ngoại tới kho
+kho_nhan_id | bigint |  | Khóa ngoại tới kho; NOT NULL khi loai_phieu = CHUYEN_KHO và khác kho_id
+nha_cung_cap_id | bigint |  | Khóa ngoại tới nha_cung_cap; NOT NULL khi loai_phieu = NHAP
+phieu_kiem_ke_id | bigint |  | Khóa ngoại tới phieu_kiem_ke, UNIQUE
+ma_don_hang | varchar | 30 ký tự | Dùng cho XUAT, DOI_TRA
+ten_khach_hang | varchar | 100 ký tự | Dùng cho DOI_TRA
+nguoi_giao_nhan | varchar | 100 ký tự | Người giao (NHAP) hoặc người nhận (XUAT)
+ly_do | varchar | 255 ký tự | 
+so_tien_chenh_lech | numeric | 12,0 | Dùng cho DOI_TRA
+trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN giá trị TrangThaiPhieu
+nguoi_lap_id | bigint |  | NOT NULL, khóa ngoại tới nguoi_dung
+nguoi_duyet_id | bigint |  | Khóa ngoại tới nguoi_dung
+ngay_lap | timestamp |  | NOT NULL
+ngay_hoan_thanh | timestamp |  | NOT NULL khi trang_thai = HOAN_THANH
+ghi_chu | varchar | 500 ký tự | 
+
+[TABLE 46]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+phieu_kho_id | bigint |  | NOT NULL, khóa ngoại tới phieu_kho, ON DELETE CASCADE khi phiếu còn DANG_LAP
+bien_the_id | bigint |  | NOT NULL, khóa ngoại tới bien_the_san_pham
+so_luong | int |  | NOT NULL, CHECK ≠ 0; chỉ phiếu DIEU_CHINH được âm
+don_gia | numeric | 12,0 | CHECK ≥ 0; bắt buộc với phiếu NHAP
+huong | varchar | 3 ký tự | CHECK IN (VAO, RA); bắt buộc với DOI_TRA
+tinh_trang | varchar | 10 ký tự | CHECK IN (CON_TOT, LOI, HONG)
+ton_truoc | int |  | Dùng cho DIEU_CHINH
+ton_sau | int |  | Dùng cho DIEU_CHINH
+ly_do | varchar | 255 ký tự | Lý do từng dòng (HUY)
+
+[TABLE 47]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+phieu_kiem_ke.id | bigserial |  | Khóa chính
+phieu_kiem_ke.ma_phieu | varchar | 20 ký tự | NOT NULL, UNIQUE (KK...)
+phieu_kiem_ke.kho_id | bigint |  | NOT NULL, khóa ngoại tới kho
+phieu_kiem_ke.pham_vi | varchar | 255 ký tự | NOT NULL
+phieu_kiem_ke.trang_thai | varchar | 20 ký tự | NOT NULL, CHECK IN giá trị TrangThaiKiemKe
+phieu_kiem_ke.nguoi_kiem_id | bigint |  | NOT NULL, khóa ngoại tới nguoi_dung
+phieu_kiem_ke.nguoi_duyet_id | bigint |  | Khóa ngoại tới nguoi_dung
+phieu_kiem_ke.ngay_kiem_ke | timestamp |  | NOT NULL
+phieu_kiem_ke.ngay_duyet | timestamp |  | 
+chi_tiet_kiem_ke.id | bigserial |  | Khóa chính
+chi_tiet_kiem_ke.phieu_kiem_ke_id | bigint |  | NOT NULL, khóa ngoại tới phieu_kiem_ke
+chi_tiet_kiem_ke.bien_the_id | bigint |  | NOT NULL, khóa ngoại; UNIQUE (phieu_kiem_ke_id, bien_the_id)
+chi_tiet_kiem_ke.ton_he_thong | int |  | NOT NULL, CHECK ≥ 0
+chi_tiet_kiem_ke.so_thuc_te | int |  | CHECK ≥ 0, rỗng khi chưa đếm
+chi_tiet_kiem_ke.chenh_lech | int |  | Cột sinh: so_thuc_te - ton_he_thong
+chi_tiet_kiem_ke.nguyen_nhan | varchar | 255 ký tự | 
+
+[TABLE 48]
+Tên trường | Kiểu dữ liệu | Kích thước | Ràng buộc toàn vẹn
+id | bigserial |  | Khóa chính
+kho_id | bigint |  | NOT NULL, khóa ngoại tới kho
+bien_the_id | bigint |  | NOT NULL, khóa ngoại tới bien_the_san_pham
+phieu_kho_id | bigint |  | NOT NULL, khóa ngoại tới phieu_kho
+loai_bien_dong | varchar | 20 ký tự | NOT NULL, CHECK IN giá trị LoaiBienDong
+so_luong_thay_doi | int |  | NOT NULL, CHECK ≠ 0
+ton_sau | int |  | NOT NULL, CHECK ≥ 0
+thoi_gian | timestamp |  | NOT NULL, mặc định now()
+nguoi_thuc_hien_id | bigint |  | NOT NULL, khóa ngoại tới nguoi_dung; bảng có INDEX (bien_the_id, kho_id, thoi_gian), quyền UPDATE, DELETE bị thu hồi
+
+[TABLE 49]
+Mã | Màn hình | Use case | Mục đích
+MH-01 | Đăng nhập | UC-1.1 | Xác thực người dùng
+MH-02 | Tổng quan | UC-4.2 | Cảnh báo tồn thấp, phiếu chờ xử lý
+MH-03 | Sản phẩm và biến thể | UC-2.1, UC-2.2 | Quản lý mẫu sản phẩm, sinh ma trận màu × size
+MH-04 | Lập phiếu nhập kho | UC-3.1 | Quét hàng nhập, hoàn tất phiếu
+MH-05 | Xử lý phiếu xuất | UC-3.2, UC-3.3 | Danh sách yêu cầu và soạn hàng xuất
+MH-06 | Kiểm kê | UC-3.5 | Nhập số thực tế theo phạm vi
+MH-07 | Duyệt kiểm kê | UC-3.6 | Xem chênh lệch và duyệt điều chỉnh
+MH-08 | Đổi trả hàng | UC-3.7, UC-3.8 | Ghi nhận hàng trả, hàng đổi
+MH-09 | Tra cứu tồn kho và thẻ kho | UC-4.1, UC-4.4 | Tìm tồn theo bộ lọc, xem lịch sử
+MH-10 | Báo cáo | UC-4.3 | Chọn loại báo cáo, lọc, xuất Excel
+
+[TABLE 50]
+Mục tiêu | Giải pháp trong thiết kế
+Tồn kho cập nhật ngay, sai lệch sau kiểm kê dưới 1% | Tồn quản lý theo cặp (kho, biến thể); cập nhật trong giao dịch khi phiếu hoàn tất (UC-3.1, 3.3); quy trình kiểm kê có duyệt (UC-3.5, 3.6)
+Không xuất vượt tồn kể cả khi đồng thời | Ràng buộc CHECK so_luong ≥ 0; khóa dòng ton_kho khi trừ (NFR-04, Bảng 5.3)
+Truy xuất lịch sử biến động | Bảng lich_su_bien_dong chỉ cho phép thêm, gắn với phiếu và người thực hiện (UC-4.4)
+Báo cáo NXT dưới 1 phút | Tổng hợp trực tiếp từ thẻ kho có chỉ mục (bien_the_id, kho_id, thoi_gian) (UC-4.3, NFR-02)
+Cảnh báo hết hàng, sắp hết | Tồn tối thiểu theo biến thể, trạng thái tồn theo QT-05, màn hình MH-02 (UC-4.2)
+
+================================================================================
+FILE: kinh-phi-du-an.xlsx
+================================================================================
+SHEETS: ['DuToan', 'ChuyenDe', 'CongLaoDong', 'ThietBiVatTu', 'ChiKhac']
+
+--- SHEET DuToan ---
+BẢNG DỰ TOÁN KINH PHÍ |  |  | 
+ĐỀ TÀI | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  | 
+MÃ SỐ | CNTT20261_N01 |  | 
+CHỦ TRÌ | Bùi Tuấn Anh |  | 
+THỜI GIAN | 01/09/2026 ~ 31/03/2027 |  | 
+TT | Danh mục | Số tiền (VNĐ) | Ghi chú
+1 | Công lao động |  | Chi tiết tại sheet CongLaoDong, ChuyenDe
+2 | Vật tư, Thiết bị |  | Chi tiết tại sheet ThietBiVatTu
+3 | Chi khác (VPP, Công tác, Quản lý...) |  | Chi tiết tại sheet ChiKhac
+Tổng |  |  | 
+Bằng chữ: Bốn trăm linh tám triệu một trăm chín mươi sáu nghìn sáu trăm năm mươi đồng |  |  | 
+ |  | Hà Nội, Ngày 25 tháng 7 năm 2026 | 
+Chủ nhiệm đề tài |  | Người lập bảng | 
+Bùi Tuấn Anh |  | Bùi Tuấn Anh | 
+
+--- SHEET ChuyenDe ---
+STT | Các nội dung, công việc thực hiện | Sản phẩm | Thời gian | Tiến trình | Nhiệm vụ | Người thực hiện | Công số (manday) | Định mức | Giá trị | Lương cơ sở | 
+A. KHẢO SÁT & YÊU CẦU |  |  |  |  |  |  |  |  |  |  | 
+1 | Khảo sát cách kho nhận hàng từ nhà cung cấp, kiểm tra mẫu mã, màu, size, đối chiếu hóa đơn nhập; cách tiếp nhận và phân loại hàng khách trả lại. | Báo cáo khảo sát & đặc tả yêu cầu | 01/09/2026-25/09/2026 | Từ đầu | Chủ nhiệm | Bùi Tuấn Anh | 3.483333333333333 |  |  |  | 
+2 | Khảo sát cách bộ phận bán hàng gửi yêu cầu xuất, cách kho soạn hàng, chuyển hàng giữa kho tổng và kho cửa hàng, xử lý hàng lỗi hỏng. | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Thành viên chính | Bùi Quốc Luýt | 3.483333333333333 |  |  |  | 
+3 | Khảo sát quy trình kiểm kê, đối chiếu sổ sách; thu thập 13 biểu mẫu gồm 7 phiếu chứng từ và 6 mẫu báo cáo đang sử dụng. | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Thành viên chính | Phạm Đoàn Bảo Thiên | 4.4 |  |  |  | 
+4 | Khảo sát cách ghi nhận sản phẩm, loại, màu, size, giá nhập, giá bán, vị trí lưu trữ; xác định cấp quản lý đúng (sản phẩm hay biến thể). | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Thành viên chính | Bạch Minh Quang | 2.383333333333333 |  |  |  | 
+5 | Tổng hợp kết quả khảo sát, mô tả 4 quy trình cốt lõi, liệt kê hạn chế của cách quản lý bằng sổ sách và Excel, đối chiếu vấn đề với nhu cầu hệ thống. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 1, 2, 3, 4 | Chủ nhiệm | Bùi Tuấn Anh | 3.3 |  |  |  | 
+6 | Xác định mục tiêu đo được, phạm vi trong và ngoài hệ thống, tác nhân và các quy tắc nghiệp vụ QT-01 đến QT-06 (tồn không âm, chỉ đổi tồn khi phiếu hoàn thành...). | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 5 | Chủ nhiệm | Bùi Tuấn Anh | 3.3 |  |  |  | 
+7 | Lập danh sách 19 yêu cầu chức năng (FR) và 11 yêu cầu phi chức năng (NFR) kèm tiêu chí đo về hiệu năng, toàn vẹn dữ liệu, bảo mật. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 6 | Thành viên chính | Bùi Quốc Luýt | 4.583333333333334 |  |  |  | 
+8 | Trao đổi với quản lý kho và bộ phận bán hàng của doanh nghiệp, tiếp nhận phản hồi và chốt tài liệu đặc tả yêu cầu. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 7 | Chủ nhiệm | Bùi Tuấn Anh | 2.2 |  |  |  | 
+B. PHÂN TÍCH & THIẾT KẾ HỆ THỐNG |  |  |  |  |  |  |  |  |  |  | 
+9 | Xác định tác nhân Người dùng, Quản lý, Nhân viên kho, Nhân viên bán hàng; lập ma trận phân quyền vai trò - use case làm căn cứ RBAC. | Báo cáo phân tích thiết kế (UML) | 26/09/2026-20/11/2026 | Sau Task 8 | Chủ nhiệm | Bùi Tuấn Anh | 2.2 |  |  |  | 
+10 | Vẽ biểu đồ use case tổng quát và phân rã 4 gói: Quản trị hệ thống, Quản lý danh mục, Nghiệp vụ kho, Tồn kho và báo cáo. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 9 | Chủ nhiệm | Bùi Tuấn Anh | 3.3 |  |  |  | 
+11 | Đặc tả luồng chính, luồng thay thế, điều kiện trước/sau cho 19 use case, chi tiết nhất cho Nhập kho, Xuất kho, Duyệt điều chỉnh tồn, Đổi trả. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 10 | Thành viên chính | Phạm Đoàn Bảo Thiên | 6.600000000000001 |  |  |  | 
+12 | Xây dựng mô hình lĩnh vực (sản phẩm, biến thể, kho, tồn kho, phiếu kho, thẻ kho) và biểu đồ lớp phân tích theo mẫu BCE cho các use case trọng tâm. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 11 | Chủ nhiệm | Bùi Tuấn Anh | 5.5 |  |  |  | 
+13 | Vẽ 4 biểu đồ tuần tự cho UC Nhập kho, Xuất kho, Duyệt điều chỉnh tồn kho, Xử lý đổi trả hàng. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 12 | Thành viên chính | Vũ Quang Minh | 5.5 |  |  |  | 
+14 | Vẽ 4 biểu đồ hoạt động (nghiệp vụ tổng quát, yêu cầu và xuất kho, kiểm kê, đổi trả) và 2 biểu đồ trạng thái của PhieuKho, PhieuKiemKe. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 11 | Thành viên chính | Bạch Minh Quang | 4.583333333333334 |  |  |  | 
+15 | Chọn kiến trúc web 3 tầng (React - Spring Boot - PostgreSQL), chia 6 hệ thống con, tổ chức biểu đồ gói theo BCE và quy tắc phụ thuộc. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 12 | Thành viên chính | Bùi Quốc Luýt | 4.583333333333334 |  |  |  | 
+16 | Mô tả các thành phần phần mềm, REST API cung cấp; bố trí máy chủ ứng dụng, máy chủ CSDL, lưu trữ sao lưu và máy tính bảng tại kho. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 15 | Thành viên chính | Vũ Quang Minh | 3.3 |  |  |  | 
+17 | Chi tiết hóa lớp thiết kế: kiểu dữ liệu, tầm vực, phương thức cho nhóm chứng từ kho, tồn kho và kiểm kê, danh mục hàng hóa và quản trị. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 13, 15 | Thành viên chính | Bùi Quốc Luýt | 5.5 |  |  |  | 
+C. THIẾT KẾ CƠ SỞ DỮ LIỆU & GIAO DIỆN |  |  |  |  |  |  |  |  |  |  | 
+18 | Ánh xạ lớp thực thể sang 15 bảng, xác định khóa chính, khóa ngoại, quan hệ giữa sản phẩm, biến thể, kho, tồn kho, phiếu kho và thẻ kho. | Lược đồ CSDL & từ điển dữ liệu | 21/11/2026-25/12/2026 | Sau Task 17 | Thành viên chính | Phạm Đoàn Bảo Thiên | 4.583333333333334 |  |  |  | 
+19 | Đặc tả chi tiết từng cột; ràng buộc CHECK tồn không âm, UNIQUE (kho, biến thể), chỉ mục thẻ kho theo (biến thể, kho, thời gian). | Lược đồ CSDL & từ điển dữ liệu |  | Sau Task 18 | Thành viên chính | Phạm Đoàn Bảo Thiên | 4.216666666666667 |  |  |  | 
+20 | Viết script migration tạo bảng, khóa, ràng buộc trên PostgreSQL 16 và bộ dữ liệu mẫu (sản phẩm nhiều màu/size, nhiều kho) phục vụ phát triển. | Lược đồ CSDL & từ điển dữ liệu |  | Sau Task 19 | Thành viên chính | Vũ Quang Minh | 3.483333333333333 |  |  |  | 
+21 | Thiết kế luồng chuyển 10 màn hình, bố cục menu trái hiển thị theo quyền, ô tìm SKU nhận dữ liệu từ máy quét mã vạch, responsive cho máy tính bảng 10 inch. | Thiết kế UI/UX hệ thống |  | Sau Task 17 | Thành viên chính | Bạch Minh Quang | 3.3 |  |  |  | 
+22 | Thiết kế MH-01 Đăng nhập và MH-02 Tổng quan hiển thị cảnh báo hết hàng, sắp hết và các phiếu chờ xử lý. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Thành viên chính | Bạch Minh Quang | 2.2 |  |  |  | 
+23 | Thiết kế MH-03 quản lý mẫu sản phẩm, sinh ma trận màu x size, khai báo giá nhập, giá bán, tồn tối thiểu cho từng biến thể. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Thành viên chính | Bạch Minh Quang | 3.3 |  |  |  | 
+24 | Thiết kế MH-04 Lập phiếu nhập kho, MH-05 Xử lý phiếu xuất, MH-08 Đổi trả hàng với thao tác quét hàng, hiển thị tồn khả dụng và thông báo lỗi. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Thành viên chính | Bạch Minh Quang | 4.583333333333334 |  |  |  | 
+25 | Thiết kế MH-06 Kiểm kê, MH-07 Duyệt kiểm kê, MH-09 Tra cứu tồn kho và thẻ kho, MH-10 Báo cáo với bộ lọc và xuất Excel. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Chủ nhiệm | Bùi Tuấn Anh | 4.216666666666667 |  |  |  | 
+D. XÂY DỰNG CHƯƠNG TRÌNH |  |  |  |  |  |  |  |  |  |  | 
+26 | Khởi tạo dự án Spring Boot 3 và ReactJS/TypeScript, cấu hình Docker, kho mã nguồn, quy ước code và pipeline build tự động. | Mã nguồn & module chạy được | 26/12/2026-15/02/2027 | Sau Task 20 | Thành viên chính | Bùi Quốc Luýt | 3.3 |  |  |  | 
+27 | Xây dựng đăng nhập JWT, đổi mật khẩu, khóa tài khoản sau 5 lần sai; quản lý tài khoản, gán vai trò và kho phụ trách (UC-1.1, UC-1.2). | Mã nguồn & module chạy được |  | Sau Task 26 | Thành viên chính | Bùi Quốc Luýt | 4.583333333333334 |  |  |  | 
+28 | Xây dựng CRUD loại sản phẩm, màu sắc, kích thước, nhà cung cấp, kho và vị trí kho (UC-2.3, UC-2.4, UC-2.5). | Mã nguồn & module chạy được |  | Sau Task 26 | Thành viên chính | Vũ Quang Minh | 4.583333333333334 |  |  |  | 
+29 | Xây dựng quản lý sản phẩm, sinh biến thể theo màu x size, tự sinh mã SKU, tìm kiếm và lọc theo loại, trạng thái (UC-2.1, UC-2.2). | Mã nguồn & module chạy được |  | Sau Task 28 | Thành viên chính | Vũ Quang Minh | 5.5 |  |  |  | 
+30 | Xây dựng dịch vụ tăng, trừ, điều chỉnh tồn có khóa dòng (SELECT ... FOR UPDATE), ghi thẻ kho chỉ thêm không sửa, dùng chung cho mọi nghiệp vụ. | Mã nguồn & module chạy được |  | Sau Task 29 | Thành viên chính | Bùi Quốc Luýt | 5.866666666666667 |  |  |  | 
+31 | Xây dựng lập phiếu nhập theo nhà cung cấp, quét SKU, hoàn tất phiếu trong một giao dịch: cộng tồn, ghi thẻ kho, đổi trạng thái (UC-3.1). | Mã nguồn & module chạy được |  | Sau Task 30 | Thành viên chính | Vũ Quang Minh | 4.583333333333334 |  |  |  | 
+32 | Xây dựng tạo yêu cầu xuất kèm mã đơn hàng cho nhân viên bán hàng; xử lý xuất kho kiểm tra đủ tồn, không cho tồn âm (UC-3.2, UC-3.3). | Mã nguồn & module chạy được |  | Sau Task 30 | Thành viên chính | Bùi Quốc Luýt | 5.683333333333334 |  |  |  | 
+33 | Xây dựng chuyển hàng giữa các kho qua hai bước xuất đi và xác nhận nhận hàng tại kho đích (UC-3.4). | Mã nguồn & module chạy được |  | Sau Task 32 | Thành viên chính | Vũ Quang Minh | 3.483333333333333 |  |  |  | 
+34 | Xây dựng phiếu kiểm kê theo phạm vi, tự tính chênh lệch = thực tế - hệ thống; Quản lý duyệt, hệ thống sinh phiếu điều chỉnh (UC-3.5, UC-3.6). | Mã nguồn & module chạy được |  | Sau Task 30 | Thành viên chính | Phạm Đoàn Bảo Thiên | 5.683333333333334 |  |  |  | 
+35 | Xây dựng tiếp nhận đổi trả: nhập lại hàng tốt vào kho bán, tách hàng lỗi sang kho hàng lỗi, xuất hàng đổi sang, tính tiền chênh lệch (UC-3.7). | Mã nguồn & module chạy được |  | Sau Task 32 | Thành viên chính | Phạm Đoàn Bảo Thiên | 4.583333333333334 |  |  |  | 
+36 | Xây dựng lập phiếu hủy hàng lỗi, hỏng; phiếu chỉ trừ tồn sau khi Quản lý duyệt (UC-3.8). | Mã nguồn & module chạy được |  | Sau Task 35 | Thành viên chính | Phạm Đoàn Bảo Thiên | 2.2 |  |  |  | 
+37 | Xây dựng tra cứu tồn theo kho, sản phẩm, màu, size, vị trí; cảnh báo hết hàng, sắp hết; truy xuất lịch sử biến động của biến thể (UC-4.1, UC-4.2, UC-4.4). | Mã nguồn & module chạy được |  | Sau Task 30 | Thành viên chính | Bạch Minh Quang | 4.583333333333334 |  |  |  | 
+38 | Xây dựng 6 loại báo cáo: tồn kho, nhập, xuất, nhập - xuất - tồn, kiểm kê, hàng tồn lâu; xuất file .xlsx bằng Apache POI (UC-4.3). | Mã nguồn & module chạy được |  | Sau Task 31, 32, 34 | Chủ nhiệm | Bùi Tuấn Anh | 5.683333333333334 |  |  |  | 
+39 | Hiện thực 10 màn hình theo thiết kế trên ReactJS, menu theo quyền, hỗ trợ máy quét mã vạch và kết nối REST API. | Mã nguồn & module chạy được |  | Sau Task 25, 27 | Thành viên chính | Bạch Minh Quang | 8.983333333333334 |  |  |  | 
+E. TÍCH HỢP & KIỂM THỬ |  |  |  |  |  |  |  |  |  |  | 
+40 | Kết nối giao diện với các dịch vụ, bảo đảm các hệ thống con Nghiệp vụ kho, Kiểm kê, Báo cáo đều đổi tồn qua dịch vụ Tồn kho và thẻ kho. | Báo cáo kiểm thử | 16/02/2027-15/03/2027 | Sau Task 39 | Thành viên chính | Bùi Quốc Luýt | 4.583333333333334 |  |  |  | 
+41 | Kiểm thử đăng nhập, khóa tài khoản, truy cập chức năng theo từng vai trò; CRUD danh mục, sinh SKU không trùng. | Báo cáo kiểm thử |  | Sau Task 40 | Thành viên chính | Bạch Minh Quang | 3.3 |  |  |  | 
+42 | Kiểm thử cộng trừ tồn, ghi thẻ kho; kiểm thử hai phiếu xuất đồng thời trên cùng biến thể không làm tồn âm (NFR-04). | Báo cáo kiểm thử |  | Sau Task 40 | Thành viên chính | Phạm Đoàn Bảo Thiên | 4.583333333333334 |  |  |  | 
+43 | Kiểm thử tính chênh lệch, luồng duyệt điều chỉnh, phân loại hàng trả tốt/lỗi, hủy hàng chỉ có hiệu lực sau khi duyệt. | Báo cáo kiểm thử |  | Sau Task 40 | Thành viên chính | Vũ Quang Minh | 3.483333333333333 |  |  |  | 
+44 | Đối chiếu số liệu báo cáo với thẻ kho: tồn cuối = tồn đầu + nhập - xuất ± điều chỉnh; kiểm tra cảnh báo tồn thấp và file Excel xuất ra. | Báo cáo kiểm thử |  | Sau Task 40 | Chủ nhiệm | Bùi Tuấn Anh | 3.3 |  |  |  | 
+45 | Đo tra cứu tồn dưới 2 giây với 50.000 biến thể và 100 người dùng; báo cáo NXT tháng dưới 10 giây; kiểm tra HTTPS, hết phiên, mã hóa mật khẩu. | Báo cáo kiểm thử |  | Sau Task 40 | Thành viên chính | Phạm Đoàn Bảo Thiên | 3.483333333333333 |  |  |  | 
+46 | Cho người dùng doanh nghiệp chạy thử các luồng nghiệp vụ trọn vẹn từ nhập hàng, xuất bán, kiểm kê đến lập báo cáo; ghi nhận lỗi và góp ý. | Báo cáo kiểm thử |  | Sau Task 41, 42, 43, 44, 45 | Chủ nhiệm | Bùi Tuấn Anh | 4.583333333333334 |  |  |  | 
+47 | Phân tích nguyên nhân, sửa các lỗi phát hiện trong quá trình kiểm thử và hoàn thiện hệ thống trước khi nghiệm thu. | Báo cáo kiểm thử |  | Sau Task 46 | Thành viên chính | Bùi Quốc Luýt | 4.583333333333334 |  |  |  | 
+ |  |  |  |  | Thành viên chính | Vũ Quang Minh | 4.583333333333334 |  |  |  | 
+ |  |  |  |  | Thành viên chính | Bạch Minh Quang | 4.583333333333334 |  |  |  | 
+F. TRIỂN KHAI & BÀN GIAO |  |  |  |  |  |  |  |  |  |  | 
+48 | Chuẩn bị máy chủ ứng dụng, máy chủ CSDL, Nginx HTTPS, cấu hình sao lưu hằng ngày giữ 30 bản gần nhất. | Tài liệu cấu hình hệ thống | 16/03/2027-31/03/2027 | Sau Task 47 | Thành viên chính | Bùi Quốc Luýt | 2.2 |  |  |  | 
+49 | Chuyển danh mục hàng hóa và số tồn đầu kỳ từ các file Excel hiện có vào hệ thống, triển khai và chạy thử tại kho tổng và cửa hàng. | Biên bản nghiệm thu |  | Sau Task 48 | Thành viên chính | Vũ Quang Minh | 3.483333333333333 |  |  |  | 
+50 | Viết tài liệu hướng dẫn sử dụng theo vai trò Quản lý, Nhân viên kho, Nhân viên bán hàng và tài liệu vận hành hệ thống. | Tài liệu hướng dẫn |  | Sau Task 48 | Thành viên chính | Phạm Đoàn Bảo Thiên | 3.3 |  |  |  | 
+51 | Tổng hợp kết quả thực hiện, kết quả kiểm thử, đối chiếu với mục tiêu dự án và lập hồ sơ nghiệm thu. | Báo cáo nghiệm thu |  | Sau Task 49, 50 | Chủ nhiệm | Bùi Tuấn Anh | 2.2 |  |  |  | 
+52 | Hướng dẫn nhân viên kho và cửa hàng sử dụng hệ thống, máy quét mã vạch; hỗ trợ trong thời gian đầu vận hành. | Xác nhận bàn giao |  | Sau Task 51 | Thành viên chính | Bạch Minh Quang | 2.2 |  |  |  | 
+Tổng |  |  |  |  |  |  |  |  |  |  | 
+
+--- SHEET CongLaoDong ---
+PHỤ LỤC DỰ TOÁN KINH PHÍ / 1. Nhân công lao động khoa học (khoán chi) |  |  |  |  |  | 
+ĐỀ TÀI | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  |  |  |  | 
+MÃ SỐ | CNTT20261_N01 |  |  |  |  | 
+CHỦ TRÌ | Bùi Tuấn Anh |  |  |  |  | 
+Công lao động khoa học thực hiện theo mức lương cơ sở: |  |  |  | 2530000 |  | 
+TT | Họ và tên | Nhiệm vụ | Số ngày công | Hệ số nhiệm vụ | Định mức / ngày công | Thành tiền
+1 | Bùi Tuấn Anh | Chủ trì |  | 0.75 |  | 
+2 | Bùi Quốc Luýt | Thành viên chính |  | 0.45 |  | 
+3 | Vũ Quang Minh | Thành viên chính |  | 0.45 |  | 
+4 | Bạch Minh Quang | Thành viên chính |  | 0.45 |  | 
+5 | Phạm Đoàn Bảo Thiên | Thành viên chính |  | 0.45 |  | 
+Tổng |  |  |  |  |  | 
+Bằng chữ: Hai trăm tám mươi lăm triệu ba trăm chín mươi sáu nghìn sáu trăm năm mươi đồng |  |  |  |  |  | 
+ |  |  | Hà Nội, Ngày 25 tháng 7 năm 2026 |  |  | 
+ | Chủ nhiệm đề tài |  | Người lập bảng |  |  | 
+ | Bùi Tuấn Anh |  | Bùi Tuấn Anh |  |  | 
+
+--- SHEET ThietBiVatTu ---
+PHỤ LỤC DỰ TOÁN KINH PHÍ / 2. Thiết bị vật tư |  |  |  |  | 
+ĐỀ TÀI | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  |  |  | 
+MÃ SỐ | CNTT20261_N01 |  |  |  | 
+CHỦ TRÌ | Bùi Tuấn Anh |  |  |  | 
+Thiết bị vật tư phục vụ đề tài |  |  |  |  | 
+STT | TÊN | ĐƠN VỊ TÍNH | SỐ LƯỢNG | ĐƠN GIÁ (VNĐ) | THÀNH TIỀN (VNĐ)
+I | Giai đoạn A (Khảo sát hiện trạng & Thu thập yêu cầu) |  |  |  | 
+1 | Thuê laptop cho nhân sự khảo sát tại kho tổng và cửa hàng (1 tháng) | Bộ | 2 | 2000000 | 
+II | Giai đoạn B (Phân tích & Thiết kế hệ thống) |  |  |  | 
+1 | Thuê bộ máy tính làm việc cho nhóm dự án (2 tháng) | Bộ/tháng | 10 | 1500000 | 
+III | Giai đoạn C (Thiết kế cơ sở dữ liệu & Giao diện) |  |  |  | 
+1 | Thuê bộ máy tính làm việc cho nhóm dự án (1 tháng) | Bộ/tháng | 5 | 1500000 | 
+2 | Tài khoản Figma Professional thiết kế giao diện (2 người x 2 tháng) | Tài khoản/tháng | 4 | 400000 | 
+IV | Giai đoạn D (Xây dựng chương trình) |  |  |  | 
+1 | Thuê bộ máy tính làm việc cho nhóm dự án (2 tháng) | Bộ/tháng | 10 | 1500000 | 
+2 | Cloud Server môi trường Dev/Staging (Docker, PostgreSQL) | Tháng | 2 | 1800000 | 
+3 | Máy quét mã vạch USB phục vụ lập trình, thử nghiệm nhập SKU | Cái | 2 | 1200000 | 
+V | Giai đoạn E (Tích hợp & Kiểm thử) |  |  |  | 
+1 | Thuê bộ máy tính làm việc cho nhóm dự án (1 tháng) | Bộ/tháng | 5 | 1500000 | 
+2 | Cloud Server môi trường Testing, kiểm thử hiệu năng 50.000 biến thể | Tháng | 1 | 2500000 | 
+3 | Thuê máy tính bảng 10 inch kiểm thử giao diện tại kho (1 tháng) | Cái | 2 | 800000 | 
+VI | Giai đoạn F (Triển khai & Bàn giao) |  |  |  | 
+1 | Thuê bộ máy tính làm việc cho nhóm dự án (nửa tháng) | Bộ | 5 | 750000 | 
+2 | Máy chủ ứng dụng Production 4 vCPU, 8 GB RAM (tháng đầu vận hành) | Tháng | 1 | 3500000 | 
+3 | Máy chủ CSDL Production 4 vCPU, 16 GB RAM, SSD 200 GB (tháng đầu vận hành) | Tháng | 1 | 4500000 | 
+4 | Object Storage lưu bản sao lưu CSDL 30 ngày | Tháng | 1 | 500000 | 
+5 | Đăng ký tên miền hệ thống (.vn) | Năm | 1 | 850000 | 
+TỔNG CỘNG |  |  |  |  | 
+Bằng chữ: Bảy mươi ba triệu tám trăm nghìn đồng |  |  |  |  | 
+ |  |  | Hà Nội, Ngày 25 tháng 7 năm 2026 |  | 
+ | Chủ nhiệm đề tài |  | Người lập bảng |  | 
+ | Bùi Tuấn Anh |  | Bùi Tuấn Anh |  | 
+
+--- SHEET ChiKhac ---
+PHỤ LỤC DỰ TOÁN KINH PHÍ / 3. Chi khác |  |  | 
+ĐỀ TÀI | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  | 
+MÃ SỐ | CNTT20261_N01 |  | 
+CHỦ TRÌ | Bùi Tuấn Anh |  | 
+Chi khác phục vụ đề tài |  |  | 
+STT | NỘI DUNG | Mô tả chi tiết | SỐ TIỀN (VNĐ)
+Giai đoạn A (Khảo sát hiện trạng & thu thập yêu cầu - Tháng 09/2026) |  |  | 
+1 | Văn phòng phẩm (phô tô, in ấn tài liệu) | In phiếu phỏng vấn, bảng hỏi khảo sát; photo 13 biểu mẫu phiếu kho và báo cáo đang sử dụng; in Tôn chỉ dự án. | 1500000
+2 | Chi phí khảo sát (đi lại, workshop...) | Di chuyển đến kho tổng và các kho cửa hàng để quan sát quy trình nhập, xuất, kiểm kê, đổi trả; phỏng vấn quản lý kho, nhân viên kho, nhân viên bán hàng. | 4000000
+Giai đoạn B (Phân tích & thiết kế hệ thống - Tháng 09/2026 - 11/2026) |  |  | 
+1 | Văn phòng phẩm (phô tô, in ấn tài liệu) | In tài liệu đặc tả yêu cầu (19 FR, 11 NFR), biểu đồ use case và đặc tả 19 use case để rà soát với doanh nghiệp. | 1500000
+2 | Chi phí khảo sát (đi lại, workshop...) | Tổ chức 01 buổi workshop thống nhất quy tắc nghiệp vụ QT-01 đến QT-06 và ma trận phân quyền với Ban Giám đốc và quản lý kho. | 3000000
+Giai đoạn C (Thiết kế cơ sở dữ liệu & giao diện - Tháng 11/2026 - 12/2026) |  |  | 
+1 | Chi phí khảo sát (đi lại, workshop...) | Tổ chức buổi duyệt prototype 10 màn hình với nhân viên kho, thử thao tác quét mã vạch trên bản mẫu. | 3000000
+2 | Chi phí phục vụ OT (tiền nước, ăn uống ... cho nhân sự) | Hỗ trợ ăn uống cho nhân sự tăng ca hoàn thiện lược đồ 15 bảng, từ điển dữ liệu và ràng buộc toàn vẹn. | 5000000
+Giai đoạn D (Xây dựng chương trình - Tháng 12/2026 - 02/2027) |  |  | 
+1 | Văn phòng phẩm (in tem mã vạch) | In tem mã vạch SKU mẫu trên giấy decal để thử nghiệm quét khi lập phiếu nhập, xuất, kiểm kê. | 1000000
+2 | Chi phí phục vụ OT (tiền nước, ăn uống ... cho nhân sự) | Bồi dưỡng lập trình viên tăng ca hoàn thiện dịch vụ tồn kho, thẻ kho và các nghiệp vụ nhập, xuất, chuyển kho, kiểm kê, đổi trả. | 10000000
+Giai đoạn E (Tích hợp & kiểm thử - Tháng 02/2027 - 03/2027) |  |  | 
+1 | Chi phí khảo sát (đi lại, workshop...) | Chi phí đi lại, nước uống tổ chức kiểm thử chấp nhận người dùng (UAT) tại kho tổng và cửa hàng. | 3000000
+2 | Chi phí phục vụ OT (tiền nước, ăn uống ... cho nhân sự) | Hỗ trợ nhân sự tăng ca sửa lỗi phát sinh sau kiểm thử tích hợp, kiểm thử đồng thời và hiệu năng. | 8000000
+Giai đoạn F (Triển khai & bàn giao - Tháng 03/2027) |  |  | 
+1 | Văn phòng phẩm (phô tô, in ấn tài liệu) | In tài liệu hướng dẫn sử dụng theo 3 vai trò, tài liệu vận hành và hồ sơ nghiệm thu. | 2000000
+2 | Chi phí đào tạo người dùng | Thuê phòng, nước uống, đi lại tổ chức các buổi đào tạo cho quản lý, nhân viên kho và nhân viên bán hàng. | 4000000
+3 | Chi phí phục vụ OT (tiền nước, ăn uống ... cho nhân sự) | Hỗ trợ nhân sự tăng ca chuyển đổi dữ liệu tồn đầu kỳ từ các file Excel và triển khai hệ thống. | 3000000
+TỔNG CỘNG |  |  | 
+Bằng chữ: Bốn mươi chín triệu đồng |  |  | 
+ |  | Hà Nội, Ngày 25 tháng 7 năm 2026 | 
+ | Chủ nhiệm đề tài | Người lập bảng | 
+ | Bùi Tuấn Anh | Bùi Tuấn Anh | 
+
+================================================================================
+FILE: Nhóm 1 - Báo cáo khảo sát.docx
+================================================================================
+[Heading 1] Dự án: Quản lý dự án xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang
+[Normal] Nhóm 1:
+[Normal] Bùi Tuấn Anh - 202490032
+[Normal] Bùi Quốc Luýt - 202490069
+[Normal] Vũ Quang Minh - 202490071
+[Normal] Bạch Minh Quang - 202490077
+[Normal] Phạm Đoàn Bảo Thiên - 202490090
+[Heading 2] 1. Khảo sát hiện trạng
+[Heading 3] 1.1. Mục đích khảo sát
+[Normal] Khảo sát hiện trạng nhằm tìm hiểu cách thức doanh nghiệp đang quản lý hàng hóa và vận hành kho, từ đó xác định các nghiệp vụ chính, các đối tượng dữ liệu cần quản lý, những khó khăn trong quá trình vận hành và nhu cầu xây dựng hệ thống phần mềm quản lý kho.
+[Normal] Đối với ngành hàng thời trang quần áo, việc quản lý kho có một số đặc thù như:
+[List Paragraph] Một sản phẩm có nhiều màu sắc, kích thước (size).
+[List Paragraph] Cùng một mẫu quần áo có thể tồn tại dưới nhiều biến thể.
+[List Paragraph] Số lượng và mẫu mã hàng hóa thường xuyên thay đổi.
+[List Paragraph] Hàng hóa được nhập từ nhiều nhà cung cấp.
+[List Paragraph] Hàng được xuất bán tại cửa hàng hoặc qua các kênh bán hàng trực tuyến.
+[List Paragraph] Cần theo dõi số lượng tồn kho theo từng sản phẩm và từng biến thể.
+[List Paragraph] Có các trường hợp đổi trả, hàng lỗi, hàng hỏng hoặc hàng cần thanh lý.
+[Heading 3] 1.2. Quy trình vận hành kho hiện tại
+[Normal] Qua khảo sát, quy trình quản lý kho có thể được mô tả như sau:
+[Normal] Nhập hàng:
+[List Paragraph] Nhân viên nhận hàng từ nhà cung cấp.
+[List Paragraph] Kiểm tra số lượng, mẫu mã, màu sắc và kích thước.
+[List Paragraph] Đối chiếu với đơn đặt hàng hoặc hóa đơn nhập hàng.
+[List Paragraph] Ghi nhận thông tin hàng hóa nhập kho.
+[List Paragraph] Sắp xếp hàng hóa vào vị trí tương ứng trong kho.
+[List Paragraph] Cập nhật số lượng tồn kho.
+[Normal] Xuất hàng:
+[List Paragraph] Nhận yêu cầu xuất hàng từ bộ phận bán hàng/đơn hàng.
+[List Paragraph] Kiểm tra số lượng hàng tồn.
+[List Paragraph] Nhân viên lấy hàng từ kho.
+[List Paragraph] Kiểm tra sản phẩm trước khi xuất.
+[List Paragraph] Ghi nhận thông tin xuất kho.
+[List Paragraph] Cập nhật lại số lượng tồn kho.
+[Normal] Kiểm kê:
+[List Paragraph] Nhân viên kiểm tra số lượng hàng thực tế trong kho.
+[List Paragraph] Đối chiếu với số lượng được ghi nhận trên sổ sách hoặc file quản lý.
+[List Paragraph] Xác định các trường hợp chênh lệch.
+[List Paragraph] Điều chỉnh số lượng tồn kho nếu cần.
+[List Paragraph] Lập báo cáo kiểm kê.
+[Normal] Đổi trả hàng:
+[List Paragraph] Tiếp nhận thông tin sản phẩm được trả lại.
+[List Paragraph] Kiểm tra tình trạng sản phẩm.
+[List Paragraph] Xác định sản phẩm có đủ điều kiện nhập lại kho hay không.
+[List Paragraph] Cập nhật số lượng tồn kho.
+[List Paragraph] Ghi nhận nguyên nhân đổi/trả.
+[Heading 3] 1.3. Thực trạng quản lý thông tin hàng hóa
+[Normal] Thông tin hàng hóa thường được quản lý dựa trên các thuộc tính:
+[Normal] Đặc biệt, màu sắc và kích thước cần được quản lý ở cấp biến thể sản phẩm, thay vì chỉ quản lý ở cấp sản phẩm. Ví dụ:
+[Normal] Áo thun AT01
+[List Paragraph] Đen / S: 1000 sản phẩm
+[List Paragraph] Đen / M: 1500 sản phẩm
+[List Paragraph] Đen / L: 800 sản phẩm
+[List Paragraph] Trắng / S: 1200 sản phẩm
+[List Paragraph] Trắng / M: 2000 sản phẩm
+[Normal] Cách quản lý này phù hợp hơn với đặc thù hàng thời trang.
+[Heading 3] 1.4. Phương thức quản lý hiện tại
+[Normal] Trong mô hình quản lý thủ công hoặc bán thủ công, thông tin kho thường được ghi nhận bằng Excel, sổ sách hoặc nhiều file riêng biệt.
+[Normal] Điều này dẫn đến một số vấn đề:
+[List Paragraph] Khó kiểm soát số lượng tồn kho theo thời gian thực.
+[List Paragraph] Dễ xảy ra sai sót khi nhập hoặc xuất hàng.
+[List Paragraph] Khó kiểm tra lịch sử biến động của một sản phẩm.
+[List Paragraph] Khó quản lý nhiều biến thể màu sắc/kích thước.
+[List Paragraph] Việc tìm kiếm thông tin mất nhiều thời gian.
+[List Paragraph] Dễ xảy ra tình trạng dữ liệu giữa các file không đồng nhất.
+[List Paragraph] Khó phát hiện hàng sắp hết hoặc tồn kho quá lâu.
+[List Paragraph] Việc lập báo cáo phải thực hiện thủ công.
+[List Paragraph] Khó phân quyền và kiểm soát thao tác của nhân viên.
+[Heading 3] 1.5. Các đối tượng tham gia vận hành
+[Normal] Các đối tượng chính trong quá trình quản lý kho gồm:
+[Heading 2] 2. Hợp nhất hiện trạng
+[Normal] Sau khi khảo sát các nghiệp vụ và phương thức vận hành kho, có thể hợp nhất các kết quả thành mô hình nghiệp vụ tổng quát như sau.
+[Heading 3] 2.1. Tổng hợp các nghiệp vụ chính
+[Normal] Hệ thống hiện tại xoay quanh các nhóm nghiệp vụ:
+[Normal] Quản lý danh mục
+[List Paragraph] Quản lý sản phẩm.
+[List Paragraph] Quản lý loại sản phẩm.
+[List Paragraph] Quản lý màu sắc.
+[List Paragraph] Quản lý kích thước.
+[List Paragraph] Quản lý biến thể sản phẩm.
+[List Paragraph] Quản lý nhà cung cấp.
+[List Paragraph] Quản lý vị trí kho.
+[Normal] Quản lý nhập kho
+[List Paragraph] Tạo phiếu nhập.
+[List Paragraph] Ghi nhận nhà cung cấp.
+[List Paragraph] Ghi nhận các sản phẩm và số lượng nhập.
+[List Paragraph] Cập nhật tồn kho.
+[Normal] Quản lý xuất kho
+[List Paragraph] Tạo phiếu xuất.
+[List Paragraph] Ghi nhận lý do xuất.
+[List Paragraph] Ghi nhận sản phẩm và số lượng xuất.
+[List Paragraph] Kiểm tra tồn kho.
+[List Paragraph] Cập nhật tồn kho.
+[Normal] Quản lý tồn kho
+[List Paragraph] Tra cứu số lượng tồn.
+[List Paragraph] Theo dõi tồn kho theo sản phẩm.
+[List Paragraph] Theo dõi tồn kho theo màu sắc/kích thước.
+[List Paragraph] Kiểm kê.
+[List Paragraph] Điều chỉnh tồn kho.
+[Normal] Quản lý đổi trả
+[List Paragraph] Ghi nhận sản phẩm trả lại.
+[List Paragraph] Kiểm tra tình trạng hàng.
+[List Paragraph] Nhập lại kho hoặc loại khỏi kho.
+[List Paragraph] Ghi nhận nguyên nhân.
+[Normal] Báo cáo
+[List Paragraph] Báo cáo nhập kho.
+[List Paragraph] Báo cáo xuất kho.
+[List Paragraph] Báo cáo tồn kho.
+[List Paragraph] Báo cáo biến động hàng hóa.
+[List Paragraph] Thống kê sản phẩm bán chạy/hết hàng.
+[List Paragraph] Thống kê hàng tồn lâu.
+[Heading 3] 2.2. Các vấn đề cần giải quyết
+[Normal] Từ kết quả khảo sát, hệ thống cần giải quyết các vấn đề chính:
+[Heading 3] 2.3. Mô hình nghiệp vụ tổng quát sau khi hợp nhất
+[Normal] Có thể khái quát hệ thống thành chuỗi:
+[Heading 3] 2.4. Kết luận khảo sát
+[Normal] Qua quá trình khảo sát và hợp nhất hiện trạng, có thể xác định kho là trung tâm của hệ thống quản lý hàng hóa. Mọi nghiệp vụ nhập hàng, xuất hàng, kiểm kê và đổi trả đều làm thay đổi trạng thái tồn kho.
+[Normal] Do đặc thù ngành thời trang, hệ thống không chỉ cần quản lý sản phẩm mà phải quản lý biến thể sản phẩm theo màu sắc và kích thước. Đồng thời, hệ thống cần lưu lại lịch sử biến động kho để đảm bảo khả năng kiểm tra và truy xuất dữ liệu.
+[Normal] Vì vậy, hệ thống mới cần tập trung vào các chức năng cốt lõi:
+[Normal] Quản lý sản phẩm → Quản lý biến thể → Nhập kho → Xuất kho → Tồn kho → Kiểm kê/điều chỉnh → Đổi trả → Báo cáo và thống kê.
+[Normal] Đây sẽ là cơ sở để chuyển sang các phần tiếp theo như phân tích yêu cầu, xác định tác nhân/use case, mô hình hóa nghiệp vụ và thiết kế cơ sở dữ liệu.
+[Heading 2] 3. Các biểu mẫu liên quan
+[Heading 3] 3.1. Danh sách biểu mẫu
+[Heading 3] 3.1. Phiếu nhập kho
+[Normal] PHIẾU NHẬP KHO
+[Normal] Chi tiết hàng hóa
+[Normal] Tổng số lượng: ................                                                                           Tổng tiền: ................
+[Normal] Người lập: ................                         Người giao: ................            Người nhận/duyệt: ................
+[Heading 3] 3.2. Phiếu xuất kho
+[Normal] PHIẾU XUẤT KHO
+[Normal] Chi tiết hàng hóa
+[Normal] Tổng số lượng: ................
+[Normal] Người xuất: ................                        Người nhận: ................                   Người duyệt: ................
+[Heading 3] 3.3. Phiếu kiểm kê kho
+[Normal] PHIẾU KIỂM KÊ KHO
+[Normal] Chi tiết hàng hóa
+[Normal] Công thức:    Chênh lệch = Số lượng thực tế − Số lượng hệ thống
+[Normal] Nguyên nhân:
+[Normal] Người kiểm kê: ................                                                                  Người xác nhận: ................
+[Heading 3] 3.4. Phiếu điều chỉnh tồn kho
+[Normal] PHIẾU ĐIỀU CHỈNH TỒN KHO
+[Normal] Chi tiết hàng hóa
+[Normal] Lý do:
+[Normal] Người lập: ................                                                                              Người duyệt: ................
+[Heading 3] 3.5. Phiếu đổi / trả hàng
+[Normal] PHIẾU ĐỔI / TRẢ HÀNG
+[Normal] Chi tiết hàng hóa
+[Normal] Sản phẩm đổi sang: ................................    Size mới: ................    Màu mới: ................
+Số tiền chênh lệch/hoàn tiền: ................................
+Ghi chú:
+[Heading 3] 3.6. Phiếu chuyển kho
+[Normal] PHIẾU CHUYỂN KHO
+[Normal] Chi tiết hàng hóa
+[Normal] Người chuyển: ................    Người nhận: ................    Người duyệt: ................
+[Heading 3] 3.7. Phiếu huỷ hàng
+[Normal] PHIẾU HỦY HÀNG
+[Normal] Chi tiết hàng hóa
+[Normal] Ghi chú:
+[Normal] Người lập: ................                                                                  Người duyệt: ................
+[Heading 3] 3.8. Báo cáo tồn kho
+[Normal] Mục đích: Cho biết hiện tại kho đang có những sản phẩm nào và số lượng bao nhiêu.
+[Normal] Điều kiện lọc:
+[List Paragraph] Kho
+[List Paragraph] Nhóm / loại sản phẩm
+[List Paragraph] Trạng thái tồn kho
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Có thể bổ sung: Vị trí, Giá nhập, Giá bán, Giá trị tồn kho, Mức tồn tối thiểu
+[List Paragraph] Trạng thái xác định theo: Tồn kho so với mức tồn tối thiểu
+[Heading 3] 3.9. Báo cáo nhập kho
+[Normal] Mục đích: Tổng hợp tình hình hàng hóa nhập vào kho trong một khoảng thời gian.
+[Normal] Điều kiện lọc:
+[List Paragraph] Từ ngày – đến ngày
+[List Paragraph] Nhà cung cấp
+[List Paragraph] Sản phẩm
+[List Paragraph] Kho
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Tổng số phiếu nhập
+[List Paragraph] Tổng số lượng sản phẩm nhập
+[List Paragraph] Tổng giá trị nhập
+[Heading 3] 3.9. Báo cáo xuất kho
+[Normal] Mục đích: Tổng hợp tình hình hàng hóa xuất khỏi kho theo thời gian và lý do xuất.
+[Normal] Điều kiện lọc:
+[List Paragraph] Từ ngày – đến ngày
+[List Paragraph] Lý do xuất (bán hàng, chuyển kho, hủy…)
+[List Paragraph] Sản phẩm
+[List Paragraph] Kho
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Tổng số phiếu xuất
+[List Paragraph] Tổng số lượng xuất
+[List Paragraph] Số lượng xuất theo sản phẩm
+[List Paragraph] Số lượng xuất theo khoảng thời gian
+[Heading 3] 3.10. Báo cáo nhập – xuất – tồn
+[Normal] Mục đích: Báo cáo tổng hợp trung tâm, cho biết sự biến động của tồn kho theo công thức: Tồn cuối = Tồn đầu + Nhập − Xuất ± Điều chỉnh.
+[Normal] Điều kiện lọc:
+[List Paragraph] Kỳ báo cáo (từ ngày – đến ngày)
+[List Paragraph] Sản phẩm
+[List Paragraph] Kho
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Tổng nhập trong kỳ
+[List Paragraph] Tổng xuất trong kỳ
+[List Paragraph] Tổng tồn cuối kỳ
+[Heading 3] 3.11. Báo cáo kiểm kê
+[Normal] Mục đích: Theo dõi kết quả kiểm kê và chênh lệch giữa số liệu hệ thống với thực tế.
+[Normal] Điều kiện lọc:
+[List Paragraph] Đợt kiểm kê
+[List Paragraph] Kho
+[List Paragraph] Sản phẩm
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Tổng số sản phẩm kiểm kê
+[List Paragraph] Số sản phẩm có chênh lệch
+[List Paragraph] Tổng thiếu / Tổng thừa
+[List Paragraph] Giá trị chênh lệch
+[Heading 3] 3.12. Báo cáo biến động hàng hóa
+[Normal] Mục đích: Đi sâu vào lịch sử thay đổi số lượng của một sản phẩm cụ thể (ví dụ: Áo thun AT001 – Đen – M).
+[Normal] Điều kiện lọc:
+[List Paragraph] Sản phẩm (bắt buộc chọn 1)
+[List Paragraph] Màu, Size
+[List Paragraph] Từ ngày – đến ngày
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Rất hữu ích cho việc truy xuất và đối chiếu lịch sử tồn kho
+[Heading 3] 3.13. Báo cáo hàng tồn kho thấp
+[Normal] Mục đích: Phục vụ cảnh báo và quản lý, liệt kê các sản phẩm sắp hết hoặc đã hết hàng.
+[Normal] Điều kiện lọc:
+[List Paragraph] Kho
+[List Paragraph] Nhóm sản phẩm
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Tồn kho = 0  →  Hết hàng
+[List Paragraph] 0 < Tồn ≤ tối thiểu  →  Sắp hết
+[List Paragraph] Tồn > tối thiểu  →  Bình thường
+[Heading 3] 3.14. Báo cáo hàng tồn lâu
+[Normal] Mục đích: Rất hữu ích cho ngành thời trang vì mẫu mã dễ lỗi thời; liệt kê sản phẩm tồn kho trong thời gian dài.
+[Normal] Điều kiện lọc:
+[List Paragraph] Kho
+[List Paragraph] Số ngày tồn tối thiểu
+[List Paragraph] Nhóm sản phẩm
+[Normal] Số liệu tổng hợp cuối báo cáo:
+[List Paragraph] Hỗ trợ quyết định: Giảm giá, Khuyến mãi, Thanh lý, Điều chuyển sang cửa hàng khác
+
+--- TABLES 26 ---
+
+[TABLE 1]
+Thông tin | Mô tả
+Mã sản phẩm | Mã định danh sản phẩm
+Tên sản phẩm | Tên/mẫu quần áo
+Loại sản phẩm | Áo, quần, váy, áo khoác,...
+Màu sắc | Đỏ, đen, trắng,...
+Kích thước | S, M, L, XL,...
+Giá nhập | Giá nhập từ nhà cung cấp
+Giá bán | Giá bán cho khách hàng
+Nhà cung cấp | Đơn vị cung cấp sản phẩm
+Số lượng tồn | Số lượng hiện có trong kho
+Vị trí | Vị trí lưu trữ trong kho
+Trạng thái | Đang bán, ngừng bán, hết hàng,...
+
+[TABLE 2]
+Đối tượng | Vai trò
+Quản lý | Quản lý hàng hóa, kho, nhân viên và xem báo cáo
+Nhân viên kho | Nhập, xuất, kiểm kê và sắp xếp hàng hóa
+Nhân viên bán hàng | Tạo đơn bán và yêu cầu xuất hàng
+Nhà cung cấp | Cung cấp hàng hóa cho doanh nghiệp
+Khách hàng | Mua hoặc đổi trả sản phẩm
+
+[TABLE 3]
+Vấn đề | Nhu cầu hệ thống
+Dữ liệu phân tán | Tập trung dữ liệu trên một hệ thống
+Khó quản lý biến thể | Quản lý sản phẩm theo màu và size
+Sai lệch tồn kho | Tự động cập nhật khi nhập/xuất
+Khó truy vết | Lưu lịch sử nhập, xuất, điều chỉnh
+Tìm kiếm chậm | Cung cấp chức năng tìm kiếm và lọc
+Khó kiểm kê | Hỗ trợ kiểm kê và điều chỉnh
+Báo cáo thủ công | Tự động tổng hợp báo cáo
+Khó kiểm soát nhân viên | Phân quyền người dùng
+Khó phát hiện hàng sắp hết | Cảnh báo tồn kho thấp
+Hàng tồn lâu | Theo dõi thời gian và tình trạng tồn kho
+
+[TABLE 4]
+STT | Biểu mẫu | Nghiệp vụ | Mục đích
+1 | Phiếu nhập kho | Nhập hàng | Ghi nhận hàng hóa nhập vào kho
+2 | Phiếu xuất kho | Xuất hàng | Ghi nhận hàng hóa xuất khỏi kho
+3 | Phiếu kiểm kê kho | Kiểm kê | Ghi nhận kết quả kiểm đếm thực tế
+4 | Phiếu điều chỉnh tồn kho | Điều chỉnh | Ghi nhận tăng/giảm tồn kho do chênh lệch
+5 | Phiếu đổi/trả hàng | Đổi trả | Ghi nhận hàng khách trả lại
+6 | Phiếu chuyển kho | Chuyển kho | Ghi nhận chuyển hàng giữa các kho
+7 | Phiếu hủy hàng | Hủy hàng | Ghi nhận hàng lỗi, hỏng hoặc không còn khả năng bán
+8 | Báo cáo tồn kho | Quản lý tồn kho | Cho biết số lượng tồn hiện tại theo sản phẩm, màu, size, kho
+9 | Báo cáo nhập kho | Nhập kho | Tổng hợp hàng hóa nhập vào theo thời gian, nhà cung cấp, sản phẩm
+10 | Báo cáo xuất kho | Xuất kho | Tổng hợp hàng hóa xuất ra theo thời gian, lý do xuất
+11 | Báo cáo nhập – xuất – tồn | Tổng hợp biến động kho | Theo dõi tồn đầu, nhập, xuất, điều chỉnh và tồn cuối kỳ
+12 | Báo cáo kiểm kê | Kiểm kê kho | Đối chiếu tồn hệ thống với thực tế, ghi nhận chênh lệch
+13 | Báo cáo biến động hàng hóa | Truy xuất lịch sử | Theo dõi lịch sử thay đổi số lượng của một sản phẩm cụ thể
+
+[TABLE 5]
+Mã phiếu nhập | ....................................................................................................................
+Ngày nhập | ....................................................................................................................
+Nhà cung cấp | ....................................................................................................................
+Người giao hàng | ....................................................................................................................
+Kho nhập | ....................................................................................................................
+Người lập phiếu | ....................................................................................................................
+Ghi chú | ....................................................................................................................
+
+[TABLE 6]
+STT | Mã SP | Tên sản phẩm | Màu | Size | Số lượng | Đơn giá | Thành tiền
+1 | AT001 | Áo thun Basic | Đen | M | 20 | 120.000 | 2.400.000
+2 | AT001 | Áo thun Basic | Đen | L | 15 | 120.000 | 1.800.000
+
+[TABLE 7]
+Mã phiếu xuất | ...................................................................................................
+Ngày xuất | ...................................................................................................
+Kho xuất | ...................................................................................................
+Người nhận | ...................................................................................................
+Lý do xuất | ...................................................................................................
+Người lập phiếu | ...................................................................................................
+Ghi chú | ...................................................................................................
+
+[TABLE 8]
+STT | Mã SP | Tên sản phẩm | Màu | Size | Số lượng
+1 | AT001 | Áo thun Basic | Đen | M | 2
+2 | QJ001 | Quần jean Slim | Xanh | 32 | 1
+
+[TABLE 9]
+Mã phiếu kiểm kê | .............................................................................................
+Ngày kiểm kê | .............................................................................................
+Kho kiểm kê | .............................................................................................
+Người kiểm kê | .............................................................................................
+Phạm vi kiểm kê | .............................................................................................
+Ghi chú | .............................................................................................
+
+[TABLE 10]
+STT | Mã SP | Tên SP | Màu | Size | Tồn hệ thống | Thực tế | Chênh lệch
+1 | AT001 | Áo thun Basic | Đen | M | 20 | 19 | -1
+2 | AT001 | Áo thun Basic | Đen | L | 15 | 15 | 0
+
+[TABLE 11]
+Mã phiếu điều chỉnh | .....................................................................................................
+Ngày điều chỉnh | .....................................................................................................
+Kho | .....................................................................................................
+Lý do điều chỉnh | .....................................................................................................
+Người lập | .....................................................................................................
+Người duyệt | .....................................................................................................
+
+[TABLE 12]
+STT | Mã SP | Tên SP | Màu | Size | Tồn trước | Điều chỉnh | Tồn sau
+1 | AT001 | Áo thun Basic | Đen | M | 20 | -1 | 19
+
+[TABLE 13]
+Mã phiếu | ..................................................................................................................
+Ngày đổi/trả | ..................................................................................................................
+Mã đơn hàng | ..................................................................................................................
+Khách hàng | ..................................................................................................................
+Lý do đổi/trả | ..................................................................................................................
+Nhân viên xử lý | ..................................................................................................................
+
+[TABLE 14]
+STT | Mã SP | Tên SP | Màu | Size | Số lượng | Tình trạng
+1 | AT001 | Áo thun Basic | Đen | M | 1 | Còn tốt
+
+[TABLE 15]
+Mã phiếu | ..............................................................................................................
+Ngày chuyển | ..............................................................................................................
+Kho xuất | ..............................................................................................................
+Kho nhận | ..............................................................................................................
+Người chuyển | ..............................................................................................................
+Người nhận | ..............................................................................................................
+Lý do | ..............................................................................................................
+
+[TABLE 16]
+STT | Mã SP | Tên SP | Màu | Size | Số lượng
+1 | AT001 | Áo thun Basic | Đen | M | 10
+
+[TABLE 17]
+Mã phiếu hủy | ...............................................................................................................
+Ngày hủy | ...............................................................................................................
+Kho | ...............................................................................................................
+Lý do hủy | ...............................................................................................................
+Người lập | ...............................................................................................................
+Người duyệt | ...............................................................................................................
+
+[TABLE 18]
+STT | Mã SP | Tên SP | Màu | Size | Số lượng | Lý do
+1 | AT001 | Áo thun Basic | Đen | M | 2 | Hư hỏng
+
+[TABLE 19]
+STT | Mã SP | Tên sản phẩm | Màu | Size | Tồn kho | Trạng thái
+1 | AT001 | Áo thun Basic | Đen | M | 20 | Bình thường
+2 | AT001 | Áo thun Basic | Đen | L | 15 | Bình thường
+3 | AT001 | Áo thun Basic | Trắng | M | 12 | Bình thường
+
+[TABLE 20]
+Ngày | Mã phiếu | Nhà cung cấp | Sản phẩm | Màu | Size | SL | Đơn giá | Thành tiền
+10/09 | PN001 | NCC A | Áo thun | Đen | M | 20 | 120.000 | 2.400.000
+11/09 | PN002 | NCC B | Quần jean | Xanh | 32 | 10 | 250.000 | 2.500.000
+
+[TABLE 21]
+Ngày | Mã phiếu | Lý do | Sản phẩm | Màu | Size | Số lượng
+10/09 | PX001 | Bán hàng | Áo thun | Đen | M | 2
+10/09 | PX002 | Chuyển kho | Quần jean | Xanh | 32 | 5
+
+[TABLE 22]
+Mã SP | Tên SP | Màu | Size | Tồn đầu | Nhập | Xuất | Điều chỉnh | Tồn cuối
+AT001 | Áo thun | Đen | M | 10 | 20 | 5 | -1 | 24
+AT001 | Áo thun | Đen | L | 8 | 15 | 3 | 0 | 20
+
+[TABLE 23]
+Mã SP | Tên SP | Màu | Size | Tồn hệ thống | Thực tế | Chênh lệch | Nguyên nhân
+AT001 | Áo thun | Đen | M | 20 | 19 | -1 | Thất lạc
+AT002 | Áo sơ mi | Trắng | L | 10 | 10 | 0 | —
+
+[TABLE 24]
+Thời gian | Loại biến động | Mã phiếu | Nhập | Xuất | Điều chỉnh | Tồn
+01/09 | Tồn đầu kỳ | — |  |  |  | 10
+03/09 | Nhập kho | PN001 | +20 |  |  | 30
+05/09 | Xuất kho | PX001 |  | -5 |  | 25
+07/09 | Điều chỉnh | DC001 |  |  | -1 | 24
+
+[TABLE 25]
+Mã SP | Sản phẩm | Màu | Size | Tồn kho | Tồn tối thiểu | Trạng thái
+AT001 | Áo thun | Đen | M | 3 | 5 | Sắp hết
+QJ001 | Quần jean | Xanh | 32 | 1 | 5 | Sắp hết
+
+[TABLE 26]
+Mã SP | Sản phẩm | Màu | Size | Số lượng | Ngày nhập gần nhất | Số ngày tồn
+AT001 | Áo thun | Đen | M | 20 | 01/06 | 103
+QJ002 | Quần jean | Xanh | 32 | 8 | 15/05 | 120
+
+================================================================================
+FILE: quan-ly-chat-luong.docx
+================================================================================
+[Heading 1] KẾ HOẠCH QUẢN LÝ CHẤT LƯỢNG
+[] Tài liệu này là một phần trong bộ hồ sơ quản lý dự án của Nhóm 1. Bối cảnh doanh nghiệp, quy trình kho hiện tại và các vấn đề khách hàng gặp phải được trình bày trong Báo cáo khảo sát hiện trạng. Yêu cầu chức năng (FR), yêu cầu phi chức năng (NFR), quy tắc nghiệp vụ (QT), use case, kiến trúc, cơ sở dữ liệu và giao diện được đặc tả trong Báo cáo phân tích và thiết kế hệ thống. Danh sách công việc, tiến độ, phân công và tôn chỉ dự án nằm trong Bảng phân rã công việc; chi phí thực hiện nằm trong Bảng dự toán kinh phí. Kế hoạch này không nhắc lại các nội dung trên mà chỉ xác định cách kiểm soát chất lượng cho từng giai đoạn, dẫn chiếu tới mã yêu cầu, quy tắc và task đã có trong các tài liệu đó.
+[Heading 2] 1. Mục tiêu chất lượng
+[] Các mục tiêu dưới đây được chuyển trực tiếp từ mục tiêu của hệ thống (mục 1.3.1 báo cáo phân tích thiết kế) thành chỉ tiêu có thể kiểm tra khi nghiệm thu.
+[] Bảng 1. Mục tiêu chất lượng và cách đo
+[Heading 2] 2. Tổ chức và trách nhiệm chất lượng
+[] Nhóm có 5 thành viên nên không tách riêng một bộ phận QA. Thay vào đó, mỗi sản phẩm được người khác với người tạo ra nó rà soát, và mỗi người được giao một mảng chất lượng chính như Bảng 2.
+[] Bảng 2. Vai trò trong quản lý chất lượng
+[Heading 2] 3. Kế hoạch quản lý chất lượng tổng hợp
+[] Bảng 3 tóm tắt 6 nội dung quản lý chất lượng xuyên suốt dự án. Chi tiết từng nội dung được trình bày ở mục 4.
+[] Bảng 3. Kế hoạch quản lý chất lượng
+[Heading 2] 4. Chi tiết các nội dung quản lý chất lượng
+[Heading 3] 4.1. Quản lý yêu cầu
+[] Thời gian: giai đoạn A, 01/09/2026 - 25/09/2026 (Task 1 - 8 trong WBS). Người phụ trách: Bùi Tuấn Anh; người tham gia: Bùi Quốc Luýt, Bạch Minh Quang, Phạm Đoàn Bảo Thiên và đại diện doanh nghiệp.
+[] Sai sót ở yêu cầu là nguồn lỗi tốn kém nhất, nhất là với bài toán kho, nơi một quy tắc hiểu sai (ví dụ hàng trả lại bị lỗi có được cộng vào tồn bán hay không) sẽ làm sai toàn bộ số liệu về sau.
+[] Hoạt động thực hiện:
+[List Paragraph] Khảo sát trực tiếp 4 quy trình cốt lõi (nhập hàng, xuất hàng, kiểm kê, đổi trả) và 2 nghiệp vụ phụ (chuyển kho, hủy hàng) tại kho tổng và kho cửa hàng.
+[List Paragraph] Thu thập đủ 13 biểu mẫu (7 phiếu chứng từ, 6 mẫu báo cáo); ánh xạ từng trường trên biểu mẫu tới thuộc tính dữ liệu, xác định đúng cấp quản lý (sản phẩm hay biến thể).
+[List Paragraph] Lập bảng vấn đề hiện tại và nhu cầu tương ứng; mỗi nhu cầu phải dẫn tới ít nhất một yêu cầu chức năng.
+[List Paragraph] Thống nhất với khách hàng các quy ước riêng của hàng thời trang:
+bảng màu và bảng size theo từng loại sản phẩm (size chữ S, M, L, XL cho áo; size số 29, 30, 32 cho quần);
+quy tắc đặt mã SKU theo mẫu, màu, size (ví dụ AT001-DEN-M);
+tồn tối thiểu khai báo cho từng biến thể, vì size M, L thường bán nhanh hơn size S, XL;
+vòng đời mẫu theo mùa: mẫu hết mùa chuyển Ngừng bán, không xóa;
+điều kiện nhận đổi trả, cách xử lý đổi size cùng mẫu và đổi sang mẫu khác giá;
+ngưỡng số ngày để coi là hàng tồn lâu.
+[List Paragraph] Làm rõ nguồn yêu cầu xuất kho: đơn bán tại cửa hàng và đơn trực tuyến đều do nhân viên bán hàng nhập mã đơn, vì việc tích hợp tự động với phần mềm bán hàng nằm ngoài phạm vi.
+[List Paragraph] Đánh mã yêu cầu FR-01 đến FR-19, NFR-01 đến NFR-11; lập ma trận truy vết yêu cầu - use case.
+[List Paragraph] Tổ chức buổi rà soát với quản lý kho và bộ phận bán hàng để xác nhận quy tắc nghiệp vụ, đặc biệt là QT-02 (tồn chỉ thay đổi khi phiếu Hoàn thành), QT-03 (chênh lệch kiểm kê phải được duyệt) và QT-04 (hàng lỗi vào kho hàng lỗi).
+[List Paragraph] Mọi thay đổi yêu cầu sau khi chốt phải được ghi vào nhật ký thay đổi, đánh giá ảnh hưởng tới thiết kế và kế hoạch, và được Giám đốc dự án duyệt.
+[] Tiêu chí chất lượng:
+[List Paragraph] 100% yêu cầu được doanh nghiệp xác nhận bằng văn bản hoặc biên bản họp.
+[List Paragraph] 10 vấn đề khách hàng nêu trong báo cáo khảo sát đều có yêu cầu đáp ứng và tiêu chí nghiệm thu.
+[List Paragraph] Mọi thuộc tính trên 13 biểu mẫu được xác định đúng cấp quản lý; màu, size, giá, tồn, vị trí được đưa về cấp biến thể thay vì ghi chung trên dòng sản phẩm như cách làm hiện tại.
+[List Paragraph] Mỗi yêu cầu rõ ràng, kiểm thử được, không mâu thuẫn với yêu cầu khác; mỗi NFR có con số đo cụ thể (ví dụ tra cứu dưới 2 giây với 50.000 biến thể và 100 người dùng đồng thời).
+[List Paragraph] 100% FR truy vết được tới use case; không có use case nào không gắn với yêu cầu.
+[List Paragraph] Phạm vi trong và ngoài hệ thống được thống nhất (POS, công nợ NCC, kết nối sàn thương mại điện tử nằm ngoài phạm vi).
+[] Kết quả đầu ra: báo cáo khảo sát hiện trạng; danh sách yêu cầu chức năng và phi chức năng; ma trận truy vết; biên bản xác nhận yêu cầu.
+[Heading 3] 4.2. Quản lý thiết kế
+[] Thời gian: giai đoạn B (26/09/2026 - 20/11/2026, Task 9 - 17) và giai đoạn C (21/11/2026 - 25/12/2026, Task 18 - 25). Người phụ trách: Bùi Quốc Luýt; Phạm Đoàn Bảo Thiên phụ trách CSDL, Bạch Minh Quang phụ trách giao diện.
+[] Hoạt động thực hiện:
+[List Paragraph] Rà soát mô hình use case: biểu đồ tổng quát, 4 gói phân rã và đặc tả 19 use case; kiểm tra luồng thay thế cho các tình huống ngoại lệ như không đủ tồn, phiếu bị từ chối duyệt, hàng trả không đủ điều kiện.
+[List Paragraph] Rà soát tính nhất quán giữa các mô hình: bước trong đặc tả use case trọng tâm phải có thông điệp tương ứng trên biểu đồ tuần tự; thông điệp phải là phương thức của lớp thiết kế; lớp thực thể phải ánh xạ tới bảng CSDL.
+[List Paragraph] Kiểm tra biểu đồ trạng thái của PhieuKho và PhieuKiemKe: chỉ chuyển trạng thái Hoàn thành mới làm thay đổi tồn; phiếu đã hoàn thành không được sửa.
+[List Paragraph] Kiểm tra kiến trúc: 6 hệ thống con có phụ thuộc một chiều, không vòng lặp; chỉ hệ thống con Tồn kho và thẻ kho được thay đổi số lượng tồn.
+[List Paragraph] Rà soát lược đồ 15 bảng và từ điển dữ liệu: khóa chính, khóa ngoại, ràng buộc, chỉ mục, kiểu dữ liệu tiền tệ.
+[List Paragraph] Rà soát thiết kế cho hàng thời trang:
+sinh biến thể hàng loạt từ ma trận màu x size, thêm màu hoặc size mới chỉ sinh thêm tổ hợp còn thiếu;
+mẫu ngừng bán vẫn giữ biến thể, tồn và thẻ kho;
+kho hàng lỗi là một loại kho riêng, tồn tại đây không được tính là tồn có thể bán;
+phiếu đổi trả ghi nhận đồng thời biến thể trả lại và biến thể đổi sang.
+[List Paragraph] Duyệt prototype 10 màn hình (MH-01 đến MH-10) với nhân viên kho, thử thao tác quét mã vạch trên máy tính bảng 10 inch.
+[List Paragraph] Đối chiếu menu và nút chức năng trên từng màn hình với ma trận phân quyền vai trò - use case.
+[] Tiêu chí chất lượng:
+[List Paragraph] Thiết kế bao phủ đủ 19 use case và 11 yêu cầu phi chức năng; mỗi NFR có giải pháp thiết kế cụ thể.
+[List Paragraph] CSDL đạt chuẩn 3NF; có ràng buộc CHECK so_luong ≥ 0 trên bảng tồn kho, UNIQUE (kho, biến thể), chỉ mục (bien_the_id, kho_id, thoi_gian) trên bảng lịch sử biến động; bảng lịch sử biến động chỉ cho phép thêm.
+[List Paragraph] Hoàn tất phiếu kho được thiết kế trong một giao dịch và có khóa dòng tồn kho khi cập nhật (NFR-03, NFR-04).
+[List Paragraph] Mô hình dữ liệu tách rõ sản phẩm (mẫu) và biến thể; ràng buộc UNIQUE trên mã SKU và trên tổ hợp (sản phẩm, màu, size).
+[List Paragraph] Màn hình MH-03 hiển thị biến thể dạng ma trận màu x size; màn hình MH-08 cho chọn biến thể đổi sang kèm tồn khả dụng; màn hình tra cứu lọc được theo màu và size.
+[List Paragraph] Giao diện được người dùng chấp nhận; sau khi quét SKU con trỏ tự chuyển sang ô số lượng; bố cục dùng được trên màn hình 10 inch.
+[List Paragraph] Phân quyền đúng vai trò: nhân viên bán hàng chỉ tạo yêu cầu xuất và tra cứu tồn; chỉ Quản lý được duyệt điều chỉnh tồn và hủy hàng.
+[List Paragraph] Không còn ý kiến rà soát mức nghiêm trọng chưa xử lý khi chuyển sang giai đoạn lập trình.
+[] Kết quả đầu ra: báo cáo phân tích và thiết kế hệ thống; lược đồ CSDL và từ điển dữ liệu; script tạo CSDL và dữ liệu mẫu; prototype giao diện; biên bản rà soát thiết kế.
+[Heading 3] 4.3. Kiểm soát lập trình
+[] Thời gian: giai đoạn D, 26/12/2026 - 15/02/2027 (Task 26 - 39). Người phụ trách: Bùi Quốc Luýt; nhóm phát triển gồm Bùi Quốc Luýt, Vũ Quang Minh, Bạch Minh Quang, Phạm Đoàn Bảo Thiên, Bùi Tuấn Anh.
+[] Hoạt động thực hiện:
+[List Paragraph] Áp dụng quy ước code thống nhất: Google Java Style cho back-end Java 21 / Spring Boot 3; ESLint và Prettier cho front-end ReactJS / TypeScript; tên gói theo cấu trúc giaodien, dieukhien, thucthe, truycapdulieu, chung.
+[List Paragraph] Quản lý phiên bản bằng Git: mỗi chức năng phát triển trên nhánh riêng; không đẩy trực tiếp lên nhánh chính; mỗi pull request được ít nhất một thành viên khác review trước khi gộp.
+[List Paragraph] Quản lý thay đổi CSDL bằng script migration có đánh số phiên bản; không sửa trực tiếp CSDL dùng chung.
+[List Paragraph] Tích hợp liên tục: mỗi pull request tự động build, chạy unit test và phân tích tĩnh (SonarQube) trước khi được gộp.
+[List Paragraph] Viết unit test cho quy tắc nghiệp vụ trong lớp thực thể và điều khiển; ưu tiên dịch vụ Tồn kho và thẻ kho vì đây là điểm duy nhất được thay đổi tồn.
+[List Paragraph] Review theo danh sách kiểm tra riêng của đề tài: thao tác hoàn tất phiếu có nằm trong giao dịch không; có khóa dòng tồn kho trước khi trừ không; có ghi thẻ kho cho mọi thay đổi không; có kiểm tra quyền ở tầng điều khiển không; có dùng truy vấn tham số hóa không.
+[] Tiêu chí chất lượng:
+[List Paragraph] 100% mã nguồn trên nhánh chính đã qua review và build thành công.
+[List Paragraph] Không có lỗi mức Blocker/Critical trong báo cáo phân tích tĩnh; không có mật khẩu, khóa bí mật ghi cứng trong mã nguồn.
+[List Paragraph] Độ phủ unit test ≥ 80% với dịch vụ Tồn kho và thẻ kho, nhập kho, xuất kho, kiểm kê; ≥ 60% với phần còn lại.
+[List Paragraph] Chức năng chính (nhập, xuất, chuyển kho, kiểm kê, đổi trả, hủy hàng) đều có unit test cho luồng chính và luồng lỗi.
+[List Paragraph] Mật khẩu được băm bằng bcrypt; mọi API trừ đăng nhập đều yêu cầu JWT hợp lệ.
+[] Kết quả đầu ra: mã nguồn trên kho Git; báo cáo unit test và độ phủ; báo cáo phân tích tĩnh; lịch sử review pull request.
+[Heading 3] 4.4. Kiểm thử phần mềm
+[] Thời gian: giai đoạn E, 16/02/2027 - 15/03/2027 (Task 40 - 46). Người phụ trách: Phạm Đoàn Bảo Thiên; người tham gia: Bạch Minh Quang, Vũ Quang Minh, Bùi Tuấn Anh, Bùi Quốc Luýt.
+[] Hoạt động thực hiện theo từng loại kiểm thử:
+[] Bảng 4. Nội dung kiểm thử trọng tâm
+[] Tiêu chí chất lượng:
+[List Paragraph] 100% yêu cầu chức năng bắt buộc có ít nhất một test case; 100% test case đã được thực thi.
+[List Paragraph] Dữ liệu kiểm thử mô phỏng đúng đặc thù hàng thời trang: nhiều loại sản phẩm, mỗi mẫu nhiều màu và size, nhiều kho, có mẫu ngừng bán và hàng tồn lâu; bộ dữ liệu hiệu năng có 50.000 biến thể.
+[List Paragraph] ≥ 95% test case đạt; 100% test case thuộc nhóm nghiệp vụ kho, biến thể, đổi trả, đồng thời và phân quyền phải đạt.
+[List Paragraph] 0 trường hợp tồn âm; 0 thay đổi tồn không có thẻ kho tương ứng.
+[List Paragraph] Thời gian phản hồi đạt NFR-01, NFR-02; các chức năng thao tác thường xuyên (quét SKU, lưu dòng phiếu) phản hồi dưới 1 giây.
+[List Paragraph] Kiểm thử hồi quy được chạy lại sau mỗi đợt sửa lỗi.
+[] Kết quả đầu ra: kế hoạch kiểm thử; bộ test case và dữ liệu kiểm thử; báo cáo kết quả kiểm thử theo từng loại; báo cáo hiệu năng.
+[Heading 3] 4.5. Quản lý lỗi
+[] Thời gian: xuyên suốt dự án, tập trung trong giai đoạn E (Task 47 - Sửa lỗi & hoàn thiện). Người phụ trách: Bùi Quốc Luýt (điều phối sửa lỗi), Phạm Đoàn Bảo Thiên (xác nhận kiểm thử lại).
+[] Hoạt động thực hiện:
+[List Paragraph] Mọi lỗi được ghi nhận trên công cụ quản lý lỗi (GitHub Issues) với các thông tin: mô tả, bước tái hiện, dữ liệu dùng (kho, SKU, số phiếu), kết quả mong đợi, kết quả thực tế, ảnh chụp, mức độ.
+[List Paragraph] Phân loại mức độ theo Bảng 5; Trưởng nhóm kỹ thuật phân công người sửa trong ngày.
+[List Paragraph] Vòng đời lỗi: Mới --> Đã phân công --> Đã sửa --> Kiểm thử lại --> Đóng; nếu kiểm thử lại không đạt thì chuyển về Mở lại.
+[List Paragraph] Lỗi liên quan đến tồn kho phải kèm test case tự động tái hiện trước khi sửa, để tránh lỗi lặp lại.
+[List Paragraph] Họp rà soát lỗi 2 lần mỗi tuần trong giai đoạn E; báo cáo số lỗi mở theo mức độ cho Giám đốc dự án.
+[] Bảng 5. Phân loại mức độ lỗi
+[] Tiêu chí chất lượng:
+[List Paragraph] Không còn lỗi Blocker/Critical ở trạng thái mở trước khi nghiệm thu.
+[List Paragraph] Lỗi High phải được sửa, hoặc có phương án xử lý được Giám đốc dự án phê duyệt và ghi vào biên bản nghiệm thu.
+[List Paragraph] 100% lỗi đã đóng đều được kiểm thử lại bởi người khác với người sửa.
+[List Paragraph] Tỷ lệ lỗi mở lại dưới 10%.
+[] Kết quả đầu ra: danh sách lỗi và trạng thái xử lý; báo cáo thống kê lỗi theo mức độ và theo hệ thống con.
+[Heading 3] 4.6. Nghiệm thu và bàn giao
+[] Thời gian: giai đoạn F, 16/03/2027 - 31/03/2027 (Task 48 - 52). Người phụ trách: Bùi Tuấn Anh; người tham gia: Bùi Quốc Luýt (môi trường), Vũ Quang Minh (chuyển đổi dữ liệu), Phạm Đoàn Bảo Thiên (tài liệu), Bạch Minh Quang (đào tạo), đại diện doanh nghiệp.
+[] Hoạt động thực hiện:
+[List Paragraph] Chuẩn bị môi trường production theo biểu đồ triển khai: máy chủ ứng dụng, máy chủ CSDL trong mạng riêng, Nginx HTTPS, sao lưu hằng ngày giữ 30 bản.
+[List Paragraph] Chuyển danh mục hàng hóa và số tồn đầu kỳ từ các file Excel hiện có vào hệ thống. Vì file hiện tại ghi màu, size, số tồn chung trên dòng sản phẩm, dữ liệu phải được tách về từng biến thể và từng kho trước khi nhập; sau khi chuyển, đối chiếu tổng tồn theo mẫu và theo từng biến thể với file gốc.
+[List Paragraph] Người dùng thực hiện kiểm thử chấp nhận trên dữ liệu thật của mùa hàng hiện tại theo kịch bản ở Bảng 4, bao gồm một đợt kiểm kê thử tại một kho cửa hàng bằng máy quét mã vạch.
+[List Paragraph] Diễn tập khôi phục CSDL từ bản sao lưu.
+[List Paragraph] Kiểm tra tài liệu hướng dẫn sử dụng cho 3 vai trò và tài liệu vận hành hệ thống.
+[List Paragraph] Đào tạo quản lý, nhân viên kho, nhân viên bán hàng; ghi nhận câu hỏi và bổ sung vào tài liệu.
+[List Paragraph] Lập hồ sơ nghiệm thu: đối chiếu kết quả với mục tiêu chất lượng ở Bảng 1, báo cáo kiểm thử, danh sách lỗi còn tồn và phương án xử lý.
+[] Tiêu chí chất lượng:
+[List Paragraph] Đáp ứng đủ 19 chức năng bắt buộc và các yêu cầu bảo mật NFR-06, NFR-07.
+[List Paragraph] 10 vấn đề khách hàng nêu trong báo cáo khảo sát đều được giải quyết và nghiệm thu đạt.
+[List Paragraph] Dữ liệu tồn đầu kỳ sau chuyển đổi khớp 100% với file gốc đã được doanh nghiệp xác nhận, cả ở cấp mẫu lẫn cấp biến thể.
+[List Paragraph] Sai lệch sau đợt kiểm kê thử dưới 1%; báo cáo nhập - xuất - tồn tháng được lập trong dưới 1 phút.
+[List Paragraph] Khôi phục CSDL thành công trong thời gian dưới 4 giờ (NFR-08).
+[List Paragraph] Tài liệu hướng dẫn đầy đủ cho 3 vai trò; 100% người dùng chủ chốt đã tham gia đào tạo.
+[List Paragraph] Đại diện doanh nghiệp ký xác nhận nghiệm thu.
+[] Kết quả đầu ra: hệ thống chạy trên môi trường production; biên bản chuyển đổi dữ liệu; tài liệu hướng dẫn sử dụng và vận hành; báo cáo nghiệm thu; biên bản nghiệm thu và bàn giao.
+[Heading 2] 5. Các mốc kiểm soát chất lượng
+[] Dự án chỉ chuyển sang giai đoạn tiếp theo khi mốc kiểm soát của giai đoạn trước đạt đủ điều kiện và được Giám đốc dự án phê duyệt.
+[] Bảng 6. Mốc kiểm soát chất lượng
+[Heading 2] 6. Theo dõi và báo cáo chất lượng
+[] Nhóm theo dõi chất lượng bằng các chỉ số trong Bảng 7, cập nhật trong buổi họp tiến độ hằng tuần và tổng hợp vào báo cáo tại mỗi mốc kiểm soát.
+[] Bảng 7. Chỉ số theo dõi chất lượng
+[] Khi một chỉ số không đạt ngưỡng, người phụ trách nội dung tương ứng phải nêu nguyên nhân và hành động khắc phục trong buổi họp kế tiếp. Hành động khắc phục được theo dõi đến khi chỉ số trở lại ngưỡng mong đợi.
+
+--- TABLES 8 ---
+
+[TABLE 1]
+Dự án | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang
+Mã số | CNTT20261_N01
+Thời gian | 01/09/2026 - 31/03/2027
+Giám đốc dự án | Bùi Tuấn Anh
+Trưởng nhóm kỹ thuật | Bùi Quốc Luýt
+Thành viên | Vũ Quang Minh, Bạch Minh Quang, Phạm Đoàn Bảo Thiên
+
+[TABLE 2]
+STT | Mục tiêu chất lượng | Chỉ tiêu | Cách kiểm tra
+1 | Tồn kho chính xác | Sai lệch giữa tồn hệ thống và tồn thực tế sau đợt kiểm kê thử dưới 1% | Kiểm kê thử một kho cửa hàng trong UAT, so sánh chênh lệch trên phiếu kiểm kê
+2 | Không xuất vượt tồn | 0 trường hợp tồn âm, kể cả khi nhiều phiếu xuất cùng trừ một biến thể | Kiểm thử đồng thời (NFR-04); kiểm tra ràng buộc CHECK so_luong ≥ 0
+3 | Truy vết đầy đủ | 100% thay đổi tồn có dòng thẻ kho gắn với phiếu và người thực hiện; thẻ kho không sửa, không xóa được | Đối chiếu tổng thẻ kho với bảng tồn kho; thử sửa/xóa lịch sử biến động qua API
+4 | Báo cáo nhanh và đúng | Báo cáo nhập - xuất - tồn một tháng sinh ra dưới 10 giây, số liệu thỏa công thức Tồn cuối = Tồn đầu + Nhập - Xuất ± Điều chỉnh | Kiểm thử hiệu năng (NFR-02); đối chiếu thủ công trên bộ dữ liệu mẫu
+5 | Cảnh báo tồn thấp đúng | 100% biến thể được phân loại đúng Hết hàng / Sắp hết / Bình thường theo QT-05 | Test case giá trị biên: tồn = 0, tồn = tồn tối thiểu, tồn = tồn tối thiểu + 1
+6 | Quản lý biến thể đúng | 100% biến thể sinh đúng tổ hợp màu x size của mẫu; không trùng SKU; tồn của các biến thể cùng mẫu độc lập với nhau | Kiểm thử sinh biến thể cho áo (size chữ) và quần (size số); kiểm thử nhập, xuất trên từng biến thể
+7 | Phát hiện hàng tồn lâu | 100% biến thể quá ngưỡng số ngày tồn xuất hiện trong báo cáo hàng tồn lâu với số ngày đúng | Test case với biến thể có ngày nhập gần nhất khác nhau
+8 | An toàn và phân quyền | 100% chức năng tuân theo ma trận phân quyền (Bảng 2.4 báo cáo phân tích thiết kế); không còn lỗ hổng mức Critical | Kiểm thử phân quyền theo từng vai trò; kiểm thử bảo mật NFR-06, NFR-07
+
+[TABLE 3]
+Thành viên | Vai trò dự án | Trách nhiệm chất lượng
+Bùi Tuấn Anh | Giám đốc dự án, phân tích nghiệp vụ | Chịu trách nhiệm chung về chất lượng; chủ trì rà soát yêu cầu, UAT và nghiệm thu; phê duyệt qua mỗi mốc kiểm soát
+Bùi Quốc Luýt | Trưởng nhóm kỹ thuật, back-end | Rà soát kiến trúc, thiết kế lớp; duyệt pull request; quản lý chất lượng mã nguồn và quy trình sửa lỗi
+Vũ Quang Minh | Lập trình back-end | Viết unit test cho các nghiệp vụ kho; kiểm thử kiểm kê, đổi trả, hủy hàng
+Bạch Minh Quang | Thiết kế UI/UX, front-end | Bảo đảm giao diện đúng thiết kế, dùng được trên máy tính bảng và với máy quét mã vạch; kiểm thử phân quyền trên giao diện
+Phạm Đoàn Bảo Thiên | Thiết kế CSDL, kiểm thử | Phụ trách bộ test case và báo cáo kiểm thử; kiểm thử nhập, xuất, chuyển kho, đồng thời và hiệu năng
+Đại diện doanh nghiệp | Quản lý kho, nhân viên kho, nhân viên bán hàng | Xác nhận yêu cầu và quy tắc nghiệp vụ; duyệt prototype giao diện; thực hiện UAT; ký biên bản nghiệm thu
+
+[TABLE 4]
+STT | Nội dung quản lý | Hoạt động thực hiện | Tiêu chí chất lượng | Người phụ trách | Kết quả đầu ra
+1 | Quản lý yêu cầu | Khảo sát 4 quy trình kho, thu thập 13 biểu mẫu; thống nhất cách quản lý biến thể màu/size, vòng đời mẫu theo mùa, quy tắc đổi trả; rà soát yêu cầu với quản lý kho, bộ phận bán hàng | 10 vấn đề của khách hàng đều có yêu cầu đáp ứng; 100% trong 19 FR được xác nhận và truy vết tới use case; 11 NFR đều có tiêu chí đo; 6 quy tắc nghiệp vụ QT-01 đến QT-06 được doanh nghiệp xác nhận | Bùi Tuấn Anh, đại diện doanh nghiệp | Báo cáo khảo sát, tài liệu đặc tả yêu cầu đã xác nhận
+2 | Quản lý thiết kế | Rà soát mô hình use case, lớp, tuần tự, trạng thái; kiểm tra kiến trúc, lược đồ CSDL, giao diện và phân quyền | Thiết kế đáp ứng đủ 19 use case; tồn quản lý theo cặp (kho, biến thể); CSDL có ràng buộc chống tồn âm và thẻ kho chỉ thêm; 10 màn hình được người dùng duyệt; phân quyền khớp ma trận vai trò | Bùi Quốc Luýt, đại diện doanh nghiệp | Báo cáo phân tích thiết kế, lược đồ CSDL, prototype giao diện
+3 | Kiểm soát lập trình | Áp dụng quy ước code, quản lý phiên bản bằng Git, review chéo pull request, viết unit test | Mã nguồn qua review; không có lỗi Blocker/Critical từ phân tích tĩnh; độ phủ unit test ≥ 80% với dịch vụ tồn kho và nghiệp vụ kho | Bùi Quốc Luýt, nhóm phát triển | Mã nguồn trên nhánh chính, báo cáo unit test
+4 | Kiểm thử phần mềm | Kiểm thử chức năng, tích hợp, đồng thời, giao diện, hiệu năng và bảo mật; kiểm thử các tình huống riêng của hàng thời trang | 100% FR có test case; có đủ kịch bản biến thể màu/size, bán đa kênh, đổi size, hàng lỗi; ≥ 95% test case đạt; tra cứu tồn dưới 2 giây, báo cáo NXT dưới 10 giây; 0 trường hợp tồn âm | Phạm Đoàn Bảo Thiên, nhóm phát triển | Bộ test case, báo cáo kiểm thử
+5 | Quản lý lỗi | Ghi nhận, phân loại theo mức độ, sửa, kiểm thử lại và đóng lỗi | Không còn lỗi Blocker/Critical trước nghiệm thu; lỗi High đã sửa hoặc có phương án được Giám đốc dự án duyệt | Bùi Quốc Luýt, Phạm Đoàn Bảo Thiên | Danh sách lỗi và trạng thái xử lý
+6 | Nghiệm thu và bàn giao | UAT tại kho tổng và cửa hàng trên dữ liệu thật của mùa hàng hiện tại; chuyển đổi dữ liệu tồn đầu kỳ về cấp biến thể; kiểm tra tài liệu; đào tạo người dùng | Đạt đủ chức năng bắt buộc và yêu cầu bảo mật; dữ liệu tồn đầu kỳ khớp 100% file gốc; người dùng xác nhận; tài liệu đủ cho 3 vai trò | Bùi Tuấn Anh, đại diện doanh nghiệp | Biên bản nghiệm thu và bàn giao
+
+[TABLE 5]
+Loại kiểm thử | Kịch bản trọng tâm của đề tài | Người thực hiện
+Chức năng | Đăng nhập, khóa tài khoản sau 5 lần sai; CRUD danh mục; sinh biến thể theo màu x size và mã SKU không trùng | Bạch Minh Quang
+Biến thể và danh mục | Mẫu áo AT001 với 2 màu (Đen, Trắng) x 4 size (S, M, L, XL) sinh đúng 8 SKU; mẫu quần size 29, 30, 32 sinh đúng biến thể; thêm màu Xanh sinh thêm đúng 4 biến thể, không trùng SKU cũ; mẫu Ngừng bán không lập được phiếu nhập nhưng vẫn tra cứu được thẻ kho | Vũ Quang Minh
+Nghiệp vụ kho | Hoàn tất phiếu nhập cộng tồn và ghi thẻ kho; phiếu xuất không đủ tồn bị chặn; chuyển kho qua hai bước; phiếu đang lập hoặc chờ duyệt không làm đổi tồn | Phạm Đoàn Bảo Thiên
+Kiểm kê, hủy | Chênh lệch = thực tế - hệ thống cho từng biến thể; điều chỉnh chỉ sau khi Quản lý duyệt; hủy hàng chỉ trừ tồn sau khi duyệt | Vũ Quang Minh
+Đổi trả hàng thời trang | Khách đổi AT001 Đen/M sang Đen/L: tồn Đen/M tăng 1, Đen/L giảm 1, tiền chênh lệch bằng 0; đổi sang mẫu giá cao hơn: tính đúng tiền khách trả thêm; hàng trả bị lỗi đường may: vào kho hàng lỗi, tồn có thể bán không đổi, sau đó lập được phiếu hủy | Vũ Quang Minh
+Tích hợp | Giao diện gọi đúng API; các hệ thống con Nghiệp vụ kho, Kiểm kê đều đổi tồn qua dịch vụ Tồn kho; một bước lỗi giữa chừng thì toàn bộ giao dịch được hoàn tác | Bùi Quốc Luýt
+Đồng thời (bán đa kênh) | Biến thể AT001 Đen/M tại kho cửa hàng chỉ còn 1 sản phẩm, một yêu cầu xuất từ đơn tại quầy và một từ đơn trực tuyến được xử lý cùng lúc: chỉ một phiếu hoàn tất, phiếu còn lại báo không đủ tồn, tồn cuối bằng 0 | Phạm Đoàn Bảo Thiên
+Tra cứu và báo cáo | Lọc tồn theo kho, sản phẩm, màu, size, vị trí; trạng thái tồn tại các giá trị biên; số liệu NXT khớp công thức và khớp thẻ kho; biến thể có ngày nhập gần nhất quá ngưỡng xuất hiện trong báo cáo hàng tồn lâu với số ngày đúng; file Excel mở được và đúng số | Bùi Tuấn Anh
+Giao diện | Hiển thị đúng thiết kế trên Chrome, Edge và máy tính bảng 10 inch; máy quét mã vạch nhập SKU đúng; menu hiển thị theo quyền | Bạch Minh Quang
+Hiệu năng | Tra cứu tồn dưới 2 giây với 50.000 biến thể và 100 người dùng đồng thời; báo cáo NXT một tháng dưới 10 giây (dùng JMeter) | Phạm Đoàn Bảo Thiên
+Bảo mật | Truy cập qua HTTPS; phiên hết hạn sau 30 phút; người dùng không gọi được API ngoài quyền; thẻ kho không sửa, xóa được | Phạm Đoàn Bảo Thiên
+Chấp nhận (UAT) | Người dùng chạy trọn luồng trên dữ liệu mùa hàng hiện tại: nhập lô hàng mới từ NCC, chuyển hàng từ kho tổng ra cửa hàng, xuất cho đơn tại quầy và đơn trực tuyến, đổi size, kiểm kê cuối tuần, chuyển mẫu hết mùa sang Ngừng bán, lập báo cáo tháng và báo cáo hàng tồn lâu | Bùi Tuấn Anh, đại diện doanh nghiệp
+
+[TABLE 6]
+Mức độ | Mô tả | Ví dụ trong hệ thống | Thời hạn xử lý
+Blocker | Hệ thống không dùng được hoặc làm sai lệch dữ liệu tồn kho | Tồn bị âm; hoàn tất phiếu không ghi thẻ kho; không đăng nhập được | Trong 1 ngày
+Critical | Nghiệp vụ chính sai hoặc lỗ hổng bảo mật | Báo cáo NXT sai số; đổi size làm sai tồn của biến thể trả lại hoặc biến thể đổi sang; hàng lỗi được cộng vào tồn bán; nhân viên bán hàng duyệt được điều chỉnh tồn | Trong 2 ngày
+High | Chức năng quan trọng hoạt động sai nhưng có cách làm tạm | Cảnh báo tồn thấp phân loại sai; thêm màu mới không sinh được biến thể; xuất Excel lỗi; máy quét không chuyển con trỏ | Trong 3 ngày
+Medium | Chức năng phụ sai, ảnh hưởng hạn chế | Bộ lọc tra cứu theo size số sai thứ tự; báo cáo hàng tồn lâu sắp xếp sai | Trong đợt sửa lỗi kế tiếp
+Low | Lỗi hiển thị, chính tả, bố cục | Sai nhãn cột, lệch bố cục trên máy tính bảng | Trước khi bàn giao nếu còn thời gian
+
+[TABLE 7]
+Mốc | Thời điểm | Điều kiện đạt | Người phê duyệt
+M1 - Chốt yêu cầu | 25/09/2026 | Tài liệu đặc tả yêu cầu được doanh nghiệp xác nhận | Bùi Tuấn Anh, đại diện doanh nghiệp
+M2 - Chốt phân tích thiết kế | 20/11/2026 | Mô hình UML và kiến trúc qua rà soát, không còn ý kiến nghiêm trọng | Bùi Tuấn Anh, Bùi Quốc Luýt
+M3 - Chốt CSDL và giao diện | 25/12/2026 | Lược đồ CSDL và script chạy được; prototype 10 màn hình được người dùng duyệt | Bùi Tuấn Anh, đại diện doanh nghiệp
+M4 - Hoàn thành lập trình | 15/02/2027 | Đủ chức năng theo WBS; unit test đạt độ phủ yêu cầu; không lỗi Blocker/Critical từ phân tích tĩnh | Bùi Quốc Luýt
+M5 - Hoàn thành kiểm thử | 15/03/2027 | ≥ 95% test case đạt; không còn lỗi Blocker/Critical; đạt NFR-01, NFR-02 | Bùi Tuấn Anh
+M6 - Nghiệm thu | 31/03/2027 | Đạt các tiêu chí mục 4.6; biên bản nghiệm thu được ký | Bùi Tuấn Anh, đại diện doanh nghiệp
+
+[TABLE 8]
+Chỉ số | Cách tính | Ngưỡng mong đợi | Tần suất
+Tỷ lệ yêu cầu được truy vết | Số FR có use case và test case / tổng số FR | 100% | Mỗi mốc
+Tỷ lệ pull request được review | Số PR có review / tổng số PR đã gộp | 100% | Hằng tuần (giai đoạn D)
+Độ phủ unit test dịch vụ tồn kho | Theo báo cáo công cụ đo độ phủ | ≥ 80% | Mỗi lần build
+Tỷ lệ test case đạt | Số test case đạt / số test case đã chạy | ≥ 95% | Hằng tuần (giai đoạn E)
+Số lỗi mở theo mức độ | Đếm trên công cụ quản lý lỗi | Blocker/Critical = 0 tại M5 | 2 lần/tuần (giai đoạn E)
+Tỷ lệ lỗi mở lại | Số lỗi mở lại / số lỗi đã đóng | < 10% | Hằng tuần (giai đoạn E)
+Sai lệch tồn sau kiểm kê thử | Tổng giá trị tuyệt đối chênh lệch / tổng tồn hệ thống | < 1% | Tại M6
+
+================================================================================
+FILE: ton-chi-DA-va-phan-ra-cong-viec.xlsx
+================================================================================
+SHEETS: ['WBS_PhanRaCTCongViec', 'TongCongSoMoiThanhVien', 'TonChiDA']
+
+--- SHEET WBS_PhanRaCTCongViec ---
+STT | Task | Mô tả | Sản phẩm | Thời gian | Thứ tự thực hiện | Người thực hiện | Estimate (manday) |  |  |  |  | 
+ |  |  |  |  |  |  | MO | ML | MP | EST PERT | Buffer | EST chốt
+ |  |  |  |  |  |  |  |  |  |  | 0.1 | 
+A. KHẢO SÁT & YÊU CẦU |  |  |  |  |  |  |  |  |  |  |  | 
+1 | Khảo sát quy trình nhập hàng và đổi trả | Khảo sát cách kho nhận hàng từ nhà cung cấp, kiểm tra mẫu mã, màu, size, đối chiếu hóa đơn nhập; cách tiếp nhận và phân loại hàng khách trả lại. | Báo cáo khảo sát & đặc tả yêu cầu | 01/09/2026-25/09/2026 | Từ đầu | Bùi Tuấn Anh | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+2 | Khảo sát quy trình xuất hàng, chuyển kho, hủy hàng | Khảo sát cách bộ phận bán hàng gửi yêu cầu xuất, cách kho soạn hàng, chuyển hàng giữa kho tổng và kho cửa hàng, xử lý hàng lỗi hỏng. | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Bùi Quốc Luýt | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+3 | Khảo sát kiểm kê và thu thập biểu mẫu | Khảo sát quy trình kiểm kê, đối chiếu sổ sách; thu thập 13 biểu mẫu gồm 7 phiếu chứng từ và 6 mẫu báo cáo đang sử dụng. | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Phạm Đoàn Bảo Thiên | 2 | 4 | 6 | 4 | 0.4 | 4.4
+4 | Khảo sát thông tin hàng hóa và biến thể | Khảo sát cách ghi nhận sản phẩm, loại, màu, size, giá nhập, giá bán, vị trí lưu trữ; xác định cấp quản lý đúng (sản phẩm hay biến thể). | Báo cáo khảo sát & đặc tả yêu cầu |  | Từ đầu | Bạch Minh Quang | 1 | 2 | 4 | 2.1666666666666665 | 0.21666666666666667 | 2.3833333333333333
+5 | Tổng hợp hiện trạng | Tổng hợp kết quả khảo sát, mô tả 4 quy trình cốt lõi, liệt kê hạn chế của cách quản lý bằng sổ sách và Excel, đối chiếu vấn đề với nhu cầu hệ thống. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 1, 2, 3, 4 | Bùi Tuấn Anh | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+6 | Xác định mục tiêu, phạm vi và quy tắc nghiệp vụ | Xác định mục tiêu đo được, phạm vi trong và ngoài hệ thống, tác nhân và các quy tắc nghiệp vụ QT-01 đến QT-06 (tồn không âm, chỉ đổi tồn khi phiếu hoàn thành...). | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 5 | Bùi Tuấn Anh | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+7 | Phân tích yêu cầu chức năng và phi chức năng | Lập danh sách 19 yêu cầu chức năng (FR) và 11 yêu cầu phi chức năng (NFR) kèm tiêu chí đo về hiệu năng, toàn vẹn dữ liệu, bảo mật. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 6 | Bùi Quốc Luýt | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+8 | Xác nhận/chỉnh sửa yêu cầu | Trao đổi với quản lý kho và bộ phận bán hàng của doanh nghiệp, tiếp nhận phản hồi và chốt tài liệu đặc tả yêu cầu. | Báo cáo khảo sát & đặc tả yêu cầu |  | Sau Task 7 | Bùi Tuấn Anh | 1 | 2 | 3 | 2 | 0.2 | 2.2
+B. PHÂN TÍCH & THIẾT KẾ HỆ THỐNG |  |  |  |  |  |  |  |  |  |  |  | 
+9 | Xác định tác nhân và ma trận phân quyền | Xác định tác nhân Người dùng, Quản lý, Nhân viên kho, Nhân viên bán hàng; lập ma trận phân quyền vai trò - use case làm căn cứ RBAC. | Báo cáo phân tích thiết kế (UML) | 26/09/2026-20/11/2026 | Sau Task 8 | Bùi Tuấn Anh | 1 | 2 | 3 | 2 | 0.2 | 2.2
+10 | Xây dựng biểu đồ use case | Vẽ biểu đồ use case tổng quát và phân rã 4 gói: Quản trị hệ thống, Quản lý danh mục, Nghiệp vụ kho, Tồn kho và báo cáo. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 9 | Bùi Tuấn Anh | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+11 | Đặc tả use case | Đặc tả luồng chính, luồng thay thế, điều kiện trước/sau cho 19 use case, chi tiết nhất cho Nhập kho, Xuất kho, Duyệt điều chỉnh tồn, Đổi trả. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 10 | Phạm Đoàn Bảo Thiên | 4 | 6 | 8 | 6 | 0.6000000000000001 | 6.6
+12 | Mô hình lĩnh vực và biểu đồ lớp phân tích | Xây dựng mô hình lĩnh vực (sản phẩm, biến thể, kho, tồn kho, phiếu kho, thẻ kho) và biểu đồ lớp phân tích theo mẫu BCE cho các use case trọng tâm. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 11 | Bùi Tuấn Anh | 3 | 5 | 7 | 5 | 0.5 | 5.5
+13 | Thiết kế biểu đồ tuần tự | Vẽ 4 biểu đồ tuần tự cho UC Nhập kho, Xuất kho, Duyệt điều chỉnh tồn kho, Xử lý đổi trả hàng. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 12 | Vũ Quang Minh | 3 | 5 | 7 | 5 | 0.5 | 5.5
+14 | Thiết kế biểu đồ hoạt động và trạng thái | Vẽ 4 biểu đồ hoạt động (nghiệp vụ tổng quát, yêu cầu và xuất kho, kiểm kê, đổi trả) và 2 biểu đồ trạng thái của PhieuKho, PhieuKiemKe. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 11 | Bạch Minh Quang | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+15 | Thiết kế kiến trúc hệ thống | Chọn kiến trúc web 3 tầng (React - Spring Boot - PostgreSQL), chia 6 hệ thống con, tổ chức biểu đồ gói theo BCE và quy tắc phụ thuộc. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 12 | Bùi Quốc Luýt | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+16 | Thiết kế biểu đồ thành phần và triển khai | Mô tả các thành phần phần mềm, REST API cung cấp; bố trí máy chủ ứng dụng, máy chủ CSDL, lưu trữ sao lưu và máy tính bảng tại kho. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 15 | Vũ Quang Minh | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+17 | Thiết kế lớp chi tiết | Chi tiết hóa lớp thiết kế: kiểu dữ liệu, tầm vực, phương thức cho nhóm chứng từ kho, tồn kho và kiểm kê, danh mục hàng hóa và quản trị. | Báo cáo phân tích thiết kế (UML) |  | Sau Task 13, 15 | Bùi Quốc Luýt | 3 | 5 | 7 | 5 | 0.5 | 5.5
+C. THIẾT KẾ CƠ SỞ DỮ LIỆU & GIAO DIỆN |  |  |  |  |  |  |  |  |  |  |  | 
+18 | Thiết kế lược đồ CSDL | Ánh xạ lớp thực thể sang 15 bảng, xác định khóa chính, khóa ngoại, quan hệ giữa sản phẩm, biến thể, kho, tồn kho, phiếu kho và thẻ kho. | Lược đồ CSDL & từ điển dữ liệu | 21/11/2026-25/12/2026 | Sau Task 17 | Phạm Đoàn Bảo Thiên | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+19 | Xây dựng từ điển dữ liệu, ràng buộc và chỉ mục | Đặc tả chi tiết từng cột; ràng buộc CHECK tồn không âm, UNIQUE (kho, biến thể), chỉ mục thẻ kho theo (biến thể, kho, thời gian). | Lược đồ CSDL & từ điển dữ liệu |  | Sau Task 18 | Phạm Đoàn Bảo Thiên | 2 | 4 | 5 | 3.8333333333333335 | 0.38333333333333336 | 4.216666666666667
+20 | Tạo script CSDL PostgreSQL và dữ liệu mẫu | Viết script migration tạo bảng, khóa, ràng buộc trên PostgreSQL 16 và bộ dữ liệu mẫu (sản phẩm nhiều màu/size, nhiều kho) phục vụ phát triển. | Lược đồ CSDL & từ điển dữ liệu |  | Sau Task 19 | Vũ Quang Minh | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+21 | Thiết kế luồng màn hình và bố cục chung | Thiết kế luồng chuyển 10 màn hình, bố cục menu trái hiển thị theo quyền, ô tìm SKU nhận dữ liệu từ máy quét mã vạch, responsive cho máy tính bảng 10 inch. | Thiết kế UI/UX hệ thống |  | Sau Task 17 | Bạch Minh Quang | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+22 | Thiết kế giao diện đăng nhập và tổng quan | Thiết kế MH-01 Đăng nhập và MH-02 Tổng quan hiển thị cảnh báo hết hàng, sắp hết và các phiếu chờ xử lý. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Bạch Minh Quang | 1 | 2 | 3 | 2 | 0.2 | 2.2
+23 | Thiết kế giao diện sản phẩm và biến thể | Thiết kế MH-03 quản lý mẫu sản phẩm, sinh ma trận màu x size, khai báo giá nhập, giá bán, tồn tối thiểu cho từng biến thể. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Bạch Minh Quang | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+24 | Thiết kế giao diện phiếu nhập, xuất, đổi trả | Thiết kế MH-04 Lập phiếu nhập kho, MH-05 Xử lý phiếu xuất, MH-08 Đổi trả hàng với thao tác quét hàng, hiển thị tồn khả dụng và thông báo lỗi. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Bạch Minh Quang | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+25 | Thiết kế giao diện kiểm kê, tra cứu, báo cáo | Thiết kế MH-06 Kiểm kê, MH-07 Duyệt kiểm kê, MH-09 Tra cứu tồn kho và thẻ kho, MH-10 Báo cáo với bộ lọc và xuất Excel. | Thiết kế UI/UX hệ thống |  | Sau Task 21 | Bùi Tuấn Anh | 2 | 4 | 5 | 3.8333333333333335 | 0.38333333333333336 | 4.216666666666667
+D. XÂY DỰNG CHƯƠNG TRÌNH |  |  |  |  |  |  |  |  |  |  |  | 
+26 | Dựng khung dự án và môi trường phát triển | Khởi tạo dự án Spring Boot 3 và ReactJS/TypeScript, cấu hình Docker, kho mã nguồn, quy ước code và pipeline build tự động. | Mã nguồn & module chạy được | 26/12/2026-15/02/2027 | Sau Task 20 | Bùi Quốc Luýt | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+27 | Đăng nhập & quản lý tài khoản | Xây dựng đăng nhập JWT, đổi mật khẩu, khóa tài khoản sau 5 lần sai; quản lý tài khoản, gán vai trò và kho phụ trách (UC-1.1, UC-1.2). | Mã nguồn & module chạy được |  | Sau Task 26 | Bùi Quốc Luýt | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+28 | Quản lý danh mục loại, màu, size, NCC, kho | Xây dựng CRUD loại sản phẩm, màu sắc, kích thước, nhà cung cấp, kho và vị trí kho (UC-2.3, UC-2.4, UC-2.5). | Mã nguồn & module chạy được |  | Sau Task 26 | Vũ Quang Minh | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+29 | Quản lý sản phẩm và biến thể | Xây dựng quản lý sản phẩm, sinh biến thể theo màu x size, tự sinh mã SKU, tìm kiếm và lọc theo loại, trạng thái (UC-2.1, UC-2.2). | Mã nguồn & module chạy được |  | Sau Task 28 | Vũ Quang Minh | 3 | 5 | 7 | 5 | 0.5 | 5.5
+30 | Dịch vụ tồn kho và thẻ kho | Xây dựng dịch vụ tăng, trừ, điều chỉnh tồn có khóa dòng (SELECT ... FOR UPDATE), ghi thẻ kho chỉ thêm không sửa, dùng chung cho mọi nghiệp vụ. | Mã nguồn & module chạy được |  | Sau Task 29 | Bùi Quốc Luýt | 4 | 5 | 8 | 5.333333333333333 | 0.5333333333333333 | 5.866666666666666
+31 | Nhập kho | Xây dựng lập phiếu nhập theo nhà cung cấp, quét SKU, hoàn tất phiếu trong một giao dịch: cộng tồn, ghi thẻ kho, đổi trạng thái (UC-3.1). | Mã nguồn & module chạy được |  | Sau Task 30 | Vũ Quang Minh | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+32 | Yêu cầu xuất kho và xuất kho | Xây dựng tạo yêu cầu xuất kèm mã đơn hàng cho nhân viên bán hàng; xử lý xuất kho kiểm tra đủ tồn, không cho tồn âm (UC-3.2, UC-3.3). | Mã nguồn & module chạy được |  | Sau Task 30 | Bùi Quốc Luýt | 4 | 5 | 7 | 5.166666666666667 | 0.5166666666666667 | 5.683333333333334
+33 | Chuyển kho | Xây dựng chuyển hàng giữa các kho qua hai bước xuất đi và xác nhận nhận hàng tại kho đích (UC-3.4). | Mã nguồn & module chạy được |  | Sau Task 32 | Vũ Quang Minh | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+34 | Kiểm kê và duyệt điều chỉnh tồn kho | Xây dựng phiếu kiểm kê theo phạm vi, tự tính chênh lệch = thực tế - hệ thống; Quản lý duyệt, hệ thống sinh phiếu điều chỉnh (UC-3.5, UC-3.6). | Mã nguồn & module chạy được |  | Sau Task 30 | Phạm Đoàn Bảo Thiên | 4 | 5 | 7 | 5.166666666666667 | 0.5166666666666667 | 5.683333333333334
+35 | Xử lý đổi trả hàng | Xây dựng tiếp nhận đổi trả: nhập lại hàng tốt vào kho bán, tách hàng lỗi sang kho hàng lỗi, xuất hàng đổi sang, tính tiền chênh lệch (UC-3.7). | Mã nguồn & module chạy được |  | Sau Task 32 | Phạm Đoàn Bảo Thiên | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+36 | Hủy hàng | Xây dựng lập phiếu hủy hàng lỗi, hỏng; phiếu chỉ trừ tồn sau khi Quản lý duyệt (UC-3.8). | Mã nguồn & module chạy được |  | Sau Task 35 | Phạm Đoàn Bảo Thiên | 1 | 2 | 3 | 2 | 0.2 | 2.2
+37 | Tra cứu tồn, cảnh báo tồn thấp, thẻ kho | Xây dựng tra cứu tồn theo kho, sản phẩm, màu, size, vị trí; cảnh báo hết hàng, sắp hết; truy xuất lịch sử biến động của biến thể (UC-4.1, UC-4.2, UC-4.4). | Mã nguồn & module chạy được |  | Sau Task 30 | Bạch Minh Quang | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+38 | Báo cáo kho và xuất Excel | Xây dựng 6 loại báo cáo: tồn kho, nhập, xuất, nhập - xuất - tồn, kiểm kê, hàng tồn lâu; xuất file .xlsx bằng Apache POI (UC-4.3). | Mã nguồn & module chạy được |  | Sau Task 31, 32, 34 | Bùi Tuấn Anh | 4 | 5 | 7 | 5.166666666666667 | 0.5166666666666667 | 5.683333333333334
+39 | Lập trình giao diện web | Hiện thực 10 màn hình theo thiết kế trên ReactJS, menu theo quyền, hỗ trợ máy quét mã vạch và kết nối REST API. | Mã nguồn & module chạy được |  | Sau Task 25, 27 | Bạch Minh Quang | 6 | 8 | 11 | 8.166666666666666 | 0.8166666666666667 | 8.983333333333333
+E. TÍCH HỢP & KIỂM THỬ |  |  |  |  |  |  |  |  |  |  |  | 
+40 | Tích hợp các module | Kết nối giao diện với các dịch vụ, bảo đảm các hệ thống con Nghiệp vụ kho, Kiểm kê, Báo cáo đều đổi tồn qua dịch vụ Tồn kho và thẻ kho. | Báo cáo kiểm thử | 16/02/2027-15/03/2027 | Sau Task 39 | Bùi Quốc Luýt | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+41 | Kiểm thử đăng nhập, phân quyền, danh mục | Kiểm thử đăng nhập, khóa tài khoản, truy cập chức năng theo từng vai trò; CRUD danh mục, sinh SKU không trùng. | Báo cáo kiểm thử |  | Sau Task 40 | Bạch Minh Quang | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+42 | Kiểm thử nhập, xuất, chuyển kho | Kiểm thử cộng trừ tồn, ghi thẻ kho; kiểm thử hai phiếu xuất đồng thời trên cùng biến thể không làm tồn âm (NFR-04). | Báo cáo kiểm thử |  | Sau Task 40 | Phạm Đoàn Bảo Thiên | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+43 | Kiểm thử kiểm kê, đổi trả, hủy hàng | Kiểm thử tính chênh lệch, luồng duyệt điều chỉnh, phân loại hàng trả tốt/lỗi, hủy hàng chỉ có hiệu lực sau khi duyệt. | Báo cáo kiểm thử |  | Sau Task 40 | Vũ Quang Minh | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+44 | Kiểm thử tra cứu và báo cáo | Đối chiếu số liệu báo cáo với thẻ kho: tồn cuối = tồn đầu + nhập - xuất ± điều chỉnh; kiểm tra cảnh báo tồn thấp và file Excel xuất ra. | Báo cáo kiểm thử |  | Sau Task 40 | Bùi Tuấn Anh | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+45 | Kiểm thử hiệu năng và bảo mật | Đo tra cứu tồn dưới 2 giây với 50.000 biến thể và 100 người dùng; báo cáo NXT tháng dưới 10 giây; kiểm tra HTTPS, hết phiên, mã hóa mật khẩu. | Báo cáo kiểm thử |  | Sau Task 40 | Phạm Đoàn Bảo Thiên | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+46 | Kiểm thử toàn hệ thống (UAT) | Cho người dùng doanh nghiệp chạy thử các luồng nghiệp vụ trọn vẹn từ nhập hàng, xuất bán, kiểm kê đến lập báo cáo; ghi nhận lỗi và góp ý. | Báo cáo kiểm thử |  | Sau Task 41, 42, 43, 44, 45 | Bùi Tuấn Anh | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+47 | Sửa lỗi & hoàn thiện | Phân tích nguyên nhân, sửa các lỗi phát hiện trong quá trình kiểm thử và hoàn thiện hệ thống trước khi nghiệm thu. | Báo cáo kiểm thử |  | Sau Task 46 | Bùi Quốc Luýt | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+ |  |  |  |  |  | Vũ Quang Minh | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+ |  |  |  |  |  | Bạch Minh Quang | 3 | 4 | 6 | 4.166666666666667 | 0.41666666666666674 | 4.583333333333334
+F. TRIỂN KHAI & BÀN GIAO |  |  |  |  |  |  |  |  |  |  |  | 
+48 | Chuẩn bị môi trường triển khai | Chuẩn bị máy chủ ứng dụng, máy chủ CSDL, Nginx HTTPS, cấu hình sao lưu hằng ngày giữ 30 bản gần nhất. | Tài liệu cấu hình hệ thống | 16/03/2027-31/03/2027 | Sau Task 47 | Bùi Quốc Luýt | 1 | 2 | 3 | 2 | 0.2 | 2.2
+49 | Chuyển đổi dữ liệu và triển khai hệ thống | Chuyển danh mục hàng hóa và số tồn đầu kỳ từ các file Excel hiện có vào hệ thống, triển khai và chạy thử tại kho tổng và cửa hàng. | Biên bản nghiệm thu |  | Sau Task 48 | Vũ Quang Minh | 2 | 3 | 5 | 3.1666666666666665 | 0.31666666666666665 | 3.4833333333333334
+50 | Viết tài liệu hướng dẫn | Viết tài liệu hướng dẫn sử dụng theo vai trò Quản lý, Nhân viên kho, Nhân viên bán hàng và tài liệu vận hành hệ thống. | Tài liệu hướng dẫn |  | Sau Task 48 | Phạm Đoàn Bảo Thiên | 2 | 3 | 4 | 3 | 0.30000000000000004 | 3.3
+51 | Báo cáo nghiệm thu | Tổng hợp kết quả thực hiện, kết quả kiểm thử, đối chiếu với mục tiêu dự án và lập hồ sơ nghiệm thu. | Báo cáo nghiệm thu |  | Sau Task 49, 50 | Bùi Tuấn Anh | 1 | 2 | 3 | 2 | 0.2 | 2.2
+52 | Đào tạo người dùng | Hướng dẫn nhân viên kho và cửa hàng sử dụng hệ thống, máy quét mã vạch; hỗ trợ trong thời gian đầu vận hành. | Xác nhận bàn giao |  | Sau Task 51 | Bạch Minh Quang | 1 | 2 | 3 | 2 | 0.2 | 2.2
+Tổng |  |  |  |  |  |  | 134 | 197 | 288 | 201.66666666666657 | 20.166666666666668 | 221.83333333333331
+
+--- SHEET TongCongSoMoiThanhVien ---
+Thành viên | Giai đoạn A | Giai đoạn B | Giai đoạn C | Giai đoạn D | Giai đoạn E | Giai đoạn F | Tổng cộng
+Bùi Tuấn Anh | 12.283333333333331 | 11 | 4.216666666666667 | 5.683333333333334 | 7.883333333333334 | 2.2 | 43.26666666666667
+Bùi Quốc Luýt | 8.066666666666666 | 10.083333333333334 | 0 | 19.433333333333334 | 9.166666666666668 | 2.2 | 48.95
+Vũ Quang Minh | 0 | 8.8 | 3.4833333333333334 | 18.150000000000002 | 8.066666666666666 | 3.4833333333333334 | 41.983333333333334
+Bạch Minh Quang | 2.3833333333333333 | 4.583333333333334 | 13.383333333333335 | 13.566666666666666 | 7.883333333333334 | 2.2 | 44.00000000000001
+Phạm Đoàn Bảo Thiên | 4.4 | 6.6 | 8.8 | 12.466666666666669 | 8.066666666666666 | 3.3 | 43.633333333333326
+Tổng | 27.133333333333333 | 41.06666666666667 | 29.883333333333336 | 69.3 | 41.06666666666666 | 13.383333333333333 | 221.83333333333331
+
+--- SHEET TonChiDA ---
+PHẦN 2 : TÔN CHỈ DỰ ÁN |  |  | 
+Tôn chỉ dự án (Project Charter) |  |  | 
+1.    Mô tả dự án  |  |  | 
+• Tên dự án: Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  |  | 
+• Ngày bắt đầu: 01/09/2026 |  |  | 
+• Ngày kết thúc: 31/03/2027 |  |  | 
+• Chủ đầu tư: Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát) |  |  | 
+• Kinh phí: 408.196.650 VND (Bốn trăm linh tám triệu một trăm chín mươi sáu nghìn sáu trăm năm mươi đồng) |  |  | 
+• Giám đốc dự án: Bùi Tuấn Anh |  |  | 
+• Mục tiêu dự án: / - Mục tiêu tổng quát: Xây dựng thành công hệ thống phần mềm quản lý hàng hóa và kho bãi cho doanh nghiệp kinh doanh thời trang, thay thế việc quản lý bằng sổ sách và nhiều file Excel rời rạc, lấy kho làm trung tâm và quản lý tồn kho đến từng biến thể (sản phẩm + màu + size). / - Mục tiêu cụ thể: /   + Tồn kho của mọi biến thể tại mọi kho được cập nhật ngay khi phiếu kho hoàn tất; sai lệch giữa tồn hệ thống và thực tế sau kiểm kê định kỳ dưới 1%. /   + Không thể xuất kho vượt quá số lượng tồn, kể cả khi nhiều yêu cầu xuất được xử lý đồng thời. /   + Truy xuất được toàn bộ lịch sử biến động của một biến thể (ai, khi nào, chứng từ nào, thay đổi bao nhiêu) trong vài giây. /   + Rút thời gian lập báo cáo nhập - xuất - tồn tháng từ khoảng một ngày làm việc xuống dưới 1 phút. /   + Cảnh báo tự động các biến thể hết hàng hoặc sắp hết để quản lý chủ động nhập bổ sung. |  |  | 
+- Chức năng nghiệp vụ: Hệ thống cung cấp các chức năng phục vụ hoạt động chính của kho: /   + Quản trị hệ thống: Đăng nhập, đổi mật khẩu, quản lý tài khoản, gán vai trò và kho phụ trách. /   + Quản lý danh mục: Sản phẩm, biến thể theo màu/size với mã SKU, loại sản phẩm, màu sắc, kích thước, nhà cung cấp, kho và vị trí kho. /   + Nhập kho: Lập phiếu nhập theo nhà cung cấp; khi hoàn tất tự động cộng tồn và ghi thẻ kho. /   + Yêu cầu xuất và xuất kho: Bộ phận bán hàng tạo yêu cầu kèm mã đơn hàng; kho kiểm tra đủ tồn, trừ tồn, không cho phép tồn âm. /   + Chuyển kho: Chuyển hàng giữa kho tổng và kho cửa hàng qua hai bước xuất đi và xác nhận nhận hàng. /   + Kiểm kê và điều chỉnh tồn: Ghi nhận số thực tế, tự tính chênh lệch; điều chỉnh tồn chỉ sau khi Quản lý duyệt. /   + Đổi trả và hủy hàng: Nhập lại hàng tốt, tách hàng lỗi sang kho hàng lỗi, tính tiền chênh lệch; hủy hàng lỗi hỏng có phê duyệt. /   + Tra cứu và cảnh báo: Tra cứu tồn theo kho, sản phẩm, màu, size, vị trí; cảnh báo hết hàng, sắp hết so với tồn tối thiểu. /   + Báo cáo và thẻ kho: Báo cáo tồn kho, nhập, xuất, nhập - xuất - tồn, kiểm kê, hàng tồn lâu, xuất Excel; truy xuất lịch sử biến động của biến thể. |  |  | 
+- Yêu cầu kĩ thuật (Đáp ứng được tiêu chuẩn của một ứng dụng Web): / + Kiến trúc & Công nghệ: Ứng dụng web 3 tầng; giao diện ReactJS/TypeScript, REST API Java 21 - Spring Boot 3, CSDL PostgreSQL 16, triển khai bằng Docker và Nginx. / + Giao diện tiếng Việt, hiển thị tốt trên máy tính và máy tính bảng 10 inch; hỗ trợ máy quét mã vạch; chạy trên Chrome, Edge. / + Toàn vẹn dữ liệu: Hoàn tất phiếu kho là một giao dịch nguyên tử; khóa dòng tồn kho khi cập nhật; thẻ kho chỉ được thêm, lưu tối thiểu 5 năm. / + Hiệu năng: Tra cứu tồn dưới 2 giây với 50.000 biến thể và 100 người dùng đồng thời; báo cáo nhập - xuất - tồn tháng dưới 10 giây. / + Bảo mật: Phân quyền theo vai trò (RBAC), mật khẩu băm bcrypt, truy cập qua HTTPS, phiên hết hạn sau 30 phút không thao tác. / + Khả dụng: Sẵn sàng 99% trong giờ làm việc (7h - 22h); sao lưu CSDL hằng ngày, khôi phục trong 4 giờ. |  |  | 
+- Yêu cầu khác: / + Dữ liệu kho được tập trung trên một hệ thống duy nhất, loại bỏ việc mỗi nhân viên tự cập nhật file riêng. / + Mọi thay đổi số lượng tồn đều đi qua phiếu kho và ghi nhận người thực hiện để kiểm soát thao tác nhân viên. / + Giao diện trực quan, thao tác quét mã nhanh, giảm tối đa thời gian đào tạo cho nhân viên kho mới. |  |  | 
+- Phạm vi của dự án: / (1) Nằm trong phạm vi (In-Scope): / + Phân tích, thiết kế, phát triển và kiểm thử hệ thống quản lý hàng hóa và kho bãi. / + Quản lý tài khoản và phân quyền; danh mục sản phẩm, biến thể, NCC, kho, vị trí; nhập, xuất, chuyển kho, hủy hàng; kiểm kê và điều chỉnh tồn có phê duyệt; tiếp nhận đổi trả tại kho; tra cứu tồn, cảnh báo, báo cáo và thẻ kho. / + Chuyển đổi dữ liệu tồn đầu kỳ từ các file Excel hiện có, triển khai, đào tạo và bàn giao cho doanh nghiệp. /  / (2) Ngoài phạm vi (Out-of-Scope): / + Bán hàng tại quầy (POS), thanh toán, hóa đơn điện tử. / + Quản lý đơn đặt hàng với nhà cung cấp, công nợ NCC; kế toán giá vốn, định khoản. / + Kết nối sàn thương mại điện tử và đơn vị vận chuyển; chăm sóc khách hàng, khuyến mãi. / + Ứng dụng di động riêng và mua sắm trang thiết bị phần cứng (máy tính bảng, máy quét mã vạch). |  |  | 
+- Đối tượng sử dụng: Vai trò và trách nhiệm. |  |  | 
+Vai trò | Họ tên | Tổ chức/vị trí | Liên hệ 
+ |  | Organization/Position | Contact Information
+Khách hàng | Ban Giám đốc | Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát) | 
+Người sử dụng | Quản lý, Nhân viên kho, Nhân viên bán hàng | Kho tổng, kho cửa hàng và bộ phận bán hàng của doanh nghiệp | 
+Giám đốc dự án | Bùi Tuấn Anh | Trường CNTT&TT - ĐHBK Hà Nội / Giám đốc dự án, Phân tích nghiệp vụ | 
+Trưởng nhóm Kỹ thuật (Tech Lead) | Bùi Quốc Luýt | Trường CNTT&TT - ĐHBK Hà Nội / Trưởng nhóm kỹ thuật, Lập trình Back-end | 
+Thành viên | Vũ Quang Minh | Trường CNTT&TT - ĐHBK Hà Nội / Lập trình Back-end | 
+Thành viên | Bạch Minh Quang | Trường CNTT&TT - ĐHBK Hà Nội / Thiết kế UI/UX, Lập trình Front-end | 
+Thành viên | Phạm Đoàn Bảo Thiên | Trường CNTT&TT - ĐHBK Hà Nội / Thiết kế CSDL, Kiểm thử | 
+Ký tên |  |  | 
+2.    Công bố dự án |  |  | 
+Quyết định khởi công dự án phần mềm |  |  | 
+(Số 01 Ngày 31/07/2026) |  |  | 
+Tên dự án | Xây dựng hệ thống quản lý hàng hóa và kho bãi sản phẩm thời trang |  | 
+Mã số | CNTT20261_N01 |  | 
+Chủ đầu tư | Doanh nghiệp kinh doanh sản phẩm thời trang (đơn vị được khảo sát) |  | 
+Thời gian | 07 tháng (Từ 01/09/2026 đến 31/03/2027) |  | 
+Giám đốc dự án | Bùi Tuấn Anh |  | 
+Quản trị viên | Bùi Tuấn Anh |  | 
+Qui mô dự án | Dự án phần mềm quy mô vừa, ngân sách 408.196.650 VNĐ / Gồm 5 thành viên đảm nhận các công việc từ khảo sát, phân tích thiết kế, phát triển, kiểm thử đến triển khai. |  | 
+Mục tiêu và các yêu cầu | Xây dựng ứng dụng web quản lý tập trung hàng hóa và kho bãi sản phẩm thời trang, quản lý tồn kho theo biến thể màu/size, bảo đảm tồn kho chính xác và truy vết được mọi biến động; đáp ứng các yêu cầu toàn vẹn dữ liệu, hiệu năng, bảo mật, bàn giao đúng hạn ngày 31/03/2027 và tuân thủ ngân sách phê duyệt. |  | 
+ |  | Giám đốc dự án | 
+ |  | (Ký và ghi rõ tên) | 
+ |  | Bùi Tuấn Anh | 
