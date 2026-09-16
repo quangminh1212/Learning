@@ -1,0 +1,252 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{%
+  \IfFontExistsTF{Arial}{\setmainfont{Arial}}{\setmainfont{TeX Gyre Termes}}%
+}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{top=1.25cm,bottom=1.15cm,left=1.45cm,right=1.45cm}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{skip=3pt,font=small,labelfont=bf}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\renewcommand{\arraystretch}{1.10}
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+
+\definecolor{criticalbar}{RGB}{211,47,47}
+\definecolor{normalbar}{RGB}{63,125,190}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Quản trị dự án -- Bài 4}
+\rhead{\small Bach Minh Quang -- 202490077}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+
+\tikzset{
+  event/.style={circle,draw=black,thick,minimum size=10.6mm,inner sep=0.2pt,
+    font=\scriptsize\bfseries,align=center,fill=white},
+  arc/.style={-{Latex[length=2.0mm]},thick,normalbar},
+  criticalarc/.style={-{Latex[length=2.0mm]},very thick,criticalbar},
+  dummyarc/.style={-{Latex[length=2.0mm]},dashed,thick,gray!65!black},
+  arclabel/.style={font=\scriptsize\bfseries,fill=white,inner sep=0.8pt}
+}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI}\\[0.4pt]
+  {\bfseries Trường Công nghệ Thông tin và Truyền thông}\\[3.5pt]
+  {\Large\bfseries BÀI TẬP 4 -- SƠ ĐỒ PERT}\\[0.5pt]
+  {\small Bach Minh Quang \quad MSSV: 202490077 \quad Hà Nội, 09/2026}
+\end{center}
+\vspace{-2pt}
+\hrule
+\vspace{5pt}
+
+\paragraph{Đề bài.}
+Vẽ sơ đồ PERT, tính các yếu tố thời gian, các loại dự trữ và xác định đường găng.
+Số liệu như sau.
+
+\begin{table}[H]\centering
+\caption{Dữ liệu công việc -- Bài 4}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{CV} & \textbf{Trình tự} & \textbf{$d$} &
+\textbf{CV} & \textbf{Trình tự} & \textbf{$d$}\\
+\midrule
+$A$ & Từ đầu & 3 & $F$ & Sau $C$ & 9\\
+$B$ & Từ đầu & 2 & $I$ & Sau $H$ & 5\\
+$C$ & Sau $A$ & 4 & $K$ & Sau $I$ & 6\\
+$D$ & Sau $A$ & 2 & $L$ & Sau $I$ & 5\\
+$G$ & Sau $C$ & 3 & $M$ & Sau $F,K,L$ & 7\\
+$H$ & Sau $B,D,G$ & 6 & $N$ & Sau $F,K$ & 10\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{a. Sơ đồ PERT.}
+Mạng AOA. Mũi đỏ: công việc găng. Mũi xanh: không găng. Nét đứt: việc giả ($d=0$).
+Trong đỉnh: số hiệu sự kiện và $t_s/t_m$.
+Năm việc giả: $e_1$ nối hết $B$ vào đầu $H$; $e_2$ nối hết $D$ vào đầu $H$;
+$e_3$ nối hết $F$ vào đầu $N$; $e_4$ nối hết $K$ (đã gộp $F$) vào đầu $M$;
+$e_5$ nối hết $L$ vào đầu $M$.
+
+\begin{figure}[H]\centering
+\resizebox{0.99\linewidth}{!}{%
+\begin{tikzpicture}[x=1.05cm,y=0.82cm]
+  \node[event] (p1)  at (0.00, 2.20) {1\\[-1pt]{\tiny\normalfont $0/0$}};
+  \node[event] (p3)  at (2.05, 2.20) {3\\[-1pt]{\tiny\normalfont $3/3$}};
+  \node[event] (p5)  at (4.15, 2.20) {5\\[-1pt]{\tiny\normalfont $7/7$}};
+  \node[event] (p6)  at (6.25, 2.20) {6\\[-1pt]{\tiny\normalfont $10/10$}};
+  \node[event] (p8)  at (8.20, 2.20) {8\\[-1pt]{\tiny\normalfont $16/16$}};
+  \node[event] (p9)  at (10.15,2.20) {9\\[-1pt]{\tiny\normalfont $21/21$}};
+  \node[event] (p11) at (12.20,2.20) {11\\[-1pt]{\tiny\normalfont $27/27$}};
+  \node[event] (p13) at (14.50,2.20) {13\\[-1pt]{\tiny\normalfont $37/37$}};
+
+  \node[event] (p2)  at (2.05,-0.45) {2\\[-1pt]{\tiny\normalfont $2/10$}};
+  \node[event] (p4)  at (4.15, 0.50) {4\\[-1pt]{\tiny\normalfont $5/10$}};
+  \node[event] (p7)  at (6.25, 4.40) {7\\[-1pt]{\tiny\normalfont $16/27$}};
+  \node[event] (p10) at (12.20,-0.45) {10\\[-1pt]{\tiny\normalfont $26/30$}};
+  \node[event] (p12) at (13.40, 0.65) {12\\[-1pt]{\tiny\normalfont $27/30$}};
+
+  \draw[criticalarc] (p1) -- node[arclabel,above] {$A$ (3)} (p3);
+  \draw[arc] (p1) to[out=-70,in=180] node[arclabel,below left] {$B$ (2)} (p2);
+  \draw[criticalarc] (p3) -- node[arclabel,above] {$C$ (4)} (p5);
+  \draw[arc] (p3) to[out=-55,in=165] node[arclabel,below] {$D$ (2)} (p4);
+  \draw[criticalarc] (p5) -- node[arclabel,above] {$G$ (3)} (p6);
+  \draw[arc] (p5) to[out=75,in=180] node[arclabel,above left] {$F$ (9)} (p7);
+  \draw[dummyarc] (p2) to[out=0,in=-115] node[arclabel,below] {$e_1$ (0)} (p6);
+  \draw[dummyarc] (p4) -- node[arclabel,below] {$e_2$ (0)} (p6);
+  \draw[criticalarc] (p6) -- node[arclabel,above] {$H$ (6)} (p8);
+  \draw[criticalarc] (p8) -- node[arclabel,above] {$I$ (5)} (p9);
+  \draw[criticalarc] (p9) -- node[arclabel,above] {$K$ (6)} (p11);
+  \draw[arc] (p9) to[out=-70,in=180] node[arclabel,below left] {$L$ (5)} (p10);
+  \draw[dummyarc] (p7) to[out=0,in=95] node[arclabel,above] {$e_3$ (0)} (p11);
+  \draw[dummyarc] (p11) to[out=-70,in=145] node[arclabel,right] {$e_4$ (0)} (p12);
+  \draw[dummyarc] (p10) -- node[arclabel,below] {$e_5$ (0)} (p12);
+  \draw[arc] (p12) to[out=20,in=-120] node[arclabel,below right] {$M$ (7)} (p13);
+  \draw[criticalarc] (p11) -- node[arclabel,above] {$N$ (10)} (p13);
+
+  \fill[criticalbar] (0.00,-1.55) rectangle +(0.42,0.28);
+  \node[anchor=west,font=\tiny] at (0.50,-1.41) {Công việc găng};
+  \fill[normalbar] (3.15,-1.55) rectangle +(0.42,0.28);
+  \node[anchor=west,font=\tiny] at (3.65,-1.41) {Không găng};
+  \draw[dummyarc] (6.40,-1.41) -- +(0.70,0);
+  \node[anchor=west,font=\tiny] at (7.20,-1.41) {Việc giả};
+\end{tikzpicture}}
+\caption{Mạng PERT. Đường găng $A$--$C$--$G$--$H$--$I$--$K$--$N$.}
+\end{figure}
+
+\paragraph{b. Chỉ tiêu các sự kiện.}
+Tính tiến: $t_s(j)=\max_{i\rightarrow j}\{t_s(i)+d_{ij}\}$, $t_s(1)=0$.
+Tính lùi: $t_m(i)=\min_{i\rightarrow j}\{t_m(j)-d_{ij}\}$, $t_m(13)=t_s(13)$.
+Dự trữ đỉnh $R(i)=t_m(i)-t_s(i)$; đỉnh găng khi $R=0$.
+
+{\small
+\begin{minipage}[t]{0.49\textwidth}
+\textbf{Tiến}\\[1pt]
+$t_s(1)=0$\\
+$t_s(2)=0+2=2$\\
+$t_s(3)=0+3=3$\\
+$t_s(4)=3+2=5$\\
+$t_s(5)=3+4=7$\\
+$t_s(6)=\max\{7+3,\ 2+0,\ 5+0\}=10$\\
+$t_s(7)=7+9=16$\\
+$t_s(8)=10+6=16$\\
+$t_s(9)=16+5=21$\\
+$t_s(10)=21+5=26$\\
+$t_s(11)=\max\{21+6,\ 16+0\}=27$\\
+$t_s(12)=\max\{27+0,\ 26+0\}=27$\\
+$t_s(13)=\max\{27+10,\ 27+7\}=37$
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\textbf{Lùi}\\[1pt]
+$t_m(13)=37$\\
+$t_m(12)=37-7=30$\\
+$t_m(11)=\min\{37-10,\ 30-0\}=27$\\
+$t_m(10)=30-0=30$\\
+$t_m(9)=\min\{27-6,\ 30-5\}=21$\\
+$t_m(8)=21-5=16$\\
+$t_m(7)=27-0=27$\\
+$t_m(6)=16-6=10$\\
+$t_m(5)=\min\{10-3,\ 27-9\}=7$\\
+$t_m(4)=10-0=10$\\
+$t_m(3)=\min\{7-4,\ 10-2\}=3$\\
+$t_m(2)=10-0=10$\\
+$t_m(1)=\min\{3-3,\ 10-2\}=0$
+\end{minipage}
+}
+
+\begin{table}[H]\centering
+\caption{Thời điểm sớm, muộn và dự trữ các sự kiện}
+\small
+\begin{tabular}{c|rrrrrrrrrrrrr}
+\toprule
+Sự kiện $i$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13\\
+\midrule
+$t_s(i)$ & 0 & 2 & 3 & 5 & 7 & 10 & 16 & 16 & 21 & 26 & 27 & 27 & 37\\
+$t_m(i)$ & 0 & 10 & 3 & 10 & 7 & 10 & 27 & 16 & 21 & 30 & 27 & 30 & 37\\
+$R(i)$   & 0 & 8 & 0 & 5 & 0 & 0 & 11 & 0 & 0 & 4 & 0 & 3 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Đỉnh găng: $1,3,5,6,8,9,11,13$.
+Thời gian sớm nhất hoàn thành dự án: $T=t_s(13)=t_m(13)=\mathbf{37}$ ngày.
+
+\paragraph{Các yếu tố thời gian và các loại dự trữ.}
+Với cung $i\rightarrow j$:
+$ES=t_s(i)$, $EF=t_s(i)+d$, $LS=t_m(j)-d$, $LF=t_m(j)$,
+$TF=t_m(j)-t_s(i)-d$,
+$FF=t_s(j)-t_s(i)-d$,
+$IF=\max\{0,\ t_s(j)-t_m(i)-d\}$.
+
+\begin{table}[H]\centering
+\caption{Chỉ tiêu thời gian các công việc}
+\small
+\begin{tabular}{c|c|c|rr|rr|rrr}
+\toprule
+\textbf{CV} & $i\!\rightarrow\!j$ & $d$ & ES & EF & LS & LF & TF & FF & IF\\
+\midrule
+$A$ & $1\rightarrow 3$ & 3 & 0 & 3 & 0 & 3 & \textbf{0} & 0 & 0\\
+$B$ & $1\rightarrow 2$ & 2 & 0 & 2 & 8 & 10 & 8 & 0 & 0\\
+$C$ & $3\rightarrow 5$ & 4 & 3 & 7 & 3 & 7 & \textbf{0} & 0 & 0\\
+$D$ & $3\rightarrow 4$ & 2 & 3 & 5 & 8 & 10 & 5 & 0 & 0\\
+$G$ & $5\rightarrow 6$ & 3 & 7 & 10 & 7 & 10 & \textbf{0} & 0 & 0\\
+$H$ & $6\rightarrow 8$ & 6 & 10 & 16 & 10 & 16 & \textbf{0} & 0 & 0\\
+$F$ & $5\rightarrow 7$ & 9 & 7 & 16 & 18 & 27 & 11 & 0 & 0\\
+$I$ & $8\rightarrow 9$ & 5 & 16 & 21 & 16 & 21 & \textbf{0} & 0 & 0\\
+$K$ & $9\rightarrow 11$ & 6 & 21 & 27 & 21 & 27 & \textbf{0} & 0 & 0\\
+$L$ & $9\rightarrow 10$ & 5 & 21 & 26 & 25 & 30 & 4 & 0 & 0\\
+$M$ & $12\rightarrow 13$ & 7 & 27 & 34 & 30 & 37 & 3 & 3 & 0\\
+$N$ & $11\rightarrow 13$ & 10 & 27 & 37 & 27 & 37 & \textbf{0} & 0 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Đường găng.}
+Công việc găng khi $TF=0$: $A,C,G,H,I,K,N$.
+Đối chiếu một số đường đi từ 1 đến 13:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item $A$--$C$--$G$--$H$--$I$--$K$--$N$: $3+4+3+6+5+6+10=\mathbf{37}$
+  \item $A$--$C$--$G$--$H$--$I$--$K$--$e_4$--$M$: $3+4+3+6+5+6+0+7=34$
+  \item $A$--$C$--$G$--$H$--$I$--$L$--$e_5$--$M$: $3+4+3+6+5+5+0+7=33$
+  \item $A$--$D$--$e_2$--$H$--$I$--$K$--$N$: $3+2+0+6+5+6+10=32$
+  \item $B$--$e_1$--$H$--$I$--$K$--$N$: $2+0+6+5+6+10=29$
+  \item $A$--$C$--$F$--$e_3$--$N$: $3+4+9+0+10=26$
+\end{itemize}
+\[
+  \boxed{A\text{--}C\text{--}G\text{--}H\text{--}I\text{--}K\text{--}N\qquad (3+4+3+6+5+6+10=37\ \text{ngày})}
+\]
+
+Công việc không găng: $B$ ($TF=8$), $D$ ($TF=5$), $F$ ($TF=11$), $L$ ($TF=4$), $M$ ($TF=3$).
+$IF=0$ với mọi công việc: không việc nào còn dự trữ nếu sự kiện đầu xảy ra muộn nhất và sự kiện cuối xảy ra sớm nhất.
+$FF(M)=3$ vì $M$ đi thẳng vào đỉnh kết thúc; các việc không găng còn lại có $FF=0$.
+
+Kéo dài \emph{đồng thời} mọi việc không găng thêm $x$ ngày.
+Không lấy $\min TF=3$, vì $L$ và $M$ nằm cùng một chuỗi:
+$A$--$C$--$G$--$H$--$I$--$L$--$M$ dài $33+2x\le 37\Rightarrow x\le 2$.
+Các chuỗi khác lỏng hơn ($M$ qua $K$: $x\le 3$; $D$: $x\le 5$; $B$: $x\le 8$; $F$: $x\le 11$).
+Với $x=2$, chuỗi $L$--$M$ đúng 37 ngày. Vậy mức kéo dài đồng thời lớn nhất là \textbf{2 ngày}.
+
+\end{document}
