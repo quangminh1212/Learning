@@ -1,2 +1,6 @@
 # Generated slide captures
 tmp/slide_preview/
+tmp/pptx_preview/
+tmp/node_modules/
+tmp/package-lock.json
+tmp/package.json
