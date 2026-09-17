@@ -31,16 +31,28 @@
     .muted { color: var(--muted); }
     .bar { display: flex; align-items: flex-end; gap: 20px; flex: 0 0 auto; }
     .bar .rule { flex: 1; height: 3px; margin-bottom: 8px; background: linear-gradient(90deg, var(--red), var(--gold) 60%, transparent); }
-    .fill { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; justify-content: flex-start; }
+    .fill { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+    .fill > * { flex: 1 1 0; min-height: 0; }
+    .fill > table { flex: 1.5 1 0; }
+    .fill > .g3 { flex: 0.4 1 0; }
+    .fill > .g4, .fill > .g5 { flex: 0.26 1 0; }
+    .fill > .short { flex: 0.4 1 0 !important; }
+    .fill.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fill.g2 > * { flex: unset; height: 100%; }
+    .g2, .g3, .g4, .g5, .g6 { align-items: stretch; }
     .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .g5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
     .g6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-    .tight { flex: 0 0 auto; }
-    .grow { flex: 1 1 auto; min-height: 0; }
+    .g2 > .card, .g3 > .card, .g4 > .card { height: 100%; }
+    .tight { flex: 0 0 auto !important; }
+    .grow { flex: 1 1 0; min-height: 0; }
     .scope > .card { justify-content: flex-start; }
     .scope > .card > .g2 { flex: 1; align-content: stretch; grid-auto-rows: 1fr; }
+    .card > .g2 { flex: 1; min-height: 0; grid-auto-rows: 1fr; }
+    .card > .g3, .card > .g4, .card > .g5 { flex: 0.48; min-height: 0; grid-auto-rows: 1fr; }
+    .card > table { flex: 1.4; }
     .card {
       background: var(--card); border: 1px solid var(--line); border-radius: 12px;
       padding: 14px 16px; display: flex; flex-direction: column; min-height: 0;
@@ -50,9 +62,9 @@
     .tag { display: inline-flex; background: #f3e6e9; color: var(--red); font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; width: fit-content; }
     .tag.gold { background: #FFF6CC; color: #7A5C00; }
     .tag.ok { background: #e5f4ea; color: var(--ok); }
-    table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    table { width: 100%; height: 100%; border-collapse: collapse; font-size: 16px; }
     th { text-align: left; background: var(--red); color: #fff; font-weight: 600; padding: 10px 12px; }
-    td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
     tr:nth-child(even) td { background: #fbf8f8; }
     ul.clean { list-style: none; }
     ul.clean li { position: relative; padding-left: 16px; margin: 4px 0; }
@@ -67,8 +79,8 @@
     .progress > i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
     #hud { display: none !important; }
     .cover-bg { display: grid; grid-template-columns: 1.12fr .88fr; height: 100%; }
-    .cover-l { background: var(--red); color: #fff; padding: 52px 60px; display: flex; flex-direction: column; }
-    .cover-r { background: var(--paper); padding: 52px 48px; display: flex; flex-direction: column; }
+    .cover-l { background: var(--red); color: #fff; padding: 48px 56px 40px; display: flex; flex-direction: column; }
+    .cover-r { background: var(--paper); padding: 48px 48px 40px; display: flex; flex-direction: column; }
     .brand { display: flex; align-items: center; gap: 14px; }
     .brand img { width: 68px; height: 68px; }
     .brand .uni { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
@@ -78,20 +90,23 @@
     .meta-row { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
     .meta-row .lab { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
     .meta-row .val { font-size: 17px; font-weight: 700; margin-top: 4px; }
-    .member { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .member { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); flex: 1; }
     .av { width: 40px; height: 40px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 12px; flex-shrink: 0; }
     .av.g { background: var(--gold); color: #1A1A1A; }
     .member .nm { font-weight: 700; font-size: 17px; }
     .member .role { font-size: 13px; color: var(--muted); }
-    .end-bg { height: 100%; background: var(--red); color: #fff; display: flex; flex-direction: column; padding: 52px 60px 36px; }
+    .end-bg { height: 100%; background: var(--red); color: #fff; display: flex; flex-direction: column; padding: 48px 60px 36px; }
+    .end-bg > .g3 { flex: 0 0 auto; }
+    .end-bg > .g2 { flex: 1; min-height: 0; margin-top: 14px; }
+    .end-bg > .g2 > .card { height: 100%; }
     .end-bg h1 { color: #fff; font-size: 56px; font-weight: 800; }
     .q { font-size: 20px; color: var(--gold); margin-top: 6px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
 
     /* diagrams */
-    .flow { display: flex; align-items: center; gap: 0; }
+    .flow { display: flex; align-items: stretch; gap: 0; flex: 1; min-height: 0; }
     .flow .st {
       flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 10px;
-      padding: 10px 6px; text-align: center; min-width: 0; min-height: 70px;
+      padding: 10px 6px; text-align: center; min-width: 0; min-height: 0;
       display: flex; flex-direction: column; justify-content: center;
     }
     .flow .st b { display: block; color: var(--red); font-size: 12px; font-weight: 800; }
@@ -100,12 +115,13 @@
     .chip {
       background: #fff; border: 1px solid var(--line); border-radius: 10px;
       padding: 12px 12px; font-size: 16px; font-weight: 600; text-align: center;
-      display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 58px;
+      display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 0; height: 100%;
     }
     .chip em { font-style: normal; font-size: 13px; color: var(--muted); font-weight: 500; }
     .kpi {
       background: #fff; border: 1px solid var(--line); border-radius: 12px;
       padding: 12px 10px; text-align: center; display: flex; flex-direction: column; justify-content: center;
+      height: 100%;
     }
     .kpi .n { font-size: 30px; font-weight: 800; color: var(--red); line-height: 1; }
     .kpi .l { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 600; }
@@ -123,29 +139,30 @@
     .tree .col { display: flex; flex-direction: column; align-items: center; flex: 1; }
     .hbar { height: 18px; background: #f3e6e9; border-radius: 6px; overflow: hidden; }
     .hbar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), #e25a3a); border-radius: 6px; }
-    .gantt { display: grid; grid-template-columns: 150px 1fr; gap: 8px 10px; align-items: center; }
-    .gantt .track { position: relative; height: 32px; background: #f6eef0; border-radius: 6px; }
+    .gantt { display: grid; grid-template-columns: 150px 1fr; gap: 8px 10px; align-items: center; flex: 1; align-content: space-evenly; }
+    .gantt .track { position: relative; height: 36px; background: #f6eef0; border-radius: 6px; }
     .gantt .bar {
-      position: absolute; top: 5px; height: 22px; border-radius: 5px;
+      position: absolute; top: 6px; height: 24px; border-radius: 5px;
       background: var(--red); color: #fff; font-size: 12px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
     .gantt .months { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 12px; color: var(--muted); font-weight: 700; text-align: center; }
     .donut-wrap { display: flex; align-items: center; gap: 28px; }
     .donut {
-      width: 240px; height: 240px; border-radius: 50%; flex-shrink: 0;
+      width: 280px; height: 280px; border-radius: 50%; flex-shrink: 0;
       background: conic-gradient(#C81028 0 69.9%, #9D1D1F 69.9% 88%, #F0C008 88% 100%);
       display: grid; place-items: center;
     }
     .donut > span {
-      width: 128px; height: 128px; border-radius: 50%; background: var(--paper);
+      width: 148px; height: 148px; border-radius: 50%; background: var(--paper);
       display: grid; place-items: center; text-align: center; font-weight: 800; font-size: 22px; line-height: 1.15;
     }
     .donut > span small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); }
     .legend { display: flex; flex-direction: column; gap: 10px; }
     .legend .it { display: flex; align-items: center; gap: 10px; font-size: 15px; }
     .sw { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
-    .org { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .org { display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1; justify-content: space-evenly; width: 100%; }
+    .bars { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 6px; min-height: 0; }
     .obox {
       background: #fff; border: 1px solid var(--line); border-radius: 10px;
       padding: 8px 14px; text-align: center; min-width: 160px;
@@ -155,7 +172,7 @@
     .obox span { display: block; font-size: 12px; opacity: .85; }
     .ov { width: 2px; height: 14px; background: var(--red); }
     .oh { height: 2px; background: var(--red); width: 100%; }
-    .arch { display: grid; gap: 8px; }
+    .arch { display: grid; gap: 8px; flex: 1; align-content: space-evenly; }
     .arch .ly {
       border-radius: 10px; padding: 10px 14px; text-align: center; font-weight: 700; font-size: 15px;
       display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;
@@ -164,16 +181,20 @@
     .arch .ui { background: var(--red); color: #fff; }
     .arch .api { background: var(--red-d); color: #fff; }
     .arch .data { background: #7A5C00; color: #fff; }
-    .kv { display: grid; grid-template-columns: 140px 1fr; gap: 6px 12px; font-size: 15px; }
+    .kv { display: grid; grid-template-columns: 140px 1fr; gap: 6px 12px; font-size: 15px; flex: 1; align-content: space-evenly; }
     .kv b { color: var(--muted); font-weight: 600; }
-    .goal { text-align: center; padding: 16px 10px; }
+    .goal { text-align: center; padding: 16px 10px; height: 100%; justify-content: center; }
+    .cover-r > .card { flex: 1.15; margin-top: 10px; }
+    .cover-l > .g3 { flex: 1; align-content: stretch; }
+    .cover-l > .g3 > .card { height: auto; }
     .goal .n { font-size: 28px; font-weight: 800; color: var(--red); }
     .goal p { font-size: 14px; margin-top: 6px; }
-    .ms { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; position: relative; }
+    .ms { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; position: relative; height: 100%; align-items: stretch; }
     .ms::before { content: ""; position: absolute; left: 8%; right: 8%; top: 18px; height: 3px; background: linear-gradient(90deg, var(--red), var(--gold)); }
     .ms .m {
       background: #fff; border: 1px solid var(--line); border-radius: 12px;
       padding: 28px 8px 10px; text-align: center; position: relative;
+      display: flex; flex-direction: column; justify-content: center; height: 100%;
     }
     .ms .m i {
       position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
@@ -240,7 +261,7 @@
           <div class="member"><div class="av">QM</div><div><div class="nm">Vũ Quang Minh · 202490071</div><div class="role">Lập trình Back-end</div></div></div>
           <div class="member"><div class="av g">MQ</div><div><div class="nm">Bạch Minh Quang · 202490077</div><div class="role">Thiết kế UI/UX, Lập trình Front-end</div></div></div>
           <div class="member"><div class="av">BT</div><div><div class="nm">Phạm Đoàn Bảo Thiên · 202490090</div><div class="role">Thiết kế CSDL, Kiểm thử</div></div></div>
-          <div class="card" style="margin-top:14px;">
+          <div class="card">
             <h3>Bộ hồ sơ · 5 tài liệu</h3>
             <div class="flow" style="margin-top:8px;">
               <div class="st"><b>1</b><span>Khảo sát</span></div><div class="ar">→</div>
@@ -300,7 +321,7 @@
       <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 1.1 – 1.5</div><h2>Đặc thù ngành và đối tượng</h2></div><div class="rule"></div></div>
       <div class="fill">
         <div class="g2 grow">
-          <div class="card" style="justify-content:center;">
+          <div class="card">
             <h3>Đặc thù thời trang quần áo</h3>
             <div class="g2" style="margin-top:8px;">
               <div class="chip">Nhiều màu + size<em>1 SP → nhiều biến thể</em></div>
@@ -309,7 +330,7 @@
               <div class="chip">Đổi trả / lỗi / thanh lý<em>Cần truy vết tình trạng</em></div>
             </div>
           </div>
-          <div class="card" style="justify-content:center;">
+          <div class="card">
             <h3>Hiện tại: Excel + sổ sách rời</h3>
             <div class="g2" style="margin-top:8px;">
               <div class="chip" style="background:#f8e9ec;">Tồn không realtime</div>
@@ -452,7 +473,7 @@
     <section class="slide">
       <div class="bar"><div><div class="kicker">Báo cáo khảo sát · 2.4 – 3.1</div><h2>Kho trung tâm · QT · 13 biểu mẫu</h2></div><div class="rule"></div></div>
       <div class="fill">
-        <div class="card">
+        <div class="card short">
           <h3>Chuỗi chức năng cốt lõi</h3>
           <div class="flow" style="margin-top:8px;">
             <div class="st"><b>1</b><span>Sản phẩm</span></div><div class="ar">→</div>
@@ -601,7 +622,7 @@
           </div>
           <div class="card">
             <h3>Ngày-người theo giai đoạn · EST chốt 221,83</h3>
-            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+            <div class="bars" style="margin-top:8px;">
               <div><div style="display:flex;justify-content:space-between;font-size:13px;"><b>A Khảo sát</b><span>27,13</span></div><div class="hbar"><i style="width:39%"></i></div></div>
               <div><div style="display:flex;justify-content:space-between;font-size:13px;"><b>B Phân tích TK</b><span>41,07</span></div><div class="hbar"><i style="width:59%"></i></div></div>
               <div><div style="display:flex;justify-content:space-between;font-size:13px;"><b>C CSDL &amp; UI</b><span>29,88</span></div><div class="hbar"><i style="width:43%"></i></div></div>
@@ -848,7 +869,7 @@
             <p style="margin-top:8px;font-weight:700;">19 FR · 11 NFR · 19 UC · 15 bảng · 10 MH</p>
           </div>
         </div>
-        <div class="g2" style="margin-top:14px;">
+        <div class="g2">
           <div class="card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;">
             <h3 style="color:#F0C008;">Hạn chế (6.2)</h3>
             <div class="g2" style="margin-top:8px;">
