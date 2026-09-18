@@ -4,3 +4,26 @@ tmp/pptx_preview/
 tmp/node_modules/
 tmp/package-lock.json
 tmp/package.json
+
+# Vendored toolchains (large binaries, re-downloadable)
+tmp/libreoffice/
+tmp/tectonic/
+tmp/tectonic-0.17.0/
+tmp/tectonic-0.17.0.zip
+tmp/tectonic-prebuilt/
+
+# Intermediate docx/pdf conversion + render rounds
+tmp/__pycache__/
+tmp/group1_docx_backup/
+tmp/group1_docx_convert_tmp/
+tmp/group1_docx_pages/
+tmp/group1_docx_pages_black/
+tmp/group1_docx_render_preview/
+tmp/group1_docx_render_repair1/
+tmp/group1_docx_repaired_render/
+tmp/group1_editable_tables_render*/
+tmp/group1_latex_black_1/
+tmp/group1_media/
+tmp/group1_raw_render/
+tmp/group1_report_build/
+tmp/group1_report_render/
