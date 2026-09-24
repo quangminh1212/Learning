@@ -1,0 +1,190 @@
+Bài tập
+Mô hình hóa yêu cầu với
+ 
+UseCase
+ (tiếp theo)
+Thông tin chung :
+Họ và tên sinh viên:……………………………………………………………….
+Mã số sinh viên: …………………………………………………………………..
+Bài tập minh họa: AIMS Project
+1. Đặc tả UC 
+Đặt đơn hàng (
+Place Order
+)
+&lt;&lt;
+Điền nội dung đặc tả Use case theo mẫu bảng dưới đây
+&gt;&gt;
+Đặc tả UC 
+Đặt đơn hàng
+:
+Mã Use case
+Tên Use case
+Tác nhân
+Mô tả ngắn
+Tiền điều kiện
+Luồng sự kiện chính
+(Thành công)
+STT
+Thực hiện bởi
+Hành động
+Luồng sự kiện thay thế
+STT
+Thực hiện bởi
+Hành động
+Hậu điều kiện
+&lt;&lt;Nội dung Prompt sử dụng với AI, đánh giá phản hồi
+ của AI
+ và những điều chỉnh đã thực hiện&gt;&gt;
+Biểu đồ hoạt động cho UC 
+Đặt đơn hàng
+:
+&lt;&lt;chèn hình ảnh biểu đồ hoạt động vào đây&gt;&gt;
+Đặc tả dữ liệu input/output nếu có
+:
+&lt;&lt;chèn 
+bảng đặc tả dữ liệu input/output
+ vào đây&gt;&gt;
+2. Xây dựng Đặc tả UC Thanh toán đơn hàng (Pay Order)
+&lt;&lt;
+Điền nội dung đặc tả Use case theo mẫu bảng dưới đây
+&gt;&gt;
+Đặc tả UC 
+Thanh toán đơn hàng (
+P
+ay
+ Order
+)
+:
+Mã Use case
+Tên Use case
+Tác nhân
+Mô tả ngắn
+Tiền điều kiện
+Luồng sự kiện chính
+(Thành công)
+STT
+Thực hiện bởi
+Hành động
+Luồng sự kiện thay thế
+STT
+Thực hiện bởi
+Hành động
+Hậu điều kiện
+&lt;&lt;Nội dung Prompt sử dụng với AI, đánh giá phản hồi
+ của AI
+ và những điều chỉnh đã thực hiện&gt;&gt;
+Biểu đồ hoạt động cho UC 
+Thanh toán đơn hàng (
+P
+ay
+ Order
+)
+:
+&lt;&lt;chèn hình ảnh biểu đồ hoạt động vào đây&gt;&gt;
+Đặc tả dữ liệu input/output nếu có
+:
+&lt;&lt;chèn 
+bảng đặc tả dữ liệu input/output
+ vào đây&gt;&gt;
+3. Đặc tả UC Đặt đơn hàng nhanh (Place rush order)
+&lt;&lt;
+Điền nội dung đặc tả Use case theo mẫu bảng dưới đây
+&gt;&gt;
+Đặc tả UC 
+Đặt đơn hàng nhanh
+:
+Mã Use case
+Tên Use case
+Tác nhân
+Mô tả ngắn
+Tiền điều kiện
+Luồng sự kiện chính
+(Thành công)
+STT
+Thực hiện bởi
+Hành động
+Luồng sự kiện thay thế
+STT
+Thực hiện bởi
+Hành động
+Hậu điều kiện
+&lt;&lt;Nội dung Prompt sử dụng với AI, đánh giá phản hồi
+ của AI
+ và những điều chỉnh đã thực hiện&gt;&gt;
+Biểu đồ hoạt động cho UC 
+Đặt đơn hàng nhanh
+:
+&lt;&lt;chèn hình ảnh biểu đồ hoạt động vào đây&gt;&gt;
+Đặc tả dữ liệu input/output nếu có
+:
+&lt;&lt;chèn 
+bảng đặc tả dữ liệu input/output
+ vào đây&gt;&gt;
+4. Đặc tả UC Hủy đơn hàng (Cancel order)
+&lt;&lt;
+Điền nội dung đặc tả Use case theo mẫu bảng dưới đây
+&gt;&gt;
+Đặc tả UC 
+Hủy đơn hàng
+:
+Mã Use case
+Tên Use case
+Tác nhân
+Mô tả ngắn
+Tiền điều kiện
+Luồng sự kiện chính
+(Thành công)
+STT
+Thực hiện bởi
+Hành động
+Luồng sự kiện thay thế
+STT
+Thực hiện bởi
+Hành động
+Hậu điều kiện
+&lt;&lt;Nội dung Prompt sử dụng với AI, đánh giá phản hồi
+ của AI
+ và những điều chỉnh đã thực hiện&gt;&gt;
+Biểu đồ hoạt động cho UC 
+Hủy đơn hàng
+:
+&lt;&lt;chèn hình ảnh biểu đồ hoạt động vào đây&gt;&gt;
+Đặc tả dữ liệu input/output nếu có
+:
+&lt;&lt;chèn 
+bảng đặc tả dữ liệu input/output
+ vào đây&gt;&gt;
+5. Đặc tả UC Hoàn tiền đơn hàng (Refund order)
+&lt;&lt;
+Điền nội dung đặc tả Use case theo mẫu bảng dưới đây
+&gt;&gt;
+Đặc tả UC 
+Hoàn tiền đơn hàng
+:
+Mã Use case
+Tên Use case
+Tác nhân
+Mô tả ngắn
+Tiền điều kiện
+Luồng sự kiện chính
+(Thành công)
+STT
+Thực hiện bởi
+Hành động
+Luồng sự kiện thay thế
+STT
+Thực hiện bởi
+Hành động
+Hậu điều kiện
+&lt;&lt;Nội dung Prompt sử dụng với AI, đánh giá phản hồi
+ của AI
+ và những điều chỉnh đã thực hiện&gt;&gt;
+Biểu đồ hoạt động cho UC 
+Hoàn tiền đơn hàng
+:
+&lt;&lt;chèn hình ảnh biểu đồ hoạt động vào đây&gt;&gt;
+Đặc tả dữ liệu input/output nếu có
+:
+&lt;&lt;chèn 
+bảng đặc tả dữ liệu input/output
+ vào đây&gt;&gt;
