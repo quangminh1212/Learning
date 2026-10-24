@@ -1,24 +1,87 @@
-import fitz
+import re
+import sys
+import unicodedata
 from pathlib import Path
 
-checks = [
-    (Path('de1.pdf'), 5, True, False, True),
-    (Path('de2.pdf'), 6, True, True, False),
-    (Path('Đề 1') / 'De1_go_lai.pdf', 5, True, False, True),
-    (Path('Đề 2') / 'De2_go_lai.pdf', 6, True, True, False),
-]
-ok = True
-for path, expected_pages, has_answer, has_image, has_system_prompt in checks:
-    doc = fitz.open(path)
-    text = '\n'.join(page.get_text() for page in doc)
-    images = sum(len(page.get_images(full=True)) for page in doc)
-    result = {
-        'pages': len(doc),
-        'answer': 'ĐÁP ÁN' in text,
-        'essay': ('Đặt Vé' in text) or ('Đặt vé' in text),
-        'system_prompt': 'System prompt' in text,
-        'images': images,
-    }
-    print(str(path).encode('unicode_escape').decode(), result)
-    ok = ok and len(doc) == expected_pages and result['answer'] == has_answer and result['essay'] and (result['system_prompt'] == has_system_prompt) and ((images > 0) == has_image)
-raise SystemExit(0 if ok else 1)
+import fitz
+
+
+ANSWERS = {
+    "de1.pdf": [
+        "B", "BDE", "CD", "AE", "B", "F", "C", "E", "D", "B",
+        "F", "BCD", "EF", "ABC", "CD", "BCD", "ACE", "ABE", "C", "D",
+    ],
+    "de2.pdf": [
+        "A", "BC", "DE", "BCD", "A", "C", "B", "F", "D", "B",
+        "A", "ABC", "CEF", "ABCE", "CD", "BCD", "ACD", "ABD", "AC", "D",
+    ],
+}
+
+
+def normalize(text: str) -> str:
+    return " ".join(unicodedata.normalize("NFC", text).split())
+
+
+def main() -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+
+    ok = True
+    for filename, answers in ANSWERS.items():
+        path = Path(filename)
+        doc = fitz.open(path)
+        pages = [page.get_text() for page in doc]
+        text = normalize(" ".join(pages))
+        question_numbers = {
+            int(number)
+            for number in re.findall(r"Câu\s*(\d{1,2})\s*[.:]", text)
+        }
+        answer_checks = {
+            f"Q{index}": bool(
+                re.search(
+                    rf"Câu\s*{index}\s*:\s*{re.escape(','.join(letters))}(?![A-F])",
+                    text,
+                )
+            )
+            for index, letters in enumerate(answers, start=1)
+        }
+        is_de1 = filename == "de1.pdf"
+        required = (
+            ["BookingPage", "BookingController", "ScreeningRoom", "HẾT"]
+            if is_de1
+            else [
+                "ManHinhDatVe", "khachDaDenQuay", "huyDatVe",
+                "minusHours(2)", "minusMinutes(30)", "80%", "HẾT",
+                "triển khai vật lý cuối cùng",
+                "một design class riêng cho mỗi protocol/interface/API",
+                "hành vi/cấu trúc", "address dạng chuỗi tự",
+            ]
+        )
+        result = {
+            "pages": len(doc),
+            "all_20_questions": set(range(1, 21)).issubset(question_numbers),
+            "all_20_answer_keys_match": all(answer_checks.values()),
+            "answer_heading": "ĐÁP ÁN VÀ LỜI GIẢI THAM KHẢO" in text,
+            "system_prompt_count": text.count("System prompt"),
+            "required_content": {item: item in text for item in required},
+            "no_literal_ewpage": "ewpage" not in text,
+        }
+        expected_prompt_count = 2 if is_de1 else 1
+        passed = (
+            result["pages"] == 6
+            and result["all_20_questions"]
+            and result["all_20_answer_keys_match"]
+            and result["answer_heading"]
+            and result["system_prompt_count"] == expected_prompt_count
+            and all(result["required_content"].values())
+            and result["no_literal_ewpage"]
+        )
+        print(f"{filename}: {result}; {'PASS' if passed else 'FAIL'}")
+        ok = ok and passed
+        doc.close()
+
+    raise SystemExit(0 if ok else 1)
+
+
+if __name__ == "__main__":
+    main()

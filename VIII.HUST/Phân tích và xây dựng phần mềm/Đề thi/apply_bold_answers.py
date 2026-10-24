@@ -11,7 +11,7 @@ ANSWERS = {
     ],
     "de2.tex": [
         "A", "BC", "DE", "BCD", "A", "C", "B", "F", "D", "B",
-        "AC", "ABCEF", "CEF", "ABCE", "BCD", "BCD", "ABCD", "ABD", "ACDE", "CD",
+        "A", "ABC", "CEF", "ABCE", "CD", "BCD", "ACD", "ABD", "AC", "D",
     ],
 }
 
@@ -60,9 +60,14 @@ def prepare_update(path: Path, answers: list[str]) -> tuple[str, int]:
             prefix = option_match.group(1)
             letter = option_match.group(2) or option_match.group(3) or ""
             content = option_match.group(4)
-            if letter not in correct or content.lstrip().startswith(r"{\bfseries "):
-                return prefix + content
-            return prefix + r"{\bfseries " + content + "}"
+            is_bold = content.lstrip().startswith(r"{\bfseries ")
+            if letter in correct and not is_bold:
+                return prefix + r"{\bfseries " + content + "}"
+            if letter not in correct and is_bold and content.rstrip().endswith("}"):
+                leading = content[: len(content) - len(content.lstrip())]
+                inner = content.lstrip()[len(r"{\bfseries "):-1]
+                return prefix + leading + inner
+            return prefix + content
 
         body = OPTION_RE.sub(bold_correct, match.group(3))
         opening = r"\begin{" + match.group(1) + "}" + (match.group(2) or "")
