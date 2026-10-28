@@ -22,7 +22,7 @@ from reportlab.platypus import (
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "danh-sach-repo-tiet-kiem-token-llm.md"
-OUTPUT = ROOT / "danh-sach-repo-tiet-kiem-token-llm.pdf"
+OUTPUT = ROOT / "1.Company" / "1.Apero" / "4.Danh sách repo GitHub hỗ trợ tiết kiệm token cho LLM.pdf"
 
 FONT = Path(r"C:\Windows\Fonts\DejaVuSans.ttf")
 FONT_BOLD = Path(r"C:\Windows\Fonts\DejaVuSans-Bold.ttf")
