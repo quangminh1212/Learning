@@ -4,6 +4,7 @@
 - **Ngày lập:** 29-10-2026
 - **Trạng thái:** Bản spec để chốt triển khai và ngân sách
 - **Bản HTML:** [7.Spec triển khai MCP và Codex Apply Phase 1.html](7.Spec%20triển%20khai%20MCP%20và%20Codex%20Apply%20Phase%201.html)
+- **Trình chiếu:** [8.Trình chiếu MCP và Codex Apply Phase 1.html](8.Tr%C3%ACnh%20chi%E1%BA%BFu%20MCP%20v%C3%A0%20Codex%20Apply%20Phase%201.html)
 
 ## 1. Tóm tắt quyết định
 
