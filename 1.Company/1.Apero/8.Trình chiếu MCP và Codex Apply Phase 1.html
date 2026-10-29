@@ -6,22 +6,26 @@
 <title>Trình chiếu — MCP và Codex Apply, Phase 1</title>
 <style>
   :root {
-    --ink: #1c2430;
-    --muted: #5c6b7a;
-    --navy: #17365d;
-    --blue: #24527a;
-    --line: #d5dee6;
-    --paper: #f4f1ea;
-    --card: #fffdf8;
-    --pale: #e7eef5;
-    --warn: #f4efe2;
-    --stop: #f6e8e4;
-    --good: #e5f0ea;
+    --ink: #111827;
+    --muted: #4b5563;
+    --faint: #6b7280;
+    --teal: #00a19a;
+    --teal-dark: #00726a;
+    --mint: #37c88f;
+    --soft: #e7f7f6;
+    --mint-soft: #e8f8f0;
+    --paper: #f6f8f8;
+    --card: #ffffff;
+    --line: #e5e7eb;
+    --warn: #fff7ed;
+    --warn-ink: #9a3412;
+    --stop: #fef2f2;
+    --stop-ink: #b91c1c;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
   body {
-    background: #0e1a2b;
+    background: #0f172a;
     color: var(--ink);
     font-family: "Segoe UI", Arial, sans-serif;
     overflow: hidden;
@@ -29,392 +33,500 @@
   .stage {
     width: min(100vw, calc(100vh * 16 / 9));
     height: min(100vh, calc(100vw * 9 / 16));
-    margin: auto;
     position: absolute;
     inset: 0;
-    background: var(--paper);
+    margin: auto;
+    background:
+      radial-gradient(circle at 92% 0%, rgb(0 161 154 / 12%), transparent 26rem),
+      radial-gradient(circle at 0% 80%, rgb(55 200 143 / 10%), transparent 22rem),
+      linear-gradient(180deg, #ffffff 0%, var(--paper) 100%);
     overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(0 114 106 / 5%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(0 114 106 / 5%) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+    pointer-events: none;
   }
   .slide {
     display: none;
     position: absolute;
     inset: 0;
-    padding: 42px 52px 68px;
+    padding: 22px 36px 52px;
     flex-direction: column;
-    justify-content: center;
-    gap: 16px;
+    gap: 12px;
+    z-index: 1;
   }
   .slide.active { display: flex; }
-  .kicker {
-    margin: 0;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    font-size: 13px;
-    color: var(--blue);
-    font-weight: 650;
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 28px;
   }
-  h1 {
-    margin: 0;
-    color: var(--navy);
-    font-size: 58px;
-    line-height: 1.05;
-    font-weight: 700;
-    max-width: 16ch;
-  }
-  h2 {
-    margin: 0;
-    color: var(--navy);
-    font-size: 34px;
-    line-height: 1.15;
-    font-weight: 700;
-  }
-  .lead { margin: 0; font-size: 22px; line-height: 1.35; max-width: 46ch; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .brand { display: flex; align-items: baseline; gap: 0; font-weight: 800; font-size: 22px; letter-spacing: -0.04em; line-height: 1; }
+  .brand i { font-style: normal; color: #111; }
+  .brand b { color: var(--teal); font-weight: 800; }
+  .kicker { margin: 0; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-dark); font-weight: 700; }
+  h1 { margin: 0; font-size: 64px; line-height: .98; letter-spacing: -0.04em; color: #111; max-width: 12ch; }
+  h2 { margin: 0; font-size: 32px; line-height: 1.12; letter-spacing: -0.03em; color: #111; }
+  .grow { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+  .grow.grid-2, .grow.grid-3, .grow.grid-4, .grow.grid-5 { align-content: center; align-items: start; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
   .card {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px 18px;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 10px 30px rgb(15 23 42 / 5%);
   }
-  .card h3 { margin: 0 0 8px; color: var(--navy); font-size: 20px; }
-  .card p, .card li { margin: 0 0 8px; font-size: 17px; line-height: 1.35; }
-  .card ul { margin: 0; padding-left: 18px; }
-  .price { font-size: 32px; line-height: 1.1; color: var(--navy); font-weight: 750; margin: 0 0 6px; }
-  .muted { color: var(--muted); font-size: 15px; }
-  table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 16px; }
-  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
-  th { background: var(--navy); color: white; font-weight: 650; }
-  td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 650; }
-  .flow { display: flex; gap: 8px; align-items: stretch; }
-  .flow .step {
-    flex: 1;
-    background: var(--card);
-    border-radius: 12px;
-    border-top: 6px solid var(--navy);
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  .card h3 { margin: 0 0 6px; font-size: 18px; color: var(--teal-dark); }
+  .card p { margin: 0 0 6px; font-size: 15px; line-height: 1.35; color: var(--ink); }
+  .kpi { text-align: left; }
+  .kpi .num {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--teal-dark);
+    font-variant-numeric: tabular-nums;
   }
-  .flow .n { font-size: 13px; letter-spacing: .08em; color: var(--blue); font-weight: 700; }
-  .flow strong { font-size: 18px; color: var(--navy); }
-  .flow span { font-size: 15px; line-height: 1.35; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips span {
-    background: var(--pale);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 15px;
-  }
-  .good { background: var(--good); }
-  .warn { background: var(--warn); }
-  .stop { background: var(--stop); }
-  .callout {
-    border-radius: 12px;
-    padding: 12px 14px;
-    font-size: 17px;
-    line-height: 1.35;
-  }
-  .bars { display: flex; flex-direction: column; gap: 12px; }
-  .bar-row { display: grid; grid-template-columns: 220px 1fr 120px; gap: 10px; align-items: center; font-size: 16px; }
-  .track { background: #e3eaf1; border-radius: 999px; height: 18px; overflow: hidden; }
-  .fill { height: 100%; background: var(--navy); border-radius: 999px; }
-  .fill.alt { background: #8aa0b8; }
-  .weeks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .week {
-    background: var(--card);
+  .kpi .num small { font-size: 16px; font-weight: 700; color: var(--muted); letter-spacing: 0; }
+  .kpi .lbl { margin-top: 8px; font-size: 14px; line-height: 1.3; color: var(--muted); }
+  .kpi.mint .num { color: #0f766e; }
+  .kpi.warn .num { color: var(--warn-ink); }
+  .kpi.stop .num { color: var(--stop-ink); }
+  .soft { background: var(--soft); border-color: #b7e6e2; }
+  .mintbg { background: var(--mint-soft); border-color: #b7ebc9; }
+  .warn { background: var(--warn); border-color: #fed7aa; }
+  .stop { background: var(--stop); border-color: #fecaca; }
+  .arch, .pipes, .weeks, .models { display: grid; align-items: center; gap: 10px; }
+  .arch { grid-template-columns: 1.1fr 28px 1fr 28px 1.1fr; }
+  .node {
+    background: white;
     border: 1px solid var(--line);
     border-radius: 14px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    padding: 12px 14px;
+    box-shadow: 0 8px 24px rgb(15 23 42 / 5%);
   }
-  .week b { color: var(--navy); font-size: 18px; }
-  .week p { margin: 0; font-size: 16px; line-height: 1.35; }
-  .title-slide { background: var(--navy); color: #f7f4ee; }
-  .title-slide .kicker { color: #c5d4e4; }
-  .title-slide h1 { color: white; max-width: 14ch; }
-  .title-slide .lead { color: #e4ebf2; }
+  .node strong { display: block; font-size: 18px; color: #111; }
+  .node span { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); line-height: 1.3; }
+  .node.core { background: var(--teal); border-color: var(--teal); color: white; }
+  .node.core strong, .node.core span { color: white; }
+  .stack { display: grid; gap: 10px; }
+  .arrow { text-align: center; color: var(--teal); font-size: 28px; font-weight: 700; }
+  .pipe { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    background: white;
+    border: 1px solid #b7e6e2;
+    color: var(--teal-dark);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .pill .arr { color: var(--teal); margin: 0 4px; }
+  .models { grid-template-columns: repeat(3, 1fr); }
+  .model {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    padding: 16px;
+    min-height: 150px;
+  }
+  .model .band { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--teal); }
+  .model strong { display: block; margin: 8px 0; font-size: 28px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bars { display: flex; flex-direction: column; gap: 11px; }
+  .bar-row { display: grid; grid-template-columns: 210px 1fr 88px; gap: 10px; align-items: center; font-size: 15px; }
+  .track { height: 22px; background: #e8eeef; border-radius: 999px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--mint)); }
+  .fill.deep { background: var(--teal-dark); }
+  .bar-row b { text-align: right; font-size: 18px; color: var(--teal-dark); }
+  .meter { height: 18px; border-radius: 999px; background: #e8eeef; overflow: hidden; margin-top: 8px; }
+  .meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--teal), var(--mint)); }
+  .meter.stop i { background: #f85149; width: 100%; }
+  .steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; position: relative; }
+  .steps::before {
+    content: "";
+    position: absolute;
+    left: 8%; right: 8%;
+    top: 22px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+  }
+  .step { position: relative; text-align: center; }
+  .step .dot {
+    width: 44px; height: 44px; margin: 0 auto 8px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--teal);
+    color: var(--teal-dark);
+    font-weight: 800;
+    display: grid; place-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .step strong { display: block; font-size: 15px; }
+  .step span { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); line-height: 1.3; }
+  .weeks { grid-template-columns: repeat(4, 1fr); position: relative; }
+  .weeks::before {
+    content: "";
+    position: absolute;
+    top: 27px; left: 8%; right: 8%; height: 3px;
+    background: var(--teal);
+  }
+  .week { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 12px; position: relative; }
+  .week .dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--teal); color: white; font-weight: 800;
+    display: grid; place-items: center; margin-bottom: 8px;
+  }
+  .week b { display: block; margin-bottom: 4px; }
+  .week p { margin: 0; font-size: 14px; line-height: 1.35; color: var(--muted); }
+  .fork { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 8px; align-items: center; }
+  .hub {
+    width: 80px; height: 80px; margin: 0 auto;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    display: grid; place-items: center;
+    font-weight: 800; text-align: center; font-size: 13px; line-height: 1.15;
+  }
+  .title-slide { justify-content: flex-end; padding-bottom: 64px; }
+  .title-slide h1 { font-size: 72px; }
+  .lead { margin: 8px 0 0; font-size: 22px; color: var(--muted); max-width: 36ch; }
+  .statrow { display: flex; gap: 10px; margin-top: 18px; }
+  .statrow .card { min-width: 160px; }
   .say { display: none; }
   .notes {
     display: none;
     position: absolute;
-    left: 20px; right: 20px; bottom: 52px;
-    background: rgba(23, 54, 93, .94);
-    color: #f7f4ee;
-    border-radius: 10px;
+    left: 16px; right: 16px; bottom: 46px;
+    background: rgb(0 114 106 / 94%);
+    color: white;
+    border-radius: 12px;
     padding: 10px 14px;
     font-size: 15px;
     line-height: 1.35;
     z-index: 5;
   }
   body.notes-on .notes { display: block; }
+  .progress { position: absolute; top: 0; left: 0; height: 4px; background: var(--teal); z-index: 7; width: 0; }
   .nav {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    color: var(--muted);
-    font-size: 14px;
-    z-index: 6;
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; color: var(--faint); font-size: 13px; z-index: 6;
   }
-  .title-slide ~ .nav, .stage:has(.title-slide.active) .nav { color: #c5d4e4; }
   .nav button {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: inherit;
-    width: 32px; height: 28px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+    background: white; border: 1px solid var(--line); color: var(--teal-dark);
+    width: 32px; height: 26px; border-radius: 8px; cursor: pointer;
   }
-  .progress {
-    position: absolute;
-    top: 0; left: 0; height: 4px;
-    background: #c45c26;
-    width: 0;
-    z-index: 7;
-  }
-  .keys { margin-top: 18px; color: #c5d4e4; font-size: 16px; }
+  .foot { font-size: 13px; color: var(--faint); }
+  code { font-family: Consolas, monospace; font-size: .92em; }
   @media print {
     body { background: white; overflow: visible; }
     .stage { position: static; width: 100%; height: auto; }
-    .slide {
-      display: flex !important;
-      position: relative;
-      height: 100vh;
-      page-break-after: always;
-    }
+    .slide { display: flex !important; position: relative; height: 100vh; page-break-after: always; }
     .nav, .notes, .progress { display: none !important; }
   }
 </style>
 </head>
 <body>
-<div class="stage" id="stage">
+<div class="stage">
   <div class="progress" id="progress"></div>
 
   <section class="slide title-slide active">
-    <p class="kicker">Apero · Phase 1 · 30/10/2026</p>
-    <h1>MCP hay Codex Apply</h1>
-    <p class="lead">10 người nội bộ. Một Gateway Core. Hai phiếu mua. Không GPU.</p>
-    <p class="keys">Mũi tên chuyển slide · F toàn màn hình · N ghi chú nói</p>
-    <p class="say">Mở bằng quyết định, không bằng kiến trúc. Hôm nay chốt hướng và tiền cho 10 người. Giá lấy từ tài liệu 29/10, đối chiếu checkout trước khi chuyển tiền. Chưa có source wandura-gateway trong workspace.</p>
-  </section>
-
-  <section class="slide">
-    <p class="kicker">01 · Quyết định</p>
-    <h2>Làm MCP trước. Apply khi đã chốt sửa repo.</h2>
-    <div class="grid-2">
-      <div class="card good">
-        <h3>MCP</h3>
-        <p>Nhân viên gọi tool Wandura hoặc gateway ngay trong Codex hoặc Claude Code.</p>
-        <p>Việc chính: tìm template, xem giá, tạo ảnh, video, audio, xem usage.</p>
-      </div>
-      <div class="card warn">
-        <h3>Codex Apply</h3>
-        <p>Là tool <code>apply_patch</code> của Responses API. Không có endpoint tên codex apply.</p>
-        <p>Gateway tạo diff trong worktree. Người duyệt rồi mới có PR nháp.</p>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">Phase 1 · 30/10/2026</p></div>
+    <div class="grow">
+      <h1>MCP hay Codex Apply</h1>
+      <p class="lead">10 người nội bộ. Một gateway. Hai phiếu mua.</p>
+      <div class="statrow">
+        <div class="card kpi"><div class="num">10</div><div class="lbl">người trong pilot</div></div>
+        <div class="card kpi"><div class="num">$100</div><div class="lbl">trần API Apply / tháng</div></div>
+        <div class="card kpi"><div class="num">$0</div><div class="lbl">GPU. Không mua 8×H100</div></div>
       </div>
     </div>
-    <p class="say">Nếu mục tiêu là đưa công cụ Wandura vào việc hằng ngày, MCP đi trước. Apply chỉ khi sản phẩm sửa code đã được chốt. Bật cả hai thì dùng chung sổ và chung trần tiền.</p>
+    <p class="foot">Mũi tên chuyển slide · F toàn màn hình · N ghi chú nói</p>
+    <p class="say">Mở bằng ba số: 10 người, trần 100 đô, không GPU. Hôm nay chốt cửa và phiếu mua. Giá lấy từ tài liệu 29/10, đối chiếu checkout trước khi chuyển tiền.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">02 · Một lối vào</p>
-    <h2>Hai cửa. Một core. Một sổ.</h2>
-    <div class="flow">
-      <div class="step"><span class="n">CỬA</span><strong>Codex / Claude</strong><span>Gọi MCP adapter. Mỗi người một login.</span></div>
-      <div class="step"><span class="n">CỬA</span><strong>Trang nội bộ</strong><span>Browser gọi BFF. Key không ở máy người dùng.</span></div>
-      <div class="step"><span class="n">CORE</span><strong>Gateway</strong><span>Allowlist, trần tiền, tốc độ, audit.</span></div>
-      <div class="step"><span class="n">RA</span><strong>Wandura hoặc OpenAI</strong><span>Media đi Wandura. Patch đi Responses API.</span></div>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">01 · Ngã ba</p></div>
+    <h2>Việc hằng ngày đi MCP. Sửa repo đi Apply.</h2>
+    <div class="grow">
+      <div class="fork">
+        <div class="card soft">
+          <h3>MCP</h3>
+          <p>Tool Wandura trong Codex hoặc Claude Code.</p>
+          <p>Tìm template, xem giá, tạo ảnh, video, audio.</p>
+        </div>
+        <div class="hub">10<br>người</div>
+        <div class="card mintbg">
+          <h3>Codex Apply</h3>
+          <p>Tool <code>apply_patch</code>. Không có endpoint tên codex apply.</p>
+          <p>Diff trong worktree. PR nháp sau khi người duyệt.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card kpi"><div class="num">1</div><div class="lbl">Gateway Core cho cả hai cửa</div></div>
+        <div class="card kpi"><div class="num">1</div><div class="lbl">sổ usage, một trần tiền</div></div>
+        <div class="card kpi stop"><div class="num">0</div><div class="lbl">đường ghi repo thứ hai</div></div>
+      </div>
     </div>
-    <div class="callout stop">Không mở hai đường ghi repo. Không dán API key cho từng nhân viên.</div>
-    <p class="say">Nhấn mạnh một câu: MCP và trang web đều vào cùng core. Apply là worker phía sau, không phải sản phẩm thứ ba.</p>
+    <p class="say">Chốt câu này trước kiến trúc. MCP trước nếu cần tool Wandura. Apply khi đã chốt sản phẩm sửa code. Bật cả hai thì không nhân đôi sổ và không nhân đôi trần.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">03 · MCP làm gì</p>
-    <h2>Hai ví Wandura, không trộn.</h2>
-    <table>
-      <thead><tr><th></th><th>MCP public</th><th>API v2</th></tr></thead>
-      <tbody>
-        <tr><td>Ai gọi</td><td>User đăng nhập trong Codex</td><td>Server gateway</td></tr>
-        <tr><td>Tiền</td><td>Credit trên website</td><td>API key và product wallet</td></tr>
-        <tr><td>Basic $15</td><td>1.500 credit / người / kỳ</td><td>Không trả cho API v2</td></tr>
-        <tr><td>Phase 1</td><td>Cài là dùng, nếu chỉ cần media</td><td>Xin báo giá Enterprise</td></tr>
-      </tbody>
-    </table>
-    <div class="chips">
-      <span>search → preview → clone</span>
-      <span>preview render → video / image / audio</span>
-      <span>Xem giá trước khi trừ credit</span>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">02 · Sơ đồ lối vào</p></div>
+    <h2>Hai cửa. Một core. Hai đầu ra.</h2>
+    <div class="grow">
+      <div class="arch">
+        <div class="stack">
+          <div class="node"><strong>Codex / Claude</strong><span>MCP adapter. Mỗi người một login.</span></div>
+          <div class="node"><strong>Trang nội bộ</strong><span>Browser gọi BFF. Key không ở máy user.</span></div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node core"><strong>Gateway</strong><span>Allowlist, trần, tốc độ, audit.</span></div>
+        <div class="arrow">→</div>
+        <div class="stack">
+          <div class="node"><strong>Wandura</strong><span>Ảnh, video, audio. Credit hoặc ví API.</span></div>
+          <div class="node"><strong>OpenAI</strong><span>Responses API, apply_patch, gpt-5.5.</span></div>
+        </div>
+      </div>
     </div>
-    <p class="say">Chỉ cần tạo ảnh video audio trong Codex thì cài MCP public, không viết lại client. Adapter tự viết khi gateway phải gắn trần và sổ nội bộ.</p>
+    <p class="say">Chỉ vào giữa: mọi cửa đều qua gateway. Media sang Wandura. Patch sang OpenAI. Không phát API key cho 10 người.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">04 · Model</p>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">03 · Hai ví Wandura</p></div>
+    <h2>Credit website không sang API v2.</h2>
+    <div class="grow">
+      <div class="grid-2">
+        <div class="card kpi soft">
+          <div class="num">1.500</div>
+          <div class="lbl">credit / Basic / người / kỳ. 10 người = 15.000. Không gom quỹ, không cộng dồn.</div>
+        </div>
+        <div class="card kpi warn">
+          <div class="num">API v2</div>
+          <div class="lbl">Server gọi server. Báo giá Enterprise. Basic $15 không trả ví này.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pipe">
+          <span class="pill">search</span><span class="arr">→</span>
+          <span class="pill">preview giá</span><span class="arr">→</span>
+          <span class="pill">user xác nhận</span><span class="arr">→</span>
+          <span class="pill">render video / image / audio</span><span class="arr">→</span>
+          <span class="pill">get kết quả</span>
+        </div>
+      </div>
+    </div>
+    <p class="say">Chỉ cần media trong Codex thì cài MCP public, không viết lại client. Adapter tự viết khi phải gắn trần và sổ nội bộ. Enterprise thay account thì bỏ 10 Basic, không cộng cả hai.</p>
+  </section>
+
+  <section class="slide">
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">04 · Model</p></div>
     <h2>MCP không đổi model của Codex.</h2>
-    <div class="grid-3">
-      <div class="card"><h3>Haiku</h3><p>Việc nhỏ, lọc log, tóm tắt. Chỉ chạy một lần đầu phiên để chọn model.</p></div>
-      <div class="card"><h3>Sonnet</h3><p>Viết code và việc hằng ngày.</p></div>
-      <div class="card"><h3>Opus</h3><p>Debug khó hoặc thiết kế hệ thống.</p></div>
-    </div>
-    <div class="callout warn">Codex giữ model do client chọn. Claude Code muốn đổi từng lượt thì cần plugin Mod, từ bản 2.1.287. Lỗi bộ chọn thì giữ model hiện tại.</div>
-    <p class="say">Đừng hứa Codex tự đổi model qua MCP. Team Standard không gồm Claude Code. Muốn Mod thì tính ghế Premium riêng, ở slide mua MCP.</p>
-  </section>
-
-  <section class="slide">
-    <p class="kicker">05 · Mua cho MCP · 10 người</p>
-    <h2>Chỉ mua dòng còn thiếu.</h2>
-    <table>
-      <thead><tr><th>Hạng mục</th><th>Tiền</th><th>Khi nào</th></tr></thead>
-      <tbody>
-        <tr><td>10 ghế ChatGPT Business, có Codex</td><td class="num">$250/tháng</td><td>Chưa có Codex. Trả năm: $2.400, tương đương $200/tháng.</td></tr>
-        <tr><td>10 Wandura Basic</td><td class="num">$150/tháng</td><td>MCP public. 15.000 credit, không gom quỹ, không cộng dồn.</td></tr>
-        <tr><td>Enterprise / API v2</td><td class="num">Báo giá</td><td>Không cộng thêm 10 Basic nếu Enterprise thay các account đó.</td></tr>
-        <tr><td>10 Claude Premium, chỉ để Mod chọn model</td><td class="num">$1.250/tháng</td><td>Standard $25/ghế không có Claude Code. Trả năm: $1.000/tháng quy đổi.</td></tr>
-        <tr><td>Hosting MCP và GPU</td><td class="num">$0</td><td>MCP chính thức hoặc MCP local. Không mua GPU.</td></tr>
-      </tbody>
-    </table>
-    <p class="say">Phiếu A nếu chưa có gì: 400 đô một tháng, hoặc 350 đô quy năm. Đã có Codex thì còn 150 đô Wandura. Đừng mua Growth sẵn cho cả 10 người. Đo tuần đầu rồi tăng từng ghế.</p>
-  </section>
-
-  <section class="slide">
-    <p class="kicker">06 · Hai phiếu MCP</p>
-    <h2>Nhìn số trước khi chọn cửa.</h2>
-    <div class="grid-2">
-      <div class="card">
-        <p class="muted">Phiếu A · MCP public trong Codex</p>
-        <p class="price">$400<span style="font-size:18px;font-weight:600">/tháng</span></p>
-        <p>Hoặc $350/tháng khi Business trả năm.</p>
-        <p>Đã có 10 ghế Codex: còn $150 Wandura.</p>
-        <p>Chỉ gọi tool code, không tạo media: bỏ Wandura.</p>
+    <div class="grow">
+      <div class="models">
+        <div class="model"><div class="band">VIỆC NHỎ</div><strong>Haiku</strong><span class="lbl">Lọc log, tóm tắt. Một lần đầu phiên.</span></div>
+        <div class="model"><div class="band">VIỆC NGÀY</div><strong>Sonnet</strong><span class="lbl">Viết code hằng ngày.</span></div>
+        <div class="model"><div class="band">VIỆC KHÓ</div><strong>Opus</strong><span class="lbl">Debug khó, thiết kế hệ thống.</span></div>
       </div>
-      <div class="card">
-        <p class="muted">Phiếu B · Claude Code tự chọn model</p>
-        <p class="price">$1.250<span style="font-size:18px;font-weight:600">/tháng</span></p>
-        <p>10 × Premium $125. Trả năm: $12.000 một lần.</p>
-        <p>Lượt interactive không mua khóa API.</p>
-        <p>Có khóa API trong phiên thì gateway dừng.</p>
+      <div class="split">
+        <div class="card"><h3>Codex</h3><p>Giữ model client đã chọn. Tool chỉ là tool.</p></div>
+        <div class="card mintbg"><h3>Claude Code</h3><p>Đổi từng lượt thì cần Mod, từ bản 2.1.287. Lỗi thì giữ model cũ.</p></div>
       </div>
     </div>
-    <p class="say">Khuyến nghị nói thành tiếng: phiếu A cho pilot media. Phiếu B chỉ khi buổi này chốt cần Mod. Hai phiếu không cộng vào nhau trừ khi làm cả hai việc.</p>
+    <p class="say">Đừng hứa Codex tự đổi model. Team Standard 25 đô một ghế không có Claude Code. Muốn Mod thì sang phiếu Premium.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">07 · Codex Apply</p>
-    <h2>Sáu bước. Dừng trước khi merge.</h2>
-    <div class="grid-3">
-      <div class="card"><h3>1. Task</h3><p>Repo, SHA, allowlist path, trần tiền, idempotency key.</p></div>
-      <div class="card"><h3>2. Worktree</h3><p>Một job một cây. Bỏ .env, credential, node_modules.</p></div>
-      <div class="card"><h3>3. gpt-5.5</h3><p>Chỉ tool apply_patch. Tối đa 4 lượt sửa.</p></div>
-      <div class="card"><h3>4. Harness</h3><p>Chặn ../, symlink, path lạ, file secret, binary.</p></div>
-      <div class="card"><h3>5. Kiểm tra</h3><p>Model không có shell. Worker chạy lệnh đã cho phép.</p></div>
-      <div class="card"><h3>6. Duyệt</h3><p>Hiện diff. PR nháp. Không tự merge, không deploy.</p></div>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">05 · Phiếu MCP</p></div>
+    <h2>Bốn số. Chỉ mua dòng còn thiếu.</h2>
+    <div class="grow">
+      <div class="grid-4">
+        <div class="card kpi"><div class="num">$250</div><div class="lbl">10 ghế Business / tháng. Có Codex. Năm: $2.400.</div></div>
+        <div class="card kpi mint"><div class="num">$150</div><div class="lbl">10 Wandura Basic. $15 × 10.</div></div>
+        <div class="card kpi soft"><div class="num">$400</div><div class="lbl">Phiếu A trả tháng. Năm quy $350.</div></div>
+        <div class="card kpi warn"><div class="num">$1.250</div><div class="lbl">10 Claude Premium nếu cần Mod. Năm: $12.000.</div></div>
+      </div>
+      <div class="grid-3">
+        <div class="card kpi"><div class="num">$0</div><div class="lbl">Hosting MCP chính thức hoặc local</div></div>
+        <div class="card kpi"><div class="num">$0</div><div class="lbl">GPU</div></div>
+        <div class="card kpi"><div class="num">?</div><div class="lbl">Enterprise / API v2. Hỏi sales, không cộng Basic.</div></div>
+      </div>
     </div>
-    <p class="say">Pilot 2 đến 3 kỹ sư trước. Đủ tiêu chí rồi mới mở 10 người. GitHub App quyền tối thiểu. Model không nhận credential.</p>
+    <p class="say">Phiếu A là 400 đô một tháng nếu chưa có gì. Đã có Codex thì còn 150 đô Wandura. Không mua Growth sẵn cho cả nhóm. Đo tuần đầu rồi tăng từng ghế.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">08 · Mua cho Apply · 10 người</p>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">06 · Chọn phiếu MCP</p></div>
+    <h2>A cho media. B chỉ khi cần Mod.</h2>
+    <div class="grow grid-2">
+      <div class="card soft kpi">
+        <div class="lbl">Phiếu A · MCP public trong Codex</div>
+        <div class="num" style="font-size:72px;margin:12px 0">$400<small>/tháng</small></div>
+        <div class="meter"><i style="width:32%"></i></div>
+        <p>Đã có 10 ghế Codex: còn $150. Không tạo media thì bỏ Wandura.</p>
+      </div>
+      <div class="card warn kpi">
+        <div class="lbl">Phiếu B · Claude Code tự chọn model</div>
+        <div class="num" style="font-size:72px;margin:12px 0">$1.250<small>/tháng</small></div>
+        <div class="meter"><i style="width:100%;background:#c2410c"></i></div>
+        <p>10 × $125. Lượt interactive không mua khóa API. Có khóa trong phiên thì gateway dừng.</p>
+      </div>
+    </div>
+    <p class="say">Thanh tỷ lệ lấy 1.250 làm 100%. Phiếu A bằng khoảng một phần ba phiếu B. Hai phiếu không cộng trừ khi làm cả media lẫn Mod.</p>
+  </section>
+
+  <section class="slide">
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">07 · Apply</p></div>
+    <h2>Sáu bước. Dừng trước merge.</h2>
+    <div class="grow">
+      <div class="steps">
+        <div class="step"><div class="dot">1</div><strong>Task</strong><span>Repo, SHA, path, trần, key</span></div>
+        <div class="step"><div class="dot">2</div><strong>Worktree</strong><span>Một job một cây. Bỏ secret</span></div>
+        <div class="step"><div class="dot">3</div><strong>gpt-5.5</strong><span>Chỉ apply_patch. Tối đa 4 lượt</span></div>
+        <div class="step"><div class="dot">4</div><strong>Harness</strong><span>Chặn ../, symlink, binary</span></div>
+        <div class="step"><div class="dot">5</div><strong>Kiểm tra</strong><span>Model không có shell</span></div>
+        <div class="step"><div class="dot">6</div><strong>Duyệt</strong><span>Diff, PR nháp, không deploy</span></div>
+      </div>
+      <div class="grid-3">
+        <div class="card kpi"><div class="num">4</div><div class="lbl">lượt sửa tối đa mỗi task</div></div>
+        <div class="card kpi"><div class="num">2–3</div><div class="lbl">kỹ sư ở tuần pilot</div></div>
+        <div class="card kpi"><div class="num">1–2</div><div class="lbl">job chạy cùng lúc</div></div>
+      </div>
+    </div>
+    <p class="say">Đọc sáu chấm từ trái sang phải. Nhấn mạnh chấm 6: người duyệt diff rồi mới có PR nháp. GitHub App quyền tối thiểu. Model không nhận credential.</p>
+  </section>
+
+  <section class="slide">
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">08 · Phiếu Apply</p></div>
     <h2>Trần $100. Ghế Codex không bắt buộc.</h2>
-    <table>
-      <thead><tr><th>Hạng mục</th><th>Tiền</th><th>Khi nào</th></tr></thead>
-      <tbody>
-        <tr><td>Một project OpenAI, key phía server</td><td class="num">Tách hóa đơn</td><td>Ghế ChatGPT không trả usage API.</td></tr>
-        <tr><td>Hard limit tháng</td><td class="num">$100</td><td>Cảnh báo 50, 80, 100. Đến 80% thì ngừng nhận task.</td></tr>
-        <tr><td>gpt-5.5</td><td class="num">$5 / $30</td><td>Mỗi 1 triệu token vào / ra. Đối chiếu trang giá trước khi bật.</td></tr>
-        <tr><td>Ghế Codex</td><td class="num">$0 hoặc $250</td><td>$0 nếu bấm trên trang nội bộ. $250/tháng nếu host là Codex mà chưa có ghế.</td></tr>
-        <tr><td>Wandura và GPU</td><td class="num">$0</td><td>apply_patch không gọi Wandura. Không mua 8×H100.</td></tr>
-      </tbody>
-    </table>
-    <p class="say">Máy chỉ mua khi chưa có chỗ chạy: web 1 đến 2 vCPU, Postgres nhỏ, worker 2 vCPU và 4 GB cho mỗi job. Chưa có cloud account nên spec không gán giá VPS.</p>
-  </section>
-
-  <section class="slide">
-    <p class="kicker">09 · Vì sao $100</p>
-    <h2>200 task ngắn vừa khít. Task dài thì dừng.</h2>
-    <div class="grid-2">
+    <div class="grow">
+      <div class="grid-4">
+        <div class="card kpi soft"><div class="num">$100</div><div class="lbl">hard limit / tháng. Cảnh báo 50 · 80 · 100.</div></div>
+        <div class="card kpi"><div class="num">$5</div><div class="lbl">/ 1 triệu token vào, gpt-5.5</div></div>
+        <div class="card kpi"><div class="num">$30</div><div class="lbl">/ 1 triệu token ra</div></div>
+        <div class="card kpi mint"><div class="num">$0</div><div class="lbl">ghế nếu dùng trang nội bộ. $250 nếu host là Codex.</div></div>
+      </div>
       <div class="card">
-        <p class="muted">10 người × 20 task</p>
-        <p class="price">$88</p>
-        <p>Mỗi task một lượt: 40.000 vào + 8.000 ra = $0,44.</p>
-        <p>Chưa tính retry và context dài. Bốn lượt sửa có thể nhân vài lần.</p>
-      </div>
-      <div class="card stop">
-        <p class="muted">Cùng 200 task, cỡ 100k + 20k</p>
-        <p class="price">$220</p>
-        <p>Vượt trần. Hạ số task hoặc nâng trần sau khi đo tuần đầu.</p>
-        <p>Không nâng trần trước số liệu.</p>
+        <div class="pipe">
+          <span class="pill">80% trần → ngừng task mới</span>
+          <span class="pill">Key một project, phía server</span>
+          <span class="pill">ChatGPT không trả usage API</span>
+          <span class="pill">apply_patch không trừ credit Wandura</span>
+        </div>
       </div>
     </div>
-    <p class="say">$100 là phanh của pilot, không phải dự toán chắc. gpt-5.5 được pin vì tài liệu apply_patch liệt kê model này. Cùng request 100k/20k, Sonnet khoảng $0,40, Opus $0,80, Haiku $0,02. Đổi model Apply chỉ sau khi tài liệu và smoke test xác nhận.</p>
+    <p class="say">Một project OpenAI, hóa đơn tách khỏi ghế ChatGPT. Máy chỉ mua khi chưa có web, Postgres và worker 2 vCPU / 4 GB. Chưa gán giá VPS.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">10 · Đặt cạnh nhau</p>
-    <h2>Tiền dịch vụ AI mỗi tháng, nếu mua mới hết.</h2>
-    <div class="bars">
-      <div class="bar-row"><span>Apply, trang nội bộ</span><div class="track"><div class="fill" style="width:8%"></div></div><b>$100</b></div>
-      <div class="bar-row"><span>MCP, Business trả năm</span><div class="track"><div class="fill alt" style="width:28%"></div></div><b>$350</b></div>
-      <div class="bar-row"><span>Apply gọi từ Codex</span><div class="track"><div class="fill" style="width:28%"></div></div><b>$350</b></div>
-      <div class="bar-row"><span>MCP, trả tháng</span><div class="track"><div class="fill alt" style="width:32%"></div></div><b>$400</b></div>
-      <div class="bar-row"><span>Claude Premium, Mod</span><div class="track"><div class="fill" style="width:100%"></div></div><b>$1.250</b></div>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">09 · Vì sao $100</p></div>
+    <h2>200 task. Ngắn thì vừa. Dài thì chạm trần.</h2>
+    <div class="grow grid-2">
+      <div class="card kpi soft">
+        <div class="lbl">40.000 vào + 8.000 ra · một lượt</div>
+        <div class="num" style="font-size:68px;margin:8px 0">$88</div>
+        <p>10 × 20 task × $0,44. Chưa tính retry.</p>
+        <div class="meter"><i style="width:40%"></i></div>
+        <p class="foot">40% của mẫu dài $220</p>
+      </div>
+      <div class="card kpi stop">
+        <div class="lbl">100.000 vào + 20.000 ra · một lượt</div>
+        <div class="num" style="font-size:68px;margin:8px 0">$220</div>
+        <p>200 × $1,10. Vượt trần $100.</p>
+        <div class="meter stop"><i></i></div>
+        <p class="foot">Hạ số task hoặc nâng trần sau khi đo</p>
+      </div>
     </div>
-    <p class="muted">Apply từ Codex = trần API $100 + 10 ghế $250. Enterprise Wandura chưa có số, không vẽ lên biểu đồ.</p>
-    <p class="say">Cột $350 thứ hai là Apply cộng ghế Codex, không phải MCP trả năm. Nói rõ khi chỉ tay. Enterprise để ngoài biểu đồ vì chưa có báo giá.</p>
+    <p class="say">$100 là phanh, không phải cam kết. Bốn lượt sửa có thể nhân hóa đơn. Cùng request 100k/20k, Sonnet khoảng $0,40, Opus $0,80, Haiku $0,02. Apply phase 1 vẫn pin gpt-5.5 vì tài liệu apply_patch liệt kê model này.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">11 · Không đưa vào phiếu</p>
-    <h2>Sáu khoản để ngoài phase 1.</h2>
-    <div class="grid-2">
-      <div class="card stop"><h3>GPU 8×H100</h3><p>Thuê hoặc mua đều không hòa vốn trong 3 năm khấu hao, theo Gateway.md.</p></div>
-      <div class="card stop"><h3>10 API key cá nhân</h3><p>Đã có project key phía server thì gắn user id trong gateway.</p></div>
-      <div class="card stop"><h3>Model API chỉ để gọi MCP public</h3><p>Credit website là đủ cho lối đó.</p></div>
-      <div class="card stop"><h3>Ghế ChatGPT cho người chỉ dùng web</h3><p>Trang nội bộ không cần Codex.</p></div>
-      <div class="card stop"><h3>Growth cộng Basic cùng một người</h3><p>Enterprise thay account thì bỏ Basic.</p></div>
-      <div class="card stop"><h3>Fast mode, Batch, compressor</h3><p>Thuộc kế hoạch tiết kiệm token. Chưa gắn vào worker Apply.</p></div>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">10 · Biểu đồ tháng</p></div>
+    <h2>Tiền dịch vụ AI nếu mua mới hết.</h2>
+    <div class="grow">
+      <div class="bars">
+        <div class="bar-row"><span>Apply, trang nội bộ</span><div class="track"><div class="fill" style="width:8%"></div></div><b>$100</b></div>
+        <div class="bar-row"><span>MCP, Business trả năm</span><div class="track"><div class="fill" style="width:28%"></div></div><b>$350</b></div>
+        <div class="bar-row"><span>Apply gọi từ Codex</span><div class="track"><div class="fill deep" style="width:28%"></div></div><b>$350</b></div>
+        <div class="bar-row"><span>MCP, trả tháng</span><div class="track"><div class="fill" style="width:32%"></div></div><b>$400</b></div>
+        <div class="bar-row"><span>Claude Premium, Mod</span><div class="track"><div class="fill deep" style="width:100%"></div></div><b>$1.250</b></div>
+      </div>
     </div>
-    <p class="say">Đọc chậm tên từng ô. Câu chốt: phase 1 dừng ở subscription từng người và API có trần.</p>
+    <p class="foot">Thang 100% = $1.250. Apply từ Codex = $100 API + $250 ghế. Enterprise Wandura chưa có số nên không có thanh.</p>
+    <p class="say">Hai thanh 350 đô khác nhau. Một là MCP trả năm. Một là Apply cộng ghế Codex. Nói rõ khi chỉ tay. Cột đậm là Apply-từ-Codex và Premium.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">12 · Bốn tuần</p>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">11 · Để ngoài phiếu</p></div>
+    <h2>Sáu khoản phase 1 không mua.</h2>
+    <div class="grow grid-3">
+      <div class="card stop"><h3>$0 · GPU</h3><p>8×H100 thuê hoặc mua không hòa vốn trong 3 năm khấu hao.</p></div>
+      <div class="card stop"><h3>$0 · 10 key cá nhân</h3><p>Một project key phía server. Gắn user id trong gateway.</p></div>
+      <div class="card stop"><h3>$0 · model phụ</h3><p>MCP public dùng credit website là đủ.</p></div>
+      <div class="card stop"><h3>$0 · ghế cho web</h3><p>Trang nội bộ không cần Codex.</p></div>
+      <div class="card stop"><h3>$0 · Basic + Growth</h3><p>Enterprise thay account thì bỏ Basic.</p></div>
+      <div class="card stop"><h3>$0 · fast / batch</h3><p>Compressor và fast mode chưa gắn vào worker Apply.</p></div>
+    </div>
+    <p class="say">Đọc tên sáu ô. Câu chốt: phase 1 dừng ở subscription từng người và API có trần.</p>
+  </section>
+
+  <section class="slide">
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">12 · Bốn tuần</p></div>
     <h2>Xong tuần này mới sang tuần sau.</h2>
-    <div class="weeks">
-      <div class="week"><b>Tuần 1 · Core</b><p>Sổ, trần từng user, audit. Tạo project OpenAI, limit $100, dù Apply chưa nhận traffic.</p></div>
-      <div class="week"><b>Tuần 2 · MCP</b><p>Đủ 10 người. Mới đọc và xem giá. Thu hồi một user không làm chín người kia rớt phiên.</p></div>
-      <div class="week"><b>Tuần 3 · Apply</b><p>2 đến 3 kỹ sư. Patch không thoát worktree. Diff hiện trước PR. Không auto merge.</p></div>
-      <div class="week"><b>Tuần 4 · Mở</b><p>Đủ tiêu chí tuần 3 thì mở Apply tới 10 người. Route lỗi không tự đổi provider.</p></div>
+    <div class="grow">
+      <div class="weeks">
+        <div class="week"><div class="dot">1</div><b>Core</b><p>Sổ, trần từng user. Project OpenAI limit $100 dù Apply chưa chạy.</p></div>
+        <div class="week"><div class="dot">2</div><b>MCP · 10 người</b><p>Mới đọc và xem giá. Thu hồi một user, chín người kia vẫn vào được.</p></div>
+        <div class="week"><div class="dot">3</div><b>Apply · 2–3 người</b><p>Patch không thoát worktree. Diff trước PR. Không auto merge.</p></div>
+        <div class="week"><div class="dot">4</div><b>Mở đủ 10</b><p>Đủ tiêu chí tuần 3 thì mở Apply. Route lỗi không tự đổi provider.</p></div>
+      </div>
     </div>
-    <p class="say">Tuần 2 là cửa MCP cho cả nhóm. Apply vẫn hẹp đến khi harness qua test. Đừng mở 10 người sửa repo ở tuần 1.</p>
+    <p class="say">Tuần 2 là cửa MCP cho cả nhóm. Apply vẫn hẹp đến khi harness qua test. Không mở 10 người sửa repo ở tuần 1.</p>
   </section>
 
   <section class="slide">
-    <p class="kicker">13 · Chốt</p>
-    <h2>Ba việc cần gật trong buổi này.</h2>
-    <div class="grid-3">
-      <div class="card good"><h3>1. Cửa</h3><p>Phiếu A, MCP public trong Codex, nếu việc là media.</p><p>Phiếu C, Apply trên trang nội bộ, nếu việc là sửa repo.</p></div>
-      <div class="card good"><h3>2. Trần</h3><p>OpenAI $100. Wandura đo theo credit thật tuần đầu.</p><p>80% thì ngừng task mới.</p></div>
-      <div class="card good"><h3>3. Nghiệm thu</h3><p>Mỗi đô la và mỗi credit gắn một user.</p><p>Sổ khớp dashboard OpenAI và Wandura.</p></div>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">13 · Chốt</p></div>
+    <h2>Ba việc cần gật.</h2>
+    <div class="grow grid-3">
+      <div class="card kpi soft">
+        <div class="num">A hoặc C</div>
+        <div class="lbl">A: MCP public trong Codex. C: Apply trên trang nội bộ, trần $100, không ghế.</div>
+      </div>
+      <div class="card kpi">
+        <div class="num">80%</div>
+        <div class="lbl">chạm mốc này thì ngừng nhận task mới. Cảnh báo 50 và 100 vẫn bật.</div>
+      </div>
+      <div class="card kpi mint">
+        <div class="num">1 : 1</div>
+        <div class="lbl">mỗi đô la API và mỗi credit Wandura gắn một user. Sổ khớp dashboard.</div>
+      </div>
     </div>
-    <div class="callout good">Spec đầy đủ nằm cạnh file này. Bản trình chiếu không thêm đơn giá mới.</div>
-    <p class="say">Kết bằng câu hỏi: buổi này chốt phiếu A, phiếu C, hay cả hai với một trần OpenAI. Nhắc lại không mua GPU và không phát key cá nhân.</p>
+    <p class="foot">Spec đầy đủ nằm cạnh file này. Deck không thêm đơn giá mới.</p>
+    <p class="say">Kết bằng câu hỏi: chốt phiếu A, phiếu C, hay cả hai với một trần OpenAI. Nhắc lại không mua GPU và không phát key cá nhân.</p>
   </section>
 
   <div class="notes" id="notes"></div>
   <div class="nav">
-    <span>Apero · 10 người · giá 29/10/2026</span>
-    <span><button type="button" id="prev" aria-label="Slide trước">←</button>
+    <span>XLab · 10 người · giá 29/10/2026</span>
+    <span>
+      <button type="button" id="prev" aria-label="Slide trước">←</button>
       <span id="counter">1 / 14</span>
-      <button type="button" id="next" aria-label="Slide sau">→</button></span>
+      <button type="button" id="next" aria-label="Slide sau">→</button>
+    </span>
   </div>
 </div>
 <script>
@@ -424,7 +536,6 @@
   var counter = document.getElementById("counter");
   var progress = document.getElementById("progress");
   var i = 0;
-
   function show(n) {
     if (n < 0) n = 0;
     if (n >= slides.length) n = slides.length - 1;
@@ -436,21 +547,19 @@
     progress.style.width = ((i + 1) / slides.length * 100) + "%";
     if (location.hash !== "#" + (i + 1)) history.replaceState(null, "", "#" + (i + 1));
   }
-
   document.getElementById("next").addEventListener("click", function () { show(i + 1); });
   document.getElementById("prev").addEventListener("click", function () { show(i - 1); });
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
     else if (e.key === "ArrowLeft" || e.key === "PageUp" || e.key === "Backspace") { e.preventDefault(); show(i - 1); }
-    else if (e.key === "Home") { show(0); }
-    else if (e.key === "End") { show(slides.length - 1); }
-    else if (e.key === "n" || e.key === "N") { document.body.classList.toggle("notes-on"); }
+    else if (e.key === "Home") show(0);
+    else if (e.key === "End") show(slides.length - 1);
+    else if (e.key === "n" || e.key === "N") document.body.classList.toggle("notes-on");
     else if (e.key === "f" || e.key === "F") {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen();
       else document.exitFullscreen();
     }
   });
-
   var fromHash = parseInt(location.hash.slice(1), 10);
   show(fromHash >= 1 && fromHash <= slides.length ? fromHash - 1 : 0);
 })();
