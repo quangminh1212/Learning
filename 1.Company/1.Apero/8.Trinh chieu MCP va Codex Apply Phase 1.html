@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -248,275 +248,275 @@
     <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">Phase 1 · 30/10/2026</p></div>
     <div class="grow">
       <h1>MCP hay Codex Apply</h1>
-      <p class="lead">10 người nội bộ. Một gateway. Hai phiếu mua.</p>
+      <p class="lead">Mười người. Một cổng. Hôm nay chọn cách trả tiền.</p>
       <div class="statrow">
-        <div class="card kpi"><div class="num">10</div><div class="lbl">người trong pilot</div></div>
-        <div class="card kpi"><div class="num">$100</div><div class="lbl">trần API Apply / tháng</div></div>
-        <div class="card kpi"><div class="num">$0</div><div class="lbl">GPU. Không mua 8×H100</div></div>
+        <div class="card kpi"><div class="num">10</div><div class="lbl">người cùng vào pilot</div></div>
+        <div class="card kpi"><div class="num">$100</div><div class="lbl">trần tháng cho Apply</div></div>
+        <div class="card kpi"><div class="num">$0</div><div class="lbl">GPU. 8×H100 để lại</div></div>
       </div>
     </div>
-    <p class="foot">Mũi tên chuyển slide · F toàn màn hình · N ghi chú nói</p>
-    <p class="say">Mở bằng ba số: 10 người, trần 100 đô, không GPU. Hôm nay chốt cửa và phiếu mua. Giá lấy từ tài liệu 29/10, đối chiếu checkout trước khi chuyển tiền.</p>
+    <p class="foot">Mũi tên để lật · F phóng to · N mở lời thoại</p>
+    <p class="say">Đứng lại ở ba số. Mười người, trần một trăm đô, không sắm GPU. Buổi này chốt cửa và phiếu mua. Giá chốt ngày 29/10, đối chiếu lúc thanh toán.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">01 · Ngã ba</p></div>
-    <h2>Việc hằng ngày đi MCP. Sửa repo đi Apply.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">01 · Chọn lối</p></div>
+    <h2>Việc ngày nào đi MCP. Sửa repo thì đi Apply.</h2>
     <div class="grow">
       <div class="fork">
         <div class="card soft">
           <h3>MCP</h3>
-          <p>Tool Wandura trong Codex hoặc Claude Code.</p>
-          <p>Tìm template, xem giá, tạo ảnh, video, audio.</p>
+          <p>Gọi Wandura ngay trong Codex hoặc Claude.</p>
+          <p>Tìm mẫu, xem giá, ra ảnh, video, audio.</p>
         </div>
         <div class="hub">10<br>người</div>
         <div class="card mintbg">
           <h3>Codex Apply</h3>
-          <p>Tool <code>apply_patch</code>. Không có endpoint tên codex apply.</p>
-          <p>Diff trong worktree. PR nháp sau khi người duyệt.</p>
+          <p><code>apply_patch</code> viết diff trong worktree. Không có đường tên codex apply.</p>
+          <p>Người gật đầu, lúc ấy mới có PR nháp.</p>
         </div>
       </div>
       <div class="grid-3">
-        <div class="card kpi"><div class="num">1</div><div class="lbl">Gateway Core cho cả hai cửa</div></div>
-        <div class="card kpi"><div class="num">1</div><div class="lbl">sổ usage, một trần tiền</div></div>
-        <div class="card kpi stop"><div class="num">0</div><div class="lbl">đường ghi repo thứ hai</div></div>
+        <div class="card kpi"><div class="num">1</div><div class="lbl">cổng cho cả hai lối</div></div>
+        <div class="card kpi"><div class="num">1</div><div class="lbl">sổ chi, một trần tiền</div></div>
+        <div class="card kpi stop"><div class="num">0</div><div class="lbl">lối ghi repo thứ hai</div></div>
       </div>
     </div>
-    <p class="say">Chốt câu này trước kiến trúc. MCP trước nếu cần tool Wandura. Apply khi đã chốt sản phẩm sửa code. Bật cả hai thì không nhân đôi sổ và không nhân đôi trần.</p>
+    <p class="say">Chốt câu này trước khi vẽ sơ đồ. Cần tool Wandura thì MCP đi trước. Đã quyết sửa code trên repo thì mới làm Apply. Bật cả hai vẫn một sổ, một trần.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">02 · Sơ đồ lối vào</p></div>
-    <h2>Hai cửa. Một core. Hai đầu ra.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">02 · Một cổng</p></div>
+    <h2>Hai lối vào. Một người gác. Hai nơi nhận.</h2>
     <div class="grow">
       <div class="arch">
         <div class="stack">
-          <div class="node"><strong>Codex / Claude</strong><span>MCP adapter. Mỗi người một login.</span></div>
-          <div class="node"><strong>Trang nội bộ</strong><span>Browser gọi BFF. Key không ở máy user.</span></div>
+          <div class="node"><strong>Codex / Claude</strong><span>Vào bằng MCP. Mỗi người một tài khoản.</span></div>
+          <div class="node"><strong>Trang nội bộ</strong><span>Trình duyệt gọi BFF. Key không nằm trên máy.</span></div>
         </div>
         <div class="arrow">→</div>
-        <div class="node core"><strong>Gateway</strong><span>Allowlist, trần, tốc độ, audit.</span></div>
+        <div class="node core"><strong>Gateway</strong><span>Ai được gọi gì, trần bao nhiêu, có dấu vết.</span></div>
         <div class="arrow">→</div>
         <div class="stack">
-          <div class="node"><strong>Wandura</strong><span>Ảnh, video, audio. Credit hoặc ví API.</span></div>
-          <div class="node"><strong>OpenAI</strong><span>Responses API, apply_patch, gpt-5.5.</span></div>
+          <div class="node"><strong>Wandura</strong><span>Ảnh, video, audio. Credit web hoặc ví API.</span></div>
+          <div class="node"><strong>OpenAI</strong><span>apply_patch trên gpt-5.5.</span></div>
         </div>
       </div>
     </div>
-    <p class="say">Chỉ vào giữa: mọi cửa đều qua gateway. Media sang Wandura. Patch sang OpenAI. Không phát API key cho 10 người.</p>
+    <p class="say">Chỉ vào ô giữa. Ai cũng đi qua gateway. Ảnh video sang Wandura. Sửa file sang OpenAI. Mười người không ai cầm API key.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">03 · Hai ví Wandura</p></div>
-    <h2>Credit website không sang API v2.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">03 · Hai ví</p></div>
+    <h2>Tiền trên web ở lại web.</h2>
     <div class="grow">
       <div class="grid-2">
         <div class="card kpi soft">
           <div class="num">1.500</div>
-          <div class="lbl">credit / Basic / người / kỳ. 10 người = 15.000. Không gom quỹ, không cộng dồn.</div>
+          <div class="lbl">credit Basic cho một người, một kỳ. Mười người là 15.000. Tiền ai người nấy. Hết kỳ là hết.</div>
         </div>
         <div class="card kpi warn">
           <div class="num">API v2</div>
-          <div class="lbl">Server gọi server. Báo giá Enterprise. Basic $15 không trả ví này.</div>
+          <div class="lbl">Server gọi server. Xin giá Enterprise. Gói $15 không trả ví này.</div>
         </div>
       </div>
       <div class="card">
         <div class="pipe">
-          <span class="pill">search</span><span class="arr">→</span>
-          <span class="pill">preview giá</span><span class="arr">→</span>
-          <span class="pill">user xác nhận</span><span class="arr">→</span>
-          <span class="pill">render video / image / audio</span><span class="arr">→</span>
-          <span class="pill">get kết quả</span>
+          <span class="pill">Tìm mẫu</span><span class="arr">→</span>
+          <span class="pill">Xem giá</span><span class="arr">→</span>
+          <span class="pill">Người gật</span><span class="arr">→</span>
+          <span class="pill">Ra ảnh, video, audio</span><span class="arr">→</span>
+          <span class="pill">Lấy file</span>
         </div>
       </div>
     </div>
-    <p class="say">Chỉ cần media trong Codex thì cài MCP public, không viết lại client. Adapter tự viết khi phải gắn trần và sổ nội bộ. Enterprise thay account thì bỏ 10 Basic, không cộng cả hai.</p>
+    <p class="say">Chỉ cần ảnh video trong Codex thì cài MCP public, khỏi viết client mới. Tự viết adapter khi muốn gắn trần và sổ nhà mình. Enterprise thay account thì bỏ mười gói Basic, đừng trả hai lần.</p>
   </section>
 
   <section class="slide">
     <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">04 · Model</p></div>
-    <h2>MCP không đổi model của Codex.</h2>
+    <h2>Codex giữ nguyên model đang mở.</h2>
     <div class="grow">
       <div class="models">
-        <div class="model"><div class="band">VIỆC NHỎ</div><strong>Haiku</strong><span class="lbl">Lọc log, tóm tắt. Một lần đầu phiên.</span></div>
-        <div class="model"><div class="band">VIỆC NGÀY</div><strong>Sonnet</strong><span class="lbl">Viết code hằng ngày.</span></div>
-        <div class="model"><div class="band">VIỆC KHÓ</div><strong>Opus</strong><span class="lbl">Debug khó, thiết kế hệ thống.</span></div>
+        <div class="model"><div class="band">VIỆC NHỎ</div><strong>Haiku</strong><span class="lbl">Lọc log, tóm tắt. Hỏi một lần lúc mở phiên.</span></div>
+        <div class="model"><div class="band">VIỆC NGÀY</div><strong>Sonnet</strong><span class="lbl">Code thường, việc lặp lại mỗi ngày.</span></div>
+        <div class="model"><div class="band">VIỆC KHÓ</div><strong>Opus</strong><span class="lbl">Debug bí, hoặc thiết kế cả hệ thống.</span></div>
       </div>
       <div class="split">
-        <div class="card"><h3>Codex</h3><p>Giữ model client đã chọn. Tool chỉ là tool.</p></div>
-        <div class="card mintbg"><h3>Claude Code</h3><p>Đổi từng lượt thì cần Mod, từ bản 2.1.287. Lỗi thì giữ model cũ.</p></div>
+        <div class="card"><h3>Codex</h3><p>Model nào đang chọn thì giữ. MCP chỉ đưa thêm tool.</p></div>
+        <div class="card mintbg"><h3>Claude Code</h3><p>Muốn đổi model giữa chừng thì cần Mod, từ bản 2.1.287. Chọn hụt thì ở lại model cũ.</p></div>
       </div>
     </div>
-    <p class="say">Đừng hứa Codex tự đổi model. Team Standard 25 đô một ghế không có Claude Code. Muốn Mod thì sang phiếu Premium.</p>
+    <p class="say">Đừng hứa Codex tự đổi model. Ghế Team Standard 25 đô không có Claude Code. Muốn Mod thì nhìn sang phiếu Premium.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">05 · Phiếu MCP</p></div>
-    <h2>Bốn số. Chỉ mua dòng còn thiếu.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">05 · Hóa đơn MCP</p></div>
+    <h2>Thiếu gì mua nấy. Đừng mua cả rổ.</h2>
     <div class="grow">
       <div class="grid-4">
-        <div class="card kpi"><div class="num">$250</div><div class="lbl">10 ghế Business / tháng. Có Codex. Năm: $2.400.</div></div>
-        <div class="card kpi mint"><div class="num">$150</div><div class="lbl">10 Wandura Basic. $15 × 10.</div></div>
-        <div class="card kpi soft"><div class="num">$400</div><div class="lbl">Phiếu A trả tháng. Năm quy $350.</div></div>
-        <div class="card kpi warn"><div class="num">$1.250</div><div class="lbl">10 Claude Premium nếu cần Mod. Năm: $12.000.</div></div>
+        <div class="card kpi"><div class="num">$250</div><div class="lbl">mười ghế Business mỗi tháng, kèm Codex. Trả năm một cục $2.400.</div></div>
+        <div class="card kpi mint"><div class="num">$150</div><div class="lbl">mười gói Wandura Basic. $15 một người.</div></div>
+        <div class="card kpi soft"><div class="num">$400</div><div class="lbl">phiếu A nếu trả tháng. Trả năm còn khoảng $350.</div></div>
+        <div class="card kpi warn"><div class="num">$1.250</div><div class="lbl">mười ghế Claude Premium, chỉ khi cần Mod. Trả năm $12.000.</div></div>
       </div>
       <div class="grid-3">
-        <div class="card kpi"><div class="num">$0</div><div class="lbl">Hosting MCP chính thức hoặc local</div></div>
+        <div class="card kpi"><div class="num">$0</div><div class="lbl">máy cho MCP chính thức hoặc MCP ngay trên máy</div></div>
         <div class="card kpi"><div class="num">$0</div><div class="lbl">GPU</div></div>
-        <div class="card kpi"><div class="num">?</div><div class="lbl">Enterprise / API v2. Hỏi sales, không cộng Basic.</div></div>
+        <div class="card kpi"><div class="num">?</div><div class="lbl">Enterprise. Hỏi sales. Đừng cộng thêm mười Basic.</div></div>
       </div>
     </div>
-    <p class="say">Phiếu A là 400 đô một tháng nếu chưa có gì. Đã có Codex thì còn 150 đô Wandura. Không mua Growth sẵn cho cả nhóm. Đo tuần đầu rồi tăng từng ghế.</p>
+    <p class="say">Chưa có gì thì phiếu A là 400 đô một tháng. Đã có Codex thì còn 150 đô Wandura. Đừng mua Growth sẵn cho cả nhóm. Tuần đầu đo xong, ghế nào thiếu mới nâng.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">06 · Chọn phiếu MCP</p></div>
-    <h2>A cho media. B chỉ khi cần Mod.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">06 · A hay B</p></div>
+    <h2>Làm media thì lấy A. Claude tự chọn model thì mới tính B.</h2>
     <div class="grow grid-2">
       <div class="card soft kpi">
-        <div class="lbl">Phiếu A · MCP public trong Codex</div>
+        <div class="lbl">Phiếu A · MCP Wandura trong Codex</div>
         <div class="num" style="font-size:72px;margin:12px 0">$400<small>/tháng</small></div>
         <div class="meter"><i style="width:32%"></i></div>
-        <p>Đã có 10 ghế Codex: còn $150. Không tạo media thì bỏ Wandura.</p>
+        <p>Đã có mười ghế Codex thì còn $150. Không làm ảnh video thì bỏ Wandura.</p>
       </div>
       <div class="card warn kpi">
-        <div class="lbl">Phiếu B · Claude Code tự chọn model</div>
+        <div class="lbl">Phiếu B · Claude tự chọn model</div>
         <div class="num" style="font-size:72px;margin:12px 0">$1.250<small>/tháng</small></div>
         <div class="meter"><i style="width:100%;background:#c2410c"></i></div>
-        <p>10 × $125. Lượt interactive không mua khóa API. Có khóa trong phiên thì gateway dừng.</p>
+        <p>Mười ghế, $125 một ghế. Lượt chat không mua khóa API. Thấy khóa trong phiên, gateway dừng.</p>
       </div>
     </div>
-    <p class="say">Thanh tỷ lệ lấy 1.250 làm 100%. Phiếu A bằng khoảng một phần ba phiếu B. Hai phiếu không cộng trừ khi làm cả media lẫn Mod.</p>
+    <p class="say">Thanh dài lấy 1.250 làm mốc. A chỉ bằng khoảng một phần ba B. Hai phiếu cộng vào nhau khi làm cả media lẫn Mod.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">07 · Apply</p></div>
-    <h2>Sáu bước. Dừng trước merge.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">07 · Sáu nhịp</p></div>
+    <h2>Viết diff xong. Dừng trước lúc merge.</h2>
     <div class="grow">
       <div class="steps">
-        <div class="step"><div class="dot">1</div><strong>Task</strong><span>Repo, SHA, path, trần, key</span></div>
-        <div class="step"><div class="dot">2</div><strong>Worktree</strong><span>Một job một cây. Bỏ secret</span></div>
-        <div class="step"><div class="dot">3</div><strong>gpt-5.5</strong><span>Chỉ apply_patch. Tối đa 4 lượt</span></div>
-        <div class="step"><div class="dot">4</div><strong>Harness</strong><span>Chặn ../, symlink, binary</span></div>
-        <div class="step"><div class="dot">5</div><strong>Kiểm tra</strong><span>Model không có shell</span></div>
-        <div class="step"><div class="dot">6</div><strong>Duyệt</strong><span>Diff, PR nháp, không deploy</span></div>
+        <div class="step"><div class="dot">1</div><strong>Giao việc</strong><span>Repo, SHA, thư mục, trần, mã chống gửi trùng</span></div>
+        <div class="step"><div class="dot">2</div><strong>Cây riêng</strong><span>Một job một worktree. Bỏ file mật</span></div>
+        <div class="step"><div class="dot">3</div><strong>gpt-5.5</strong><span>Chỉ apply_patch. Hết bốn lượt là dừng</span></div>
+        <div class="step"><div class="dot">4</div><strong>Hàng rào</strong><span>Chặn ../, symlink, file nhị phân</span></div>
+        <div class="step"><div class="dot">5</div><strong>Chạy thử</strong><span>Model không được mở shell</span></div>
+        <div class="step"><div class="dot">6</div><strong>Người duyệt</strong><span>Xem diff, mở PR nháp, chưa deploy</span></div>
       </div>
       <div class="grid-3">
-        <div class="card kpi"><div class="num">4</div><div class="lbl">lượt sửa tối đa mỗi task</div></div>
-        <div class="card kpi"><div class="num">2–3</div><div class="lbl">kỹ sư ở tuần pilot</div></div>
-        <div class="card kpi"><div class="num">1–2</div><div class="lbl">job chạy cùng lúc</div></div>
+        <div class="card kpi"><div class="num">4</div><div class="lbl">lượt sửa rồi phải dừng</div></div>
+        <div class="card kpi"><div class="num">2–3</div><div class="lbl">kỹ sư thử tuần đầu</div></div>
+        <div class="card kpi"><div class="num">1–2</div><div class="lbl">job được chạy cùng lúc</div></div>
       </div>
     </div>
-    <p class="say">Đọc sáu chấm từ trái sang phải. Nhấn mạnh chấm 6: người duyệt diff rồi mới có PR nháp. GitHub App quyền tối thiểu. Model không nhận credential.</p>
+    <p class="say">Đọc từ trái sang phải, dừng ở chấm sáu. Người xem diff rồi mới có PR nháp. GitHub App chỉ đủ quyền cần. Model không cầm credential.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">08 · Phiếu Apply</p></div>
-    <h2>Trần $100. Ghế Codex không bắt buộc.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">08 · Hóa đơn Apply</p></div>
+    <h2>Khóa tháng ở $100. Ghế Codex tính sau.</h2>
     <div class="grow">
       <div class="grid-4">
-        <div class="card kpi soft"><div class="num">$100</div><div class="lbl">hard limit / tháng. Cảnh báo 50 · 80 · 100.</div></div>
-        <div class="card kpi"><div class="num">$5</div><div class="lbl">/ 1 triệu token vào, gpt-5.5</div></div>
-        <div class="card kpi"><div class="num">$30</div><div class="lbl">/ 1 triệu token ra</div></div>
-        <div class="card kpi mint"><div class="num">$0</div><div class="lbl">ghế nếu dùng trang nội bộ. $250 nếu host là Codex.</div></div>
+        <div class="card kpi soft"><div class="num">$100</div><div class="lbl">trần cứng mỗi tháng. Báo khi chạm 50, 80 và 100.</div></div>
+        <div class="card kpi"><div class="num">$5</div><div class="lbl">một triệu token gpt-5.5 đi vào</div></div>
+        <div class="card kpi"><div class="num">$30</div><div class="lbl">một triệu token đi ra</div></div>
+        <div class="card kpi mint"><div class="num">$0</div><div class="lbl">ghế, nếu bấm trên trang nhà. Gọi từ Codex thì $250.</div></div>
       </div>
       <div class="card">
         <div class="pipe">
-          <span class="pill">80% trần → ngừng task mới</span>
-          <span class="pill">Key một project, phía server</span>
-          <span class="pill">ChatGPT không trả usage API</span>
-          <span class="pill">apply_patch không trừ credit Wandura</span>
+          <span class="pill">Tới 80% thì khóa việc mới</span>
+          <span class="pill">Một key, để trên server</span>
+          <span class="pill">Ghế ChatGPT không trả tiền API</span>
+          <span class="pill">apply_patch không đụng credit Wandura</span>
         </div>
       </div>
     </div>
-    <p class="say">Một project OpenAI, hóa đơn tách khỏi ghế ChatGPT. Máy chỉ mua khi chưa có web, Postgres và worker 2 vCPU / 4 GB. Chưa gán giá VPS.</p>
+    <p class="say">Một project OpenAI, hóa đơn tách khỏi ghế ChatGPT. Máy chỉ mua khi nhà chưa có web, Postgres và worker 2 vCPU với 4 GB. Giá VPS chốt khi biết cloud.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">09 · Vì sao $100</p></div>
-    <h2>200 task. Ngắn thì vừa. Dài thì chạm trần.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">09 · Cái phanh</p></div>
+    <h2>Task ngắn thì vừa túi. Task dài thì đụng trần.</h2>
     <div class="grow grid-2">
       <div class="card kpi soft">
-        <div class="lbl">40.000 vào + 8.000 ra · một lượt</div>
+        <div class="lbl">40.000 token vào, 8.000 ra, một lượt</div>
         <div class="num" style="font-size:68px;margin:8px 0">$88</div>
-        <p>10 × 20 task × $0,44. Chưa tính retry.</p>
+        <p>Mười người, hai mươi task, $0,44 một task. Chưa tính lần sửa lại.</p>
         <div class="meter"><i style="width:40%"></i></div>
-        <p class="foot">40% của mẫu dài $220</p>
+        <p class="foot">Bằng 40% mẫu dài bên kia</p>
       </div>
       <div class="card kpi stop">
-        <div class="lbl">100.000 vào + 20.000 ra · một lượt</div>
+        <div class="lbl">100.000 token vào, 20.000 ra, một lượt</div>
         <div class="num" style="font-size:68px;margin:8px 0">$220</div>
-        <p>200 × $1,10. Vượt trần $100.</p>
+        <p>Hai trăm task kiểu này. Vượt trần $100.</p>
         <div class="meter stop"><i></i></div>
-        <p class="foot">Hạ số task hoặc nâng trần sau khi đo</p>
+        <p class="foot">Bớt việc, hoặc nâng trần sau khi đo thật</p>
       </div>
     </div>
-    <p class="say">$100 là phanh, không phải cam kết. Bốn lượt sửa có thể nhân hóa đơn. Cùng request 100k/20k, Sonnet khoảng $0,40, Opus $0,80, Haiku $0,02. Apply phase 1 vẫn pin gpt-5.5 vì tài liệu apply_patch liệt kê model này.</p>
+    <p class="say">Một trăm đô là phanh của pilot, chưa phải lời hứa chi. Bốn lượt sửa có thể nhân hóa đơn. Cùng một request dài, Sonnet khoảng $0,40, Opus $0,80, Haiku $0,02. Phase 1 vẫn giữ gpt-5.5 vì tài liệu apply_patch đang liệt kê model này.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">10 · Biểu đồ tháng</p></div>
-    <h2>Tiền dịch vụ AI nếu mua mới hết.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">10 · So tiền</p></div>
+    <h2>Mua mới từ đầu, mỗi tháng tốn từng này.</h2>
     <div class="grow">
       <div class="bars">
-        <div class="bar-row"><span>Apply, trang nội bộ</span><div class="track"><div class="fill" style="width:8%"></div></div><b>$100</b></div>
+        <div class="bar-row"><span>Apply trên trang nhà</span><div class="track"><div class="fill" style="width:8%"></div></div><b>$100</b></div>
         <div class="bar-row"><span>MCP, Business trả năm</span><div class="track"><div class="fill" style="width:28%"></div></div><b>$350</b></div>
         <div class="bar-row"><span>Apply gọi từ Codex</span><div class="track"><div class="fill deep" style="width:28%"></div></div><b>$350</b></div>
-        <div class="bar-row"><span>MCP, trả tháng</span><div class="track"><div class="fill" style="width:32%"></div></div><b>$400</b></div>
-        <div class="bar-row"><span>Claude Premium, Mod</span><div class="track"><div class="fill deep" style="width:100%"></div></div><b>$1.250</b></div>
+        <div class="bar-row"><span>MCP trả từng tháng</span><div class="track"><div class="fill" style="width:32%"></div></div><b>$400</b></div>
+        <div class="bar-row"><span>Claude Premium, có Mod</span><div class="track"><div class="fill deep" style="width:100%"></div></div><b>$1.250</b></div>
       </div>
     </div>
-    <p class="foot">Thang 100% = $1.250. Apply từ Codex = $100 API + $250 ghế. Enterprise Wandura chưa có số nên không có thanh.</p>
-    <p class="say">Hai thanh 350 đô khác nhau. Một là MCP trả năm. Một là Apply cộng ghế Codex. Nói rõ khi chỉ tay. Cột đậm là Apply-từ-Codex và Premium.</p>
+    <p class="foot">Cột dài nhất là $1.250. Hai cột $350 khác nhau: MCP trả năm, và Apply cộng ghế Codex ($100 API + $250). Enterprise chưa có giá nên chưa vẽ.</p>
+    <p class="say">Khi chỉ tay, tách hai cột 350. Một là MCP trả năm. Một là Apply cộng ghế Codex, cột đó tô đậm, cùng với Premium.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">11 · Để ngoài phiếu</p></div>
-    <h2>Sáu khoản phase 1 không mua.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">11 · Để ngoài ví</p></div>
+    <h2>Sáu món phase 1 để yên.</h2>
     <div class="grow grid-3">
-      <div class="card stop"><h3>$0 · GPU</h3><p>8×H100 thuê hoặc mua không hòa vốn trong 3 năm khấu hao.</p></div>
-      <div class="card stop"><h3>$0 · 10 key cá nhân</h3><p>Một project key phía server. Gắn user id trong gateway.</p></div>
-      <div class="card stop"><h3>$0 · model phụ</h3><p>MCP public dùng credit website là đủ.</p></div>
-      <div class="card stop"><h3>$0 · ghế cho web</h3><p>Trang nội bộ không cần Codex.</p></div>
-      <div class="card stop"><h3>$0 · Basic + Growth</h3><p>Enterprise thay account thì bỏ Basic.</p></div>
-      <div class="card stop"><h3>$0 · fast / batch</h3><p>Compressor và fast mode chưa gắn vào worker Apply.</p></div>
+      <div class="card stop"><h3>GPU</h3><p>8×H100, thuê hay mua, chưa hòa vốn trong ba năm khấu hao.</p></div>
+      <div class="card stop"><h3>Mười key riêng</h3><p>Một key trên server. Gateway ghi tên người gọi.</p></div>
+      <div class="card stop"><h3>Model phụ</h3><p>Gọi MCP public thì credit trên web là đủ.</p></div>
+      <div class="card stop"><h3>Ghế cho trang web</h3><p>Người chỉ mở trang nhà thì khỏi mua Codex.</p></div>
+      <div class="card stop"><h3>Basic cộng Growth</h3><p>Enterprise đã thay account thì thôi gói Basic.</p></div>
+      <div class="card stop"><h3>Fast mode, batch</h3><p>Nén prompt và fast mode chưa gắn vào worker Apply.</p></div>
     </div>
-    <p class="say">Đọc tên sáu ô. Câu chốt: phase 1 dừng ở subscription từng người và API có trần.</p>
+    <p class="say">Đọc tên sáu ô, chậm. Phase 1 sống bằng gói của từng người và API có trần.</p>
   </section>
 
   <section class="slide">
     <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">12 · Bốn tuần</p></div>
-    <h2>Xong tuần này mới sang tuần sau.</h2>
+    <h2>Tuần này xong, tuần sau mới mở cửa.</h2>
     <div class="grow">
       <div class="weeks">
-        <div class="week"><div class="dot">1</div><b>Core</b><p>Sổ, trần từng user. Project OpenAI limit $100 dù Apply chưa chạy.</p></div>
-        <div class="week"><div class="dot">2</div><b>MCP · 10 người</b><p>Mới đọc và xem giá. Thu hồi một user, chín người kia vẫn vào được.</p></div>
-        <div class="week"><div class="dot">3</div><b>Apply · 2–3 người</b><p>Patch không thoát worktree. Diff trước PR. Không auto merge.</p></div>
-        <div class="week"><div class="dot">4</div><b>Mở đủ 10</b><p>Đủ tiêu chí tuần 3 thì mở Apply. Route lỗi không tự đổi provider.</p></div>
+        <div class="week"><div class="dot">1</div><b>Dựng cổng</b><p>Sổ chi và trần từng người. Mở project OpenAI, khóa $100, Apply chưa cho chạy.</p></div>
+        <div class="week"><div class="dot">2</div><b>MCP · cả nhóm</b><p>Mười người chỉ được xem và hỏi giá. Rút một người, chín người kia vẫn vào.</p></div>
+        <div class="week"><div class="dot">3</div><b>Apply · vài người</b><p>Hai đến ba kỹ sư. Patch không chui ra ngoài. Có diff rồi mới có PR. Chưa tự merge.</p></div>
+        <div class="week"><div class="dot">4</div><b>Mở cho mười</b><p>Tuần ba đạt thì mở Apply. Lỗi chọn đường thì đứng lại, không tự nhảy chỗ khác.</p></div>
       </div>
     </div>
-    <p class="say">Tuần 2 là cửa MCP cho cả nhóm. Apply vẫn hẹp đến khi harness qua test. Không mở 10 người sửa repo ở tuần 1.</p>
+    <p class="say">Tuần hai cả nhóm vào MCP. Apply vẫn hẹp đến khi hàng rào chịu được. Tuần một chưa ai được sửa repo.</p>
   </section>
 
   <section class="slide">
-    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">13 · Chốt</p></div>
-    <h2>Ba việc cần gật.</h2>
+    <div class="top"><div class="brand"><i>X</i><b>Lab</b></div><p class="kicker">13 · Gật</p></div>
+    <h2>Ba câu. Gật là làm.</h2>
     <div class="grow grid-3">
       <div class="card kpi soft">
         <div class="num">A hoặc C</div>
-        <div class="lbl">A: MCP public trong Codex. C: Apply trên trang nội bộ, trần $100, không ghế.</div>
+        <div class="lbl">A là MCP trong Codex. C là Apply trên trang nhà, trần $100, khỏi mua ghế.</div>
       </div>
       <div class="card kpi">
         <div class="num">80%</div>
-        <div class="lbl">chạm mốc này thì ngừng nhận task mới. Cảnh báo 50 và 100 vẫn bật.</div>
+        <div class="lbl">Tới đây thì ngừng nhận việc mới. Mốc 50 và 100 vẫn báo.</div>
       </div>
       <div class="card kpi mint">
         <div class="num">1 : 1</div>
-        <div class="lbl">mỗi đô la API và mỗi credit Wandura gắn một user. Sổ khớp dashboard.</div>
+        <div class="lbl">Mỗi đô la, mỗi credit, có tên người. Sổ nhà khớp dashboard.</div>
       </div>
     </div>
-    <p class="foot">Spec đầy đủ nằm cạnh file này. Deck không thêm đơn giá mới.</p>
-    <p class="say">Kết bằng câu hỏi: chốt phiếu A, phiếu C, hay cả hai với một trần OpenAI. Nhắc lại không mua GPU và không phát key cá nhân.</p>
+    <p class="foot">Chi tiết nằm ở file Markdown cạnh đây. Slide không thêm giá mới.</p>
+    <p class="say">Hỏi thẳng: phiếu A, phiếu C, hay cả hai với một trần OpenAI. Nhắc lại: không mua GPU, không phát key cho từng người.</p>
   </section>
 
   <div class="notes" id="notes"></div>
