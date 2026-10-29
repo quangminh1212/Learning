@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spec Phase 1 — MCP và Codex Apply, 10 người</title>
+<style>
+  :root {
+    --ink: #1c2430;
+    --muted: #5c6b7a;
+    --navy: #17365d;
+    --blue: #24527a;
+    --line: #d5dee6;
+    --paper: #f4f1ea;
+    --card: #fffdf8;
+    --pale: #e7eef5;
+    --warn: #f4efe2;
+    --stop: #f6e8e4;
+    --good: #e5f0ea;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  a { color: var(--blue); }
+  header {
+    background: var(--navy);
+    color: #f7f4ee;
+    padding: 48px 24px 36px;
+  }
+  header .wrap, main, footer .wrap { max-width: 980px; margin: 0 auto; }
+  .kicker {
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #c5d4e4;
+    margin: 0 0 12px;
+  }
+  h1 { font-size: 34px; line-height: 1.2; margin: 0 0 12px; font-weight: 650; }
+  header p { margin: 0; max-width: 72ch; color: #e4ebf2; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span {
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 13px;
+  }
+  main { padding: 28px 24px 64px; }
+  nav {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+  }
+  nav ol { margin: 8px 0 0; padding-left: 20px; columns: 2; }
+  nav a { text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  h2 { color: var(--navy); font-size: 26px; margin: 36px 0 10px; }
+  h3 { color: var(--blue); font-size: 19px; margin: 22px 0 8px; }
+  p { margin: 0 0 12px; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); margin: 12px 0 18px; font-size: 15px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; text-align: left; }
+  th { background: var(--navy); color: white; font-weight: 650; }
+  tr:nth-child(even) td { background: #f7fafc; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  code, pre { font-family: Consolas, "Courier New", monospace; }
+  code { font-size: .92em; background: var(--pale); padding: 0 4px; border-radius: 4px; }
+  pre {
+    background: #13293d;
+    color: #e8eef4;
+    padding: 14px 16px;
+    border-radius: 10px;
+    overflow: auto;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .flow { display: grid; gap: 8px; margin: 14px 0 18px; }
+  .flow div {
+    background: var(--card);
+    border-left: 4px solid var(--navy);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+  }
+  .note, .stop, .good {
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 12px 0 16px;
+  }
+  .note { background: var(--warn); }
+  .stop { background: var(--stop); }
+  .good { background: var(--good); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 18px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .card h3 { margin-top: 0; }
+  .card .price { font-size: 22px; color: var(--navy); font-weight: 650; margin: 0 0 6px; }
+  ol.steps > li, ul li { margin: 0 0 8px; }
+  footer { border-top: 1px solid var(--line); padding: 18px 24px 32px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 720px) {
+    h1 { font-size: 28px; }
+    nav ol, .cards { columns: 1; grid-template-columns: 1fr; }
+    header, main { padding-left: 16px; padding-right: 16px; }
+    td.num, th.num { white-space: normal; }
+  }
+  @media print {
+    header { background: white; color: black; }
+    .kicker, header p, .meta span { color: black; }
+    nav { display: none; }
+    body { background: white; font-size: 12pt; }
+    pre { white-space: pre-wrap; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    a { color: black; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Apero · spec triển khai · Phase 1 · 29/10/2026</p>
+    <h1>MCP và API Codex Apply cho 10 người</h1>
+    <p>Hai hướng dùng chung Gateway Core. MCP đưa tool vào Codex hoặc Claude Code. Codex Apply là <code>apply_patch</code> của Responses API: gateway tự tạo diff trong worktree rồi chờ người duyệt. Phase 1 tối đa 10 người nội bộ. Không mua GPU.</p>
+    <div class="meta">
+      <span>10 người</span>
+      <span>Chưa có source <code>wandura-gateway</code> trong workspace</span>
+      <span>Giá USD trước thuế, chốt 29/10/2026</span>
+      <span>Đối chiếu checkout trước khi chuyển tiền</span>
+    </div>
+  </div>
+</header>
+<main>
+  <nav>
+    <strong>Mục lục</strong>
+    <ol>
+      <li><a href="#quyet">Quyết định và căn cứ</a></li>
+      <li><a href="#chung">Phần dùng chung</a></li>
+      <li><a href="#mcp">Hướng A — MCP</a></li>
+      <li><a href="#mua-mcp">Mua thêm cho MCP</a></li>
+      <li><a href="#apply">Hướng B — Codex Apply</a></li>
+      <li><a href="#mua-apply">Mua thêm cho Apply</a></li>
+      <li><a href="#tong">Chọn hướng và tổng tiền</a></li>
+      <li><a href="#lo-trinh">Lộ trình và nghiệm thu</a></li>
+      <li><a href="#nguon">Nguồn</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="quyet">Quyết định và căn cứ</h2>
+  <p>“Codex Apply” trong tài liệu này là tool <code>apply_patch</code> của OpenAI Responses API. Không có endpoint tên <code>codex apply</code>. Tool trả thao tác tạo, sửa, xóa file. Ứng dụng gateway áp các thao tác đó vào worktree cách ly.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>Chọn MCP khi</h3>
+      <p>Nhân viên gọi công cụ Wandura hoặc gateway ngay trong Codex, Claude Code, hoặc client có MCP. Việc chính là tìm template, xem giá, tạo job ảnh/video/audio, hoặc hỏi route và usage.</p>
+      <p>MCP thuần không đổi model chính của Codex. Muốn Claude Code tự chuyển model thì phải có plugin Mod, từ Claude Code 2.1.287 trở lên.</p>
+    </div>
+    <div class="card">
+      <h3>Chọn Codex Apply khi</h3>
+      <p>Cần một workflow trong gateway nhận yêu cầu sửa code, sinh diff, chạy lệnh kiểm tra đã cho phép, và chỉ tạo branch hoặc PR nháp sau khi người duyệt.</p>
+      <p>Nhân viên có thể bấm từ trang nội bộ hoặc gọi tool MCP. Cả hai cửa đều vào cùng worker. Không mở hai đường ghi repo.</p>
+    </div>
+  </div>
+  <div class="good">
+    <p>Với 10 người, làm MCP trước nếu mục tiêu là đưa công cụ Wandura vào việc hằng ngày. Làm Apply khi đã chốt cần sản phẩm sửa repo. Bật cả hai thì cộng seat client còn thiếu và hạ tầng còn thiếu. Ngân sách OpenAI và ví Wandura chỉ lập một lần.</p>
+  </div>
+  <p>Số liệu lấy từ tài liệu cùng thư mục, đã đối chiếu đến 29/10/2026. Thứ tự chi phí của gateway Apero vẫn là: subscription từng người, rồi API có trần, rồi máy tự chạy. Phase 1 dừng ở hai bậc đầu.</p>
+  <table>
+    <thead><tr><th>Tài liệu</th><th>Spec này lấy gì</th></tr></thead>
+    <tbody>
+      <tr><td><a href="MCP.md">MCP.md</a></td><td>Luồng chọn model trong Claude Code, rule Haiku/Sonnet/Opus, Mod bắt prompt, MCP đứng riêng thì chưa đổi được model.</td></tr>
+      <tr><td><a href="Gateway.md">Gateway.md</a></td><td>Đơn giá API, phí seat Claude, cấm gom subscription, và kết luận không mua cụm 8×H100 cho tải phase này.</td></tr>
+      <tr><td><a href="6.Kế hoạch MCP chọn model và gateway subscription.html">Kế hoạch MCP 29/10</a></td><td>Đường interactive dùng seat của đúng người. Khóa API trên lượt interactive thì dừng. Sản phẩm tự gọi API thì trả theo token.</td></tr>
+      <tr><td><a href="Spec-wandura-gateway-MCP-vs-Codex-Apply-Phase-1.md">Spec Markdown cùng chủ đề</a></td><td>Ranh giới module, hợp đồng tool, trần $100 và mẫu 200 task.</td></tr>
+      <tr><td><a href="3.So sánh Claude Pro Max Enterprise và API - 10.2026.pdf">PDF so sánh gói Claude</a> · <a href="Bao_cao_hieu_suat_so_voi_gia_goi_AI_2026.pdf">Báo cáo hiệu suất</a></td><td>Team Standard không gồm Claude Code. Credit API của Max không trả cho Claude Code chạy trực tiếp. Codex rate card 29/10: 25 credit cho mỗi $1 giá API Standard. ChatGPT subscription không bao usage API.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="chung">Phần dùng chung</h2>
+  <p>Workspace hiện chưa có cây nguồn <code>wandura-gateway</code>. Các tên module dưới đây là ranh giới trách nhiệm. Khi vào repo thật, giữ package và framework đang có, chỉ map đúng việc.</p>
+  <div class="flow">
+    <div>1. Người dùng đăng nhập bằng danh tính riêng. Không dùng chung tài khoản, không dán API key vào máy nhân viên.</div>
+    <div>2. Codex hoặc Claude gọi MCP adapter. Trang nội bộ gọi REST/BFF. Cả hai vào Gateway Core.</div>
+    <div>3. Core kiểm allowlist, trần tiền, tốc độ, rồi mới gọi Wandura API hoặc OpenAI Responses API.</div>
+    <div>4. Sổ usage ghi user, tool hoặc task, model, token, tiền, trạng thái. Mặc định không lưu prompt và không lưu mã nguồn.</div>
+  </div>
+  <table>
+    <thead><tr><th>Module</th><th>Việc phase 1</th><th>Xong khi</th></tr></thead>
+    <tbody>
+      <tr><td><code>gateway-core</code></td><td>Danh mục model được phép, policy theo user, quyết định route bằng rule.</td><td>Request không có token hợp lệ bị từ chối. Hết trần thì trả lỗi, không gọi provider.</td></tr>
+      <tr><td><code>usage-ledger</code></td><td>Một dòng cho mỗi lượt: user, project, route hoặc task id, model, token, tiền ước tính và tiền chốt.</td><td>Admin xem tổng 10 người. User chỉ xem dòng của mình.</td></tr>
+      <tr><td><code>secret store</code></td><td>Key OpenAI và key Wandura nằm phía server.</td><td>Repo, log, HTML và kết quả tool không chứa key.</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <p>Giả định phase 1: một org, một project trần chi tiêu, provider cloud sẵn có, tái sử dụng SSO, database, CI và chỗ deploy nếu công ty đã có. Chỉ mua dòng nào bảng mua ghi là thiếu.</p>
+  </div>
+
+  <h2 id="mcp">Hướng A — MCP</h2>
+  <h3>Việc cần giao</h3>
+  <p>Đưa thao tác có kiểm soát vào client nhân viên đang dùng. Có hai sản phẩm Wandura, không trộn ví:</p>
+  <ul>
+    <li>MCP public: URL <code>https://www.wandura.ai/api/mcp</code>. User đăng nhập, trừ credit trên website. CLI <code>@wandura/cli</code>. MCP local <code>@wandura/mcp</code>. Tool server gửi về, hiện gồm các luồng <code>search_templates</code> → <code>preview_generation</code> → <code>clone_template</code>, hoặc <code>preview_render</code> → <code>render_video</code> / <code>render_image</code> / <code>render_audio</code> → <code>get_generation</code>.</li>
+    <li>API v2: server gọi server, API key và product wallet. Gói Basic và Growth trên website không được coi là tiền trả cho API v2. Muốn BFF gọi API v2 thì xin key và báo giá Enterprise.</li>
+  </ul>
+  <p>Nếu chỉ cần nhân viên tạo ảnh, video, audio trong Codex: cài MCP public, không viết lại client trong gateway. Adapter tự viết chỉ khi gateway phải gắn policy, sổ usage và trần nội bộ lên trên Wandura.</p>
+
+  <h3>Tool phase 1 nếu tự viết adapter</h3>
+  <p>Tên trong bảng là hợp đồng đề xuất của gateway. Đó không phải tên tool đảm bảo của MCP public.</p>
+  <table>
+    <thead><tr><th>Tool</th><th>Đầu vào</th><th>Việc</th><th>Quyền</th></tr></thead>
+    <tbody>
+      <tr><td><code>gateway_list_models</code></td><td><code>task_type?</code></td><td>Model user được dùng</td><td>Đọc</td></tr>
+      <tr><td><code>gateway_route_preview</code></td><td><code>task_summary</code>, <code>repo_tags[]</code>, <code>max_cost_usd?</code></td><td>Đề xuất model, lý do, khoảng giá</td><td>Đọc</td></tr>
+      <tr><td><code>gateway_usage_summary</code></td><td><code>period</code></td><td>Usage của chính user; admin xem team</td><td>Đọc</td></tr>
+      <tr><td><code>wandura_preview_job</code></td><td>style hoặc model, inputs, <code>end_user_id</code></td><td>Giá trước khi chạy</td><td>Đọc, chưa trừ credit</td></tr>
+      <tr><td><code>wandura_create_job</code></td><td><code>preview_id</code>, inputs, <code>idempotency_key</code></td><td>Gửi job sau khi user xác nhận giá</td><td>Ghi, trừ credit</td></tr>
+      <tr><td><code>wandura_get_job</code></td><td><code>job_id</code></td><td>Trạng thái và URL kết quả</td><td>Đọc</td></tr>
+      <tr><td><code>code_task_preview</code></td><td><code>repo_id</code>, <code>base_ref</code>, task, <code>allowed_paths[]</code></td><td>Trả <code>preview_id</code> và ước tính. Chưa gọi model, chưa tạo branch</td><td>Đọc</td></tr>
+      <tr><td><code>code_task_start</code></td><td><code>preview_id</code>, <code>max_cost_usd</code>, <code>idempotency_key</code></td><td>Đưa task sang worker Apply sau khi user duyệt</td><td>Ghi, trừ ngân sách API</td></tr>
+      <tr><td><code>code_task_get</code></td><td><code>task_id</code></td><td>Trạng thái, usage, diff, kết quả kiểm tra</td><td>Đọc</td></tr>
+      <tr><td><code>code_task_approve</code></td><td><code>task_id</code>, <code>approval_id</code></td><td>Tạo branch hoặc PR nháp sau khi backend kiểm token duyệt</td><td>Ghi</td></tr>
+      <tr><td><code>code_task_cancel</code></td><td><code>task_id</code></td><td>Hủy job còn chạy</td><td>Ghi</td></tr>
+    </tbody>
+  </table>
+  <div class="stop">
+    <p>Không có tool <code>run_shell</code>. Không trả API key trong kết quả tool. Agent không được tự nâng hạn mức. Mọi thao tác tốn credit đi theo thứ tự preview rồi create. Host MCP phải hỏi người dùng trước write tool. Backend kiểm <code>preview_id</code>, hạn mức và idempotency key.</p>
+  </div>
+
+  <h3>Route service</h3>
+  <p><code>POST /v1/route</code>. <code>user_id</code> lấy từ token, không nhận từ body. Client không gửi key provider.</p>
+  <pre>{
+  "task_summary": "Fix the timeout handling in job polling",
+  "repo_tags": ["typescript", "backend", "wandura-gateway"],
+  "available_model_ids": ["claude-sonnet", "claude-opus"],
+  "max_cost_usd": 0.50
+}</pre>
+  <pre>{
+  "route_id": "rt_...",
+  "model_id": "claude-sonnet",
+  "reason_code": "routine_code_change",
+  "estimated_cost_usd": 0.12,
+  "fallback": "keep_current_model"
+}</pre>
+  <p>Rule chọn model, lấy từ <a href="MCP.md">MCP.md</a>: việc nhỏ, lọc log, tóm tắt dùng Haiku; viết code hằng ngày dùng Sonnet; debug khó hoặc thiết kế hệ thống dùng Opus. Haiku chỉ chạy một lần đầu phiên để chọn, nhận mô tả task và thông tin repo tối thiểu. Lỗi bộ chọn thì giữ model hiện tại hoặc hỏi người dùng. Không âm thầm chuyển sang provider khác.</p>
+  <p>Codex: MCP chỉ để gọi tool. Model Codex do cấu hình client chọn. Claude Code: muốn đổi model từng lượt thì Mod bắt <code>turn.step</code>, gọi <code>POST /v1/route</code> với tóm tắt ngắn, rồi gắn model đã chọn vào event. Giữ streaming và usage event.</p>
+
+  <h3>Các bước làm, xong bước này mới sang bước sau</h3>
+  <ol class="steps">
+    <li><strong>Chốt cửa.</strong> Một trong ba: MCP public Wandura trong Codex; MCP local trỏ gateway nội bộ; hoặc Claude Code kèm Mod. Ghi danh sách 10 tài khoản. Mỗi người một login.</li>
+    <li><strong>Read-only trước.</strong> Bật <code>gateway_list_models</code>, <code>gateway_route_preview</code>, <code>gateway_usage_summary</code> hoặc tool đọc của MCP public. Chạy thử 10 user. User A không đọc được usage của user B.</li>
+    <li><strong>Preview giá.</strong> Một job media mẫu hiện giá và dừng. Chưa có nút xác nhận thì không phát sinh credit.</li>
+    <li><strong>Write có chốt.</strong> Bật create chỉ khi sổ, idempotency và thu hồi quyền đã chạy. Gửi cùng idempotency key hai lần thì một job.</li>
+    <li><strong>Mod, nếu cần chọn model.</strong> Pin phiên bản Claude Code. Ca lỗi route giữ model cũ. Ca D0 trong kế hoạch 29/10 vẫn ra Haiku. Không gửi cả repo để phân loại.</li>
+    <li><strong>Tuần đo.</strong> Bốn số: phí seat, credit Wandura đã trừ, số lần preview bị hủy, số lần create thành công. Đối chiếu dashboard Wandura.</li>
+  </ol>
+
+  <h3>Trang nội bộ đi cùng MCP</h3>
+  <p>Nhân viên không mở được Codex vẫn dùng được việc qua trình duyệt. Browser chỉ gọi BFF. BFF giữ secret. Màn hình phase 1: đăng nhập SSO, tạo task, xem giá, danh sách trạng thái, duyệt trước khi trừ credit, admin xem usage. REST gợi ý: <code>POST /v1/media/preview</code>, <code>POST /v1/media/jobs</code>, <code>GET /v1/media/jobs/{id}</code>, <code>GET /v1/usage</code>. Cookie session có CSRF. File lớn đi bằng URL có chữ ký.</p>
+
+  <h2 id="mua-mcp">Mua thêm cho MCP — 10 người</h2>
+  <p>Chỉ mua dòng còn thiếu. Đã có seat hoặc credit đúng loại thì dòng đó bằng không. Giá là USD trước thuế.</p>
+  <table>
+    <thead>
+      <tr><th>Hạng mục</th><th class="num">Tiền</th><th>Mua khi</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>10 ghế ChatGPT Business Standard, vì gói này đang gồm Codex</td>
+        <td class="num">$250/tháng<br>hoặc $2.400/năm</td>
+        <td>Client là Codex và 10 người chưa có ghế. Trả tháng là $25 × 10. Trả năm tương đương $20 × 10 = $200/tháng, trả trước $2.400. Đã có Codex hoặc client khác thì bỏ dòng này. Claude Code và Cursor là license riêng, không thay bằng ghế ChatGPT.</td>
+      </tr>
+      <tr>
+        <td>10 Wandura Basic</td>
+        <td class="num">$150/tháng</td>
+        <td>Dùng MCP public, mỗi người đăng nhập và trừ credit website. $15 × 10. Mỗi Basic 1.500 credit, reset theo kỳ, không cộng dồn, không phải quỹ chung. Tổng 15.000 credit/tháng.</td>
+      </tr>
+      <tr>
+        <td>Wandura Enterprise, API v2 hoặc team workspace</td>
+        <td class="num">Báo giá</td>
+        <td>BFF hoặc gateway gọi API v2, cần SSO/SAML, full API, hoặc ví credit tùy chỉnh. Không cộng thêm 10 Basic nếu Enterprise thay các account đó. Hỏi sales trước khi lập phiếu.</td>
+      </tr>
+      <tr>
+        <td>10 ghế Claude có Claude Code, chỉ cho nhánh tự chọn model</td>
+        <td class="num">Premium $1.250/tháng<br>hoặc $1.000/tháng quy năm</td>
+        <td>Team Standard $25/ghế không gồm Claude Code. Premium $125/ghế/tháng, hoặc $100/ghế khi trả năm, theo ghi chú nội bộ 29/10. Xác nhận trong admin console vì quyền và giá theo vùng có thể đổi. Pro $20 hoặc Max từng người là đường khác nếu không mua Team. Credit API $20/$100 của Team không trả cho lượt Claude Code chạy trực tiếp.</td>
+      </tr>
+      <tr>
+        <td>Hosting MCP</td>
+        <td class="num">$0 thêm</td>
+        <td>MCP Wandura chính thức hoặc MCP local trên máy nhân viên. Remote MCP cho ChatGPT mới cần HTTPS. Dùng app service sẵn có. Chưa có chỗ deploy thì xin báo giá cloud hiện tại, chưa gán số trong spec này.</td>
+      </tr>
+      <tr>
+        <td>GPU</td>
+        <td class="num">$0</td>
+        <td>Không mua. 10 người dùng service cloud.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cards">
+    <div class="card">
+      <h3>Phiếu A — MCP public trong Codex</h3>
+      <p class="price">$400/tháng hoặc $350/tháng quy năm</p>
+      <p>Chưa có gì: 10 Business trả tháng $250 cộng 10 Basic $150. Trả năm Business thì $200 quy tháng cộng $150. Đã có 10 ghế Codex: còn $150 Wandura. Chỉ dùng Codex để gọi tool code, không tạo media: bỏ Wandura. Chỉ cắm MCP public vào client đã mua: bỏ hosting.</p>
+    </div>
+    <div class="card">
+      <h3>Phiếu B — chọn model trong Claude Code</h3>
+      <p class="price">$1.250/tháng Premium, nếu chưa có ghế</p>
+      <p>10 × $125. Trả năm: 10 × $100 = $1.000/tháng quy đổi, $12.000 trả trước. Gateway chấm bằng rule trên <code>127.0.0.1</code> theo kế hoạch 29/10 thì không mua khóa API cho lượt interactive. Có <code>ANTHROPIC_API_KEY</code> trong phiên đó thì gateway dừng, lý do <code>api_key_would_bill</code>.</p>
+    </div>
+  </div>
+  <div class="note">
+    <p>Growth và credit pack trên trang giá Wandura chỉ xét khi một người vượt 1.500 credit mà vẫn ở MCP public. Phase 1 không mua sẵn Growth cho cả 10 người. Đo tuần đầu rồi tăng từng seat.</p>
+  </div>
+
+  <h2 id="apply">Hướng B — API Codex Apply</h2>
+  <h3>Việc cần giao</h3>
+  <p>Thêm workflow sửa repo vào gateway. Phase 1 tạo diff và PR nháp. Không tự merge. Không tự deploy.</p>
+  <table>
+    <thead><tr><th>Thành phần</th><th>Hợp đồng phase 1</th></tr></thead>
+    <tbody>
+      <tr><td>Task API</td><td><code>POST /v1/code/tasks</code> tạo task. <code>GET /v1/code/tasks/{id}</code> đọc trạng thái. <code>POST .../approve</code> tạo branch hoặc PR nháp. <code>POST .../cancel</code> hủy.</td></tr>
+      <tr><td>Worker</td><td>Mỗi task một worktree hoặc container, pin đúng base SHA. Không dùng chung cây làm việc. Context chỉ lấy file trong allowlist, hướng dẫn repo và lệnh build. Bỏ <code>.env</code>, credential, artifact, <code>node_modules</code>.</td></tr>
+      <tr><td>Model</td><td>Pin <code>gpt-5.5</code> vì tài liệu Apply Patch liệt kê model này. ID nằm trong cấu hình để đổi sau smoke test. Gửi <code>tools: [{"type":"apply_patch"}]</code>.</td></tr>
+      <tr><td>Vòng sửa</td><td>Mỗi <code>apply_patch_call</code> được kiểm path, áp vào scratch, trả đúng một <code>apply_patch_call_output</code> theo <code>call_id</code>. Tiếp bằng <code>previous_response_id</code>. Tối đa 4 lượt.</td></tr>
+      <tr><td>Harness</td><td>Chỉ <code>create_file</code>, <code>update_file</code>, <code>delete_file</code>. Từ chối path tuyệt đối, <code>..</code>, symlink ra ngoài, path ngoài allowlist, file quá lớn, binary, và file secret. Một operation hỏng thì cả lượt không ghi dở.</td></tr>
+      <tr><td>Kiểm tra</td><td>Model không có shell. Worker chạy formatter, linter, typecheck, test nằm trong allowlist, trong sandbox.</td></tr>
+      <tr><td>Git</td><td>GitHub App quyền tối thiểu trên repo pilot. So SHA lúc tạo task với SHA lúc duyệt. Người duyệt diff rồi mới có branch. Phase 1 không push lên nhánh mặc định.</td></tr>
+    </tbody>
+  </table>
+  <h3>Body tạo task</h3>
+  <pre>{
+  "repo_id": "wandura-gateway",
+  "base_ref": "main",
+  "task": "Add retry-after support to the jobs client",
+  "allowed_paths": ["src/**", "docs/**"],
+  "max_cost_usd": 0.50,
+  "idempotency_key": "user-123:ticket-456"
+}</pre>
+  <h3>Dữ liệu tối thiểu</h3>
+  <p><code>task_id</code>, <code>user_id</code>, <code>repo_id</code>, <code>base_sha</code>, <code>status</code>, <code>response_id</code>, <code>model_id</code>, token, tiền ước tính, tiền chốt, hash diff, mốc thời gian, kết quả kiểm tra. Prompt đầy đủ và snapshot source chỉ giữ trong hạn công ty đã duyệt, rồi xóa.</p>
+  <p>Trần cứng nằm ở hai lớp. Trong app: mỗi user và mỗi task có trần riêng, giới hạn số file, số byte, số lượt. Trên OpenAI: một project, hard spend limit. Limit dashboard có thể vượt nhẹ vì thống kê trễ, nên app phải tự chặn trước khi gọi.</p>
+
+  <h3>Các bước làm</h3>
+  <ol class="steps">
+    <li><strong>Project API.</strong> Một organization project tên riêng cho gateway. Một service account. Key vào secret store. Hard limit $100/tháng, cảnh báo 50%, 80%, 100%. Cảnh báo 80% thì ngừng nhận task mới.</li>
+    <li><strong>Harness không cần mạng.</strong> Bộ test từ chối <code>../</code>, symlink, path ngoài allowlist, file secret. Operation lỗi trả <code>failed</code> và cây scratch giữ nguyên.</li>
+    <li><strong>Worker một job.</strong> Pin SHA, áp một patch mẫu, chạy một lệnh allowlist, ra diff. Concurrency phase 1 là 1 hoặc 2 job.</li>
+    <li><strong>Nối Responses API.</strong> Smoke một task thật trên repo pilot, model <code>gpt-5.5</code>, tối đa 4 lượt. Ghi token và tiền vào sổ.</li>
+    <li><strong>Cửa cho người.</strong> MCP dùng <code>code_task_*</code> hoặc trang nội bộ gọi cùng REST. Cả hai hiện diff trước khi approve. Approve tạo PR nháp. Cancel dừng job đang chạy.</li>
+    <li><strong>Mở dần.</strong> 2 đến 3 kỹ sư trước. Đủ tiêu chí nghiệm thu rồi mới đủ 10 người.</li>
+  </ol>
+  <h3>Máy cho phase 1 nếu chưa có chỗ chạy</h3>
+  <table>
+    <thead><tr><th>Thành phần</th><th>Cỡ</th><th>Ghi chú</th></tr></thead>
+    <tbody>
+      <tr><td>Web và BFF</td><td>1–2 vCPU, 2–4 GB RAM</td><td>Chỉ khi có trang nội bộ và chưa có app platform.</td></tr>
+      <tr><td>Postgres</td><td>khoảng 1 vCPU, 2 GB, có backup</td><td>Task, usage, hàng đợi. Hàng đợi có thể nằm trên chính Postgres.</td></tr>
+      <tr><td>Worker Apply</td><td>2 vCPU, 4 GB RAM mỗi job</td><td>Pool 1–2 job. Tăng số job đồng thời thì tăng máy. Không GPU.</td></tr>
+      <tr><td>Secret, domain, TLS, log</td><td>resource tối thiểu trên cloud đang dùng</td><td>Đã có thì không mua mới.</td></tr>
+    </tbody>
+  </table>
+  <p>SKU và giá máy chốt sau khi biết cloud account. Spec không bịa đơn giá VPS.</p>
+
+  <h2 id="mua-apply">Mua thêm cho Codex Apply — 10 người</h2>
+  <table>
+    <thead>
+      <tr><th>Hạng mục</th><th class="num">Tiền</th><th>Mua khi</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OpenAI API, một project, một key phía server</td>
+        <td class="num">Tách hóa đơn với ChatGPT</td>
+        <td>Luôn cần cho Apply. Ghế ChatGPT không trả usage API. Không phát key cho từng nhân viên. Gắn <code>user_id</code> trong gateway.</td>
+      </tr>
+      <tr>
+        <td>Trần tháng cho project</td>
+        <td class="num">Hard limit $100</td>
+        <td>Đặt ngay khi tạo project. Cảnh báo 50 / 80 / 100. Đây là tiền mua usage, không phải phí seat.</td>
+      </tr>
+      <tr>
+        <td>Model <code>gpt-5.5</code></td>
+        <td class="num">$5 / $30 mỗi 1M token</td>
+        <td>Input $5, output $30, theo spec đã chốt với tài liệu Apply Patch và trang giá OpenAI lúc lập. Đối chiếu lại trang giá ngay trước khi bật traffic.</td>
+      </tr>
+      <tr>
+        <td>Ghế ChatGPT Business</td>
+        <td class="num">$0 nếu dùng trang nội bộ<br>$250/tháng nếu host là Codex</td>
+        <td>Nhân viên bấm trên HTML của gateway thì không mua ghế Codex. Nhân viên gọi Apply từ MCP trong Codex thì cần quyền Codex: cùng mức 10 Standard ở mục MCP, $250/tháng hoặc $2.400/năm.</td>
+      </tr>
+      <tr>
+        <td>Credit Wandura</td>
+        <td class="num">$0 từ apply_patch</td>
+        <td><code>apply_patch</code> không gọi Wandura. Chỉ mua Basic hoặc Enterprise khi cùng workflow còn tạo ảnh, video, audio.</td>
+      </tr>
+      <tr>
+        <td>GPU và máy 8×H100</td>
+        <td class="num">$0</td>
+        <td>Gateway.md đã tính hòa vốn thuê hoặc mua cụm 8×H100 dài hơn 3 năm khấu hao ở giá DeepSeek Flash. Phase 1 không nằm ở bậc tự host.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Vì sao trần là $100</h3>
+  <p>Mẫu vận hành: 10 người × 20 task/tháng = 200 task. Mỗi task một lượt 40.000 token vào và 8.000 token ra.</p>
+  <table>
+    <thead><tr><th>Mẫu</th><th class="num">Cách tính</th><th class="num">Tiền</th></tr></thead>
+    <tbody>
+      <tr><td>Một task, một lượt</td><td class="num">40k × $5 + 8k × $30, trên 1M</td><td class="num">$0,44</td></tr>
+      <tr><td>200 task, một lượt, chưa retry</td><td class="num">200 × $0,44</td><td class="num">$88</td></tr>
+      <tr><td>Một request cỡ gateway, 100k vào + 20k ra</td><td class="num">100k × $5 + 20k × $30</td><td class="num">$1,10</td></tr>
+      <tr><td>200 request cỡ đó, một lượt</td><td class="num">200 × $1,10</td><td class="num">$220</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <p>$88 là dự toán cho task ngắn, một lượt, trước retry và trước context dài. Bốn lượt sửa có thể gửi lại context và đẩy hóa đơn lên vài lần. $100 là trần cứng để pilot dừng đúng chỗ. Tuần đầu đo token thật. Nếu phần lớn task là 100k/20k thì hạ số task mỗi người hoặc nâng trần sau khi có số, không nâng trần trước khi đo.</p>
+    <p>Cùng một request 100k/20k, bảng Gateway.md ngày 29/10: Sonnet khoảng $0,40, Opus khoảng $0,80, Haiku khoảng $0,02, GPT-6 Terra khoảng $0,20. Những đơn giá đó thuộc đường gateway chọn provider. Worker Apply phase 1 vẫn pin <code>gpt-5.5</code> vì tài liệu <code>apply_patch</code> liệt kê model này. Đổi model Apply chỉ sau khi trang Apply Patch xác nhận model mới và smoke test qua harness.</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <h3>Phiếu C — Apply qua trang nội bộ</h3>
+      <p class="price">$100 trần API / tháng</p>
+      <p>Không ghế Codex. Không credit Wandura. Thêm máy khi chưa có web, Postgres, secret store và một worker 2 vCPU / 4 GB. SSO dùng IdP công ty đang có.</p>
+    </div>
+    <div class="card">
+      <h3>Phiếu D — Apply gọi từ Codex</h3>
+      <p class="price">$100 API + ghế Codex nếu thiếu</p>
+      <p>Cộng $250/tháng hoặc $2.400/năm cho 10 Business khi chưa có Codex. Worker và GitHub App vẫn cần. Key GitHub nằm ở worker. Model không nhận credential.</p>
+    </div>
+  </div>
+
+  <h2 id="tong">Chọn hướng và tổng tiền</h2>
+  <table>
+    <thead><tr><th>Kịch bản phase 1</th><th>Dịch vụ AI phải trả</th><th>Còn cần sẵn</th></tr></thead>
+    <tbody>
+      <tr><td>MCP public Wandura + Codex</td><td>$150 Wandura + $250 Business trả tháng, hoặc $150 + $200 quy năm</td><td>Không tự host MCP. SSO và máy nhân viên.</td></tr>
+      <tr><td>MCP chọn model, Claude Code</td><td>10 Premium $1.250/tháng nếu chưa có ghế Claude Code. Không khóa API interactive</td><td>Plugin Mod. Gateway local hoặc nội bộ.</td></tr>
+      <tr><td>MCP code, worker Apply phía sau</td><td>Trần OpenAI $100. Ghế Codex chỉ khi host là Codex. Không credit Wandura</td><td>Worker, GitHub App, sổ usage.</td></tr>
+      <tr><td>Trang nội bộ gọi Apply</td><td>Trần OpenAI $100. Mẫu ngắn khoảng $88 trước retry</td><td>Web, worker, DB, secret, SSO. Không ghế Codex.</td></tr>
+      <tr><td>Trang nội bộ gọi Wandura API v2</td><td>Enterprise và ví live, báo giá. Credit Basic không sang được API v2</td><td>BFF và hàng đợi. Không ghế Codex.</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr><th>Tiêu chí</th><th>MCP</th><th>Codex Apply</th></tr></thead>
+    <tbody>
+      <tr><td>Ngồi trong agent</td><td>Có, sau khi cài server MCP</td><td>Qua tool <code>code_task_*</code> hoặc qua trang gateway</td></tr>
+      <tr><td>Tạo ảnh, video, audio Wandura</td><td>Đúng việc của MCP public</td><td>Nằm ngoài <code>apply_patch</code></td></tr>
+      <tr><td>Sửa file repo</td><td>Khi client đã có tool file và quyền máy, hoặc khi gọi worker Apply</td><td>Gateway áp patch trong worktree</td></tr>
+      <tr><td>Đổi model</td><td>Codex giữ model client. Claude Code cần Mod</td><td>Chọn model trên request Responses API</td></tr>
+      <tr><td>Tiền định kỳ</td><td>Seat client và credit hoặc ví Wandura</td><td>Token API. Seat chỉ khi client là Codex</td></tr>
+      <tr><td>Việc vận hành</td><td>Auth, allowlist tool, preview giá</td><td>Thêm worker, harness, review diff</td></tr>
+    </tbody>
+  </table>
+  <h3>Không đưa vào phiếu mua</h3>
+  <ul>
+    <li>Máy 8×H100, thuê hoặc mua, ở Mỹ hay Việt Nam.</li>
+    <li>API key cá nhân cho 10 người khi đã có project key phía server.</li>
+    <li>Thêm model API chỉ để gọi MCP Wandura chính thức bằng credit website.</li>
+    <li>Ghế ChatGPT cho người chỉ dùng trang nội bộ.</li>
+    <li>10 gói Growth hoặc một ví Enterprise cộng thêm 10 Basic cho cùng một người.</li>
+    <li>Compressor, fast mode, và Batch API trên đường Apply phase 1. Các mục đó thuộc kế hoạch tiết kiệm token, chưa gắn vào worker này.</li>
+  </ul>
+
+  <h2 id="lo-trinh">Lộ trình và nghiệm thu</h2>
+  <ol class="steps">
+    <li><strong>Tuần 1 — Core.</strong> Map auth và database hiện có. Tạo sổ, trần từng user, audit. Tạo project OpenAI và đặt limit $100 dù Apply chưa nhận traffic. Chốt Wandura là credit cá nhân hay ví Enterprise.</li>
+    <li><strong>Tuần 2 — MCP, đủ 10 người, mới đọc và preview.</strong> Mỗi người một token. Thu hồi một user không làm chín người kia mất phiên. Mọi lệnh tốn tiền đều có giá, xác nhận và idempotency.</li>
+    <li><strong>Tuần 3 — Apply, 2 đến 3 kỹ sư.</strong> Patch không ghi ra ngoài worktree. Lỗi patch trả <code>failed</code>. Task có trần và nút hủy. Diff hiện trước PR. Không auto merge.</li>
+    <li><strong>Tuần 4 — Mở Apply tới 10 người nếu tuần 3 đạt.</strong> Trang nội bộ, nếu làm, login SSO, browser không thấy key, user chỉ thấy task của mình. Route lỗi không tự đổi provider. Mỗi route có model, lý do và <code>route_id</code>.</li>
+  </ol>
+  <div class="good">
+    <p>Nghiệm thu tiền: mỗi đô la API và mỗi credit Wandura gắn được với một user. Cảnh báo 50/80/100 đã cháy đúng ngưỡng trên project thử. Số trong sổ khớp dashboard OpenAI và dashboard Wandura ở mức làm tròn nhà cung cấp công bố.</p>
+  </div>
+
+  <h2 id="nguon">Nguồn</h2>
+  <ul>
+    <li><a href="https://www.wandura.ai/mcp">Wandura MCP và CLI</a> — URL, đăng nhập, xem giá trước khi tạo.</li>
+    <li><a href="https://www.wandura.ai/pricing">Wandura pricing</a> — Basic, Growth, credit pack, Enterprise.</li>
+    <li><a href="https://docs.wandura.ai/developers/api-v2">Wandura API v2</a> — job, key, idempotency, webhook.</li>
+    <li><a href="https://developers.openai.com/api/docs/guides/tools-apply-patch">OpenAI Apply Patch</a> — operation, harness, path.</li>
+    <li><a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a> — đối chiếu lại đơn giá <code>gpt-5.5</code> trước khi bật.</li>
+    <li><a href="https://developers.openai.com/resources/docs-mcp">MCP với Codex</a> — CLI và IDE dùng chung cấu hình.</li>
+    <li><a href="https://help.openai.com/en/articles/8792828-chatgpt-business-overview">ChatGPT Business</a> — giá ghế, Codex, API tính riêng.</li>
+    <li><a href="https://help.openai.com/en/articles/9186755-managing-projects-in-the-api-platform">Project spend limit</a>.</li>
+    <li><a href="https://code.claude.com/docs/en/plugins/mods/overview">Claude Code Mods</a> · <a href="https://code.claude.com/docs/en/plugins/mods/events">Mod events</a>.</li>
+    <li><a href="https://www.anthropic.com/news/claude-code-on-team-and-enterprise">Claude Code trên Team và Enterprise</a> · <a href="Gateway.md">Gateway.md</a> · <a href="MCP.md">MCP.md</a>.</li>
+  </ul>
+  <p>Bản Markdown cùng chủ đề: <a href="Spec-wandura-gateway-MCP-vs-Codex-Apply-Phase-1.md">Spec-wandura-gateway-MCP-vs-Codex-Apply-Phase-1.md</a>. Khi trang giá đổi, sửa đơn giá trong Gateway và trong hai phiếu mua trước, rồi mới đổi luật chọn model.</p>
+</main>
+<footer>
+  <div class="wrap">Tài liệu nội bộ Apero. Spec triển khai Phase 1 cho 10 người. Chưa phải mã nguồn gateway.</div>
+</footer>
+</body>
+</html>

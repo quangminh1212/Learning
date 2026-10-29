@@ -3,6 +3,7 @@
 - **Phạm vi:** Phase 1, tối đa 10 người dùng nội bộ Wandura
 - **Ngày lập:** 29-10-2026
 - **Trạng thái:** Bản spec để chốt triển khai và ngân sách
+- **Bản HTML:** [7.Spec triển khai MCP và Codex Apply Phase 1.html](7.Spec%20triển%20khai%20MCP%20và%20Codex%20Apply%20Phase%201.html)
 
 ## 1. Tóm tắt quyết định
 
