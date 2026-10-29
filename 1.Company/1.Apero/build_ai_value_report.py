@@ -182,6 +182,35 @@ def month_from_weeks(week, price, weeks=Decimal('4')):
     return month, times(month, price)
 
 
+# Rate card Codex, Standard, 29/10/2026. Credit / giá API Standard.
+# Luna, Terra, GPT-6.1 Sol, Astra lấy từ bảng API của báo cáo này.
+# GPT-6 Sol cache $0,20 và GPT-5.6 Sol $4 / $0,40 / $20 lấy từ rate card Enterprise tính bằng đô la.
+CREDIT_PAIRS = [
+    (Decimal('0.10'), Decimal('0.01'), Decimal('0.50'), Decimal('2.5'), Decimal('0.25'), Decimal('12.5')),
+    (Decimal('1'), Decimal('0.05'), Decimal('5'), Decimal('25'), Decimal('1.25'), Decimal('125')),
+    (Decimal('2'), Decimal('0.10'), Decimal('10'), Decimal('50'), Decimal('2.5'), Decimal('250')),
+    (Decimal('2'), Decimal('0.20'), Decimal('10'), Decimal('50'), Decimal('5'), Decimal('250')),
+    (Decimal('10'), Decimal('1'), Decimal('50'), Decimal('250'), Decimal('25'), Decimal('1250')),
+    (Decimal('4'), Decimal('0.40'), Decimal('20'), Decimal('100'), Decimal('10'), Decimal('500')),
+]
+_ratios = set()
+for _pin, _cache, _pout, _cin, _cc, _co in CREDIT_PAIRS:
+    _ratios.add(_cin / _pin)
+    _ratios.add(_cc / _cache)
+    _ratios.add(_co / _pout)
+assert _ratios == {Decimal('25')}
+CREDITS_PER_API_DOLLAR = Decimal('25')
+
+
+def credits_of(dollars):
+    n = (Decimal(dollars) * CREDITS_PER_API_DOLLAR).quantize(Decimal('1'), rounding=Q)
+    return f'{int(n):,}'.replace(',', '.')
+
+
+def credits_span(lo, hi):
+    return f'{credits_of(lo)}–{credits_of(hi)}'
+
+
 def ratio_bars(items):
     d = Drawing(500, 168)
     max_v = Decimal('2.5')
@@ -211,6 +240,12 @@ PLUS_MONTH, PLUS_X = month_from_weeks(PLUS_WEEK, Decimal('20'))
 PRO100_MONTH, PRO100_X = month_from_weeks(PRO100_WEEK, Decimal('100'))
 assert PLUS_MONTH == Decimal('268.00') and PLUS_X == '13,40×'
 assert PRO100_MONTH == Decimal('700.00') and PRO100_X == '7,00×'
+assert credits_of(PLUS_WEEK) == '1.675' and credits_of(PLUS_MONTH) == '6.700'
+assert credits_of(PRO100_WEEK) == '4.375' and credits_of(PRO100_MONTH) == '17.500'
+assert credits_of(66) == '1.650' and credits_of(285) == '7.125'
+assert credits_span(330, 380) == '8.250–9.500' and credits_span(1440, 1640) == '36.000–41.000'
+assert credits_span(641, 670) == '16.025–16.750' and credits_span(2800, 2900) == '70.000–72.500'
+assert credits_of(1300) == '32.500'
 assert times(Decimal('15'), Decimal('10')) == '1,50×'
 assert times(Decimal('70'), Decimal('39')) == '1,79×'
 assert times(Decimal('200'), Decimal('100')) == '2,00×'
@@ -224,8 +259,8 @@ story += [P(f'Báo cáo thực hành cho Apero. Giá API kiểm tra {CHECK}. Ph�
 intro = [
     ['Câu hỏi', 'Một gói subscription mua được lượng dùng model trị giá bao nhiêu đô la API, và hệ số đó so với phí là bao nhiêu.'],
     ['Công thức', 'Hiệu suất = giá trị API của phần dùng được / phí gói. Trên 1: phần quy ra API lớn hơn phí. Bằng 1: phí mua đúng số đô la API đó.'],
-    ['Hai khoản', 'Credit ghi trên giá (Copilot, credit API của Claude Max). Và giá trị API của hạn mức trong app, đo từ log. Hai khoản đứng riêng, không cộng vào một hệ số.'],
-    ['Kết luận nhanh', f'Credit Copilot: Pro {times(Decimal("15"), Decimal("10"))}, Pro+ {times(Decimal("70"), Decimal("39"))}, Max {times(Decimal("200"), Decimal("100"))}. Credit Claude Max đúng 1,00×. Log Codex tháng 9–10: Plus khoảng {PLUS_X} nếu dùng hết 4 tuần; Pro $100 từ {PRO100_X} đến khoảng 16× tùy bài đo.'],
+    ['Hai khoản', 'Credit ghi trên giá (Copilot, credit API của Claude Max). Và hạn mức app đo từ log, quy ra đô la API rồi sang credit của đúng hãng. Hai khoản đứng riêng, không cộng vào một hệ số.'],
+    ['Kết luận nhanh', f'Credit Copilot: Pro {times(Decimal("15"), Decimal("10"))}, Pro+ {times(Decimal("70"), Decimal("39"))}, Max {times(Decimal("200"), Decimal("100"))}. Credit Claude Max đúng 1,00×. Log Codex: Plus {credits_of(PLUS_WEEK)} credit/tuần, {credits_of(PLUS_MONTH)} credit/tháng ({PLUS_X}). Pro $100 từ {credits_of(PRO100_WEEK)} credit/tuần trở lên, tùy bài đo.'],
 ]
 story.append(table(
     [cells(['Thông tin', 'Tóm tắt'], 'Th')] + [cells(pair, 'Td8') for pair in intro],
@@ -239,8 +274,8 @@ method = [
     ['Hạng mục', 'Cách làm'],
     ['Tử số', 'Lượng token đã dùng hoặc được cấp, nhân đơn giá API của đúng model, đúng loại token (input mới, cache read, output).'],
     ['Mẫu số', 'Phí subscription của tháng đó. Giá năm được quy về tháng khi nguồn đã quy.'],
-    ['Credit chính thức', 'Copilot: 1 AI credit = $0,01, và credit bị trừ theo giá token của model. Claude Max: credit API ghi bằng đô la trên claude.com/pricing.'],
-    ['Hạn mức app', 'Nhà cung cấp không công bố số token. Hệ số chỉ có khi có log đã định giá. Một tuần Codex nhân 4 là giả định của báo cáo này khi nguồn chỉ công bố số tuần.'],
+    ['Credit chính thức', 'Copilot: 1 AI credit = $0,01. Claude Max: credit API ghi bằng đô la. ChatGPT: credit mua thêm sau khi hết hạn mức, rate card Codex tính 25 credit cho mỗi $1 API Standard.'],
+    ['Hạn mức app', 'Nhà cung cấp không cấp một số credit cố định trong phí Plus hay Pro. Log đã định giá theo API đổi sang credit ChatGPT bằng đô la × 25. Một tuần nhân 4 là giả định của báo cáo này khi nguồn chỉ có số tuần.'],
     ['Đơn giá', 'Mức Standard, input mới, chưa thuế. Cache, batch, fast mode và context dài làm cùng một log ra số đô la khác.'],
 ]
 story.append(table([cells(r, 'Th' if i == 0 else 'Td') for i, r in enumerate(method)], [36 * mm, 142 * mm]))
@@ -296,20 +331,22 @@ story += [P(
 
 story += [P('4. Hiệu suất của hạn mức app, đo từ log', 'H1VN')]
 story += [P(
-    'Đây là giá niêm yết để mua qua API đúng lượng token trong log hoặc trong phép thử dùng hết hạn mức. Không phải credit, không phải tiền hoàn, không phải hóa đơn thật.',
+    'Cột giá trị là giá niêm yết API của lượng token trong log, rồi số credit ChatGPT tương đương. '
+    f'Rate card Codex ngày {CHECK} tính GPT-6 Astra, GPT-6.1 Sol, Terra, GPT-6 Sol, Luna và GPT-5.6 Sol đúng 25 credit cho mỗi $1 giá API Standard, cùng tỷ lệ ở input, cache read và output. '
+    'Credit = đô la API × 25. Đây là credit trên rate card mua thêm sau khi hết hạn mức, không phải số credit được cấp trong phí. Giá mua một credit phụ thuộc gói, OpenAI không niêm một giá cố định.',
     'BodyVN')]
 measured = [
-    ['ChatGPT Plus, Codex', '$20', f'Trung vị $67/tuần. Nhân 4 tuần: {money(PLUS_MONTH)}, hiệu suất {PLUS_X}.', 'FinOps LLM, 27 cửa sổ từ tháng 8, cập nhật 10/10/2026. Bảy cửa sổ gần nhất $61–$81.'],
-    ['ChatGPT Plus, Codex', '$20', 'Khoảng $66/tuần. Bài quy khoảng $285/tháng và khoảng 14×.', 'InventiveHQ, một cửa sổ 26/9, bài 4/10/2026. Số tháng là suy của bài đó.'],
-    ['ChatGPT Pro 100, Codex', '$100', f'Trung vị $175/tuần, bằng 2,6× Plus. Nhân 4 tuần: {money(PRO100_MONTH)}, hiệu suất {PRO100_X}.', 'FinOps LLM, 6 cửa sổ 27/9–8/10, bài 9/10/2026. Nhãn bán là 5× Plus.'],
-    ['ChatGPT Pro 100, Codex', '$100', '$330–$380/tuần. Bài quy $1.440–$1.640/tháng, khoảng 14–16×.', 'InventiveHQ, hai cửa sổ sạch, reset 30/9 và 3/10.'],
-    ['ChatGPT Pro 200, hạn mức mới', '$200', '$641–$670/tuần. Bài quy $2.800–$2.900/tháng, khoảng 14×.', 'InventiveHQ, hai cửa sổ reset 6/10 và 9/10.'],
-    ['ChatGPT Pro 200, hạn mức cũ', '$200', 'Bài suy khoảng $1.300/tuần, khoảng 28×, bằng cách nhân đôi cửa sổ đã đo.', 'Suy đến hết 29/10/2026. Hạn mức cũ của cửa sổ 22–29/9 hết trong ngày này.'],
-    ['ChatGPT Pro 500', '$500', 'Chưa có cửa sổ được định giá.', 'OpenAI không công bố bội số token. Ultrafast tiêu hạn mức 8 lần Standard.'],
-    ['Claude Max 20x, hết hạn mức', '$200', 'Sonnet 5.5: $12.529 agent (62,6×), $7.009 chat (35,0×). Opus 5.5: $11.726 (58,6×), $9.200 (46,0×). Fable 5.1: khoảng $2.480 (12,4×).', 'SemiAnalysis, 5/10/2026. Chưa tính lại sau khi cache read Sonnet xuống $0,10 ngày 7/10. Fable dùng tối đa 50% hạn mức tuần.'],
+    ['ChatGPT Plus, Codex', '$20', f'Tuần: $67, bằng {credits_of(PLUS_WEEK)} credit. Tháng, nhân 4: {money(PLUS_MONTH)}, bằng {credits_of(PLUS_MONTH)} credit, hiệu suất {PLUS_X}.', 'FinOps LLM, 27 cửa sổ từ tháng 8, cập nhật 10/10/2026. Bảy cửa sổ gần nhất $61–$81.'],
+    ['ChatGPT Plus, Codex', '$20', f'Tuần: khoảng $66, bằng {credits_of(66)} credit. Tháng theo bài: khoảng $285, bằng {credits_of(285)} credit, khoảng 14×.', 'InventiveHQ, một cửa sổ 26/9, bài 4/10/2026. Số tháng là suy của bài đó, không phải phép nhân 4.'],
+    ['ChatGPT Pro 100, Codex', '$100', f'Tuần: $175, bằng {credits_of(PRO100_WEEK)} credit, 2,6× Plus. Tháng, nhân 4: {money(PRO100_MONTH)}, bằng {credits_of(PRO100_MONTH)} credit, hiệu suất {PRO100_X}.', 'FinOps LLM, 6 cửa sổ 27/9–8/10, bài 9/10/2026. Nhãn bán là 5× Plus.'],
+    ['ChatGPT Pro 100, Codex', '$100', f'Tuần: $330–$380, bằng {credits_span(330, 380)} credit. Tháng theo bài: $1.440–$1.640, bằng {credits_span(1440, 1640)} credit, khoảng 14–16×.', 'InventiveHQ, hai cửa sổ sạch, reset 30/9 và 3/10.'],
+    ['ChatGPT Pro 200, hạn mức mới', '$200', f'Tuần: $641–$670, bằng {credits_span(641, 670)} credit. Tháng theo bài: $2.800–$2.900, bằng {credits_span(2800, 2900)} credit, khoảng 14×.', 'InventiveHQ, hai cửa sổ reset 6/10 và 9/10.'],
+    ['ChatGPT Pro 200, hạn mức cũ', '$200', f'Tuần bài suy: khoảng $1.300, bằng {credits_of(1300)} credit, khoảng 28×. Bài không tách một số tháng riêng.', 'Suy đến hết 29/10/2026. Hạn mức cũ của cửa sổ 22–29/9 hết trong ngày này.'],
+    ['ChatGPT Pro 500', '$500', 'Chưa có cửa sổ được định giá, nên chưa có credit.', 'OpenAI không công bố bội số token. Ultrafast tiêu hạn mức 8 lần Standard, rồi credit mua thêm ở 6 lần.'],
+    ['Claude Max 20x, hết hạn mức', '$200', 'Không đổi sang credit ChatGPT. Credit API của gói vẫn là $200. Giá trị hạn mức app: Sonnet 5.5 $12.529 agent (62,6×) và $7.009 chat (35,0×). Opus 5.5 $11.726 (58,6×) và $9.200 (46,0×). Fable 5.1 khoảng $2.480 (12,4×).', 'SemiAnalysis, 5/10/2026. Anthropic ghi credit bằng đô la. Chưa tính lại sau khi cache read Sonnet xuống $0,10 ngày 7/10. Fable dùng tối đa 50% hạn mức tuần.'],
 ]
 story.append(table(
-    [cells(['Gói và phần được đo', 'Phí', 'Giá trị API và hiệu suất', 'Nguồn, từ tháng 9/2026'], 'Th')] + [cells(r, 'Td') for r in measured],
+    [cells(['Gói và phần được đo', 'Phí', 'Giá trị API, credit và hiệu suất', 'Nguồn, từ tháng 9/2026'], 'Th')] + [cells(r, 'Td') for r in measured],
     [38 * mm, 18 * mm, 62 * mm, 60 * mm],
 ))
 story += [P('Cách đọc hai nguồn Codex', 'H2VN')]
@@ -319,14 +356,16 @@ story += [P(
     'Trên mỗi đô la phí, Plus cao hơn Pro $100 trong bài FinOps: họ đo Pro $100 bằng 2,6 lần hạn mức Plus trong khi phí gấp 5. InventiveHQ thấy các gói Pro gần cùng một hệ số khoảng 14×.',
     'BodyVN')]
 story += [P(
+    'Credit ChatGPT và credit Copilot là hai đơn vị. Copilot tính 1 credit = $0,01 và không có log tuần hay tháng trong báo cáo này, nên mục 3 giữ nguyên số credit trên giá. '
+    'Không chia đô la Codex cho $0,01 rồi gọi đó là credit Copilot. '
     'Credit API của Claude Max (mục 3, đúng 1,00×) và cột SemiAnalysis (mục 4) là hai khoản. Cộng chúng thành một hệ số sẽ đếm trùng. '
-    'Chi tiết log Claude tháng 10 nằm ở báo cáo «3.So sánh Claude Pro Max Enterprise và API - 10.2026». Báo cáo này không gộp các log đó thành một số.',
+    'Chi tiết log Claude tháng 10 nằm ở báo cáo «3.So sánh Claude Pro Max Enterprise và API - 10.2026».',
     'BodyVN'), PageBreak()]
 
 story += [P('5. Chọn gói theo hiệu suất', 'H1VN')]
 recs = [
     ['Cần hệ số đọc được từ giá', 'Copilot Pro hoặc Max', f'Pro {times(Decimal("15"), Decimal("10"))} trên credit, Max {times(Decimal("200"), Decimal("100"))}. Completion không nằm trong tử số.'],
-    ['Code nhiều bằng Codex', 'Plus nếu chưa chạm trần tuần', f'Log tháng 9–10 cho Plus khoảng {PLUS_X} đến 14× khi dùng hết tuần. Pro $100 mua thêm lượng, hệ số mỗi đô la tùy bài đo.'],
+    ['Code nhiều bằng Codex', 'Plus nếu chưa chạm trần tuần', f'Log tháng 9–10: Plus khoảng {credits_of(66)}–{credits_of(PLUS_WEEK)} credit/tuần, khoảng {PLUS_X} đến 14×. Pro $100 mua thêm lượng, từ {credits_of(PRO100_WEEK)} credit/tuần trở lên.'],
     ['Code nhiều bằng Claude', 'Max khi đã chạm trần Pro', 'Credit API đúng bằng phí. Phần app, nếu dùng hết hạn mức tháng 10, từ khoảng 12× với Fable đến vài chục lần với Sonnet và Opus.'],
     ['Chat, file, nghiên cứu', 'Giữ một gói $20', 'Chưa có log chat thường được định giá theo API trong tháng 9–10. Perplexity và Gemini chưa ra được hệ số token.'],
     ['Sản phẩm tự gọi API', 'Trả theo token', 'Gói subscription không cấp một số token cố định cho sản phẩm. Credit Claude Max chỉ bù API khi đủ điều kiện Console.'],
@@ -343,6 +382,8 @@ story += [P('6. Nguồn và giới hạn', 'H1VN')]
 story += [P(f'Đơn giá kiểm tra {CHECK}. Hệ số log giữ nguyên ngày đo của từng bài.', 'BodyVN')]
 sources = [
     ['OpenAI, đơn giá API', 'https://developers.openai.com/api/docs/pricing'],
+    ['Codex, rate card credit, 29/10/2026', 'https://learn.chatgpt.com/docs/pricing'],
+    ['ChatGPT Plus và Pro, credit mua thêm', 'https://help.openai.com/en/articles/12642688'],
     ['ChatGPT Pro 100 / 200 / 500', 'https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers'],
     ['FinOps LLM, Codex Plus và Pro $100', 'https://finopsllm.com/research/chatgpt-pro-100-real-codex-multiplier'],
     ['InventiveHQ, đo Codex trên Plus và Pro', 'https://inventivehq.com/blog/codex-subscription-usage-measured'],
@@ -362,13 +403,14 @@ story.append(table(
 story += [P('Giới hạn', 'H2VN')]
 story += [P(
     'Nhân 4 là giả định của báo cáo khi nguồn chỉ có số tuần. Một tháng lịch có thể hơn hoặc kém 4 cửa sổ. '
+    'Hệ số 25 credit trên mỗi đô la API là rate card Standard ngày kiểm tra. Hạn mức có sẵn trong gói không được OpenAI công bố bằng credit, và Fast mode tiêu hạn mức đó ở 2,5 lần trong khi credit mua thêm tính 2 lần. '
     'Hai bài Codex không thống nhất ở Pro $100. SemiAnalysis là phép dùng hết hạn mức ngày 5/10, trước lần giảm giá cache read của Sonnet. '
     'ChatGPT Go $8 và Plus $20 trên trang chat không hiện trong HTML giá chính thức đã tải; phí Plus $20 trong bảng log là mức các bài đo dùng. '
     'Perplexity Max $200 lấy từ bài help sửa 14/9/2026. Pro $20 là đối chiếu 23–28/10/2026.',
     'BodyVN')]
 story += [Spacer(1, 3 * mm), P(
-    'Hiệu suất một gói là giá trị API của phần dùng được chia cho phí. Credit Copilot nằm từ 1,00× đến 2,00×. Credit Claude Max đúng 1,00×, và hạn mức app là khoản thứ hai. '
-    'Log Codex tháng 9–10 đặt Plus quanh 13× đến 14× khi dùng hết tuần. Cùng một phí mua hệ số khác nhau theo model và theo cách đo.',
+    'Hiệu suất một gói là giá trị API của phần dùng được chia cho phí. Credit Copilot nằm từ 1,00× đến 2,00×. Credit Claude Max đúng 1,00×. '
+    f'Log Codex tháng 9–10, quy theo rate card ngày {CHECK}: Plus khoảng {credits_of(PLUS_WEEK)} credit một tuần và {credits_of(PLUS_MONTH)} credit cho 4 tuần, tức {PLUS_X}. Cùng một phí mua hệ số khác nhau theo model và theo cách đo.',
     'Callout')]
 story += [Spacer(1, 4 * mm), P('Tài liệu tham khảo nội bộ Apero. Định giá lại bằng log của nhóm và bảng đơn giá mục 2 trước khi nâng gói.', 'SmallVN')]
 
