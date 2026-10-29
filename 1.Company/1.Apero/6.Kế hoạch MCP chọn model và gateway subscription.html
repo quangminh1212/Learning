@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kế hoạch MCP chọn model và gateway subscription</title>
+<style>
+  :root {
+    --ink: #1c2430;
+    --muted: #5c6b7a;
+    --navy: #17365d;
+    --blue: #24527a;
+    --line: #d5deE6;
+    --paper: #f4f1ea;
+    --card: #fffdf8;
+    --pale: #e7eef5;
+    --warn: #f4efe2;
+    --stop: #f6e8e4;
+    --good: #e5f0ea;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  a { color: var(--blue); }
+  header {
+    background: var(--navy);
+    color: #f7f4ee;
+    padding: 48px 24px 36px;
+  }
+  header .wrap, main, footer .wrap { max-width: 920px; margin: 0 auto; }
+  .kicker {
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #c5d4e4;
+    margin: 0 0 12px;
+  }
+  h1 { font-size: 34px; line-height: 1.2; margin: 0 0 12px; font-weight: 650; }
+  header p { margin: 0; max-width: 68ch; color: #e4ebf2; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span {
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 13px;
+  }
+  main { padding: 28px 24px 64px; }
+  nav {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+  }
+  nav ol { margin: 8px 0 0; padding-left: 20px; columns: 2; }
+  nav a { text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  h2 { color: var(--navy); font-size: 26px; margin: 36px 0 10px; }
+  h3 { color: var(--blue); font-size: 19px; margin: 22px 0 8px; }
+  p { margin: 0 0 12px; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); margin: 12px 0 18px; font-size: 15px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; text-align: left; }
+  th { background: var(--navy); color: white; font-weight: 650; }
+  tr:nth-child(even) td { background: #f7fafc; }
+  code, pre { font-family: Consolas, "Courier New", monospace; }
+  code { font-size: .92em; background: var(--pale); padding: 0 4px; border-radius: 4px; }
+  pre {
+    background: #13293d;
+    color: #e8eef4;
+    padding: 14px 16px;
+    border-radius: 10px;
+    overflow: auto;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .flow { display: grid; gap: 8px; margin: 14px 0 18px; }
+  .flow div {
+    background: var(--card);
+    border-left: 4px solid var(--navy);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+  }
+  .note, .stop, .good {
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 12px 0 16px;
+  }
+  .note { background: var(--warn); }
+  .stop { background: var(--stop); }
+  .good { background: var(--good); }
+  ol.steps > li { margin: 0 0 10px; }
+  footer { border-top: 1px solid var(--line); padding: 18px 24px 32px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 720px) {
+    h1 { font-size: 28px; }
+    nav ol { columns: 1; }
+    header, main { padding-left: 16px; padding-right: 16px; }
+  }
+  @media print {
+    header { background: white; color: black; }
+    .kicker, header p, .meta span { color: black; }
+    nav { display: none; }
+    body { background: white; }
+    pre { white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Apero · kế hoạch làm · 29/10/2026</p>
+    <h1>MCP chọn model theo độ khó, gateway dùng subscription làm provider</h1>
+    <p>Trước khi Claude Code trả lời, MCP chấm prompt. Gateway chọn model và seat subscription của đúng người đang chạy. Khóa API không được đứng ở đường interactive.</p>
+    <div class="meta">
+      <span>Chưa viết mã</span>
+      <span>Bám 6 PDF trong thư mục này</span>
+      <span>Claude Code: hook không tự gán model giữa câu trả lời</span>
+    </div>
+  </div>
+</header>
+<main>
+  <nav>
+    <strong>Mục lục</strong>
+    <ol>
+      <li><a href="#can-cu">Căn cứ</a></li>
+      <li><a href="#rang-buoc">Ràng buộc Claude Code</a></li>
+      <li><a href="#kien-truc">Kiến trúc</a></li>
+      <li><a href="#do-kho">Thang độ khó</a></li>
+      <li><a href="#provider">Luật provider</a></li>
+      <li><a href="#hop-dong">Hợp đồng</a></li>
+      <li><a href="#gan">Gắn vào Claude Code</a></li>
+      <li><a href="#so">Sổ và lộ trình</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="can-cu">Căn cứ</h2>
+  <p>Số liệu lấy từ PDF cùng thư mục, kiểm đến 27–29/10/2026. Bảng giá đổi thì sửa đơn giá trong gateway trước, rồi mới đổi luật chọn.</p>
+  <table>
+    <thead><tr><th>Tài liệu</th><th>Việc kế hoạch lấy</th></tr></thead>
+    <tbody>
+      <tr><td><a href="1.Giảm chi phí API và hạn mức Claude.pdf">1. Giảm chi phí API và hạn mức Claude</a></td><td>Output khoảng năm lần input. Thinking tính như output. Cache read Sonnet 5.5 và Opus 5.5 bằng 5% giá input. Đổi model giữa session làm cache miss. Haiku 5.5 nhảy bậc khi một request vượt 100.000 token. Fast mode nhân đôi giá và không đi với Batch API.</td></tr>
+      <tr><td><a href="2.Claude - Quy đổi gói sang giá trị API.pdf">2. Quy đổi gói Claude sang giá trị API</a></td><td>Pro không có credit API. Max 5x có $100, Max 20x có $200, đúng 1,00× phí. Credit đó không trả cho Claude Code chạy trực tiếp.</td></tr>
+      <tr><td><a href="3.So sánh Claude Pro Max Enterprise và API - 10.2026.pdf">3. So sánh Pro, Max, Enterprise và API</a></td><td>App và Claude Code trừ hạn mức gói. Sản phẩm tự gọi API thì trả theo token. Max 5x đáng xét khi phần API khoảng $80/tháng. Max 20x từ khoảng $180/tháng nếu đã nhận và dùng hết credit API.</td></tr>
+      <tr><td><a href="4.Danh sách repo GitHub hỗ trợ tiết kiệm token cho LLM.pdf">4. Repo tiết kiệm token</a></td><td>Chọn model rẻ hơn là giảm chi phí, chưa phải giảm token. Vòng 1 không gắn compressor.</td></tr>
+      <tr><td><a href="5.So sánh mức tiêu thụ Claude Desktop CLI Web cùng một gói.pdf">5. Desktop, CLI và Web</a></td><td>Ba bề mặt trừ một hạn mức phiên 5 giờ và một hạn mức tuần. Khóa API trên CLI chuyển sang trả theo token.</td></tr>
+      <tr><td><a href="Bao_cao_hieu_suat_so_voi_gia_goi_AI_2026.pdf">Báo cáo hiệu suất gói AI</a></td><td>Hiệu suất = giá trị API của phần dùng được / phí. Ba loại credit không cộng với nhau. Codex, rate card 29/10/2026: 25 credit cho mỗi $1 giá API Standard.</td></tr>
+    </tbody>
+  </table>
+  <div class="good">
+    <p>Copilot Pro 1,50×, Pro+ 1,79×, Max 2,00× trên credit ghi ở giá. Completion không trừ credit, nên đó là sàn của phần chat và agent.</p>
+    <p>Codex trên Plus, log tháng 9–10: khoảng 1.675 credit/tuần, 6.700 credit cho 4 tuần, hiệu suất 13,40×. Pro $100 mua thêm lượng: FinOps ra 7,00× sau khi nhân 4 tuần, InventiveHQ ra khoảng 14–16×. Gateway giữ cả hai.</p>
+    <p>Fable trên Max dùng tối đa một nửa weekly limit. Pro và standard seat không có Fable trong hạn mức gói.</p>
+  </div>
+
+  <h2 id="rang-buoc">Ràng buộc của Claude Code</h2>
+  <p>Đối chiếu tài liệu tại code.claude.com, mục hooks và model config, lúc lập kế hoạch:</p>
+  <ul>
+    <li>Model phiên đặt bằng <code>claude --model</code>, <code>ANTHROPIC_MODEL</code>, hoặc trường <code>model</code> trong settings. Trong phiên thì đổi bằng <code>/model</code>. SDK đổi bằng <code>set_model</code>.</li>
+    <li>Hook <code>UserPromptSubmit</code> chạy trước khi model trả lời, nhưng chỉ thêm <code>additionalContext</code>. Hook này không sửa prompt và không gán model.</li>
+    <li>Hook <code>PreToolUse</code> sửa tham số tool qua <code>updatedInput</code>. Tool <code>Agent</code> có trường <code>model</code>: haiku, sonnet, opus, fable.</li>
+    <li>Hook <code>PreModelSwitch</code> nhận <code>prompt_cache_warm</code>, <code>context_tokens</code>, <code>cache_ttl</code> và <code>estimated_cache_write_usd</code>. Nó cho qua, chặn, hoặc hỏi. Nó không bịa một model mới.</li>
+    <li><code>/usage</code> của Pro và Max hiện thanh hạn mức gói. Số đô la trên màn đó là cho tài khoản API.</li>
+  </ul>
+  <div class="note">MCP chấm prompt trước. Phiên mới mang sẵn <code>--model</code>. Phiên đang chạy giữ model khi cache còn ấm. Subagent được sửa trường <code>model</code> trước khi tool chạy.</div>
+
+  <h2 id="kien-truc">Kiến trúc</h2>
+  <p>Ba phần, một sổ. Gateway phục vụ đúng người đang ngồi máy và dùng seat của người đó. Không gom nhiều subscription thành một khóa API, không đọc cookie web để giả làm API.</p>
+  <div class="flow">
+    <div>1. MCP <code>apero-route</code> chấm bậc bằng bảng quy tắc. Vòng 1 không gọi model để chấm.</div>
+    <div>2. Gateway nhìn bậc và hạn mức seat, rồi trả provider cùng hành động: mở mới, giữ, hỏi, hoặc dừng.</div>
+    <div>3. Lệnh bọc <code>apero</code> mở <code>claude --model</code>. Ba hook gắn lớp quyết định vào Claude Code.</div>
+    <div>4. Claude Code trả lời. Sổ ghi bậc, provider, model và token.</div>
+  </div>
+
+  <h2 id="do-kho">Thang độ khó</h2>
+  <p>Đầu vào: <code>prompt</code>, <code>file_count</code>, <code>wants_tests</code>, <code>pasted_file</code>, <code>estimated_input_tokens</code>, <code>user_override</code>, <code>caller</code> là <code>interactive</code> hoặc <code>product</code>.</p>
+  <p>Token vòng 1 ước lượng bằng độ dài ký tự chia 4, cộng kích thước file được nhắc trong repo đang mở. Số này để chọn bậc, chưa phải số nhà cung cấp tính tiền. Xét từ trên xuống, gặp bậc thì dừng.</p>
+  <table>
+    <thead><tr><th>Bậc</th><th>Khi nào</th><th>Model</th></tr></thead>
+    <tbody>
+      <tr><td>D0</td><td>Đổi tên, regex, format, typo, lọc một đoạn log. Không quá 1 file. Không yêu cầu test. Input ước lượng dưới 8.000 token.</td><td>haiku</td></tr>
+      <tr><td>D1</td><td>Sửa một việc trong 1 hoặc 2 file. Không có thiết kế, migration, hay rà soát cả hệ thống.</td><td>sonnet</td></tr>
+      <tr><td>D2</td><td>Từ 3 file, hoặc có yêu cầu test, hoặc vòng sửa kèm lệnh kiểm tra.</td><td>sonnet</td></tr>
+      <tr><td>D3</td><td>Thiết kế, migration, lỗi chưa tái hiện được, hoặc từ 8 file.</td><td>opus</td></tr>
+      <tr><td>D4</td><td>Người dùng ghi rõ việc then chốt hoặc rà soát bảo mật, và prompt đã ở D3.</td><td>fable nếu còn hạn mức, không thì opus</td></tr>
+    </tbody>
+  </table>
+  <p><code>user_override</code> được ghi sổ. Gateway vẫn chặn Fable khi hết phần weekly, và vẫn nâng Haiku lên Sonnet khi ước lượng input vượt 100.000 token, lý do <code>haiku_price_cliff</code>. Vượt mốc đó, Haiku 5.5 tính input $0,50 và output $2,50 cho một triệu token.</p>
+  <p>Prompt tiếng Việt chưa có benchmark công khai trong báo cáo repo. Quy tắc đọc từ khóa tiếng Việt và tiếng Anh. Sau bốn tuần sổ mới xét bộ chấm nhỏ, nếu quy tắc gán sai trên prompt thật của nhóm.</p>
+
+  <h2 id="provider">Luật provider</h2>
+  <p>Caller <code>product</code> nhận <code>api_product</code>. Đường đó bật prompt caching. Việc không cần trả lời ngay đi Batch API, giảm 50% input và output. Fast mode không dùng trên đường tiết kiệm. Sàn model dùng cùng bảng bậc.</p>
+  <table>
+    <thead><tr><th>Thứ tự</th><th>Provider cho interactive</th><th>Khi nào</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>copilot_subscription</code></td><td>D0 và seat Copilot còn credit chat hoặc agent. Completion trong editor ở lại Copilot.</td></tr>
+      <tr><td>2</td><td><code>claude_subscription</code></td><td>D1–D3, hoặc D0 khi Copilot hết phần agent, và hạn mức tuần Claude còn dưới 70%.</td></tr>
+      <tr><td>3</td><td><code>codex_subscription</code></td><td>Việc code, hạn mức tuần Claude từ 70%, cửa sổ Codex trên Plus hoặc Pro của người đó còn.</td></tr>
+      <tr><td>4</td><td>Dừng</td><td>Hết quỹ subscription cho việc code. Không tự chuyển sang khóa API.</td></tr>
+    </tbody>
+  </table>
+  <p>D4 chỉ ở <code>claude_subscription</code>, trên seat Max còn phần Fable, tối đa một nửa hạn mức tuần. Hết thì xuống Opus trên cùng seat.</p>
+  <p>Ngưỡng 70% là ngưỡng vận hành, chưa phải số nhà cung cấp. Bốn tuần đầu ghi tỷ lệ dùng thật rồi mới siết hoặc nới. Một seat Claude là một quỹ cho Web, Desktop và CLI. Gateway không tạo ba quỹ.</p>
+  <div class="stop">Có <code>ANTHROPIC_API_KEY</code> trên lượt interactive thì gateway trả <code>stop</code> với lý do <code>api_key_would_bill</code>. Người chạy bỏ khóa khỏi môi trường phiên đó và dùng <code>claude /login</code>. Extra usage chỉ khi chủ seat đã bật, ghi <code>auth_mode = extra_usage</code>, tính như giá API. Credit API $100 hoặc $200 của Max không phải tiền trả cho lượt Claude Code.</div>
+  <p>Phiên giữ provider và model đến <code>/clear</code> hoặc hết phiên 5 giờ. Prompt mới vẫn được chấm lại:</p>
+  <ul>
+    <li>Cùng model: giữ. Hook chỉ gắn thẻ bậc.</li>
+    <li>Muốn model rẻ hơn: giữ model hiện tại. Hạ model cũng làm cache miss.</li>
+    <li>Muốn model đắt hơn lúc cache còn ấm: <code>PreModelSwitch</code> trả <code>ask</code>, kèm số đô la cache ước tính. Từ chối thì giữ model cũ.</li>
+    <li>Cache đã nguội, hoặc chưa có lượt nào: lên model đúng bậc, không hỏi.</li>
+  </ul>
+  <p><code>/loop</code> và scheduled task gửi lại cả cuộc trò chuyện theo chu kỳ, nên không nằm ở đường tiết kiệm. Prompt yêu cầu lặp mà không có điều kiện dừng thì MCP gắn <code>repeat_risk</code>.</p>
+
+  <h2 id="hop-dong">Hợp đồng</h2>
+  <p>JSON trên <code>127.0.0.1</code>. Vòng 1 chỉ nhận kết nối từ máy đó.</p>
+  <h3>POST /v1/classify</h3>
+  <pre>{
+  "prompt": "đổi tên hàm parseDate cho đúng camelCase",
+  "file_count": 1,
+  "wants_tests": false,
+  "pasted_file": false,
+  "estimated_input_tokens": 900,
+  "user_override": "",
+  "caller": "interactive"
+}</pre>
+  <p>Trả về <code>band</code>, <code>model</code>, <code>reasons</code>. Ví dụ D0, haiku, vì đổi tên, một file, input ngắn.</p>
+  <h3>POST /v1/route</h3>
+  <p>Nhận <code>session_id</code>, kết quả classify, model hiện tại, <code>cache_warm</code>, <code>context_tokens</code>, và seat: phần tuần Claude đã dùng, Codex còn cửa sổ hay không, Copilot còn credit agent hay không, phần Fable đã dùng, tên plan.</p>
+  <table>
+    <thead><tr><th>action</th><th>Ý nghĩa</th></tr></thead>
+    <tbody>
+      <tr><td><code>start</code></td><td>Phiên mới. Lệnh bọc chạy <code>claude --model</code> với provider đã chọn.</td></tr>
+      <tr><td><code>keep</code></td><td>Giữ model và provider hiện tại.</td></tr>
+      <tr><td><code>ask_switch</code></td><td>Muốn lên model lúc cache ấm. Hook để Claude Code hỏi.</td></tr>
+      <tr><td><code>stop</code></td><td>Hết quỹ subscription phù hợp, hoặc đang có khóa API trên lượt interactive.</td></tr>
+    </tbody>
+  </table>
+  <p>Ba tool MCP cùng schema: <code>classify_prompt</code>, <code>route_session</code>, <code>quota_snapshot</code>. File hạn mức do người chạy ghi sau khi xem <code>/usage</code>, Settings → Usage, và hạn mức Codex. Các PDF không có API công khai cho phần trăm còn lại của mọi gói. Thiếu file thì bốn tuần đầu gateway coi Claude còn dưới 70% và gắn <code>quota_unmeasured</code>. Sau đó, thiếu file thì <code>route</code> trả <code>stop</code> với lý do <code>quota_required</code>.</p>
+
+  <h2 id="gan">Gắn vào Claude Code</h2>
+  <ol class="steps">
+    <li><strong>Lệnh bọc <code>apero</code>.</strong> Gọi classify rồi route. <code>start</code> thì chạy Claude Code với <code>--model</code> trong môi trường không còn <code>ANTHROPIC_API_KEY</code>. <code>stop</code> thì in lý do và không mở phiên.</li>
+    <li><strong>UserPromptSubmit.</strong> Chấm lại trước khi trả lời. <code>keep</code> thì thêm context dưới 500 ký tự: bậc, model, provider, một lý do. Không dán lại prompt. Việc hỏi người dùng khi lên model nằm ở PreModelSwitch.</li>
+    <li><strong>PreToolUse trên Agent.</strong> Chấm prompt của subagent và ghi <code>updatedInput.model</code>. Đọc log, tìm file, regex thì haiku. Sửa nhiều file thì sonnet. Vòng 1 không đặt fable cho subagent. Subagent vẫn tốn hạn mức.</li>
+    <li><strong>PreModelSwitch.</strong> <code>to_model</code> đắt hơn model đã gán, và cache còn ấm, thì <code>ask</code> kèm <code>estimated_cache_write_usd</code>. <code>/model fable</code> khi gateway không cho D4 thì <code>deny</code>. Cưỡng bức chỉ qua <code>user_override</code> khi seat còn phần Fable.</li>
+    <li><strong>Một session, một việc.</strong> Đổi việc thì <code>/clear</code>. Câu phụ dùng <code>/btw</code> để khỏi vào history. Nêu đường dẫn và tên hàm, không dán cả file.</li>
+  </ol>
+
+  <h2 id="so">Sổ và lộ trình</h2>
+  <p>Mỗi lượt một dòng JSONL: thời điểm, session, caller, bậc, lý do, model, provider, auth mode, action, input mới, cache read, cache write, output, đô la API niêm yết của lượt, và việc có được nhận hay không. Phí gói ghi một lần mỗi tháng cho mỗi seat. Hiệu suất tháng bằng tổng đô la API của các lượt đã nhận chia cho phí seat. Ba loại credit ở ba cột.</p>
+  <ol class="steps">
+    <li><strong>Bộ chấm.</strong> 12 prompt mẫu: 3 D0 tiếng Việt, 3 D1, 2 D2 có test, 2 D3, 1 D4, 1 Haiku vượt 100.000 token. Cùng prompt hai lần ra cùng JSON.</li>
+    <li><strong>MCP stdio.</strong> Ba tool. Test bằng JSON, chưa cần mở Claude Code. <code>classify_prompt</code> khớp 12 mẫu.</li>
+    <li><strong>Gateway Claude.</strong> Tuần 40% ra subscription Claude. Tuần 80% và Codex còn cửa sổ thì sang Codex. Có khóa API trên interactive thì dừng. Caller product ra API dù seat Claude còn trống.</li>
+    <li><strong>Hook và lệnh bọc.</strong> JSON stdin, không cần mạng. Agent lọc log bị đổi từ opus xuống haiku. PreModelSwitch trả ask khi cache ấm và model đích đắt hơn. Lệnh bọc in <code>claude --model sonnet</code> ở ca D1 và không mở tiến trình ở ca stop.</li>
+    <li><strong>Copilot và Codex.</strong> Test chỉ kiểm quyết định, chưa gửi prompt đi. D0 vào Copilot khi còn credit agent. Việc code sang Codex khi Claude từ 70%. Fable bị chặn từ 50% weekly trên Max, và bị chặn trên Pro.</li>
+    <li><strong>Một tuần dùng thật.</strong> Năm việc: sửa một file, đọc log, viết báo cáo, gọi API sản phẩm, hỏi ngắn. Cuối tuần đủ bốn số: phí gói cộng hóa đơn API, đô la API của việc đã nhận, tỷ lệ cache read trên input lặp, tiền cho mỗi việc được nhận.</li>
+  </ol>
+  <div class="note">Nâng Claude Max hoặc ChatGPT Pro 100/200/500 chỉ sau bốn tuần sổ của nhóm, khi giá trị API của phần dùng được lớn hơn phần phí tăng. Hạn mức tuần còn thừa thì giữ gói hiện tại.</div>
+  <h3>Vòng 1 không làm</h3>
+  <ul>
+    <li>Không gắn LLMLingua, Ponytail, Tamp, RTK, Headroom hay LiteLLM vào đường trả lời. Các phần trăm trong báo cáo repo không cộng được. Có phép đo mà tổng phiên không rẻ hơn.</li>
+    <li>Không hạ model giữa session chỉ vì prompt sau dễ hơn.</li>
+    <li>Không bật fast mode trên đường tiết kiệm.</li>
+    <li>Không coi credit API của Max là tiền đã trả cho Claude Code.</li>
+    <li>Không đưa traffic sản phẩm vào hạn mức Pro, Max, Plus hay Copilot.</li>
+    <li>Không xếp một hệ số chung cho ba loại credit.</li>
+  </ul>
+  <p>Bản Markdown cùng nội dung nằm cạnh file này. Hook và cách đặt model lấy từ tài liệu Claude Code lúc lập kế hoạch ngày 29/10/2026.</p>
+</main>
+<footer>
+  <div class="wrap">Tài liệu nội bộ Apero. Kế hoạch làm MCP và gateway. Chưa phải mã nguồn.</div>
+</footer>
+</body>
+</html>
