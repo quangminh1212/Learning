@@ -352,7 +352,7 @@ Cho hàm toàn phương
 \[
 f(x)=\tfrac12x\T Ax+b\T x+c,
 \]
-trong đó \(A\) là ma trận cấp \(n\times n\), đối xứng, xác định dương; \(b\in\R^n\) và \(c\in\R\). Nói rằng giải \(\min\{f(x):x\in\R^n\}\) được đưa về tìm nghiệm hệ tuyến tính \(Ax+b=0\) có đúng không? Vì sao? Cho ví dụ cụ thể.
+với \(A\) là ma trận cấp \(n\times n\), đối xứng, xác định dương, véc-tơ \(b\in\R^n\) và số thực \(c\in\R\). Nói rằng việc giải bài toán \(\min\{f(x):x\in\R^n\}\) được đưa về việc tìm nghiệm của hệ phương trình tuyến tính \(Ax+b=0\).
 \end{questionbox}
 \textbf{Lời giải.} Vì \(A=A\T\),
 \[
@@ -852,19 +852,19 @@ Giải bài toán quy hoạch tuyến tính sau bằng phương pháp hình họ
 \begin{aligned}
 \min\quad &z=x_1+2x_2\\
 \text{với }&2x_1+x_2\ge12,\quad x_1+x_2\ge5,\\
-&-x_1+3x_2\ge5,\quad 6x_1-x_2\ge12,\\
+&-x_1+3x_2\le3,\quad 6x_1-x_2\ge12,\\
 &x_1,x_2\ge0.
 \end{aligned}
 \]
 \end{questionbox}
 \textbf{Lời giải.}
-\textbf{Bước 1: Mô tả miền.} Hai đường biên quyết định đoạn đáy gặp nhau tại
+\textbf{Bước 1: Mô tả miền.} Hai ràng buộc \(2x_1+x_2\ge12\) và \(-x_1+3x_2\le3\) cho hai đường biên cắt nhau tại
 \[
-2x_1+x_2=12,\quad -x_1+3x_2=5
+2x_1+x_2=12,\quad -x_1+3x_2=3
 \quad\Longrightarrow\quad
-(x_1,x_2)=\left(\frac{31}{7},\frac{22}{7}\right).
+(x_1,x_2)=\left(\frac{33}{7},\frac{18}{7}\right).
 \]
-Miền khả thi không bị chặn. Biên dưới đi từ giao điểm \((3,6)\) của \(2x_1+x_2=12\) và \(6x_1-x_2=12\), đến \((31/7,22/7)\), rồi tiếp tục theo đường \(-x_1+3x_2=5\). Các ràng buộc còn lại vẫn được thỏa trên biên này.
+Vì \(x_2\ge12-2x_1\) và \(x_2\le(x_1+3)/3\), miền khả thi có \(x_1\ge33/7\). Biên dưới đi từ \((33/7,18/7)\) đến \((6,0)\) theo đường \(2x_1+x_2=12\), rồi tiếp tục theo \(x_2=0\); biên trên là \(-x_1+3x_2=3\). Miền không bị chặn về bên phải. Hai ràng buộc còn lại luôn thỏa trên miền này: \(x_1+x_2\ge6\) và \(6x_1-x_2\ge180/7>12\).
 
 \begin{center}
 \begin{tikzpicture}[xscale=.62,yscale=.62,>=Stealth]
@@ -872,29 +872,28 @@ Miền khả thi không bị chặn. Biên dưới đi từ giao điểm \((3,6)
 \draw[->] (0,0)--(0,13.2) node[above] {\(x_2\)};
 \foreach \x in {1,...,10} \draw (\x,.08)--(\x,-.08) node[below=2pt] {\scriptsize \x};
 \foreach \y in {1,...,12} \draw (.08,\y)--(-.08,\y) node[left=2pt] {\scriptsize \y};
-\fill[teal!14] (3,6)--(4,12)--(10,12)--(10,5)--(4.429,3.143)--cycle;
-\draw[very thick,blue] (3,6)--(6,0);
-\node[blue,fill=white,inner sep=1pt,rotate=-63] at (3.75,4.5) {\scriptsize \(2x_1+x_2=12\)};
-\draw[very thick,red] (0,1.667)--(10,5);
-\node[red,fill=white,inner sep=1pt,rotate=18] at (7.5,4.9) {\scriptsize \(-x_1+3x_2=5\)};
+\fill[teal!14] (4.7143,2.5714)--(10,4.3333)--(10,0)--(6,0)--cycle;
+\draw[very thick,blue] (0,12)--(6,0);
+\node[blue,fill=white,inner sep=1pt,rotate=-63] at (2.8,6.8) {\scriptsize \(2x_1+x_2=12\)};
+\draw[very thick,red] (0,1)--(10,4.3333);
+\node[red,fill=white,inner sep=1pt,rotate=18] at (7.4,3.7) {\scriptsize \(-x_1+3x_2=3\)};
 \draw[thick,dashed,gray] (2,0)--(4,12);
 \node[gray,fill=white,inner sep=1pt,rotate=72] at (3.2,8.5) {\scriptsize \(6x_1-x_2=12\)};
 \draw[thick,dotted,orange!80!black] (0,5)--(5,0);
 \node[orange!80!black,fill=white,inner sep=1pt,rotate=-45] at (1.7,3.3) {\scriptsize \(x_1+x_2=5\)};
-\fill[navy] (3,6) circle (2pt) node[above left] {\scriptsize \((3,6)\)};
-\fill[navy] (4.429,3.143) circle (2pt) node[below right] {\scriptsize \((31/7,22/7)\)};
-\draw[->,thick,navy] (6.5,7.2)--(5.5,5.2) node[midway,right] {\scriptsize \(-c\)};
-\draw[->,thick,teal] (9.0,10.8)--(9.8,11.8);
-\draw[->,thick,teal] (9.0,5.0)--(9.8,5.3);
-\node[teal!70!black,fill=white,inner sep=1pt] at (8.4,8.2) {\scriptsize miền khả thi};
+\fill[navy] (4.7143,2.5714) circle (2pt) node[above left] {\scriptsize \((33/7,18/7)\)};
+\fill[navy] (6,0) circle (2pt) node[above right,fill=white,inner sep=1pt] {\scriptsize \((6,0)\)};
+\draw[->,thick,navy] (7.2,2.5)--(6.5,1.0) node[midway,right] {\scriptsize \(-c\)};
+\draw[->,thick,teal] (9.0,2.5)--(9.8,2.7);
+\node[teal!70!black,fill=white,inner sep=1pt] at (8.5,3.2) {\scriptsize miền khả thi};
 \end{tikzpicture}
 \end{center}
 
-\textbf{Bước 2: Xác định điểm tối ưu.} Vì hệ số của \(x_2\) trong mục tiêu dương, tại mỗi \(x_1\) ta chọn điểm thấp nhất còn khả thi. Trên biên dưới, với \(3\le x_1\le31/7\), ta có \(x_2=12-2x_1\), do đó \(z=24-3x_1\) giảm. Với \(x_1\ge31/7\), biên dưới là \(x_2=(x_1+5)/3\), do đó \(z=(5x_1+10)/3\) tăng. Vậy giá trị nhỏ nhất đạt tại giao điểm hai biên:
+\textbf{Bước 2: Xác định điểm tối ưu.} Nếu \(x_1\ge6\), thì \(z=x_1+2x_2\ge6\). Nếu \(33/7\le x_1\le6\), từ \(x_2\ge12-2x_1\) suy ra \(z\ge x_1+2(12-2x_1)=24-3x_1\ge6\). Do đó mọi phương án khả thi có \(z\ge6\).
 \[
-z^*=\frac{31}{7}+2\cdot\frac{22}{7}=\frac{75}{7}.
+z^*=6.
 \]
-Kiểm tra điểm \((31/7,22/7)\) thỏa cả ràng buộc. Do đó \(\boxed{x^\ast=(31/7,22/7),\ z^*=75/7}\). Miền khả thi không bị chặn nhưng bài toán min vẫn có nghiệm hữu hạn.
+Điểm \((6,0)\) thỏa tất cả ràng buộc và đạt giá trị \(6\). Vì vậy \(\boxed{x^\ast=(6,0),\ z^\ast=6}\) là nghiệm tối ưu. Miền khả thi không bị chặn nhưng bài toán min vẫn có nghiệm hữu hạn.
 
 \Needspace{8\baselineskip}
 \subsection{Bài 5 trang 130 -- tổ hợp lồi của nghiệm tối ưu \(\dagger\)}

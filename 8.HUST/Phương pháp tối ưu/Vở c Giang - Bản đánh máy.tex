@@ -334,7 +334,7 @@ x_1-1&x_1
 \end{exbox}
 
 \subsection{Bài 3 trang 289: cực tiểu hàm toàn phương}
-\textbf{Đề bài.} Cho \(f(x)=\frac12x\T Ax+b\T x+c\), trong đó \(A=A\T\succ0\), \(b\in\R^n\), \(c\in\R\). Chứng minh tìm cực tiểu của \(f\) trên \(\R^n\) tương đương giải hệ \(Ax+b=0\).
+\textbf{Đề bài.} Cho hàm toàn phương \(f(x)=\frac12x\T Ax+b\T x+c\), với \(A\) là ma trận cấp \(n\times n\), đối xứng, xác định dương, véc-tơ \(b\in\R^n\) và số thực \(c\in\R\). Nói rằng việc giải bài toán \(\min\{f(x):x\in\R^n\}\) được đưa về việc tìm nghiệm của hệ phương trình tuyến tính \(Ax+b=0\).
 
 \textbf{Lời giải.} Vì \(A\) đối xứng,
 \[
@@ -532,31 +532,31 @@ Khi \(\alpha>1\), Hessian xác định dương nên \(x^0\) là cực tiểu to�
 \clearpage
 \begin{samepage}
 \subsection{Bài 6 trang 289: cực tiểu địa phương nhưng không toàn cục}
-\textbf{Đề bài.} Cho hàm
+\textbf{Đề bài.} Xét hàm số
 \[
-F(x,y)=e^{3xy}-3xe^y+x^3.
+f(x,y)=e^{3y}-3xe^y+x^3.
 \]
-Chứng minh \((1,0)\T\) là điểm cực tiểu địa phương của \(F\), nhưng không phải cực tiểu toàn cục.
+Chứng minh điểm \((1,0)\T\) là điểm tối ưu địa phương của hàm \(f\), nhưng không phải điểm tối ưu toàn cục.
 
 \textbf{Lời giải.} Gradient và Hessian tổng quát là
 \[
-\grad F=
+\grad f=
 \begin{pmatrix}
-3y e^{3xy}-3e^y+3x^2\\
-3x e^{3xy}-3xe^y
+-3e^y+3x^2\\
+3e^{3y}-3xe^y
 \end{pmatrix},\qquad
-\Hess F=
+\Hess f=
 \begin{pmatrix}
-9y^2e^{3xy}+6x & 3e^{3xy}+9xy e^{3xy}-3e^y\\
-3e^{3xy}+9xy e^{3xy}-3e^y & 9x^2e^{3xy}-3xe^y
+6x & -3e^y\\
+-3e^y & 9e^{3y}-3xe^y
 \end{pmatrix}.
 \]
-Tại \((1,0)\), \(\grad F(1,0)=0\) và
+Tại \((1,0)\), \(\grad f(1,0)=0\) và
 \[
-\Hess F(1,0)=\begin{pmatrix}6&0\\0&6\end{pmatrix},
-\qquad \det\Hess F(1,0)=36>0.
+\Hess f(1,0)=\begin{pmatrix}6&-3\\-3&6\end{pmatrix},
+\qquad \det\Hess f(1,0)=27>0.
 \]
-Do Hessian xác định dương, \((1,0)\) là cực tiểu địa phương nghiêm. Nhưng \(F(1,0)=-1\), còn \(F(-10,0)=-969\); hơn nữa \(F(x,0)=1-3x+x^3\to-\infty\) khi \(x\to-\infty\). Vì vậy đây không phải cực tiểu toàn cục.
+Vì \(H_{11}=6>0\) và định thức dương, Hessian xác định dương, nên \((1,0)\) là cực tiểu địa phương nghiêm. Ta có \(f(1,0)=-1\); hơn nữa \(f(x,0)=1-3x+x^3\to-\infty\) khi \(x\to-\infty\). Vì vậy \((1,0)\) không phải điểm tối ưu toàn cục.
 
 \end{samepage}
 \clearpage
@@ -937,8 +937,8 @@ Phân loại bảy hàm là lồi, lõm hoặc không lồi cũng không lõm.\\
 \src{18,46-61,64-85,87-93}
 \begin{correction}{Đọc nét mờ và chuẩn hóa ký hiệu}
 \begin{itemize}
-\item Bài 6 trang 130(ii) có hai phiên bản. Ảnh trong \textit{Đề Bài.docx} ghi \(-x_1+3x_2\le3\), cho nghiệm \((6,0)\), \(z=6\); giáo trình/ghi chép trong vở ghi \(-x_1+3x_2\ge5\), cho \((31/7,22/7)\), \(z=75/7\). Hai đề và hai đáp án được giữ tách riêng.
-\item Ở Bài 6 trang 289, nét ghi Hessian có vẻ cho hai đạo hàm hỗn hợp bằng \(-3\). Tính lại từ hàm gốc cho \(F_{xy}=3e^{3xy}+9xy e^{3xy}-3e^y\), nên \(F_{xy}(1,0)=0\) và \(\Hess F(1,0)=\operatorname{diag}(6,6)\). Kết luận cực tiểu địa phương vẫn đúng; ví dụ \((-10,0)\) cho thấy không phải cực tiểu toàn cục.
+\item Bài 6 trang 130(ii) được đồng bộ theo ảnh \textit{Đề Bài.docx}: ràng buộc là \(-x_1+3x_2\le3\). Giao điểm biên trái là \((33/7,18/7)\), còn nghiệm tối ưu là \((6,0)\), \(z=6\).
+\item Bài 6 trang 289 dùng đúng hàm trong \textit{Đề Bài.docx}, \(f(x,y)=e^{3y}-3xe^y+x^3\). Tại \((1,0)\), \(\Hess f=\begin{pmatrix}6&-3\\-3&6\end{pmatrix}\), có định thức \(27>0\); trên \(y=0\), \(f(x,0)=1-3x+x^3\to-\infty\) khi \(x\to-\infty\).
 \item Bài 17 trang 37, ý (vi), bản đề in hai hạng tử \(2x_1x_2\) và \(4x_1x_2\). Bản chép giữ nguyên; khi tính Hessian đã cộng chúng thành hệ số \(6x_1x_2\).
 \item Bài 5 trang 289 được chép thành \(f_\alpha=\alpha x_1^2+x_2^2-2x_1x_2-2x_2\). Công thức cho điểm dừng \(\bigl(1/(\alpha-1),\alpha/(\alpha-1)\bigr)\) và định thức Hessian \(4(\alpha-1)\) xác nhận vị trí của tham số \(\alpha\).
 \item Trong ví dụ hồi quy, bình phương sai số được giữ đúng theo hàm \(L=\frac1{2N}\sum r_i^2\). Căn bậc hai chỉ xuất hiện ở RMSE, không nằm trong hàm mất mát bình phương dùng để lấy đạo hàm.
