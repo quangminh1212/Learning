@@ -63,7 +63,7 @@
 \begin{tcolorbox}[width=.88\textwidth,colback=pale,colframe=navy,arc=2mm]
 \centering
 \textbf{Phạm vi trọng tâm}\\[4pt]
-Mô hình hóa và phân loại bài toán tối ưu; tính lồi của hàm và tập; cực trị địa phương/toàn cục; hướng giảm; gradient descent với tìm kiếm chính xác theo tia; quy hoạch tuyến tính, dạng chính tắc, phương pháp hình học và phương án cực biên.
+Mô hình hóa và phân loại bài toán tối ưu; tính lồi của hàm và tập; cực trị địa phương/toàn cục; hướng giảm; gradient descent với tìm kiếm chính xác theo tia; quy hoạch tuyến tính, dạng chính tắc, đơn hình cho LP tổng quát và phương pháp hình học cho hai biến.
 \end{tcolorbox}
 \vfill
 \textit{Tổng hợp từ giáo trình, đề bài, ghi chép môn học và bản ghi buổi giảng NMTU4.vtt.}\\[4pt]
@@ -81,7 +81,7 @@ Mô hình hóa và phân loại bài toán tối ưu; tính lồi của hàm và
 \section*{Phạm vi và cách dùng tài liệu}
 \addcontentsline{toc}{section}{Phạm vi và cách dùng tài liệu}
 \begin{keybox}{Phần cô chốt ở cuối bản ghi NMTU4}
-Ở đoạn khoảng \textbf{02:10:42--02:11:07}, giảng viên nhắc phạm vi ôn gồm: bài toán tối ưu tổng quát và phân loại; mô hình hóa; hàm lồi, tập lồi, tối ưu lồi; quy hoạch tuyến tính; thuật toán hướng giảm gradient với tìm kiếm chính xác theo tia. Cuối buổi, các bài tập được nhắc gồm nhóm phi tuyến không ràng buộc ở Chương 6 và bài quy hoạch tuyến tính 1, 2, 6.
+Ở đoạn khoảng \textbf{02:10:42--02:11:07}, giảng viên nhắc phạm vi ôn gồm: bài toán tối ưu tổng quát và phân loại; mô hình hóa; hàm lồi, tập lồi, tối ưu lồi; quy hoạch tuyến tính; thuật toán hướng giảm gradient với tìm kiếm chính xác theo tia. Cuối buổi, các bài tập được nhắc gồm nhóm phi tuyến không ràng buộc Bài 2, 5, 6, 7, 8, 11 và bài quy hoạch tuyến tính Bài 1, 2, 6. Đơn hình được gọi tên ở khoảng \textbf{00:09:48}; ngay sau đó giảng viên phân biệt cách hình học đơn giản hơn cho LP hai biến.
 \end{keybox}
 
 Tài liệu này ưu tiên những dạng xuất hiện đồng thời trong lời chốt, danh sách \textit{Đề Bài.docx} và giáo trình gốc. Dấu \(\star\) đánh dấu phần bám trực tiếp vào nội dung buổi cuối; dấu \(\dagger\) đánh dấu dạng được bổ sung từ đề bài/giáo trình để luyện rộng hơn. Lời giải được trình bày theo khuôn \textbf{nêu điều kiện -- tính -- kết luận}, giống các tờ hướng dẫn trong thư mục.
@@ -96,6 +96,7 @@ Dạng & Câu hỏi thường gặp\\
 \(\star\) Hướng giảm & Tính \(\grad f(x^\ast)\T d\), quyết định \(d\) có làm giảm hàm không.\\
 \(\star\) Gradient exact line search & Tính \(d_k=-\grad f(x_k)\), tìm \(\alpha_k\), cập nhật \(x_{k+1}\), kiểm tra dừng.\\
 \(\star\) Quy hoạch tuyến tính & Nhận dạng dạng bài; đổi biến và thêm biến phụ để đưa về \(\min c\T x,\ Ax=b,\ x\ge0\).\\
+\(\star\) Đơn hình & Với LP tổng quát, tìm cơ sở khả thi, tính chi phí giảm, chọn biến vào/ra và lặp pivot đến tối ưu hoặc phát hiện không bị chặn.\\
 \(\star\) Hình học & Vẽ miền khả thi, tìm đỉnh, xét hàm mục tiêu; kết luận hữu nghiệm/vô nghiệm/vô hạn.\\
 \(\dagger\) Phương án cực biên & Chọn cơ sở, giải \(A_Bx_B=b\), kiểm tra không âm và tính suy biến.\\
 \bottomrule
@@ -104,7 +105,7 @@ Dạng & Câu hỏi thường gặp\\
 
 \begin{keybox}{Sơ đồ chọn cách giải}
 \begin{enumerate}
-\item Nếu hàm mục tiêu và mọi ràng buộc đều tuyến tính: đó là quy hoạch tuyến tính. Nếu có đúng hai biến, ưu tiên phương pháp hình học; nếu đề yêu cầu dạng chính tắc, chuẩn hóa trước.
+\item Nếu hàm mục tiêu và mọi ràng buộc đều tuyến tính: đó là quy hoạch tuyến tính. Nếu có đúng hai biến, dùng phương pháp hình học; với LP tổng quát, đưa về dạng chính tắc rồi dùng đơn hình khi có cơ sở khả thi. Nếu đề chỉ yêu cầu chuẩn hóa, chưa cần chạy đơn hình.
 \item Nếu không có ràng buộc: tìm điểm dừng bằng \(\grad f=0\), phân loại bằng Hessian và dùng tính lồi để kết luận toàn cục.
 \item Nếu đề hỏi một hướng \(d\): tính đạo hàm theo hướng \(\grad f(x)\T d\).
 \item Nếu đề yêu cầu lặp theo gradient: đặt \(d_k=-\grad f(x_k)\), tối ưu một biến theo \(\alpha\ge0\), rồi cập nhật.
@@ -614,6 +615,23 @@ u_1,u_2,v_2,x_3,s_1,s_2\ge0.
 \]
 Ở phương trình thứ hai, sau phép thế vế phải là \(-3\); nhân cả hai vế với \(-1\) để có \(b=3\). Bài này kiểm tra đồng thời ba thao tác: biến có cận dưới, biến tự do và đổi dấu phương trình.
 
+\subsection{Đơn hình cho LP tổng quát -- quy trình chuẩn}
+Ở khoảng 00:09:48, bản ghi gọi tên thuật toán đơn hình cho quy hoạch tuyến tính tổng quát; khoảng 00:10:50, giảng viên chuyển sang cách hình học đơn giản hơn khi chỉ có hai biến. Phần này là nhắc nhanh quy trình chuẩn cho LP nhiều biến.
+
+Xét \(\min c\T x\) với \(Ax=b,\ x\ge0\). Tại một cơ sở khả thi \(B\), ta có \(x_B=B^{-1}b\ge0\), còn các biến ngoài cơ sở bằng \(0\). Với cột \(A_j\) ngoài cơ sở, chi phí giảm là
+\[
+\bar c_j=c_j-c_B\T B^{-1}A_j.
+\]
+\begin{enumerate}
+\item Nếu mọi \(\bar c_j\ge0\), phương án cơ sở hiện tại tối ưu cho bài toán min.
+\item Nếu có \(\bar c_j<0\), chọn một biến vào cơ sở \(x_j\) có chi phí giảm âm và tính \(u=B^{-1}A_j\).
+\item Nếu không có thành phần \(u_i>0\), có thể tăng \(x_j\) mãi mà vẫn giữ khả thi và làm mục tiêu giảm mãi; bài toán không bị chặn dưới.
+\item Nếu có \(u_i>0\), chọn \(\theta=\min_{u_i>0}(x_B)_i/u_i\). Biến đạt min rời cơ sở; pivot rồi lặp lại.
+\end{enumerate}
+Nếu chưa có cơ sở khả thi ban đầu, cần tìm cơ sở bằng pha I với biến giả; giá trị tối ưu pha I dương chứng tỏ miền khả thi rỗng, còn giá trị bằng \(0\) cho phép bỏ biến giả và chạy pha II. Bài max có thể đổi thành min của \(-c\T x\). Khi tỉ số hòa hoặc có suy biến, dùng quy tắc chống lặp như Bland nếu cần.
+
+\textbf{Ví dụ minh họa một lượt giải.} Đổi \(\max z=3x_1+2x_2\), \(x_1+x_2\le4\), \(2x_1+x_2\le5\), \(x\ge0\) thành min \(w=-3x_1-2x_2\), rồi thêm biến dư \(s_1,s_2\). Cơ sở đầu là \((s_1,s_2)=(4,5)\), với chi phí giảm của \((x_1,x_2)\) là \((-3,-2)\). Chọn \(x_1\) vào; \(u=(1,2)\), nên \(\theta=\min(4,5/2)=5/2\) và \(s_2\) ra. Ở cơ sở kế tiếp, chi phí giảm của \((x_2,s_2)\) là \((-1/2,3/2)\); cho \(x_2\) vào thì phép thử tỉ số làm \(s_1\) ra. Ta được \((x_1,x_2)=(1,3)\), \(z=9\); hai chi phí giảm còn lại đều không âm, nên đây là nghiệm tối ưu. Ví dụ này chỉ minh họa pivot; các bài LP được giao cuối buổi tập trung vào chuẩn hóa và hình học.
+
 \section{Phương pháp hình học và nghiệm ở đỉnh}
 \subsection{Quy trình giải LP hai biến}
 \begin{enumerate}
@@ -834,13 +852,40 @@ Các đề bài trong phần lời giải chính lấy theo trang in của \text
 \item \textbf{Bài 5 trang 289:} giáo trình ghi \(f=\alpha x_1^2+x_2^2-2x_1x_2-2x_2\). Tờ lời giải tạo sẵn dùng một hàm bậc bốn khác; ở đây giải theo công thức trên.
 \item \textbf{Bài 6 trang 130:} giáo trình có hai câu i) và ii). Ở câu ii), điều kiện đúng là \(6x_1-x_2\ge12\). Tờ lời giải kèm theo đổi dấu thành \(\le12\), làm thay đổi kết luận khả thi; ở đây dùng dấu \(\ge\) của giáo trình.
 \item \textbf{Bài 7 trang 290:} các biểu thức ở giáo trình lần lượt là hai hàm một biến bậc ba, một quadratic hai biến và một hàm có thể phân tích thành tổng bình phương. Một PDF lời giải kèm theo thay các biểu thức này bằng những đề khác; ở đây giải đúng bốn biểu thức trên trang in 290.
+\item \textbf{Ghi chép phụ và phạm vi:} một ghi chép ghi Bài 16 trang 37, trong khi \textit{Đề Bài.docx} ghi Bài 17 trang 37; tài liệu này theo số bài trên phiếu giao và giải Bài 17. Ghi chép phụ còn nêu Bài 15, 21 trang 291 và các bài KKT trang 291--292; các bài này không nằm trong danh sách cuối buổi của NMTU4. Tài liệu có nhắc nhanh KKT nhưng không tuyên bố đã giải các bài KKT ấy.
 \end{itemize}
+
+\subsection*{Bảng chú giải lời nhắc trong NMTU4}
+\addcontentsline{toc}{subsection}{Bảng chú giải lời nhắc trong NMTU4}
+Các mốc dưới đây lấy từ phụ đề VTT; trang và nội dung bài được chuẩn hóa theo \textit{Đề Bài.docx} và trang in giáo trình vì một số phụ đề nhận dạng sai từ. Đây là bảng phân biệt lời nhắc phương pháp với bài tập được giao.
+\begingroup
+\small
+\begin{longtable}{p{.15\textwidth} p{.20\textwidth} p{.40\textwidth} p{.13\textwidth}}
+\toprule
+Mốc VTT & Lời nhắc & Dạng/bài và cách giải tương ứng & Vị trí\\
+\midrule
+\endfirsthead
+\toprule
+Mốc VTT & Lời nhắc & Dạng/bài và cách giải tương ứng & Vị trí\\
+\midrule
+\endhead
+00:09:48--00:10:58 & Đơn hình cho LP tổng quát; sau đó nêu cách hình học cho hai biến. & Đơn hình: cơ sở khả thi, chi phí giảm, biến vào/ra, phép pivot; hai biến: miền khả thi và các đỉnh. & Mục 5.5; 6.1--6.3\\
+02:08:04--02:08:32 & Giao bài nhóm phi tuyến không ràng buộc: Bài 2, 5, 6, 7, 8, 11. & Bài 2 tr. 289: kiểm tra hướng giảm; Bài 5: tham số và Hessian; Bài 6: cực tiểu địa phương/toàn cục; Bài 7: bốn câu tìm cực tiểu toàn cục; Bài 8: điểm dừng/hướng giảm; Bài 11: exact line search. & Mục 3.4--3.7, 3.9; 4.3--4.5\\
+02:09:12--02:09:32 & Giao bài quy hoạch tuyến tính: Bài 1, 2, 6. & Bài 1--2 tr. 129: chuẩn hóa mục tiêu, biến và ràng buộc; Bài 6 tr. 130: xét miền rỗng và min trên miền không bị chặn bằng hình học. & Mục 5.3--5.4; 6.2--6.3\\
+02:10:38--02:11:07 & Chốt phạm vi thi. & Tối ưu tổng quát/phân loại; mô hình hóa; hàm lồi, tập lồi, tối ưu lồi; quy hoạch tuyến tính; gradient descent với tìm kiếm chính xác theo tia. & Mục 1--6\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\begin{answerbox}{Kết quả rà soát độ phủ}
+Toàn bộ bài tập được cô gọi tên ở đoạn 02:08--02:09 đều có lời giải theo khuôn chuẩn trong tài liệu. Danh sách rộng hơn trong \textit{Đề Bài.docx} cũng được đối chiếu: Bài 17 tr. 37, Bài 10 tr. 62, Bài 1--2 tr. 129, Bài 6--7 tr. 130, Bài 2--3 tr. 289, Bài 5--6 tr. 289, Bài 7--8 và 10--11 tr. 290. Đơn hình được nhắc đầu buổi nên đã bổ sung quy trình chuẩn và một ví dụ pivot minh họa; phiếu giao cuối buổi không nêu bài đơn hình riêng. Các bài KKT trong ghi chép phụ được đánh dấu ngoài phạm vi chốt, không tính là dạng đã giải đầy đủ.
+\end{answerbox}
 
 \subsection*{Tài liệu đã đối chiếu}
 \addcontentsline{toc}{subsection}{Tài liệu đã đối chiếu}
 \begin{enumerate}
 \item \textit{Giáo trình các phương pháp tối ưu.pdf}: Chương 3, tr. 129--131; Chương 6, tr. 289--291.
-\item \textit{NMTU4.vtt}: phần gradient descent đầu buổi; phần quy hoạch tuyến tính khoảng 00:10--02:10; lời chốt phạm vi ôn khoảng 02:10:42--02:11:07.
+\item \textit{NMTU4.vtt}: nhắc đơn hình 00:09:48 và hình học hai biến khoảng 00:10:50; giao bài 02:08:04--02:09:32; lời chốt phạm vi thi 02:10:38--02:11:07.
 \item \textit{Đề Bài.docx}: danh sách Bài 17 tr. 37; Bài 10 tr. 62; Bài 1--2 tr. 129; Bài 6--7 tr. 130; Bài 2--3 tr. 289; Bài 5--6 tr. 289; Bài 7--8, 10--11 tr. 290.
 \item \textit{Nhập môn pp tối ưu (1).docx}, \textit{Lý\_thuyết.pdf}, \textit{vở c Giang.pdf} và các tệp bài giải kèm theo: thuật ngữ nền, cách trình bày; đề được kiểm lại với giáo trình ở các bài có sai khác.
 \end{enumerate}
