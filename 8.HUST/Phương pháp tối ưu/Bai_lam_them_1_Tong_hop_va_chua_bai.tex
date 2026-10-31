@@ -1,91 +1,1034 @@
 \documentclass[11pt,a4paper]{article}
+
 \usepackage{fontspec}
 \setmainfont{Arial}
 \usepackage{amsmath,amssymb,mathtools}
-\usepackage{xcolor,geometry,hyperref,enumitem,booktabs,longtable,array,fancyhdr,graphicx,pdfpages}
+\usepackage[margin=2.1cm,headheight=15pt]{geometry}
 \usepackage{microtype}
-\geometry{margin=2.05cm,headheight=15pt}
-\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=teal!60!black}
-\definecolor{navy}{HTML}{17365D}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{needspace}
+
+\definecolor{navy}{HTML}{183153}
 \definecolor{teal}{HTML}{087E8B}
-\definecolor{pale}{HTML}{F2F7FB}
-\definecolor{ink}{HTML}{243247}
+\definecolor{pale}{HTML}{EFF6FA}
+\definecolor{palegreen}{HTML}{EEF8F1}
+\definecolor{palered}{HTML}{FFF2F0}
+\definecolor{warm}{HTML}{FFF8E7}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=navy,
+  urlcolor=teal,
+  pdftitle={Bài làm thêm 1 - Phương pháp tối ưu},
+  pdfauthor={Tài liệu ôn tập cá nhân},
+  pdfsubject={Tổng hợp dạng bài, phương pháp giải và lời giải mẫu}
+}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\small Phương pháp tối ưu -- HUST}
+\lhead{\small Phương pháp tối ưu}
 \rhead{\small Bài làm thêm 1}
 \cfoot{\thepage}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{4pt}
 \setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=3pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Hess}{\nabla^2}
+\newcommand{\T}{^{\mathsf T}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newtcolorbox{keybox}[1]{breakable,colback=pale,colframe=navy,title={#1},fonttitle=\bfseries}
+\newtcolorbox{questionbox}[1]{breakable,colback=warm,colframe=navy,title={#1},fonttitle=\bfseries}
+\newtcolorbox{answerbox}[1]{breakable,colback=palegreen,colframe=teal,title={#1},fonttitle=\bfseries}
+\newtcolorbox{warningbox}[1]{breakable,colback=warm,colframe=orange!70!black,title={#1},fonttitle=\bfseries}
 
 \begin{document}
 \begin{titlepage}
 \centering
-\vspace*{2.0cm}
-{\Large\color{teal}\textbf{HỌC PHẦN HUST}}\\[.9cm]
-{\Huge\color{navy}\textbf{BÀI LÀM THÊM 1}}\\[.45cm]
-{\LARGE Tổng hợp bài tập và phần cô chấm, chữa}\\[.8cm]
-\begin{minipage}{.84\textwidth}
+\vspace*{2.1cm}
+{\Large\color{teal}\textbf{HỌC PHẦN HUST}}\\[1.2cm]
+{\Huge\color{navy}\textbf{BÀI LÀM THÊM 1}}\\[0.5cm]
+{\LARGE Phương pháp tối ưu}\\[0.35cm]
+{\large Tổng hợp theo chủ đề, lời giải ngắn gọn và thống nhất}\\[1.4cm]
+\begin{tcolorbox}[width=.88\textwidth,colback=pale,colframe=navy,arc=2mm]
 \centering
-\colorbox{pale}{\parbox{.94\textwidth}{\centering
-\textbf{Nội dung được xếp theo chủ đề của học phần}\\[4pt]
-Các bản đánh máy bài tập và ghi chép được ghép thành một tài liệu; ảnh nguồn có nét bút màu được giữ ở phụ lục để đối chiếu.
-}}
-\end{minipage}
+\textbf{Mạch nội dung}\\[4pt]
+Mô hình hóa và tính lồi \(\to\) tối ưu không ràng buộc \(\to\) gradient descent \(\to\) quy hoạch tuyến tính \(\to\) KKT. Mỗi bài chỉ xuất hiện một lần; ghi chú cô chấm và chữa được gõ lại cạnh bài tương ứng.
+\end{tcolorbox}
 \vfill
-{\large Tài liệu học tập cá nhân}\\[4pt]
-{\small Biên soạn bằng LaTeX; ngày 31 tháng 10 năm 2026}
+\textit{Tổng hợp từ giáo trình, đề bài và ghi chép môn học.}\\[4pt]
+31 tháng 10 năm 2026
 \end{titlepage}
 
+\renewcommand{\contentsname}{Mục lục}
+\begingroup
+\small
+\setlength{\parskip}{0pt}
 \tableofcontents
+\endgroup
 \clearpage
 
-\section{Phạm vi và cách đọc}
-Tài liệu gồm hai phần đã được biên soạn trong thư mục học phần: \textit{Ôn thi -- Các dạng bài Phương pháp tối ưu} (bài tập xếp theo dạng) và \textit{Vở cô Giang -- Bản đánh máy} (ghi chép cùng các bài tập theo mạch bài giảng). Phụ lục lưu các ảnh nguồn để có thể so lại phép tính và lời nhận xét trên bản gốc.
-
+\section*{Phạm vi và cách dùng tài liệu}
+\addcontentsline{toc}{section}{Phạm vi và cách dùng tài liệu}
+\begin{keybox}{Một mạch, không lặp bài}
+Các bài được sắp theo công cụ cần dùng: mô hình hóa; tập và hàm lồi; cực trị không ràng buộc; hướng giảm và gradient descent; quy hoạch tuyến tính; cuối cùng là KKT. Ký hiệu \(\star\) là bài trọng tâm theo đề/buổi học; \(\dagger\) là bài mở rộng để luyện thêm.
+\end{keybox}
 \begin{itemize}
-\item Các nét bút đỏ hoặc xanh được xem là phần cô chấm, đánh dấu hoặc chữa bài theo yêu cầu. Ảnh được giữ màu để không mất dấu kiểm, gạch sửa và ghi chú.
-\item Phần đánh máy chuẩn hóa ký hiệu và cách trình bày. Khi một ghi chú viết tay khó đọc, tài liệu giữ ảnh gốc để đối chiếu, không tự đoán nội dung.
-\item Hai phần tài liệu ghép giữ số trang và mục lục nội bộ; phụ lục ảnh dùng số trang của bản tổng hợp.
-\item Thư mục nguồn hiện có 104 ảnh. Bảy tệp trùng khớp hoàn toàn theo SHA-256 được đưa về một bản trong phụ lục; bảng kê ở \texttt{Bai\_lam\_them\_1\_source\_manifest.csv} lưu liên kết giữa tên gốc và ảnh phụ lục.
-\item Đường dẫn được nêu là \texttt{Downloads\textbackslash Bài làm thêm 1} không xuất hiện nguyên văn trên máy. Bản này dùng bộ 104 ảnh trong thư mục gần khớp \texttt{Downloads\textbackslash Bài}.
+\item Mỗi đề chỉ được trình bày ở một mục; công thức chung chỉ nhắc một lần rồi áp dụng vào bài.
+\item Khung \textbf{Cô chữa} ghi lại các điểm sửa màu đỏ/xanh đã thấy trên bản viết tay.
+\item Bài KKT trang 291--292 được thêm từ vở; phần này bổ sung đề ôn tập chính.
+\item Nguồn ảnh gần khớp là \texttt{Downloads\textbackslash Bài}; thư mục \texttt{Downloads\textbackslash Bài làm thêm 1} ghi trong yêu cầu không có nguyên văn trên máy. Bỏ ảnh scan khỏi PDF để bản tổng hợp gọn; bản gốc vẫn ở thư mục Downloads.
+\end{itemize}
+\section{Bài toán tối ưu và mô hình hóa}
+\subsection{Dạng tổng quát và cách gọi}
+Bài toán tối ưu có dạng
+\[
+\min_{x\in D} f(x)\qquad\text{hoặc}\qquad \max_{x\in D} f(x),
+\]
+trong đó \(x=(x_1,\ldots,x_n)\) là vectơ biến quyết định, \(f\) là hàm mục tiêu, còn \(D\) là tập khả thi gồm các điểm thỏa mọi ràng buộc.
+
+\begin{center}
+\begin{tabularx}{.96\textwidth}{>{\bfseries}p{.23\textwidth}Y}
+\toprule
+Phân loại & Ý nghĩa\\
+\midrule
+Tuyến tính & Hàm mục tiêu và tất cả ràng buộc đều tuyến tính.\\
+Phi tuyến & Có ít nhất một hàm mục tiêu hoặc ràng buộc phi tuyến.\\
+Không ràng buộc & \(D=\R^n\), không có điều kiện bổ sung lên \(x\).\\
+Có ràng buộc & Có ít nhất một đẳng thức/bất đẳng thức hạn chế \(x\).\\
+Liên tục / nguyên & Biến nhận giá trị thực / chỉ nhận giá trị nguyên. Nếu thêm \(x\in\mathbb Z^n\), bài toán là quy hoạch nguyên.\\
+Địa phương / toàn cục & So sánh giá trị trong một lân cận / trên toàn bộ tập khả thi.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Quy trình mô hình hóa}
+\begin{enumerate}
+\item Chọn biến quyết định, kèm đơn vị và ý nghĩa.
+\item Viết đúng mục tiêu: doanh thu/lợi nhuận thường là \(\max\); chi phí/thời gian thường là \(\min\).
+\item Viết từng giới hạn tài nguyên thành một bất đẳng thức riêng.
+\item Thêm miền giá trị: không âm, bị chặn, nguyên hoặc tự do dấu theo đề.
+\item Thử một phương án đơn giản để rà dấu và đơn vị.
+\end{enumerate}
+
+\Needspace{8\baselineskip}
+\subsection{Bài 10 trang 62 -- lập mô hình sản xuất \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 10 trang 62}
+Một xí nghiệp có thể sử dụng tối đa 550 giờ máy cán, 430 giờ máy tiện và 200 giờ máy mài để sản xuất ba loại sản phẩm. Để sản xuất một đơn vị sản phẩm loại thứ nhất cần 9 giờ máy cán, 5 giờ máy tiện và 1 giờ máy mài. Để sản xuất một đơn vị sản phẩm loại thứ ba cần 8 giờ máy cán, 3 giờ máy tiện và 3 giờ máy mài. Mất 5 giờ máy cán và 3 giờ máy tiện để sản xuất một đơn vị sản phẩm loại thứ hai. Giá bán mỗi sản phẩm loại thứ nhất, thứ hai và thứ ba tương ứng là 100, 120 và 55 đô-la. Xí nghiệp cần quyết định sản xuất mỗi loại bao nhiêu đơn vị để doanh thu lớn nhất. Hãy thiết lập mô hình toán học cho bài toán trên.
+\end{questionbox}
+
+\textbf{Lời giải -- xác định biến, mục tiêu và giới hạn tài nguyên.}
+
+\textbf{Bước 1 -- biến.} Gọi \(x_i\) là số đơn vị sản phẩm loại \(i\), \(i=1,2,3\).
+
+\textbf{Bước 2 -- mục tiêu.} Tổng doanh thu là \(100x_1+120x_2+55x_3\), cần tối đa hóa.
+
+\textbf{Bước 3 -- tài nguyên.} Cộng giờ sử dụng của từng loại máy không vượt quá số giờ hiện có.
+\[
+\begin{aligned}
+\max\quad &100x_1+120x_2+55x_3\\
+\text{với điều kiện}\quad
+&9x_1+5x_2+8x_3\le550,\\
+&5x_1+3x_2+3x_3\le430,\\
+&x_1+3x_3\le200,\\
+&x_1,x_2,x_3\ge0.
+\end{aligned}
+\]
+Nếu sản phẩm không thể chia lẻ thì thêm \(x_i\in\mathbb Z\). Trong bộ số liệu này, \(x^\ast=(0,110,0)\) cho doanh thu 13\,200 đô-la. Có thể chứng minh tối ưu bằng ràng buộc máy cán:
+\[
+100x_1+120x_2+55x_3
+\le 24(9x_1+5x_2+8x_3)\le24\cdot550=13\,200.
+\]
+Dấu bằng đạt tại \((0,110,0)\).
+
+\subsection{Bài 20 trang 292 -- hồi quy và bình phương tối thiểu}
+Với dữ liệu \(x_i=(a_i,b_i,c_i)\T\) và giá trị thực \(Y_i\), mô hình tuyến tính dự báo \(\widehat Y_i=w\T x_i\). Chọn \(w\) để tối thiểu hóa
+\[
+L(w)=\frac1{2N}\sum_{i=1}^N(Y_i-w\T x_i)^2
+=\frac1{2N}\|Y-Xw\|^2.
+\]
+Khi đó
+\[
+\grad L(w)=\frac1N X\T(Xw-Y),\qquad
+\Hess L(w)=\frac1N X\T X\succeq0.
+\]
+Nghiệm bình phương tối thiểu thỏa \(X\T Xw=X\T Y\); nghiệm là duy nhất nếu các cột của \(X\) độc lập tuyến tính. Ví dụ dự báo giá nhà có thể dùng diện tích, khoảng cách tới trung tâm và số phòng làm biến; dấu hệ số được chọn theo ý nghĩa mô hình. RMSE là căn MSE, còn hàm \(L\) ở trên dùng bình phương sai số để đạo hàm.
+
+\subsection{Mô hình hỗn hợp có biến nguyên}
+Ví dụ trong vở:
+\[
+\max\ 6x_1+2x_2+4x_3,\quad
+2x_1+4x_2+2x_3\le8,\quad
+x_1+2x_2+3x_3\le7,\quad x\ge0.
+\]
+Nếu \(x\) liên tục, miền khả thi lồi; nếu yêu cầu \(x_i\in\mathbb Z_+\), tập khả thi thường rời rạc và không còn lồi. Vì vậy điều kiện nguyên phải được ghi riêng, không tự thêm vào LP liên tục.
+
+\section{Tập lồi, hàm lồi và Hessian}
+\subsection{Định nghĩa cần nhớ}
+\begin{itemize}
+\item Tập \(C\subseteq\R^n\) lồi nếu với mọi \(x,y\in C\) và \(\lambda\in[0,1]\), điểm \(\lambda x+(1-\lambda)y\) vẫn thuộc \(C\).
+\item Hàm \(f:C\to\R\) lồi nếu
+\[
+f(\lambda x+(1-\lambda)y)\le \lambda f(x)+(1-\lambda)f(y).
+\]
+\item Hàm lõm nếu bất đẳng thức đổi chiều. Hàm vừa lồi vừa lõm trên miền lồi chính là hàm affine.
+\item Giao của các nửa không gian tuyến tính là tập lồi; vì thế miền khả thi của quy hoạch tuyến tính là một đa diện lồi.
+\end{itemize}
+\begin{answerbox}{Cô chữa -- phép toán trên tập lồi}
+Giao của các tập lồi là tập lồi; hợp thì không nhất thiết (chẳng hạn \([-2,-1]\cup[1,2]\)). Nếu \(C,D\) lồi thì tổng Minkowski \(C+D=\{c+d:c\in C,\ d\in D\}\) cũng lồi.
+\end{answerbox}
+
+\begin{keybox}{Hệ quả thi rất hay dùng}
+Nếu \(f\) lồi trên tập khả thi lồi \(D\), mọi cực tiểu địa phương đều là cực tiểu toàn cục. Nếu \(f\) lồi chặt thì cực tiểu toàn cục, khi tồn tại, là duy nhất. Với hàm khả vi lồi, điều kiện \(\grad f(x^\ast)=0\) đủ để \(x^\ast\) là cực tiểu toàn cục trên \(\R^n\).
+\end{keybox}
+
+\subsection{Kiểm tra lồi/lõm bằng Hessian}
+Với \(f\) khả vi cấp hai trên miền lồi:
+\[
+\Hess f(x)\succeq0\ \text{trên toàn miền}\Rightarrow f\text{ lồi},\qquad
+\Hess f(x)\preceq0\ \text{trên toàn miền}\Rightarrow f\text{ lõm}.
+\]
+Đối với hàm hai biến, viết \(H=\begin{pmatrix}a&b\\b&c\end{pmatrix}\), \(\Delta=ac-b^2\):
+\begin{itemize}
+\item \(a>0,\ \Delta>0\): xác định dương (PD). Tại một điểm dừng, điều này đủ cho cực tiểu địa phương nghiêm ngặt; trên toàn miền lồi, đủ cho lồi chặt.
+\item \(a<0,\ \Delta>0\): xác định âm (ND). Tại một điểm dừng, đủ cho cực đại địa phương nghiêm ngặt.
+\item \(\Delta<0\): không xác định, hàm không lồi cũng không lõm trên miền mở đó.
+\item \(\Delta=0\): phép thử chưa kết luận; xét trị riêng, dạng toàn phương hoặc cấu trúc hàm.
+\end{itemize}
+Với Hessian \(n\times n\), Sylvester: xác định dương khi mọi định thức con chính đầu đều dương; xác định âm khi các dấu định thức con chính đầu luân phiên. Để kiểm tra nửa xác định, không chỉ nhìn định thức cuối: có thể xét mọi định thức con chính hoặc trị riêng.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 16 trang 37: xét lồi bằng đạo hàm và định nghĩa \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 16 trang 37}
+Các hàm số sau có phải hàm lồi không? Hãy giải thích bằng ít nhất hai cách:
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(f(x)=|x|,\ x\in\R\).
+\item \(f(x)=e^x+1+5x,\ x\in\R\).
+\item \(f(x)=-\ln x+3x^3,\ 0<x<+\infty\).
+\item \(f(x)=\arctan x,\ 0<x<+\infty\).
+\item \(f(x)=|x|\) nếu \(x\le1\), và \(f(x)=(x-2)^2-1\) nếu \(x>1\), với \(x\in\R\).
+\item \(f(x)=e^x\) nếu \(x<0\), và \(f(0)=3\), với miền \(( -\infty,0]\).
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.} Ta dùng hai hướng kiểm tra: đạo hàm bậc hai cho hàm trơn; bất đẳng thức Jensen, tính đóng của hàm lồi và phản ví dụ trung điểm cho hàm ghép.
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(|x|=\max\{x,-x\}\) là giá trị lớn nhất của hai hàm affine, nên lồi; cũng có trực tiếp \(|\lambda x+(1-\lambda)y|\le\lambda|x|+(1-\lambda)|y|\). Với \(x=-1,y=1\), bất đẳng thức lõm đòi \(f(0)\ge(f(-1)+f(1))/2=1\), nhưng \(f(0)=0\). Kết luận: lồi, không lõm.
+\item \(f''(x)=e^x>0\), nên lồi chặt. Mặt khác, \(e^x\) lồi chặt và \(1+5x\) affine; tổng vẫn lồi chặt. Vì vậy hàm không lõm.
+\item \(f''(x)=x^{-2}+18x>0\) với \(x>0\), nên lồi chặt. Đồng thời \(-\ln x\) và \(3x^3\) đều lồi trên \((0,+\infty)\), trong đó \(-\ln x\) lồi chặt; tổng lồi chặt, không lõm.
+\item \(f''(x)=-2x/(1+x^2)^2<0\) với \(x>0\), nên lõm chặt. Cùng kết luận từ \(f'(x)=1/(1+x^2)\) giảm nghiêm ngặt; do đó hàm không lồi.
+\item Không lồi: lấy \(x=0,y=2\), ta có \(f(1)=1>(f(0)+f(2))/2=-1/2\). Không lõm: lấy \(x=1,y=3\), ta có \(f(2)=-1<(f(1)+f(3))/2=1/2\). Kết luận: không lồi, không lõm.
+\item Trên \((\infty,0)\), hàm mũ lồi; khi nối tới đầu mút, giá trị \(f(0)=3\) cao hơn giới hạn trái \(1\), nên bất đẳng thức Jensen vẫn đúng. Cụ thể, với \(x<0\), \(0\le\lambda\le1\): \(e^{(1-\lambda)x}\le(1-\lambda)e^x+\lambda\le(1-\lambda)e^x+3\lambda\). Có thể kiểm tra tương đương qua độ dốc: \(f\prime(x)=e^x\) tăng trên phần trong của miền; nâng giá trị tại đầu mút không làm vi phạm các dây cung lồi. Không lõm vì tại \(-1,0\), \(f(-1/2)=e^{-1/2}<(e^{-1}+3)/2\). Kết luận: lồi, không lõm.
+\end{enumerate}
+
+\Needspace{8\baselineskip}
+\subsection{Bài 17 trang 37 -- phân loại bảy hàm \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 17 trang 37}
+Trong các hàm số sau, hàm nào lồi, hàm nào lõm, hàm nào không lồi không lõm? Vì sao?
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(f(x_1,x_2)=x_1e^{-(x_1+x_2)}\).
+\item \(f(x_1,x_2)=x_1^2+2x_1x_2-10x_1+5x_2\).
+\item \(f(x_1,x_2)=-x_1^2-5x_2^2+2x_1x_2+9x_1-8x_2\).
+\item \(f(x_1,x_2,x_3)=x_1x_2+2x_1^2+x_2^2+2x_3^2-6x_1x_3+3x_2x_3\).
+\item \(f(x_1,x_2,x_3)=-x_1^2-3x_2^2-2x_3^2+4x_1x_2+2x_1x_3+4x_2x_3\).
+\item \(f(x_1,x_2,x_3)=x_1^2+2x_1x_2+4x_1x_2+3x_2^2+x_2x_3+6x_3^2\).
+\item \(f(x_1,x_2,x_3)=x_1^2+4x_1x_2+4x_2^2+2x_1x_3+4x_2x_3\).
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.} Với hàm trơn, lồi tương đương \(H\succeq0\), lõm tương đương \(H\preceq0\). Hessian không xác định chứng minh đồng thời không lồi và không lõm.
+\begin{enumerate}[label=\roman*),leftmargin=*,itemsep=.45em]
+\item Đặt \(s=x_1+x_2\). Khi đó
+\[
+H=e^{-s}\begin{pmatrix}x_1-2&x_1-1\\x_1-1&x_1\end{pmatrix},\qquad \det H=-e^{-2s}<0.
+\]
+Hessian không xác định nên hàm không lồi, không lõm.
+\item \[
+H=\begin{pmatrix}2&2\\2&0\end{pmatrix},\qquad \det H=-4<0.
+\]
+Hessian không xác định nên hàm không lồi, không lõm.
+\item \[
+H=\begin{pmatrix}-2&2\\2&-10\end{pmatrix}.
+\]
+Định thức con đầu là \(-2<0\), còn \(\det H=16>0\), nên \(H\prec0\). Hàm lõm chặt.
+\item \[
+H=\begin{pmatrix}4&1&-6\\1&2&3\\-6&3&4\end{pmatrix},\qquad \det H=-116<0,\quad H_{11}=4>0.
+\]
+Định thức âm loại trừ nửa xác định dương; phần tử chéo dương loại trừ nửa xác định âm. Hàm không lồi, không lõm.
+\item \[
+H=\begin{pmatrix}-2&4&2\\4&-6&4\\2&4&-4\end{pmatrix}.
+\]
+Vì \(H_{11}=-2<0\), ma trận không nửa xác định dương; định thức con chính cấp hai \((1,2)=-4<0\) loại trừ nửa xác định âm. Hàm không lồi, không lõm.
+\end{enumerate}
+
+\Needspace{8\baselineskip}
+\subsection*{Bài 17 trang 37 (tiếp)}
+\begin{questionbox}{Đề bài gốc -- Bài 17 trang 37}
+Trong các hàm số sau, hàm nào lồi, hàm nào lõm, hàm nào không lồi không lõm? Vì sao?
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(f(x_1,x_2)=x_1e^{-(x_1+x_2)}\).
+\item \(f(x_1,x_2)=x_1^2+2x_1x_2-10x_1+5x_2\).
+\item \(f(x_1,x_2)=-x_1^2-5x_2^2+2x_1x_2+9x_1-8x_2\).
+\item \(f(x_1,x_2,x_3)=x_1x_2+2x_1^2+x_2^2+2x_3^2-6x_1x_3+3x_2x_3\).
+\item \(f(x_1,x_2,x_3)=-x_1^2-3x_2^2-2x_3^2+4x_1x_2+2x_1x_3+4x_2x_3\).
+\item \(f(x_1,x_2,x_3)=x_1^2+2x_1x_2+4x_1x_2+3x_2^2+x_2x_3+6x_3^2\).
+\item \(f(x_1,x_2,x_3)=x_1^2+4x_1x_2+4x_2^2+2x_1x_3+4x_2x_3\).
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải tiếp theo.}
+\begin{enumerate}[label=\roman*),start=6,leftmargin=*,itemsep=.45em]
+\item Đề in hai hạng tử \(2x_1x_2+4x_1x_2\), nên
+\[
+H=\begin{pmatrix}2&6&0\\6&6&1\\0&1&12\end{pmatrix}.
+\]
+Ta có \(H_{11}=2>0\) và định thức con \((1,2)=12-36=-24<0\); vậy Hessian không nửa xác định theo cả hai chiều. Hàm không lồi, không lõm.
+\item \[
+H=\begin{pmatrix}2&4&2\\4&8&4\\2&4&0\end{pmatrix}.
+\]
+Ta có \(H_{11}=2>0\) và định thức con \((1,3)=2\cdot0-2^2=-4<0\); vậy Hessian không nửa xác định theo cả hai chiều. Hàm không lồi, không lõm.
+\end{enumerate}
+\begin{answerbox}{Kết luận}
+Trong Bài 17, chỉ hàm (iii) lõm chặt; sáu hàm còn lại không lồi, không lõm. Không có hàm lồi trong danh sách.
+\end{answerbox}
+\begin{warningbox}{Lưu ý chép đúng đề}
+Ở câu (vi), giữ nguyên hai hạng tử \(2x_1x_2+4x_1x_2\) như bản in trang 37. Không tự ý đổi hạng tử để làm Hessian giống câu khác.
+\end{warningbox}
+\Needspace{8\baselineskip}
+
+
+\section{Tối ưu phi tuyến không ràng buộc}
+\subsection{Điều kiện bậc một và bậc hai}
+Giả sử \(f\) khả vi trên một lân cận mở quanh \(x^\ast\).
+\begin{itemize}
+\item Nếu \(x^\ast\) là cực tiểu/cực đại địa phương thì \(\grad f(x^\ast)=0\) (điều kiện cần Fermat).
+\item Nếu \(f\) khả vi cấp hai và \(x^\ast\) là cực tiểu địa phương thì \(\Hess f(x^\ast)\succeq0\) là điều kiện cần; Hessian xác định dương là điều kiện đủ cho cực tiểu địa phương nghiêm ngặt.
+\item Tương tự, cực đại địa phương cần Hessian nửa xác định âm; Hessian xác định âm là điều kiện đủ.
+\item Hessian không xác định tại điểm dừng cho biết đó là điểm yên ngựa, không phải cực trị địa phương.
+\item Hessian nửa xác định nhưng suy biến: phép thử bậc hai chưa đủ; có thể cần xét biểu thức hàm trực tiếp.
 \end{itemize}
 
-\section{Bản đồ nội dung theo chủ đề}
-{\small
-\begin{longtable}{>{\bfseries\raggedright\arraybackslash}p{.23\textwidth}>{\raggedright\arraybackslash}p{.48\textwidth}>{\raggedright\arraybackslash}p{.20\textwidth}}
+\begin{center}
+\begin{tabularx}{.9\textwidth}{>{\bfseries}p{.30\textwidth}Y}
 \toprule
-Chủ đề & Dạng bài và nội dung & Tài liệu\\
+Tại điểm dừng & Kết luận\\
 \midrule
-\endfirsthead
+\(H\succ0\) & Cực tiểu địa phương nghiêm ngặt.\\
+\(H\prec0\) & Cực đại địa phương nghiêm ngặt.\\
+\(H\) không xác định & Điểm yên ngựa.\\
+\(H\succeq0\) suy biến hoặc \(H\preceq0\) suy biến & Chưa kết luận chỉ bằng kiểm tra bậc hai.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Dạng quadratic giải được ngay}
+Với
+\[
+f(x)=\tfrac12x\T Ax+b\T x+c,\qquad A=A\T\succ0,
+\]
+ta có \(\grad f(x)=Ax+b\). Điểm cực tiểu duy nhất giải hệ tuyến tính
+\[
+Ax^\ast+b=0,\qquad x^\ast=-A^{-1}b,
+\]
+và
+\[
+f(x^\ast)=c-\tfrac12b\T A^{-1}b.
+\]
+Nếu \(A\succ0\), hàm lồi chặt nên điểm dừng này cũng là cực tiểu toàn cục duy nhất.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 3 trang 289 -- quadratic xác định dương \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 3 trang 289}
+Cho hàm toàn phương
+\[
+f(x)=\tfrac12x\T Ax+b\T x+c,
+\]
+trong đó \(A\) là ma trận cấp \(n\times n\), đối xứng, xác định dương; \(b\in\R^n\) và \(c\in\R\). Nói rằng giải \(\min\{f(x):x\in\R^n\}\) được đưa về tìm nghiệm hệ tuyến tính \(Ax+b=0\) có đúng không? Vì sao? Cho ví dụ cụ thể.
+\end{questionbox}
+\textbf{Lời giải.} Vì \(A=A\T\),
+\[
+\grad f(x)=Ax+b,\qquad \Hess f(x)=A\succ0.
+\]
+Điểm dừng duy nhất giải
+\[
+Ax^\ast+b=0,\qquad x^\ast=-A^{-1}b.
+\]
+Hessian xác định dương nên \(x^\ast\) là cực tiểu toàn cục duy nhất. Giá trị cực tiểu là \(f(x^\ast)=c-\tfrac12b\T A^{-1}b\).
+
+\textbf{Ví dụ.} Với \(A=\begin{pmatrix}2&0\\0&4\end{pmatrix}\), \(b=(-2,8)\), \(c=3\), ta được \(x^\ast=(1,-2)\) và \(f(x^\ast)=3-\tfrac12(2+16)=-6\).
+
+\Needspace{8\baselineskip}
+\subsection{Bài 4 trang 289 -- điều kiện tối ưu của quadratic \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 4 trang 289}
+Cho \(f(x)=\tfrac12x\T Ax-b\T x\), với \(A\) là ma trận đối xứng cấp \(n\times n\), \(b\in\R^n\).
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item Viết điều kiện cần bậc một và bậc hai của nghiệm tối ưu địa phương. Với điều kiện gì thì \(f\) có điểm dừng?
+\item Khi nào thì \(f\) có cực tiểu địa phương?
+\item Với điều kiện nào thì \(f\) có điểm dừng nhưng không phải cực tiểu địa phương, cũng không phải cực đại địa phương?
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.} Ta có \(\grad f(x)=Ax-b\) và \(\Hess f(x)=A\).
+\begin{itemize}
+\item Có điểm dừng khi và chỉ khi \(Ax=b\) giải được, tức \(b\in\operatorname{Range}(A)\). Điều kiện cần bậc một là \(Ax^\ast=b\); điều kiện cần bậc hai tại cực tiểu là \(A\succeq0\).
+\item Tại điểm dừng, \(A\succeq0\) khi và chỉ khi đó là cực tiểu địa phương; vì hàm quadratic nên cũng là cực tiểu toàn cục. Nếu \(A\succ0\), cực tiểu là duy nhất.
+\item Có điểm dừng nhưng không phải cực tiểu hay cực đại khi \(A\) không xác định (có cả hướng cong dương và hướng cong âm); điểm dừng ấy là điểm yên ngựa.
+\end{itemize}
+Nếu \(A\) suy biến và \(b\) không vuông góc với \(\ker(A)\), phương trình dừng không giải được và hàm không bị chặn theo một hướng thuộc không gian-không.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 5 trang 289 -- tham số \(\alpha\) \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 5 trang 289}
+Cho \(f(x)=\alpha x_1^2+x_2^2-2x_1x_2-2x_2\), trong đó \(\alpha\in\R\).
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item Xác định điểm dừng của \(f\) với mỗi giá trị của \(\alpha\).
+\item Xác định điểm cực đại địa phương và cực tiểu địa phương tương ứng với một giá trị cụ thể nào đó của \(\alpha\). Hàm \(f\) có điểm cực đại toàn cục hoặc cực tiểu toàn cục không? Vì sao?
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.} \textbf{Bước 1: Tìm điểm dừng.}
+\[
+\grad f=
+\begin{pmatrix}2\alpha x_1-2x_2\\2x_2-2x_1-2\end{pmatrix}=0
+\quad\Longleftrightarrow\quad
+x_2=\alpha x_1,\quad x_2=x_1+1.
+\]
+Nếu \(\alpha\ne1\), điểm dừng duy nhất là
+\[
+x^\ast=\left(\frac1{\alpha-1},\frac{\alpha}{\alpha-1}\right).
+\]
+Nếu \(\alpha=1\), hai phương trình mâu thuẫn nên không có điểm dừng.
+
+\textbf{Bước 2: Phân loại bằng Hessian.}
+\[
+H=\begin{pmatrix}2\alpha&-2\\-2&2\end{pmatrix},
+\qquad \det H=4(\alpha-1).
+\]
+\begin{itemize}
+\item \(\alpha>1\): \(2\alpha>0\), \(\det H>0\), do đó \(H\succ0\). Hàm lồi chặt, điểm dừng là cực tiểu toàn cục duy nhất; \(f(x^\ast)=-\frac{\alpha}{\alpha-1}\).
+\item \(\alpha<1\): \(\det H<0\), Hessian không xác định; điểm dừng là yên ngựa, không phải cực trị.
+\item \(\alpha=1\): không có điểm dừng. Thật vậy \(f=(x_1-x_2)^2-2x_2\), không bị chặn dưới khi \(x_1=x_2\to+\infty\).
+\end{itemize}
+
+\begin{answerbox}{Kết luận theo tham số}
+Với \(\alpha>1\), hàm có cực tiểu toàn cục duy nhất \(x^\ast=(1/(\alpha-1),\alpha/(\alpha-1))\), không có cực đại toàn cục; ví dụ \(\alpha=2\) cho \(x^\ast=(1,2)\), \(f(x^\ast)=-2\). Với \(\alpha<1\), điểm dừng là yên ngựa và hàm không bị chặn trên/dưới. Với \(\alpha=1\), không có điểm dừng và hàm cũng không bị chặn trên/dưới.
+\end{answerbox}
+
+\Needspace{8\baselineskip}
+\subsection{Bài 6 trang 289 -- cực tiểu địa phương không toàn cục \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 6 trang 289}
+Xét hàm số \(f(x,y)=e^{3y}-3xe^y+x^3\). Chứng minh điểm \((1,0)\T\) là điểm tối ưu địa phương của hàm \(f\) nhưng không phải điểm tối ưu toàn cục.
+\end{questionbox}
+\textbf{Lời giải.}
+
+\textbf{Bước 1: Gradient tại điểm đã cho.}
+\[
+\grad f(x,y)=
+\begin{pmatrix}-3e^y+3x^2\\3e^{3y}-3xe^y\end{pmatrix},
+\qquad \grad f(1,0)=\begin{pmatrix}0\\0\end{pmatrix}.
+\]
+\textbf{Bước 2: Hessian.}
+\[
+H(x,y)=
+\begin{pmatrix}6x&-3e^y\\-3e^y&9e^{3y}-3xe^y\end{pmatrix},
+\qquad
+H(1,0)=\begin{pmatrix}6&-3\\-3&6\end{pmatrix}.
+\]
+\(H_{11}=6>0\), \(\det H(1,0)=27>0\), nên Hessian xác định dương. Vậy \((1,0)\) là cực tiểu địa phương nghiêm ngặt; \(f(1,0)=-1\).
+
+\textbf{Bước 3: Bác bỏ cực tiểu toàn cục.} Trên đường \(y=0\),
+\[
+f(x,0)=1-3x+x^3\longrightarrow-\infty\quad\text{khi }x\to-\infty.
+\]
+Hàm không bị chặn dưới; do đó \((1,0)\) không thể là cực tiểu toàn cục.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 7 trang 290 -- tìm mọi cực tiểu toàn cục \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 7 trang 290}
+Giải \(\min\{f(x):x\in\R^n\}\) với
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(f(x)=15-12x-25x^2+2x^3\) (\(n=1\));
+\item \(f(x)=3x^3+7x^2-15x-3\) (\(n=1\));
+\item \(f(x_1,x_2)=8x_1^2+3x_1x_2+7x_2^2-25x_1+31x_2-29\);
+\item \(f(x_1,x_2)=2x_1^2+x_2^2-2x_1x_2+2x_1^3+x_1^4\).
+\end{enumerate}
+\end{questionbox}
+\textbf{i) \(f(x)=15-12x-25x^2+2x^3\).}
+\[
+f'(x)=6x^2-50x-12=0
+\quad\Longrightarrow\quad x_{\pm}=\frac{25\pm\sqrt{697}}6.
+\]
+\(f''(x)=12x-50\): nghiệm \(x_-\approx-0.2335\) là cực đại địa phương; \(x_+\approx8.5668\) là cực tiểu địa phương. Nhưng \(f(x)\to-\infty\) khi \(x\to-\infty\), nên bài toán \(\min_{\R} f\) không có nghiệm tối ưu toàn cục.
+
+\textbf{ii) \(f(x)=3x^3+7x^2-15x-3\).}
+\[
+f'(x)=9x^2+14x-15=0
+\quad\Longrightarrow\quad x_{\pm}=\frac{-7\pm2\sqrt{46}}9.
+\]
+\(f''(x)=18x+14\): nghiệm nhỏ là cực đại địa phương, nghiệm lớn là cực tiểu địa phương. Do \(f(x)\to-\infty\) khi \(x\to-\infty\), không có cực tiểu toàn cục.
+
+\textbf{iii) \(f(x_1,x_2)=8x_1^2+3x_1x_2+7x_2^2-25x_1+31x_2-29\).}
+\[
+H=\begin{pmatrix}16&3\\3&14\end{pmatrix},\qquad H_{11}=16>0,\quad \det H=215>0.
+\]
+Hessian xác định dương. Giải
+\[
+\begin{cases}16x_1+3x_2=25,\\3x_1+14x_2=-31\end{cases}
+\quad\Longrightarrow\quad
+x^\ast=\left(\frac{443}{215},-\frac{571}{215}\right).
+\]
+Đây là cực tiểu toàn cục duy nhất và
+\[
+f(x^\ast)=-\frac{20623}{215}\approx-95.92093.
+\]
+
+\textbf{iv) \(f(x_1,x_2)=2x_1^2+x_2^2-2x_1x_2+2x_1^3+x_1^4\).}
+\[
+f(x_1,x_2)=x_1^2(x_1+1)^2+(x_2-x_1)^2\ge0.
+\]
+Giá trị nhỏ nhất là \(0\), đạt tại hai điểm \((0,0)\) và \((-1,-1)\). Đây là ví dụ có nhiều nghiệm tối ưu toàn cục.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 8 trang 290 -- điểm dừng và hướng giảm \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 8 trang 290}
+Cho \(f(x_1,x_2)=x_1^2-x_1x_2+2x_2^2-2x_1+e^{x_1+x_2}\). Điểm \(x=(0,0)\T\) có phải điểm cực tiểu địa phương của hàm \(f\) không? Nếu không, tìm một hướng \(d\) sao cho hàm \(f\) giảm theo hướng đó.
+\end{questionbox}
+\textbf{Lời giải.}
+Tại \((0,0)\),
+\[
+\grad f(0,0)=(-1,1)\ne(0,0).
+\]
+Điểm trong miền \(\R^2\) này không thể là cực tiểu địa phương vì vi phạm điều kiện cần bậc một. Chọn hướng ngược gradient \(d=-\grad f(0,0)=(1,-1)\):
+\[
+\grad f(0,0)\T d=(-1)(1)+(1)(-1)=-2<0.
+\]
+Vậy \(d\) là hướng giảm.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 9 trang 290 -- điều kiện bậc một cho bài toán lồi \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 9 trang 290}
+Cho \(f\) là hàm lồi khả vi, xác định trên tập lồi đa diện \(X\subset\R^n\). Chứng minh \(x^\ast\in X\) là nghiệm cực tiểu của \(\min\{f(x):x\in X\}\) khi và chỉ khi
+\[
+0=\min_{x\in X}\langle\nabla f(x^\ast),x-x^\ast\rangle.
+\]
+Kết luận này có ý nghĩa gì?
+\end{questionbox}
+\textbf{Lời giải.} Nếu \(f\) khả vi và lồi trên tập lồi \(D\), thì
+\[
+x^\ast\in\argmin_{x\in D}f(x)
+\quad\Longleftrightarrow\quad
+\grad f(x^\ast)\T(x-x^\ast)\ge0\quad\forall x\in D.
+\]
+Đề có thể viết vế phải dưới dạng \(\min_{x\in D}\grad f(x^\ast)\T(x-x^\ast)=0\); giá trị \(0\) đạt tại \(x=x^\ast\).
+
+\textit{Đủ:} bất đẳng thức đỡ của hàm lồi cho \(f(x)\ge f(x^\ast)+\grad f(x^\ast)\T(x-x^\ast)\ge f(x^\ast)\).\\
+\textit{Cần:} nếu \(x^\ast\) tối ưu, đoạn \(x^\ast+t(x-x^\ast)\) nằm trong \(D\); đạo hàm phải tại \(t=0\) không âm, tức \(\grad f(x^\ast)\T(x-x^\ast)\ge0\).
+
+\textbf{Ý nghĩa.} Đây là điều kiện bậc nhất tương đương với tối ưu toàn cục trong bài toán lồi: mọi hướng khả thi từ \(x^\ast\) đều không làm giảm xấp xỉ tuyến tính của \(f\). Vì vậy, có thể kiểm tra nghiệm bằng gradient thay vì so sánh trực tiếp \(f\) tại mọi điểm trong \(X\).
+
+\subsection{Hướng giảm và đạo hàm theo hướng}
+Vectơ \(d\ne0\) là hướng giảm của \(f\) tại \(x^\ast\) nếu tồn tại \(\delta>0\) sao cho
+\[
+f(x^\ast+td)<f(x^\ast)\qquad\forall t\in(0,\delta).
+\]
+Nếu \(f\) khả vi thì điều kiện đủ dễ kiểm tra là
+\[
+\grad f(x^\ast)\T d<0.
+\]
+Nếu tích bằng \(0\), chưa thể kết luận; cần xét bậc cao hơn hoặc thay trực tiếp vào hàm. Hướng giảm nhanh nhất tại điểm không bị ràng buộc là \(d=-\grad f(x^\ast)\), khi gradient khác \(0\).
+
+\Needspace{8\baselineskip}
+\subsection{Bài 2 trang 289 -- hướng \(d\) và nửa đường thẳng \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 2 trang 289}
+Cho \(x^0=(2,1)\T\in\R^2\), vectơ \(d=(3,-1)\T\) và hàm số \(f(x)=x_2e^{-(x_1+x_2)}\).
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item Vẽ tập các điểm \(\{x=x^0+td\mid t\ge0\}\).
+\item Vectơ \(d\) có phải là hướng giảm của hàm \(f\) tại \(x^0\) không? Vì sao?
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.}
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item Tập \(x=x^0+td,\ t\ge0\), có phương trình tham số:
+\[
+x_1=2+3t,\qquad x_2=1-t,\qquad t\ge0.
+\]
+\item \(\grad f(x)=\big(-x_2e^{-(x_1+x_2)},\ (1-x_2)e^{-(x_1+x_2)}\big)\), nên
+\[
+\grad f(2,1)=(-e^{-3},0),\qquad \grad f(2,1)\T d=-3e^{-3}<0.
+\]
+\end{enumerate}
+Kết luận: \(d\) là hướng giảm tại \(x^0\).
+
+\section{Gradient descent với tìm kiếm chính xác theo tia}
+\subsection{Thuật toán cần viết được}
+Với bài toán \(\min f(x)\) không ràng buộc:
+\begin{enumerate}
+\item Chọn \(x_0\), ngưỡng \(\varepsilon>0\), đặt \(k=0\).
+\item Tính \(g_k=\grad f(x_k)\). Nếu \(\|g_k\|\le\varepsilon\), dừng và trả \(x_k\).
+\item Đặt hướng giảm \(d_k=-g_k\).
+\item Tìm chính xác cỡ bước
+\[
+\alpha_k\in\argmin_{\alpha\ge0} f(x_k+\alpha d_k).
+\]
+\item Cập nhật \(x_{k+1}=x_k+\alpha_kd_k\), tăng \(k\), quay lại bước 2.
+\end{enumerate}
+\textbf{Chú ý:} tìm kiếm chính xác là giải bài toán một biến theo \(\alpha\). Không thay nó bằng Armijo/backtracking nếu đề yêu cầu exact line search.
+
+\subsection{Công thức cỡ bước cho hàm quadratic}
+Cho
+\[
+f(x)=\tfrac12x\T Ax-b\T x+c,\qquad A=A\T\succ0,\qquad g_k=Ax_k-b.
+\]
+Theo \(d_k=-g_k\),
+\[
+\phi_k(\alpha)=f(x_k-\alpha g_k)
+=f(x_k)-\alpha g_k\T g_k+\tfrac12\alpha^2g_k\T Ag_k.
+\]
+Lấy đạo hàm theo \(\alpha\) và cho bằng \(0\):
+\[
+\boxed{\alpha_k=\frac{g_k\T g_k}{g_k\T Ag_k}}\quad(g_k\ne0).
+\]
+Mẫu số dương vì \(A\succ0\). Nếu \(g_k=0\), dừng trước khi tính cỡ bước.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 11(i) trang 290 -- dãy lặp có công thức đóng \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 11(i) trang 290}
+Trình bày phương pháp hướng giảm nhanh nhất với tìm kiếm chính xác theo tia. Xét \(\min\{f(u)=u_1^2+2u_2^2:u\in\R^2\}\), lấy \(u^0=(2,1)\T\). Tính ba điểm tiếp theo \(u^1,u^2,u^3\). Chứng minh dãy sinh bởi thuật toán có công thức
+\[
+u^k=\left(\frac13\right)^k\begin{pmatrix}2\\(-1)^k\end{pmatrix},\qquad f(u^{k+1})=\frac{f(u^k)}9.
+\]
+\end{questionbox}
+\textbf{Lời giải.}
+Xét \(f(u)=u_1^2+2u_2^2\), \(u^0=(2,1)\). Gradient \(g=(2u_1,4u_2)\).
+\begin{answerbox}{Cô chữa -- điểm đầu của Bài 11}
+\(\grad f(u^0)=(4,4)\ne0\), nên \(u^0\) không phải điểm dừng. Hướng đầu \(d_0=(-4,-4)\) là hướng giảm vì \(\grad f(u^0)\T d_0=-32<0\).
+\end{answerbox}
+Giả sử tại bước \(k\),
+\[
+u^k=3^{-k}\big(2,(-1)^k\big).
+\]
+Theo \(d=-g\), hàm một biến là
+\[
+\phi_k(\alpha)=4\cdot3^{-2k}(1-2\alpha)^2+
+2\cdot3^{-2k}(1-4\alpha)^2.
+\]
+Đạo hàm \(\phi_k'(\alpha)=3^{-2k}(-32+96\alpha)\), nên \(\alpha_k=1/3\). Cập nhật:
+\[
+u^{k+1}=\left(\frac13\right)^k\left(\frac23,\frac{(-1)^{k+1}}3\right)
+=3^{-(k+1)}\big(2,(-1)^{k+1}\big).
+\]
+Vì vậy ba điểm đầu sau \(u^0\) là \(u^1=(2/3,-1/3)\), \(u^2=(2/9,1/9)\), \(u^3=(2/27,-1/27)\).
+Điều này chứng minh công thức bằng quy nạp. Đồng thời
+\[
+f(u^k)=\frac6{9^k},\qquad f(u^{k+1})=\frac{f(u^k)}9.
+\]
+
+\Needspace{8\baselineskip}
+\subsection{Bài 11(ii) trang 290 -- tính ba bước \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 11(ii) trang 290}
+Với phương pháp hướng giảm nhanh nhất, xét
+\[
+\min\{f(x)=4x_1^2+2x_2^2+4x_1x_2-3x_1:x\in\R^2\}.
+\]
+Lấy \(x^0=(2,2)\T\). Tính ba điểm tiếp theo \(x^1,x^2,x^3\).
+\end{questionbox}
+\textbf{Lời giải.} Hessian \(A=\begin{pmatrix}8&4\\4&4\end{pmatrix}\succ0\). Mỗi bước dùng \(g_k=\grad f(x_k)\), \(\alpha_k=(g_k\T g_k)/(g_k\T Ag_k)\) và \(x^{k+1}=x^k-\alpha_kg_k\).
+\begin{center}
+\begin{tabularx}{.96\textwidth}{c c Y Y c}
 \toprule
-Chủ đề & Dạng bài và nội dung & Tài liệu\\
+\(k\) & \(\alpha_k\) & \(x^{k+1}\) & \(f(x^{k+1})\) & \(\|g_{k+1}\|\)\\
+\midrule
+0 & \(\frac{697}{7240}\approx0.09627\) & \((-0.02169,\ 0.45967)\) & \(0.44965\) & 2.202\\
+1 & \(\frac{697}{1124}\approx0.62011\) & \((0.80604,\ -0.62672)\) & \(-1.05441\) & 1.184\\
+2 & \(\frac{697}{7240}\approx0.09627\) & \((0.71541,\ -0.69577)\) & \(-1.12184\) & 0.099\\
+\bottomrule
+\end{tabularx}
+\end{center}
+Điểm tối ưu chính xác là \(x^\ast=(3/4,-3/4)\), \(f(x^\ast)=-9/8=-1.125\). Sau ba bước, thuật toán đã giảm mạnh nhưng chưa đạt nghiệm; nếu đề yêu cầu đúng ba bước thì dừng ở \(x^3\), không tự thay bằng \(x^\ast\).
+
+\Needspace{8\baselineskip}
+\subsection{Bài 11(iii) trang 290--291 -- ảnh hưởng của \(\gamma\) \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 11(iii) trang 290--291}
+Cho \(f(x)=\tfrac12x\T Ax-b\T x\), với
+\[
+A=\begin{pmatrix}1&0&0\\0&\gamma&0\\0&0&\gamma^2\end{pmatrix},\qquad b=\begin{pmatrix}1\\1\\1\end{pmatrix}.
+\]
+Xuất phát từ \(x^0=(0,0,0)\T\), áp dụng Thuật toán 6.1 và trình bày ba bước lặp để giải \(\min\{f(x):x\in\R^3\}\) với \(\gamma=1,10,100,1000\).
+\end{questionbox}
+\textbf{Lời giải.} Ta có \(A=\operatorname{diag}(1,\gamma,\gamma^2)\), \(b=(1,1,1)\), nghiệm chính xác \(x^\ast=(1,1/\gamma,1/\gamma^2)\), và \(\alpha_k=(g_k\T g_k)/(g_k\T Ag_k)\). Bảng ghi cỡ bước và điểm mới sau mỗi bước; số đã làm tròn.
+\small
+\begin{longtable}{>{\centering\arraybackslash}p{.10\textwidth} >{\centering\arraybackslash}p{.10\textwidth} >{\centering\arraybackslash}p{.15\textwidth} p{.53\textwidth}}
+\toprule
+\(\gamma\) & \(k\) & \(\alpha_k\) & \(x^{k+1}\)\\
 \midrule
 \endhead
-Mô hình hóa và quy hoạch tuyến tính & Lập mô hình sản xuất; đổi biến; đưa ràng buộc về dạng chuẩn; xét miền khả thi và nghiệm ở đỉnh. & Phần I, II\\
-Tập lồi và hàm lồi & Kiểm tra giao, hợp và tổng Minkowski; phân loại hàm bằng định nghĩa và Hessian. & Phần I, II\\
-Điểm dừng và Hessian & Điều kiện bậc một, bậc hai; phân biệt cực tiểu địa phương với cực tiểu toàn cục. & Phần I, II\\
-Hướng giảm và gradient descent & Đạo hàm theo hướng; tìm kiếm chính xác theo tia; tính các bước lặp của phương pháp gradient. & Phần I, II\\
-Tối ưu có ràng buộc & Hàm Lagrange, điều kiện KKT, điều kiện Slater và các bài có nghiệm tại biên. & Phần II\\
-Bình phương tối thiểu & Mô hình tuyến tính, hàm mất mát và công thức đạo hàm ma trận. & Phần II\\
+1 & 0 & 1 & \((1,\ 1,\ 1)\); đạt nghiệm tối ưu nên dừng.\\
+10 & 0 & 0.027027027 & \((0.027027027,\ 0.027027027,\ 0.027027027)\)\\
+10 & 1 & 0.014782261 & \((0.041409768,\ 0.037814083,\ 0.001857231)\)\\
+10 & 2 & 0.027692113 & \((0.067955157,\ 0.055034677,\ 0.024406279)\)\\
+100 & 0 & 0.000297000 & \((0.000297000,\ 0.000297000,\ 0.000297000)\)\\
+100 & 1 & 0.000149644 & \((0.000446600,\ 0.000442200,\ 0.000002201)\)\\
+100 & 2 & 0.000297098 & \((0.000743565,\ 0.000726160,\ 0.000292761)\)\\
+1000 & 0 & 0.000002997 & \((0.000002997,\ 0.000002997,\ 0.000002997)\)\\
+1000 & 1 & 0.000001500 & \((0.000004497,\ 0.000004492,\ 0.000000002)\)\\
+1000 & 2 & 0.000002997 & \((0.000007494,\ 0.000007476,\ 0.000002993)\)\\
 \bottomrule
 \end{longtable}
-}
+\normalsize
+Khi \(\gamma=1\), ba trị riêng bằng nhau nên một bước đi thẳng tới \(x^\ast\). Khi \(\gamma\) lớn, số điều kiện \(\kappa(A)=\gamma^2\) lớn; gradient descent vẫn giảm hàm nhưng tiến chậm về tọa độ có độ cong nhỏ. Đây là ý nghĩa của việc so sánh \(\gamma=1,10,100,1000\).
 
-\section{Phần I: Bài tập ôn theo dạng}
-Phần này gom các bài mô hình hóa, tập lồi, tối ưu không ràng buộc, hướng giảm, gradient descent và quy hoạch tuyến tính theo nhóm phương pháp. Mục lục chi tiết của phần gốc được giữ ở trang đầu phần.
-\clearpage
-\includepdf[pages=2-,fitpaper=true,pagecommand={\thispagestyle{empty}}]{bai_lam_them_1_assets/study_guide.pdf}
 
-\section{Phần II: Ghi chép và bài tập theo mạch bài giảng}
-Phần này giữ lại các định nghĩa, công thức, bài tập bổ sung về KKT, bình phương tối thiểu và quy hoạch tuyến tính. Mục lục chi tiết của phần gốc được giữ ở trang đầu phần.
-\clearpage
-\includepdf[pages=2-,fitpaper=true,pagecommand={\thispagestyle{empty}}]{bai_lam_them_1_assets/lecture_notes.pdf}
+\section{Quy hoạch tuyến tính}
+\subsection{Dạng tổng quát và dạng chính tắc trong giáo trình}
+Bài toán là quy hoạch tuyến tính nếu hàm mục tiêu và mọi vế trái ràng buộc đều tuyến tính:
+\[
+\min/\max\ c\T x,\qquad
+A_{\le}x\le b_{\le},\quad A_{\ge}x\ge b_{\ge},\quad A_=x=b_=.
+\]
+Trong giáo trình gửi kèm, dạng chính tắc được viết
+\[
+\boxed{\min c\T x\quad\text{với điều kiện }Ax=b,\quad x\ge0.}
+\]
+Tên gọi “chính tắc/chuẩn tắc” có thể đổi giữa các sách; khi làm bài hãy bám đúng định nghĩa trong đề và giáo trình của lớp.
 
-\section{Phụ lục: ảnh nguồn có nét chấm, chữa}
-Các trang dưới đây được lưu theo tên tệp nguồn sau khi loại các bản trùng hoàn toàn. Nét bút đỏ và xanh trong ảnh được giữ nguyên để đối chiếu với phần đánh máy.
-\input{bai_lam_them_1_assets/source_pages.tex}
+\subsection{Quy tắc đưa về \(\min c\T x,\ Ax=b,\ x\ge0\)}
+\begin{center}
+\begin{tabularx}{.96\textwidth}{>{\bfseries}p{.30\textwidth}Y}
+\toprule
+Thành phần ban đầu & Thay thế tương đương\\
+\midrule
+\(\max z\) & Đổi thành \(\min(-z)\). Không đổi dấu các ràng buộc chỉ vì đã đổi mục tiêu.\\
+\(x_j\ge \ell\) & Đặt \(x_j=\ell+u_j,\ u_j\ge0\).\\
+\(x_j\le u\) & Đặt \(x_j=u-v_j,\ v_j\ge0\).\\
+\(x_j\) tự do dấu & Đặt \(x_j=u_j-v_j,\ u_j,v_j\ge0\).\\
+\(x_j\le0\) & Đặt \(x_j=-u_j,\ u_j\ge0\).\\
+\(a\T x\le b\) & Thêm biến dư \(s\ge0\): \(a\T x+s=b\).\\
+\(a\T x\ge b\) & Trừ biến phụ \(s\ge0\): \(a\T x-s=b\).\\
+\(a\T x=b\) & Giữ nguyên. Nếu vế phải âm, nhân cả phương trình với \(-1\).\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{enumerate}
+\item Thay biến có cận dưới/trên/tự do trước, rồi rút gọn hàm mục tiêu và các ràng buộc.
+\item Đưa mọi ràng buộc bất đẳng thức về đẳng thức bằng biến phụ.
+\item Nếu vế phải \(b_i<0\), nhân toàn bộ phương trình đó với \(-1\). Khi đổi dấu bất đẳng thức, phải đảo chiều.
+\item Liệt kê toàn bộ biến mới và ghi rõ chúng không âm.
+\end{enumerate}
+
+\begin{warningbox}{Hai lỗi hay mất điểm}
+Không tự thêm \(x\ge0\) nếu đề không có; việc ấy có thể đổi tập khả thi. Bất đẳng thức nghiêm ngặt \(<,>\) không phải dạng ràng buộc LP đóng mà giáo trình đang dùng; đừng âm thầm thay bằng \(\le,\ge\).
+\end{warningbox}
+
+\Needspace{8\baselineskip}
+\subsection{Bài 1 trang 129 -- đổi mục tiêu, biến có cận và biến phụ \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 1 trang 129}
+Chuyển bài toán quy hoạch tuyến tính sau về dạng chính tắc:
+\[
+\begin{aligned}
+\max\quad &z=3x_1+5x_2-4x_3\\
+\text{với }&7x_1-2x_2-3x_3\ge4,\\
+&2x_1-4x_2-8x_3=3,\\
+&5x_1-3x_2-2x_3\le9,\\
+&x_1\ge1,\quad x_2\le7,\quad x_3\ge0.
+\end{aligned}
+\]
+\end{questionbox}
+\textbf{Lời giải.}
+Đặt \(u_1=x_1-1\ge0\), \(u_2=7-x_2\ge0\); vậy \(x_1=u_1+1,\ x_2=7-u_2\). Đổi \(\max z\) thành \(\min(-z)\):
+\[
+-z=-3u_1+5u_2+4x_3-38.
+\]
+Hằng số \(-38\) có thể bỏ nếu chỉ cần minimizer; giữ lại nếu cần khôi phục giá trị mục tiêu ban đầu.
+
+Thay vào ràng buộc:
+\[
+\begin{aligned}
+7u_1+2u_2-3x_3-s_1&=11 &&(s_1\ge0,\ \text{ràng buộc }\ge),\\
+2u_1+4u_2-8x_3&=29,\\
+5u_1+3u_2-2x_3+s_3&=25 &&(s_3\ge0,\ \text{ràng buộc }\le).
+\end{aligned}
+\]
+Vậy dạng chính tắc là \(\min(-z)\) như trên, với
+\[
+u_1,u_2,x_3,s_1,s_3\ge0.
+\]
+
+\Needspace{8\baselineskip}
+\subsection{Bài 2 trang 129 -- biến tự do và vế phải âm \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 2 trang 129}
+Chuyển bài toán quy hoạch tuyến tính sau về dạng chính tắc:
+\[
+\begin{aligned}
+\max z={}&5x_1-x_2-7x_3\\
+\text{với }&
+7x_1+4x_2-11x_3\ge12,\\
+&x_1-3x_2-9x_3=-5,\\
+&6x_1+5x_2+2x_3\le10,\\
+&x_1\ge-2,\quad x_2\ \text{tự do dấu},\quad x_3\ge0.
+\end{aligned}
+\]
+\end{questionbox}
+\textbf{Lời giải.}
+Đặt \(u_1=x_1+2\ge0\), \(x_2=u_2-v_2\) với \(u_2,v_2\ge0\), \(x_3\ge0\). Khi đó
+\begin{answerbox}{Cô chữa -- phép đổi biến}
+Viết ngược lại: \(x_1=u_1-2\), \(x_2=u_2-v_2\), \(x_3\ge0\). Biến tự do được tách thành hiệu của hai biến không âm.
+\end{answerbox}
+\[
+\min(-z)=-5u_1+u_2-v_2+7x_3+10.
+\]
+Thay biến rồi đưa ràng buộc về đẳng thức:
+\[
+\begin{aligned}
+7u_1+4u_2-4v_2-11x_3-s_1&=26,\\
+-u_1+3u_2-3v_2+9x_3&=3,\\
+6u_1+5u_2-5v_2+2x_3+s_2&=22,
+\end{aligned}
+\qquad
+u_1,u_2,v_2,x_3,s_1,s_2\ge0.
+\]
+Ở phương trình thứ hai, sau phép thế vế phải là \(-3\); nhân cả hai vế với \(-1\) để có \(b=3\). Bài này kiểm tra đồng thời ba thao tác: biến có cận dưới, biến tự do và đổi dấu phương trình.
+
+\subsection{Đơn hình cho LP tổng quát -- quy trình chuẩn}
+Ở khoảng 00:09:48, bản ghi gọi tên thuật toán đơn hình cho quy hoạch tuyến tính tổng quát; khoảng 00:10:50, giảng viên chuyển sang cách hình học đơn giản hơn khi chỉ có hai biến. Phần này là nhắc nhanh quy trình chuẩn cho LP nhiều biến.
+
+Xét \(\min c\T x\) với \(Ax=b,\ x\ge0\). Tại một cơ sở khả thi \(B\), ta có \(x_B=B^{-1}b\ge0\), còn các biến ngoài cơ sở bằng \(0\). Với cột \(A_j\) ngoài cơ sở, chi phí giảm là
+\[
+\bar c_j=c_j-c_B\T B^{-1}A_j.
+\]
+\begin{enumerate}
+\item Nếu mọi \(\bar c_j\ge0\), phương án cơ sở hiện tại tối ưu cho bài toán min.
+\item Nếu có \(\bar c_j<0\), chọn một biến vào cơ sở \(x_j\) có chi phí giảm âm và tính \(u=B^{-1}A_j\).
+\item Nếu không có thành phần \(u_i>0\), có thể tăng \(x_j\) mãi mà vẫn giữ khả thi và làm mục tiêu giảm mãi; bài toán không bị chặn dưới.
+\item Nếu có \(u_i>0\), chọn \(\theta=\min_{u_i>0}(x_B)_i/u_i\). Biến đạt min rời cơ sở; pivot rồi lặp lại.
+\end{enumerate}
+Nếu chưa có cơ sở khả thi ban đầu, cần tìm cơ sở bằng pha I với biến giả; giá trị tối ưu pha I dương chứng tỏ miền khả thi rỗng, còn giá trị bằng \(0\) cho phép bỏ biến giả và chạy pha II. Bài max có thể đổi thành min của \(-c\T x\). Khi tỉ số hòa hoặc có suy biến, dùng quy tắc chống lặp như Bland nếu cần.
+
+\Needspace{8\baselineskip}
+\begin{questionbox}{Ví dụ pivot tự dựng -- đề và yêu cầu}
+Giải bài toán \(\max z=3x_1+2x_2\), với \(x_1+x_2\le4\), \(2x_1+x_2\le5\), \(x_1,x_2\ge0\), bằng phương pháp đơn hình.
+\end{questionbox}
+\textbf{Giải mẫu.} Đổi sang \(\min w=-3x_1-2x_2\), thêm biến dư \(s_1,s_2\). Cơ sở đầu là \((s_1,s_2)=(4,5)\), với chi phí giảm của \((x_1,x_2)\) bằng \((-3,-2)\). Chọn \(x_1\) vào; \(u=(1,2)\), nên \(\theta=\min(4,5/2)=5/2\) và \(s_2\) ra. Ở cơ sở kế tiếp, chi phí giảm của \((x_2,s_2)\) là \((-1/2,3/2)\); cho \(x_2\) vào thì phép thử tỉ số làm \(s_1\) ra. Ta được \((x_1,x_2)=(1,3)\), \(z=9\); hai chi phí giảm còn lại đều không âm, nên đây là nghiệm tối ưu. Ví dụ này chỉ minh họa pivot; các bài LP được giao cuối buổi tập trung vào chuẩn hóa và hình học.
+
+\section{Phương pháp hình học và nghiệm ở đỉnh}
+\subsection{Quy trình giải LP hai biến}
+\begin{enumerate}
+\item Vẽ từng đường biên bằng cách tìm hai điểm thuộc đường thẳng.
+\item Xác định nửa mặt phẳng thỏa mỗi bất đẳng thức; giao tất cả các miền và \(x_1,x_2\ge0\) là miền khả thi \(D\).
+\item Tìm các giao điểm biên có nằm trong \(D\) hay không; đó là các đỉnh cần xét.
+\item Với \(\max c\T x\), tịnh tiến đường mức theo hướng \(c\); với \(\min c\T x\), tịnh tiến theo hướng \(-c\).
+\item Tính giá trị hàm mục tiêu tại các đỉnh liên quan và kết luận. Nếu miền mở rộng vô hạn, vẫn phải kiểm tra hướng tăng/giảm trước khi khẳng định không có nghiệm.
+\end{enumerate}
+Nếu bài toán LP có nghiệm tối ưu hữu hạn, sẽ có ít nhất một nghiệm tối ưu tại một đỉnh của đa diện khả thi. Nhiều điểm tối ưu có thể cùng nằm trên một cạnh nếu đường mức song song cạnh đó.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 6(i), trang 130 -- miền khả thi rỗng \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 6(i) trang 130}
+Giải bài toán quy hoạch tuyến tính sau bằng phương pháp hình học:
+\[
+\begin{aligned}
+\min\quad &z=3x_1+x_2\\
+\text{với }&x_1-x_2\le1,\quad 3x_1+2x_2\le12,\\
+&2x_1+3x_2\le3,\quad -2x_1+3x_2\ge9,\\
+&x_1,x_2\ge0.
+\end{aligned}
+\]
+\end{questionbox}
+\textbf{Lời giải.}
+Chỉ cần xét hai ràng buộc cuối cùng: từ \(2x_1+3x_2\le3\) và \(x_1\ge0\) suy ra \(x_2\le1\). Từ \(-2x_1+3x_2\ge9\) và \(x_1\ge0\) suy ra \(3x_2\ge9+2x_1\ge9\), tức \(x_2\ge3\). Mâu thuẫn. Do đó \(D=\varnothing\), bài toán không có phương án khả thi và không có nghiệm tối ưu.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 6(ii), trang 130 -- tìm min trên miền không bị chặn \(\star\)}
+\begin{questionbox}{Đề bài gốc -- Bài 6(ii) trang 130}
+Giải bài toán quy hoạch tuyến tính sau bằng phương pháp hình học:
+\[
+\begin{aligned}
+\min\quad &z=x_1+2x_2\\
+\text{với }&2x_1+x_2\ge12,\quad x_1+x_2\ge5,\\
+&-x_1+3x_2\ge5,\quad 6x_1-x_2\ge12,\\
+&x_1,x_2\ge0.
+\end{aligned}
+\]
+\end{questionbox}
+\textbf{Lời giải.}
+\textbf{Bước 1: Mô tả miền.} Hai đường biên quyết định đoạn đáy gặp nhau tại
+\[
+2x_1+x_2=12,\quad -x_1+3x_2=5
+\quad\Longrightarrow\quad
+(x_1,x_2)=\left(\frac{31}{7},\frac{22}{7}\right).
+\]
+Miền khả thi không bị chặn. Biên dưới đi từ giao điểm \((3,6)\) của \(2x_1+x_2=12\) và \(6x_1-x_2=12\), đến \((31/7,22/7)\), rồi tiếp tục theo đường \(-x_1+3x_2=5\). Các ràng buộc còn lại vẫn được thỏa trên biên này.
+
+\begin{center}
+\begin{tikzpicture}[xscale=.62,yscale=.62,>=Stealth]
+\draw[->] (0,0)--(10.3,0) node[right] {\(x_1\)};
+\draw[->] (0,0)--(0,13.2) node[above] {\(x_2\)};
+\foreach \x in {1,...,10} \draw (\x,.08)--(\x,-.08) node[below=2pt] {\scriptsize \x};
+\foreach \y in {1,...,12} \draw (.08,\y)--(-.08,\y) node[left=2pt] {\scriptsize \y};
+\fill[teal!14] (3,6)--(4,12)--(10,12)--(10,5)--(4.429,3.143)--cycle;
+\draw[very thick,blue] (3,6)--(6,0);
+\node[blue,fill=white,inner sep=1pt,rotate=-63] at (3.75,4.5) {\scriptsize \(2x_1+x_2=12\)};
+\draw[very thick,red] (0,1.667)--(10,5);
+\node[red,fill=white,inner sep=1pt,rotate=18] at (7.5,4.9) {\scriptsize \(-x_1+3x_2=5\)};
+\draw[thick,dashed,gray] (2,0)--(4,12);
+\node[gray,fill=white,inner sep=1pt,rotate=72] at (3.2,8.5) {\scriptsize \(6x_1-x_2=12\)};
+\draw[thick,dotted,orange!80!black] (0,5)--(5,0);
+\node[orange!80!black,fill=white,inner sep=1pt,rotate=-45] at (1.7,3.3) {\scriptsize \(x_1+x_2=5\)};
+\fill[navy] (3,6) circle (2pt) node[above left] {\scriptsize \((3,6)\)};
+\fill[navy] (4.429,3.143) circle (2pt) node[below right] {\scriptsize \((31/7,22/7)\)};
+\draw[->,thick,navy] (6.5,7.2)--(5.5,5.2) node[midway,right] {\scriptsize \(-c\)};
+\draw[->,thick,teal] (9.0,10.8)--(9.8,11.8);
+\draw[->,thick,teal] (9.0,5.0)--(9.8,5.3);
+\node[teal!70!black,fill=white,inner sep=1pt] at (8.4,8.2) {\scriptsize miền khả thi};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Bước 2: Xác định điểm tối ưu.} Vì hệ số của \(x_2\) trong mục tiêu dương, tại mỗi \(x_1\) ta chọn điểm thấp nhất còn khả thi. Trên biên dưới, với \(3\le x_1\le31/7\), ta có \(x_2=12-2x_1\), do đó \(z=24-3x_1\) giảm. Với \(x_1\ge31/7\), biên dưới là \(x_2=(x_1+5)/3\), do đó \(z=(5x_1+10)/3\) tăng. Vậy giá trị nhỏ nhất đạt tại giao điểm hai biên:
+\[
+z^*=\frac{31}{7}+2\cdot\frac{22}{7}=\frac{75}{7}.
+\]
+Kiểm tra điểm \((31/7,22/7)\) thỏa cả ràng buộc. Do đó \(\boxed{x^\ast=(31/7,22/7),\ z^*=75/7}\). Miền khả thi không bị chặn nhưng bài toán min vẫn có nghiệm hữu hạn.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 5 trang 130 -- tổ hợp lồi của nghiệm tối ưu \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 5 trang 130}
+Cho \(x^1,x^2\) là hai phương án tối ưu của bài toán quy hoạch tuyến tính \(\min\{\langle c,x\rangle\mid Ax=b,\ x\ge0\}\), và \(x^0\) là tổ hợp lồi của \(x^1,x^2\). Chứng minh rằng \(x^0\) cũng là nghiệm của bài toán này.
+\end{questionbox}
+Giả sử \(x^1,x^2\) đều tối ưu cho \(\min\{c\T x\mid Ax=b,\ x\ge0\}\), giá trị tối ưu là \(z^\ast\). Với \(0\le\lambda\le1\), đặt \(x^0=\lambda x^1+(1-\lambda)x^2\). Khi đó
+\[
+Ax^0=\lambda Ax^1+(1-\lambda)Ax^2=b,\quad x^0\ge0,
+\]
+nên \(x^0\) khả thi; đồng thời
+\[
+c\T x^0=\lambda c\T x^1+(1-\lambda)c\T x^2
+=\lambda z^\ast+(1-\lambda)z^\ast=z^\ast.
+\]
+Vậy \(x^0\) cũng tối ưu. Tập nghiệm tối ưu của LP là tập lồi.
+
+\Needspace{8\baselineskip}
+\subsection{Bài 7 trang 130 -- phương án cực biên không suy biến \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 7 trang 130}
+Tìm các phương án cực biên không suy biến của các bài toán quy hoạch tuyến tính sau và trả lời xem mỗi bài toán có nghiệm không. Giải thích.
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item \(\min f(x)=2x_1+4x_2-3x_3\), với \(x_1-x_2-x_3=1\), \(x_1+x_2+x_3=3\), \(x_1,x_2,x_3\ge0\).
+\item \(\max f(x)=3x_1-6x_2+x_3-3x_4\), với \(x_1+x_2+x_3+x_4=10\), \(2x_2+x_3-x_4=6\), \(x_1,x_2,x_3,x_4\ge0\).
+\end{enumerate}
+\end{questionbox}
+\textbf{Lời giải.} Với dạng \(Ax=b,\ x\ge0\), một cơ sở có \(m=\operatorname{rank}(A)\) cột độc lập. Đặt biến ngoài cơ sở bằng \(0\), giải \(Bx_B=b\); nếu \(x_B\ge0\), ta có phương án cực biên khả thi. Phương án không suy biến khi mọi biến cơ sở dương.
+
+\textbf{i)} Từ
+\[
+x_1-x_2-x_3=1,\qquad x_1+x_2+x_3=3
+\]
+cộng hai phương trình được \(x_1=2\), rồi \(x_2+x_3=1\). Miền khả thi là đoạn \((2,t,1-t)\), \(0\le t\le1\); hai đỉnh là \((2,1,0)\), \((2,0,1)\), đều không suy biến. Hàm mục tiêu \(2x_1+4x_2-3x_3=1+7t\), nên giá trị nhỏ nhất bằng \(1\) tại \((2,0,1)\).
+
+\textbf{ii)} Xét từng cặp cột cơ sở của hai phương trình:
+\begin{center}
+\begin{tabularx}{.95\textwidth}{c Y c}
+\toprule
+Cơ sở & Phương án cực biên & Giá trị \(3x_1-6x_2+x_3-3x_4\)\\
+\midrule
+\(\{1,2\}\) & \((7,3,0,0)\) & 3\\
+\(\{1,3\}\) & \((4,0,6,0)\) & 18\\
+\(\{1,4\}\) & Không khả thi (\(x_4=-6\)) & --\\
+\(\{2,3\}\) & Không khả thi (\(x_2=-4\)) & --\\
+\(\{2,4\}\) & \((0,16/3,0,14/3)\) & \(-46\)\\
+\(\{3,4\}\) & \((0,0,8,2)\) & 2\\
+\bottomrule
+\end{tabularx}
+\end{center}
+Cả bốn phương án khả thi đều không suy biến. Hai miền khả thi đều không rỗng. Ở (i), nghiệm khả thi có dạng \((2,t,1-t)\), \(0\le t\le1\), nên miền khả thi đóng và bị chặn; hàm mục tiêu liên tục nên bài toán min có nghiệm (cụ thể là \((2,0,1)\)). Ở (ii), miền khả thi đóng và bị chặn vì các biến không âm và tổng bằng \(10\); do đó bài toán max có nghiệm (cụ thể là \((4,0,6,0)\), giá trị \(18\)).
+
+\Needspace{8\baselineskip}
+\subsection{Bài 10 trang 131 -- tồn tại nghiệm và tập nghiệm lồi \(\dagger\)}
+\begin{questionbox}{Đề bài gốc -- Bài 10 trang 131}
+Cho bài toán quy hoạch tuyến tính
+\[
+\max z=6x_1+2x_2+4x_3,\qquad
+2x_1+4x_2+2x_3\le8,\qquad
+x_1+2x_2+3x_3\le7,\qquad x_1,x_2,x_3\ge0.
+\]
+\begin{enumerate}[label=\roman*),nosep,leftmargin=*]
+\item Bài toán có nghiệm không? Vì sao? Hãy nêu một bài toán thực tế có thể mô tả bởi mô hình này.
+\item Chứng minh tập nghiệm của bài toán quy hoạch tuyến tính là tập lồi.
+\end{enumerate}
+\end{questionbox}
+\textbf{i) Có nghiệm và ví dụ mô hình.} Điểm \((0,0,0)\) khả thi nên \(D\ne\varnothing\). Từ bất đẳng thức thứ nhất và \(x\ge0\), có \(x_1\le4,\ x_2\le2,\ x_3\le4\); \(D\) đóng và bị chặn nên compact. Hàm mục tiêu liên tục, vì vậy đạt max trên \(D\).
+
+Một mô hình thực tế là lập kế hoạch sản xuất ba sản phẩm: \(x_i\) là lượng sản phẩm \(i\), lợi nhuận đơn vị lần lượt là \(6,2,4\); hai tài nguyên có mức dùng cho mỗi đơn vị lần lượt là \((2,4,2)\) và \((1,2,3)\), với sức chứa \(8\) và \(7\). Mục tiêu là chọn lượng sản xuất để lợi nhuận lớn nhất.
+
+\textbf{ii) Tính lồi.} Mỗi ràng buộc tuyến tính xác định một nửa không gian lồi; giao của chúng là miền khả thi lồi. Nếu \(x,y\) đều tối ưu, với \(0\le\lambda\le1\), điểm \(\lambda x+(1-\lambda)y\) khả thi và vẫn có giá trị mục tiêu \(z^\ast\), nên tập nghiệm tối ưu cũng lồi.
+
+Có thể tìm trực tiếp nghiệm: nhân ràng buộc đầu với \(3\),
+\[
+6x_1+12x_2+6x_3\le24
+\quad\Longrightarrow\quad
+6x_1+2x_2+4x_3\le24.
+\]
+Điểm \((4,0,0)\) khả thi và đạt \(z=24\), do đó là một nghiệm tối ưu.
+
+
+\section{Bài bổ sung: hướng giảm và KKT}
+\subsection{Bài 10 trang 290 -- nhận biết hướng giảm \(\dagger\)}
+\begin{questionbox}{Đề bài}
+Nêu định nghĩa hướng giảm của \(f\) tại \(x^\ast\), và điều kiện đủ để nhận biết hướng giảm.
+\end{questionbox}
+\textbf{Lời giải.} \(d\ne0\) là hướng giảm nếu tồn tại \(\delta>0\) sao cho \(f(x^\ast+td)<f(x^\ast)\) với mọi \(0<t<\delta\). Nếu \(f\) khả vi và \(\grad f(x^\ast)\T d<0\), thì \(d\) là hướng giảm. Dấu bằng \(0\) chưa đủ để kết luận; xem phép tính cụ thể ở Bài 2 trang 289.
+
+\subsection{Điều kiện KKT}
+Với \(\min f(x)\), \(g_i(x)\le0\), \(h_j(x)=0\), đặt
+\[
+L(x,\lambda,\mu)=f(x)+\sum_i\lambda_i g_i(x)+\sum_j\mu_jh_j(x).
+\]
+KKT gồm khả thi nguyên thủy \(g_i(x^\ast)\le0,\ h_j(x^\ast)=0\); dừng \(\grad_xL=0\); dấu \(\lambda_i\ge0\); và bù trừ \(\lambda_i g_i(x^\ast)=0\). KKT là điều kiện cần khi có điều kiện chính quy phù hợp; với bài toán lồi, điểm khả thi thỏa KKT là nghiệm tối ưu toàn cục.
+
+\subsection{Bài 16 trang 291(ii): nghiệm lồi tại biên}
+\[
+\min f(x)=x_1^2+x_2^2-8x_1-4x_2,\qquad
+x_1+x_2\le2,\quad x_1,x_2\ge0.
+\]
+Đặt \(g_1=x_1+x_2-2,\ g_2=-x_1,\ g_3=-x_2\). Vì \(\Hess f=2I\succ0\), \(f\) lồi chặt. Tại \(x^\ast=(2,0)\), chọn \(\lambda^\ast=(4,0,0)\):
+\[
+\grad f(x^\ast)+4(1,1)\T=(-4,-4)\T+(4,4)\T=0.
+\]
+Điểm này khả thi, nhân tử không âm và thỏa bù trừ; do lồi chặt, đây là nghiệm tối ưu duy nhất, \(f(x^\ast)=-12\).
+
+\subsection{KKT không đủ nếu bài toán không lồi}
+Xét \(f(x_1,x_2)=x_1\) với
+\[
+g(x)=-(x_1-2)^2-4(x_2-2)^2+4\le0.
+\]
+Tại \((4,2)\), \(g=0,\ \grad g=(-4,0)\T\), nên điều kiện dừng cho \(\lambda=\tfrac14\ge0\). Đây là điểm KKT, nhưng miền khả thi là phía ngoài ellipse và không lồi; có thể cho \(x_1\to-\infty\), nên bài toán không có giá trị cực tiểu hữu hạn. KKT tại đây không chứng minh tối ưu toàn cục.
+
+\subsection{Bài 21 trang 292: nghiệm tối ưu tại biên}
+\[
+\min f(x)=x_1^2+x_2^2+x_3^2+x_1x_2+x_2x_3,\qquad
+x_1\ge2,\quad x_2\ge4,\quad x_3\ge0.
+\]
+Hessian
+\[
+H=\begin{pmatrix}2&1&0\\1&2&1\\0&1&2\end{pmatrix}\succ0.
+\]
+Viết \(g_1=2-x_1,\ g_2=4-x_2,\ g_3=-x_3\). Tại \(x^\ast=(2,4,0)\),
+\[
+\grad f(x^\ast)=(8,10,4)\T,\qquad \lambda^\ast=(8,10,4)\T.
+\]
+Suy ra \(\grad f(x^\ast)+\sum_i\lambda_i^\ast\grad g_i(x^\ast)=0\); các ràng buộc hoạt động và \(\lambda^\ast\ge0\). Vì \(H\succ0\), đây là nghiệm tối ưu duy nhất, \(f(x^\ast)=28\).
+
+\section*{Ghi chú chuẩn hóa}
+\addcontentsline{toc}{section}{Ghi chú chuẩn hóa}
+Đề và ký hiệu được đối chiếu theo giáo trình và vở viết tay. Với các bản lời giải có dấu hoặc miền biến khác nhau, bản này theo đề trong giáo trình (đặc biệt Bài 2 trang 129: \(x_2\) tự do dấu, \(x_3\ge0\)). Đường dẫn nguồn ghi trong yêu cầu không có nguyên văn trên máy; đã dùng thư mục ảnh gần khớp \texttt{Downloads\textbackslash Bài} để đối chiếu.
+
+\vfill
+\begin{center}
+\textcolor{navy}{\textbf{Hết -- ghi điều kiện, phép tính và kết luận cho từng bài.}}
+\end{center}
 
 \end{document}
