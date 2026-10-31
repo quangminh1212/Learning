@@ -109,7 +109,8 @@ Nếu mỗi vật phẩm được chọn nhiều lần hoặc theo số lượng
 \end{exbox}
 
 \subsection{Bài 10 trang 62: mô hình sản xuất}
-Gọi \(x_1,x_2,x_3\) là số lượng ba loại sản phẩm. Một sản phẩm loại 1 dùng \(9\) giờ máy cán, \(5\) giờ máy tiện, \(1\) giờ máy mài; loại 2 dùng \(5,3,0\) giờ; loại 3 dùng \(8,3,3\) giờ. Giới hạn tổng là \(550,430,200\) giờ tương ứng. Giá bán lần lượt là \(100,120,55\).
+\textbf{Đề bài.} Xí nghiệp có tối đa \(550\) giờ máy cán, \(430\) giờ máy tiện và \(200\) giờ máy mài. Mỗi sản phẩm loại 1 cần \(9,5,1\) giờ trên ba loại máy; loại 3 cần \(8,3,3\) giờ; còn một sản phẩm loại 2 cần \(5\) giờ máy cán và \(3\) giờ máy tiện. Giá bán lần lượt là \(100,120,55\) đô-la. Hãy lập mô hình sản xuất để doanh thu lớn nhất.
+\textbf{Lời giải.} Gọi \(x_1,x_2,x_3\ge0\) là số lượng ba loại sản phẩm. Theo thứ tự máy cán, máy tiện, máy mài, thời gian dùng trên từng máy không được vượt giới hạn.
 \[
 \begin{aligned}
 \max\quad &100x_1+120x_2+55x_3,\\
@@ -117,10 +118,10 @@ Gọi \(x_1,x_2,x_3\) là số lượng ba loại sản phẩm. Một sản ph�
 &9x_1+5x_2+8x_3\le550,\\
 &5x_1+3x_2+3x_3\le430,\\
 &x_1+3x_3\le200,\\
-&x_1,x_2,x_3\in\N_0.
+&x_1,x_2,x_3\ge0.
 \end{aligned}
 \]
-Nếu đề cho phép sản xuất phân số đơn vị thì thay \(\N_0\) bằng \(\R_+\); không tự ý áp đặt điều kiện nguyên nếu đề không yêu cầu.
+Đề không nêu điều kiện nguyên; chỉ thêm \(x_i\in\mathbb{Z}_+\) nếu có yêu cầu riêng rằng sản lượng phải là số nguyên.
 \src{8; đối chiếu giáo trình tr. 62}
 
 \subsection{Ví dụ hồi quy giá nhà}
@@ -215,6 +216,18 @@ Với \(q(x_1,x_2)=x_1^2+3x_1x_2-2x_2^2\),
 Hessian bất định, nên \(q\) không lồi cũng không lõm trên \(\R^2\).
 \end{exbox}
 
+\subsection{Bài 17 trang 37: phân loại hàm lồi, lõm}
+\textbf{Đề bài.} Với mỗi hàm sau, xác định hàm lồi, hàm lõm hay không lồi cũng không lõm trên toàn không gian xác định; nêu lý do.
+\begin{enumerate}
+\item \(f(x_1,x_2)=x_1e^{-(x_1+x_2)}\). \textbf{Lời giải.} \(\det\Hess f=-e^{-2(x_1+x_2)}<0\), nên Hessian bất định tại mọi điểm: hàm không lồi cũng không lõm.
+\item \(f(x_1,x_2)=x_1^2+2x_1x_2-10x_1+5x_2\). \textbf{Lời giải.} \(\Hess f=\begin{pmatrix}2&2\\2&0\end{pmatrix}\), định thức \(-4<0\); hàm không lồi cũng không lõm.
+\item \(f(x_1,x_2)=-x_1^2-5x_2^2+2x_1x_2+9x_1-8x_2\). \textbf{Lời giải.} \(\Hess f=\begin{pmatrix}-2&2\\2&-10\end{pmatrix}\prec0\) vì phần tử đầu \(-2<0\), định thức \(16>0\); hàm lõm nghiêm.
+\item \(f(x)=x_1x_2+2x_1^2+x_2^2+2x_3^2-6x_1x_3+3x_2x_3\). \textbf{Lời giải.} Hessian \(\begin{pmatrix}4&1&-6\\1&2&3\\-6&3&4\end{pmatrix}\) có định thức \(-116<0\); hàm không lồi cũng không lõm.
+\item \(f(x)=-x_1^2-3x_2^2-2x_3^2+4x_1x_2+2x_1x_3+4x_2x_3\). \textbf{Lời giải.} Hessian có định thức con cấp hai \(\begin{vmatrix}-2&4\\4&-6\end{vmatrix}=-4<0\), nên bất định; hàm không lồi cũng không lõm.
+\item \(f(x)=x_1^2+2x_1x_2+4x_1x_2+3x_2^2+x_2x_3+6x_3^2\). \textbf{Lời giải.} Giữ nguyên hai hạng tử \(x_1x_2\) như bản đề; Hessian sau khi cộng hệ số là \(\begin{pmatrix}2&6&0\\6&6&1\\0&1&12\end{pmatrix}\), có định thức con cấp hai \(-24<0\), nên hàm không lồi cũng không lõm.
+\item \(f(x)=x_1^2+4x_1x_2+4x_2^2+2x_1x_3+4x_2x_3\). \textbf{Lời giải.} Hessian có định thức con theo biến \((x_1,x_3)\) bằng \(\begin{vmatrix}2&2\\2&0\end{vmatrix}=-4<0\), nên hàm không lồi cũng không lõm.
+\end{enumerate}
+
 \subsection{Lưu ý về cực trị của bài toán lồi}
 Nếu \(f\) lồi trên \(X\) lồi, mọi cực tiểu địa phương đều là cực tiểu toàn cục. Nếu \(f\) lồi nghiêm thì nghiệm cực tiểu toàn cục, nếu tồn tại, là duy nhất. Với hàm lõm, các phát biểu tương tự áp dụng cho cực đại.
 
@@ -270,8 +283,10 @@ Trong các hướng đơn vị \(\|d\|=1\),
 Vì vậy thuật toán giảm gradient chọn \(d=-\grad f(x)\) hoặc hướng đã chuẩn hóa cùng chiều với véc-tơ này.
 \end{keybox}
 
-\begin{exbox}{Bài 3 trang 289: kiểm tra một hướng giảm}
-Xét \(f(x_1,x_2)=x_2e^{-(x_1+x_2)}\), \(x^0=(2,1)\), \(d=(3,-1)\). Ta có
+\begin{exbox}{Bài 2 trang 289: đường đi và hướng giảm}
+\textbf{Đề bài.} Cho \(x^0=(2,1)\T\), \(d=(3,-1)\T\), \(f(x)=x_2e^{-(x_1+x_2)}\). (i) Vẽ tập \(\{x=x^0+td:t\ge0\}\). (ii) Xác định \(d\) có là hướng giảm của \(f\) tại \(x^0\) không.
+
+\textbf{Lời giải.} Đường đi là \(x(t)=(2+3t,1-t)\), \(t\ge0\). Ta có
 \[
 \grad f(x)=
 \begin{pmatrix}
@@ -285,7 +300,11 @@ Do đó
 \[
 f'(x^0;d)=\grad f(x^0)\T d=-3e^{-3}<0,
 \]
-nên \(d\) là hướng giảm. Đường đi tương ứng là \(x(t)=(2+3t,1-t)\), \(t\ge0\).
+vì vậy \(d\) là hướng giảm. Trên tia đó,
+\[
+\phi(t)=f(x(t))=(1-t)e^{-(3+2t)},\qquad \phi'(0)=-3e^{-3}<0,
+\]
+xác nhận hàm giảm khi \(t>0\) đủ nhỏ.
 \end{exbox}
 
 \subsection{Điều kiện bậc hai}
@@ -295,7 +314,7 @@ Nếu \(x^*\) là cực tiểu địa phương và \(f\in C^2\), điều kiện 
 \]
 Nếu \(\grad f(x^*)=0\) và \(\Hess f(x^*)\succ0\), thì \(x^*\) là cực tiểu địa phương nghiêm. Hessian xác định âm cho cực đại địa phương nghiêm; Hessian bất định loại trừ cả cực tiểu lẫn cực đại địa phương.
 
-\begin{exbox}{Bài 2 trang 289: hàm không lồi cũng không lõm}
+\begin{exbox}{Bài 17 trang 37, ý (i): hàm không lồi cũng không lõm}
 Với
 \[
 f(x_1,x_2)=x_1e^{-(x_1+x_2)},
@@ -313,6 +332,15 @@ x_1-1&x_1
 \]
 Định thức Hessian là \(-e^{-2(x_1+x_2)}<0\) tại mọi điểm. Hessian bất định, do đó hàm không lồi và không lõm trên \(\R^2\).
 \end{exbox}
+
+\subsection{Bài 3 trang 289: cực tiểu hàm toàn phương}
+\textbf{Đề bài.} Cho \(f(x)=\frac12x\T Ax+b\T x+c\), trong đó \(A=A\T\succ0\), \(b\in\R^n\), \(c\in\R\). Chứng minh tìm cực tiểu của \(f\) trên \(\R^n\) tương đương giải hệ \(Ax+b=0\).
+
+\textbf{Lời giải.} Vì \(A\) đối xứng,
+\[
+\grad f(x)=Ax+b,\qquad \Hess f(x)=A\succ0.
+\]
+Điểm dừng duy nhất là \(x^*=-A^{-1}b\); tính lồi nghiêm cho biết đây là cực tiểu toàn cục duy nhất. Giá trị nhỏ nhất là \(f(x^*)=c-\frac12b\T A^{-1}b\).
 
 \subsection{Bài 4 trang 289: dạng toàn phương}
 Cho
@@ -474,24 +502,14 @@ Nếu \(A\) đối xứng, gradient của dạng toàn phương là \(Aw\). Quy 
 \section{Một số bài tập phi tuyến được ghi trong vở}
 \src{18,22-23,46-61}
 
-\subsection{Bài 3 trang 289: đường đi và hướng giảm}
-Với \(f(x_1,x_2)=x_2e^{-(x_1+x_2)}\), \(x^0=(2,1)\), \(d=(3,-1)\), đường đi là
-\[
-x(t)=x^0+td=(2+3t,1-t).
-\]
-Thay vào hàm:
-\[
-\phi(t)=(1-t)e^{-(3+2t)},\qquad
-\phi'(0)=-3e^{-3}<0.
-\]
-Điểm trên đường đi bắt đầu giảm khi \(t>0\) đủ nhỏ. Đây là kiểm tra trực tiếp cho kết quả đạo hàm theo hướng.
-
 \subsection{Bài 5 trang 289: họ hàm theo tham số}
-Vở xét họ
+\textbf{Đề bài.} Cho
 \[
 f_\alpha(x_1,x_2)=\alpha x_1^2+x_2^2-2x_1x_2-2x_2,\qquad \alpha\in\R.
 \]
-Ta có
+Tìm điểm dừng theo \(\alpha\), phân loại cực trị địa phương và xét sự tồn tại cực trị toàn cục.
+
+\textbf{Lời giải.} Ta có
 \[
 \grad f_\alpha=
 \begin{pmatrix}2\alpha x_1-2x_2\\2x_2-2x_1-2\end{pmatrix},
@@ -503,7 +521,7 @@ Nếu \(\alpha\ne1\), điểm dừng là
 \[
 x^0=\left(\frac1{\alpha-1},\frac{\alpha}{\alpha-1}\right).
 \]
-Khi \(\alpha>1\), Hessian xác định dương và \(x^0\) là cực tiểu toàn cục nghiêm. Khi \(\alpha<1\), Hessian bất định nên điểm dừng là điểm yên ngựa. Khi \(\alpha=1\), hệ phương trình gradient bằng \(0\) vô nghiệm; hàm không có điểm dừng.
+Khi \(\alpha>1\), Hessian xác định dương nên \(x^0\) là cực tiểu toàn cục nghiêm duy nhất; hàm không có cực đại toàn cục. Khi \(\alpha<1\), Hessian bất định nên điểm dừng là điểm yên ngựa và hàm không bị chặn trên hoặc dưới. Khi \(\alpha=1\), hệ gradient bằng \(0\) vô nghiệm; \(f_1=(x_1-x_2)^2-2x_2\) cũng không bị chặn trên hoặc dưới.
 
 \subsection{Ví dụ phân loại điểm dừng}
 \begin{enumerate}
@@ -513,11 +531,13 @@ Khi \(\alpha>1\), Hessian xác định dương và \(x^0\) là cực tiểu toà
 
 \clearpage
 \begin{samepage}
-\subsection{Bài 6 trang 290: ví dụ điểm dừng nghiêm}
-\textbf{Đề bài (i).} Xét
+\subsection{Bài 6 trang 289: cực tiểu địa phương nhưng không toàn cục}
+\textbf{Đề bài.} Cho hàm
 \[
 F(x,y)=e^{3xy}-3xe^y+x^3.
 \]
+Chứng minh \((1,0)\T\) là điểm cực tiểu địa phương của \(F\), nhưng không phải cực tiểu toàn cục.
+
 \textbf{Lời giải.} Gradient và Hessian tổng quát là
 \[
 \grad F=
@@ -539,23 +559,29 @@ Tại \((1,0)\), \(\grad F(1,0)=0\) và
 Do Hessian xác định dương, \((1,0)\) là cực tiểu địa phương nghiêm. Nhưng \(F(1,0)=-1\), còn \(F(-10,0)=-969\); hơn nữa \(F(x,0)=1-3x+x^3\to-\infty\) khi \(x\to-\infty\). Vì vậy đây không phải cực tiểu toàn cục.
 
 \end{samepage}
+\clearpage
+\subsection{Bài 7 trang 290: tìm cực tiểu toàn cục}
+Với từng hàm dưới đây, giải bài toán \(\min_{x\in\R^n} f(x)\).
 \begin{samepage}
-\textbf{Đề bài (ii).} Tìm và phân loại các điểm dừng của
+\textbf{Đề bài (i).} \(p_1(x)=15-12x-25x^2+2x^3,\ x\in\R\).
+
+\textbf{Lời giải.} \(p_1'(x)=6x^2-50x-12\), nên các điểm dừng là
 \[
-p(x)=3x^3+7x^2-15x-3,\qquad x\in\R.
+x_{1,2}=\frac{25\mp\sqrt{697}}6.
 \]
-\textbf{Lời giải.} Ta có \(p'(x)=9x^2+14x-15\), nên
+Vì \(p_1''(x)=12x-50\), \(x_1\) là cực đại địa phương và \(x_2\) là cực tiểu địa phương. Khi \(x\to-\infty\), \(p_1(x)\to-\infty\), nên bài toán không có nghiệm cực tiểu toàn cục.
+\end{samepage}
+\begin{samepage}
+\textbf{Đề bài (ii).} \(p_2(x)=3x^3+7x^2-15x-3,\ x\in\R\). Tìm giá trị nhỏ nhất toàn cục nếu có.
+\textbf{Lời giải.} Ta có \(p_2'(x)=9x^2+14x-15\), nên
 \[
 x_{1,2}=\frac{-7\mp2\sqrt{46}}9.
 \]
-Vì \(p''(x)=18x+14\), suy ra \(p''(x_1)=-4\sqrt{46}<0\) và \(p''(x_2)=4\sqrt{46}>0\). Do đó \(x_1\) là cực đại địa phương, \(x_2\) là cực tiểu địa phương. Hàm bậc ba không bị chặn trên hoặc dưới trên \(\R\), nên không có cực trị toàn cục.
+Vì \(p_2''(x)=18x+14\), suy ra \(p_2''(x_1)=-4\sqrt{46}<0\) và \(p_2''(x_2)=4\sqrt{46}>0\). Do đó \(x_1\) là cực đại địa phương, \(x_2\) là cực tiểu địa phương. Khi \(x\to-\infty\), \(p_2(x)\to-\infty\), nên không có nghiệm cực tiểu toàn cục.
 
 \end{samepage}
 \begin{samepage}
-\textbf{Đề bài (iii).} Xét
-\[
-r(x_1,x_2)=8x_1^2+3x_1x_2+7x_2^2-25x_1+31x_2-29.
-\]
+\textbf{Đề bài (iii).} \(r(x_1,x_2)=8x_1^2+3x_1x_2+7x_2^2-25x_1+31x_2-29\). Tìm cực tiểu toàn cục.
 \textbf{Lời giải.} Hessian \(H=\begin{pmatrix}16&3\\3&14\end{pmatrix}\) có \(16>0\) và \(\det H=215>0\), nên \(H\succ0\). Giải hệ \(\grad r=0\):
 \[
 \begin{cases}
@@ -572,10 +598,7 @@ r(x^*)=-\frac{20623}{215}\approx-95.921.
 
 \end{samepage}
 \begin{samepage}
-\textbf{Đề bài (iv).} Xét
-\[
-s(x_1,x_2)=x_1^4+2x_1^3+2x_1^2-2x_1x_2+x_2^2.
-\]
+\textbf{Đề bài (iv).} \(s(x_1,x_2)=2x_1^2+x_2^2-2x_1x_2+2x_1^3+x_1^4\). Tìm cực tiểu toàn cục.
 \textbf{Lời giải.} Điều kiện \(\grad s=0\) cho \(x_2=x_1\) và
 \[
 2x_1(2x_1+1)(x_1+1)=0,
@@ -591,22 +614,13 @@ s(x_1,x_2)=(x_2-x_1)^2+x_1^2(x_1+1)^2\ge0,
 do đó hai điểm cực tiểu trên cũng là nghiệm toàn cục, cùng giá trị \(0\).
 \end{samepage}
 
-\subsection{Bài 7 trang 290: hàm một biến}
-Một ví dụ được ghi là
-\[
-p(x)=15-12x-25x^2+2x^3.
-\]
-Đạo hàm \(p'(x)=6x^2-50x-12\), các điểm dừng:
-\[
-x_{1,2}=\frac{25\mp\sqrt{697}}6.
-\]
-Đạo hàm bậc hai \(p''(x)=12x-50\). Tại \(x_1\), \(p''(x_1)<0\), nên có cực đại địa phương; tại \(x_2\), \(p''(x_2)>0\), nên có cực tiểu địa phương. Do hàm bậc ba không bị chặn dưới trên \(\R\), không có cực tiểu toàn cục trên toàn trục số.
-
 \subsection{Bài 8 trang 290}
-Với
+\textbf{Đề bài.} Cho
 \[
 q(x_1,x_2)=x_1^2-x_1x_2+2x_2^2-2x_1+e^{x_1+x_2},
 \]
+\textbf{Hỏi:} \((0,0)\T\) có phải cực tiểu địa phương không; nếu không, tìm hướng \(d\) sao cho hàm giảm.
+\textbf{Lời giải.} Gradient và Hessian là
 \[
 \grad q=
 \begin{pmatrix}
@@ -620,13 +634,22 @@ q(x_1,x_2)=x_1^2-x_1x_2+2x_2^2-2x_1+e^{x_1+x_2},
 -1+e^{x_1+x_2}&4+e^{x_1+x_2}
 \end{pmatrix}.
 \]
-Tại \((0,0)\), gradient là \((-1,1)\T\), nên đây không phải điểm dừng. Véc-tơ \((1,-1)\) cho đạo hàm theo hướng âm. Trên tia \(x(t)=(t,-t)\), \(q(x(t))=4t^2-2t+1\), nên đạo hàm tại \(t=0\) bằng \(-2\).
+Tại gốc, \(\grad q=(-1,1)\T\ne0\), nên không phải điểm dừng. Chọn \(d=(1,-1)\), ta có \(\grad q(0,0)\T d=-2<0\). Trên tia \(x(t)=(t,-t)\), \(q(x(t))=4t^2-2t+1\), nên hàm giảm với \(t>0\) đủ nhỏ.
 
 \subsection{Bài 10 trang 290: điều kiện hướng giảm}
-Nếu \(d\) là hướng giảm tại \(x^0\), thì \(\grad f(x^0)\T d<0\). Với hướng chuẩn hóa \(d/\|d\|\), dấu không đổi. Tại điểm dừng \(\grad f(x^0)=0\), không có hướng giảm bậc nhất; cần xét bậc hai hoặc cấu trúc toàn cục.
+\textbf{Đề bài.} Nêu định nghĩa hướng giảm của hàm \(f\) tại \(x^*\), và điều kiện đủ để nhận biết một hướng giảm.
+
+\textbf{Lời giải.} Véc-tơ \(d\ne0\) là hướng giảm tại \(x^*\) nếu tồn tại \(\varepsilon>0\) sao cho \(f(x^*+td)<f(x^*)\) với mọi \(t\in(0,\varepsilon)\). Nếu \(f\) khả vi tại \(x^*\) và
+\[
+\grad f(x^*)\T d<0,
+\]
+thì \(d\) là hướng giảm vì đạo hàm theo hướng âm. Chuẩn hóa \(d/\|d\|\) không đổi dấu tích vô hướng. Nếu \(\grad f(x^*)=0\), điều kiện bậc nhất không chỉ ra hướng giảm; cần xét bậc cao hơn hoặc cấu trúc toàn cục.
 
 \subsection{Bài 11 trang 290: ba bước gradient descent}
-\textbf{Đề bài (i).} Cho \(f(u)=u_1^2+2u_2^2\), bắt đầu tại \(u^0=(2,1)\). Dùng hướng dốc nhất và tìm kiếm chính xác để tính ba bước đầu.
+\textbf{Đề bài (i).} Với \(f(u)=u_1^2+2u_2^2\), bắt đầu tại \(u^0=(2,1)\T\). Tính \(u^1,u^2,u^3\) bằng hướng dốc nhất và tìm kiếm chính xác theo tia; chứng minh
+\[
+u^k=\frac1{3^k}\begin{pmatrix}2\\(-1)^k\end{pmatrix},\qquad f(u^{k+1})=\frac{f(u^k)}9.
+\]
 
 \textbf{Lời giải.} Ta có \(\grad f(u)=(2u_1,4u_2)\T\), \(\Hess f=\operatorname{diag}(2,4)\succ0\), nên nghiệm cực tiểu duy nhất là \(u^*=(0,0)\). Ở mỗi bước, độ dài tối ưu là \(t_k=(g_k\T g_k)/(g_k\T\Hess f\,g_k)=1/3\). Vì thế
 \[
@@ -636,7 +659,7 @@ u^2&=u^1-\tfrac13\grad f(u^1)=(\tfrac29,\tfrac19),\\
 u^3&=u^2-\tfrac13\grad f(u^2)=(\tfrac2{27},-\tfrac1{27}).
 \end{aligned}
 \]
-Theo quy nạp, \(u^k=3^{-k}(2,(-1)^k)\to(0,0)\).
+Theo quy nạp, \(u^k=3^{-k}(2,(-1)^k)\to(0,0)\). Đồng thời \(f(u^k)=6/9^k\), nên \(f(u^{k+1})=f(u^k)/9\).
 
 \textbf{(ii)} Với \(f(x)=4x_1^2+2x_2^2+4x_1x_2-3x_1\), gradient và Hessian là
 \[
@@ -745,28 +768,65 @@ Mỗi ràng buộc tuyến tính xác định một nửa mặt phẳng hoặc n
 Miền khả thi không bị chặn không đồng nghĩa bài toán không có nghiệm tối ưu: cần xét hướng của hàm mục tiêu.
 
 \subsection{Bài 6 trang 130(i): kiểm tra miền rỗng}
-Ghi chép minh họa cách vẽ các đường biên rồi xác định giao của những nửa mặt phẳng. Nếu không tồn tại điểm nào thỏa đồng thời tất cả ràng buộc, miền khả thi rỗng và bài toán không có phương án khả thi. Khi chép từ đề, cần giữ đúng chiều từng dấu \(\le,\ge\); đổi một chiều có thể đổi miền từ rỗng thành không rỗng.
+\textbf{Đề bài.} Giải bằng phương pháp hình học:
+\[
+\begin{aligned}
+\min\quad &z=3x_1+x_2,\\
+\text{với}\quad
+&x_1-x_2\le1,\quad 3x_1+2x_2\le12,\\
+&2x_1+3x_2\le3,\quad -2x_1+3x_2\ge9,\\
+&x_1,x_2\ge0.
+\end{aligned}
+\]
+\textbf{Lời giải.} Từ \(2x_1+3x_2\le3\) và \(x_1\ge0\) suy ra \(x_2\le1\). Từ \(-2x_1+3x_2\ge9\) và \(x_1\ge0\) suy ra \(x_2\ge3\). Hai điều kiện mâu thuẫn, nên miền khả thi rỗng và bài toán không có phương án khả thi.
 
 \subsection{Bài 6 trang 130(ii): miền khả thi không bị chặn}
-Bài toán đã đối chiếu với trang giáo trình:
+\textbf{Đề bài.} Giải bằng phương pháp hình học:
 \[
 \begin{aligned}
 \min\quad &z=x_1+2x_2,\\
 \text{với}\quad
 &2x_1+x_2\ge12,\quad x_1+x_2\ge5,\\
-&-x_1+3x_2\ge5,\quad 6x_1-x_2\ge12,\\
+&-x_1+3x_2\le3,\quad 6x_1-x_2\ge12,\\
 &x_1,x_2\ge0.
 \end{aligned}
 \]
-Miền khả thi không bị chặn. Hai đường \(2x_1+x_2=12\) và \(6x_1-x_2=12\) gặp tại \((3,6)\). Biên đi xuống theo đường mục tiêu tới giao điểm của \(2x_1+x_2=12\) và \(-x_1+3x_2=5\):
+\textbf{Lời giải.} Miền khả thi không bị chặn. Nếu \(x_1\ge6\), thì \(z=x_1+2x_2\ge6\). Nếu \(x_1\le6\), ràng buộc \(2x_1+x_2\ge12\) cho \(x_2\ge12-2x_1\), do đó
 \[
-x^*=\left(\frac{31}{7},\frac{22}{7}\right),\qquad
-z^*=\frac{31}{7}+2\cdot\frac{22}{7}=\frac{75}{7}.
+z\ge x_1+2(12-2x_1)=24-3x_1\ge6.
 \]
-Các ràng buộc còn lại đều được thỏa tại điểm này; do hàm mục tiêu tăng theo \(x_1,x_2\), đây là điểm đạt giá trị nhỏ nhất.
+Điểm \(x^*=(6,0)\) thỏa mọi ràng buộc và cho \(z^*=6\), nên là nghiệm tối ưu. Đây là đề theo ảnh \textit{Đề Bài.docx}; bản giáo trình/ghi tay có một biến thể khác được nêu riêng ở mục hiệu chỉnh.
 
 \subsection{Bài 7 trang 130: phương án cơ sở và sự tồn tại nghiệm}
-Với hệ phương trình \(Ax=b,\ x\ge0\), một phương án cơ sở được tạo bằng cách chọn các cột độc lập làm biến cơ sở và đặt các biến còn lại bằng \(0\). Phương án cơ sở không suy biến nếu mọi biến cơ sở dương. Để kết luận bài toán có nghiệm tối ưu, cần xét miền khả thi và hướng của mục tiêu; việc chỉ liệt kê các điểm cơ sở chưa đủ nếu miền không bị chặn.
+\textbf{Đề bài.} Tìm các phương án cực biên không suy biến của mỗi bài toán dưới đây và cho biết bài toán có nghiệm tối ưu không.
+
+\begin{samepage}
+\textbf{(i) Đề bài.}
+\[
+\min\ f(x)=2x_1+4x_2-3x_3,\quad
+x_1-x_2-x_3=1,\quad x_1+x_2+x_3=3,\quad x_1,x_2,x_3\ge0.
+\]
+\textbf{Lời giải.} Cộng hai đẳng thức được \(x_1=2\), rồi \(x_2+x_3=1\). Miền khả thi là đoạn nối hai đỉnh không suy biến \((2,1,0)\) và \((2,0,1)\). Giá trị mục tiêu lần lượt là \(8\) và \(1\); vậy bài toán có nghiệm tối ưu \(x^*=(2,0,1)\), \(f(x^*)=1\).
+\end{samepage}
+
+\begin{samepage}
+\textbf{(ii) Đề bài.}
+\[
+\max\ f(x)=3x_1-6x_2+x_3-3x_4,\quad
+x_1+x_2+x_3+x_4=10,\quad 2x_2+x_3-x_4=6,\quad x\ge0.
+\]
+\textbf{Lời giải.} Các phương án cực biên không suy biến và giá trị mục tiêu tương ứng là
+\[
+\begin{array}{c|r}
+x & f(x)\\ \hline
+(7,3,0,0) & 3\\
+(4,0,6,0) & 18\\
+(0,\frac{16}{3},0,\frac{14}{3}) & -46\\
+(0,0,8,2) & 2
+\end{array}
+\]
+Các phương án cơ sở còn lại có biến cơ sở âm nên không khả thi. Vì \(x\ge0\) và tổng các biến bằng \(10\), miền khả thi đóng và bị chặn; bài toán có nghiệm tối ưu \(x^*=(4,0,6,0)\), \(f(x^*)=18\).
+\end{samepage}
 
 \subsection{Đưa bài toán về dạng chuẩn}
 \begin{itemize}
@@ -779,7 +839,7 @@ Với hệ phương trình \(Ax=b,\ x\ge0\), một phương án cơ sở đượ
 \end{itemize}
 
 \subsection{Bài 1 trang 129: đổi mục tiêu, biến có cận và biến phụ}
-Mô hình gốc:
+\textbf{Đề bài.} Chuyển bài toán quy hoạch tuyến tính sau về dạng chính tắc:
 \[
 \begin{aligned}
 \max\quad &z=3x_1+5x_2-4x_3,\\
@@ -789,7 +849,7 @@ Mô hình gốc:
 &x_1\ge1,\quad x_2\le7,\quad x_3\ge0.
 \end{aligned}
 \]
-Đặt \(u_1=x_1-1\ge0\), \(u_2=7-x_2\ge0\), nên \(x_1=u_1+1,\ x_2=7-u_2\). Đổi mục tiêu thành \(\min(-z)\), thêm biến dư/thừa để đưa các bất đẳng thức về đẳng thức. Kết quả:
+\textbf{Lời giải.} Đặt \(u_1=x_1-1\ge0\), \(u_2=7-x_2\ge0\), nên \(x_1=u_1+1,\ x_2=7-u_2\). Đổi mục tiêu thành \(\min(-z)\), thêm biến dư/thừa để đưa các bất đẳng thức về đẳng thức. Kết quả:
 \[
 \begin{aligned}
 \min\quad&-z=-3u_1+5u_2+4x_3-38,\\
@@ -797,6 +857,29 @@ Mô hình gốc:
 &2u_1+4u_2-8x_3=29,\\
 &5u_1+3u_2-2x_3+s_3=25,\\
 &u_1,u_2,x_3,s_1,s_3\ge0.
+\end{aligned}
+\]
+
+\subsection{Bài 2 trang 129: biến tự do và vế phải âm}
+\textbf{Đề bài.} Chuyển bài toán sau về dạng chính tắc:
+\[
+\begin{aligned}
+\max\quad &z=5x_1-x_2-7x_3,\\
+\text{với}\quad
+&7x_1+4x_2-11x_3\ge12,\\
+&x_1-3x_2-9x_3=-5,\\
+&6x_1+5x_2+2x_3\le10,\\
+&x_1\ge-2,\quad x_2\text{ tự do},\quad x_3\ge0.
+\end{aligned}
+\]
+\textbf{Lời giải.} Đặt \(u_1=x_1+2\ge0\), \(x_2=u_2^+-u_2^-\) với \(u_2^+,u_2^-\ge0\), và giữ \(x_3\ge0\). Đổi \(\max z\) thành \(\min(-z)\); đổi dấu phương trình thứ hai để vế phải dương; thêm biến thừa \(s_1\) và biến dư \(s_3\):
+\[
+\begin{aligned}
+\min\quad&-z=-5u_1+u_2^+-u_2^-+7x_3+10,\\
+&7u_1+4u_2^+-4u_2^--11x_3-s_1=26,\\
+&-u_1+3u_2^+-3u_2^-+9x_3=3,\\
+&6u_1+5u_2^+-5u_2^-+2x_3+s_3=22,\\
+&u_1,u_2^+,u_2^-,x_3,s_1,s_3\ge0.
 \end{aligned}
 \]
 
@@ -828,11 +911,11 @@ Miền của mô hình liên tục là giao các nửa không gian tuyến tính
 \midrule
 \endhead
 Bài 2--3, tr. 289 &
-Bài 2: xét gradient, Hessian và tính lồi/lõm của \(x_1e^{-(x_1+x_2)}\). Bài 3: xét hướng giảm của \(x_2e^{-(x_1+x_2)}\) tại \((2,1)\) theo hướng \((3,-1)\).\\
+Bài 2: tham số hóa tia và kiểm tra hướng giảm của \(x_2e^{-(x_1+x_2)}\). Bài 3: giải cực tiểu hàm toàn phương bằng \(Ax+b=0\).\\
 Bài 4--6, tr. 289 &
-Dạng toàn phương \(\frac12x\T Ax-b\T x+c\); họ \(f_\alpha=\alpha x_1^2+x_2^2-2x_1x_2-2x_2\); ví dụ Hessian bất định và phân loại điểm dừng.\\
+Dạng toàn phương, họ \(f_\alpha\), và bài chứng minh cực tiểu địa phương không phải cực tiểu toàn cục.\\
 Bài 7--8, tr. 290 &
-Phân loại cực trị cho hàm đa thức một biến; tính gradient/Hessian cho hàm có số mũ \(e^{x_1+x_2}\), kiểm tra hướng giảm tại \((0,0)\).\\
+Tìm cực tiểu toàn cục cho bốn hàm; bài hàm có số mũ \(e^{x_1+x_2}\) và hướng giảm tại \((0,0)\).\\
 Bài 10--11, tr. 290 &
 Nhận biết hướng giảm; thực hiện các bước gradient descent và tìm kiếm chính xác trên tia.\\
 Bài 15--16, tr. 291 &
@@ -845,6 +928,8 @@ Bài 6--7, tr. 130 &
 Miền khả thi rỗng/không bị chặn; kiểm tra phương án cơ sở và tồn tại nghiệm.\\
 Bài 10, tr. 62 &
 Lập mô hình sản xuất với ba sản phẩm và ba tài nguyên.\\
+Bài 17, tr. 37 &
+Phân loại bảy hàm là lồi, lõm hoặc không lồi cũng không lõm.\\
 \bottomrule
 \end{longtable}
 
@@ -852,8 +937,9 @@ Lập mô hình sản xuất với ba sản phẩm và ba tài nguyên.\\
 \src{18,46-61,64-85,87-93}
 \begin{correction}{Đọc nét mờ và chuẩn hóa ký hiệu}
 \begin{itemize}
-\item Ở Bài 6 trang 130(ii), bản đánh máy dùng ràng buộc \(-x_1+3x_2\ge5\) theo giáo trình. Trong nét ghi tay cạnh đồ thị, dấu và hằng số ở dòng này khó phân biệt; không dùng bản chép mờ đó để kết luận.
-\item Ở Bài 6 trang 290(i), nét ghi Hessian có vẻ cho hai đạo hàm hỗn hợp bằng \(-3\). Tính lại từ hàm gốc cho \(F_{xy}=3e^{3xy}+9xy e^{3xy}-3e^y\), nên \(F_{xy}(1,0)=0\) và \(\Hess F(1,0)=\operatorname{diag}(6,6)\). Kết luận cực tiểu địa phương vẫn đúng; ví dụ \((-10,0)\) cho thấy không phải cực tiểu toàn cục.
+\item Bài 6 trang 130(ii) có hai phiên bản. Ảnh trong \textit{Đề Bài.docx} ghi \(-x_1+3x_2\le3\), cho nghiệm \((6,0)\), \(z=6\); giáo trình/ghi chép trong vở ghi \(-x_1+3x_2\ge5\), cho \((31/7,22/7)\), \(z=75/7\). Hai đề và hai đáp án được giữ tách riêng.
+\item Ở Bài 6 trang 289, nét ghi Hessian có vẻ cho hai đạo hàm hỗn hợp bằng \(-3\). Tính lại từ hàm gốc cho \(F_{xy}=3e^{3xy}+9xy e^{3xy}-3e^y\), nên \(F_{xy}(1,0)=0\) và \(\Hess F(1,0)=\operatorname{diag}(6,6)\). Kết luận cực tiểu địa phương vẫn đúng; ví dụ \((-10,0)\) cho thấy không phải cực tiểu toàn cục.
+\item Bài 17 trang 37, ý (vi), bản đề in hai hạng tử \(2x_1x_2\) và \(4x_1x_2\). Bản chép giữ nguyên; khi tính Hessian đã cộng chúng thành hệ số \(6x_1x_2\).
 \item Bài 5 trang 289 được chép thành \(f_\alpha=\alpha x_1^2+x_2^2-2x_1x_2-2x_2\). Công thức cho điểm dừng \(\bigl(1/(\alpha-1),\alpha/(\alpha-1)\bigr)\) và định thức Hessian \(4(\alpha-1)\) xác nhận vị trí của tham số \(\alpha\).
 \item Trong ví dụ hồi quy, bình phương sai số được giữ đúng theo hàm \(L=\frac1{2N}\sum r_i^2\). Căn bậc hai chỉ xuất hiện ở RMSE, không nằm trong hàm mất mát bình phương dùng để lấy đạo hàm.
 \item Các đạo hàm của ví dụ gradient descent được khai triển lại từ hàm gốc; bước đầu cho \(t=289/2934\). Kết quả nháp không rõ ở trang sau không được dùng thay cho công thức đã tính lại.
@@ -892,6 +978,7 @@ Các nhóm dưới đây là chỉ dẫn để tìm nhanh nội dung trong PDF s
 \addcontentsline{toc}{subsection}{Tài liệu đối chiếu}
 \begin{enumerate}
 \item \textit{vở c Giang.pdf}: nguồn ảnh chụp và thứ tự ghi chép.
+\item \textit{Đề Bài.docx}: nguồn đề đầy đủ cho Bài 17 trang 37 và các câu ở trang 62, 129--130, 289--290.
 \item \textit{Giáo trình các phương pháp tối ưu.pdf}: kiểm tra các bài được ghi theo trang 62, 129--130, 289--292.
 \item \textit{Ôn thi - Các dạng bài Phương pháp tối ưu}: đối chiếu các bài tập và các phép tính đã được làm rõ ở bản ôn thi.
 \end{enumerate}
