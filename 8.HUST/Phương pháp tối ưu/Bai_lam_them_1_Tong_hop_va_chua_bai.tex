@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor,geometry,hyperref,enumitem,booktabs,longtable,array,fancyhdr,graphicx,pdfpages}
+\usepackage{microtype}
+\geometry{margin=2.05cm,headheight=15pt}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=teal!60!black}
+\definecolor{navy}{HTML}{17365D}
+\definecolor{teal}{HTML}{087E8B}
+\definecolor{pale}{HTML}{F2F7FB}
+\definecolor{ink}{HTML}{243247}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Phương pháp tối ưu -- HUST}
+\rhead{\small Bài làm thêm 1}
+\cfoot{\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=3pt}
+
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{2.0cm}
+{\Large\color{teal}\textbf{HỌC PHẦN HUST}}\\[.9cm]
+{\Huge\color{navy}\textbf{BÀI LÀM THÊM 1}}\\[.45cm]
+{\LARGE Tổng hợp bài tập và phần cô chấm, chữa}\\[.8cm]
+\begin{minipage}{.84\textwidth}
+\centering
+\colorbox{pale}{\parbox{.94\textwidth}{\centering
+\textbf{Nội dung được xếp theo chủ đề của học phần}\\[4pt]
+Các bản đánh máy bài tập và ghi chép được ghép thành một tài liệu; ảnh nguồn có nét bút màu được giữ ở phụ lục để đối chiếu.
+}}
+\end{minipage}
+\vfill
+{\large Tài liệu học tập cá nhân}\\[4pt]
+{\small Biên soạn bằng LaTeX; ngày 31 tháng 10 năm 2026}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\section{Phạm vi và cách đọc}
+Tài liệu gồm hai phần đã được biên soạn trong thư mục học phần: \textit{Ôn thi -- Các dạng bài Phương pháp tối ưu} (bài tập xếp theo dạng) và \textit{Vở cô Giang -- Bản đánh máy} (ghi chép cùng các bài tập theo mạch bài giảng). Phụ lục lưu các ảnh nguồn để có thể so lại phép tính và lời nhận xét trên bản gốc.
+
+\begin{itemize}
+\item Các nét bút đỏ hoặc xanh được xem là phần cô chấm, đánh dấu hoặc chữa bài theo yêu cầu. Ảnh được giữ màu để không mất dấu kiểm, gạch sửa và ghi chú.
+\item Phần đánh máy chuẩn hóa ký hiệu và cách trình bày. Khi một ghi chú viết tay khó đọc, tài liệu giữ ảnh gốc để đối chiếu, không tự đoán nội dung.
+\item Hai phần tài liệu ghép giữ số trang và mục lục nội bộ; phụ lục ảnh dùng số trang của bản tổng hợp.
+\item Thư mục nguồn hiện có 104 ảnh. Bảy tệp trùng khớp hoàn toàn theo SHA-256 được đưa về một bản trong phụ lục; bảng kê ở \texttt{Bai\_lam\_them\_1\_source\_manifest.csv} lưu liên kết giữa tên gốc và ảnh phụ lục.
+\item Đường dẫn được nêu là \texttt{Downloads\textbackslash Bài làm thêm 1} không xuất hiện nguyên văn trên máy. Bản này dùng bộ 104 ảnh trong thư mục gần khớp \texttt{Downloads\textbackslash Bài}.
+\end{itemize}
+
+\section{Bản đồ nội dung theo chủ đề}
+{\small
+\begin{longtable}{>{\bfseries\raggedright\arraybackslash}p{.23\textwidth}>{\raggedright\arraybackslash}p{.48\textwidth}>{\raggedright\arraybackslash}p{.20\textwidth}}
+\toprule
+Chủ đề & Dạng bài và nội dung & Tài liệu\\
+\midrule
+\endfirsthead
+\toprule
+Chủ đề & Dạng bài và nội dung & Tài liệu\\
+\midrule
+\endhead
+Mô hình hóa và quy hoạch tuyến tính & Lập mô hình sản xuất; đổi biến; đưa ràng buộc về dạng chuẩn; xét miền khả thi và nghiệm ở đỉnh. & Phần I, II\\
+Tập lồi và hàm lồi & Kiểm tra giao, hợp và tổng Minkowski; phân loại hàm bằng định nghĩa và Hessian. & Phần I, II\\
+Điểm dừng và Hessian & Điều kiện bậc một, bậc hai; phân biệt cực tiểu địa phương với cực tiểu toàn cục. & Phần I, II\\
+Hướng giảm và gradient descent & Đạo hàm theo hướng; tìm kiếm chính xác theo tia; tính các bước lặp của phương pháp gradient. & Phần I, II\\
+Tối ưu có ràng buộc & Hàm Lagrange, điều kiện KKT, điều kiện Slater và các bài có nghiệm tại biên. & Phần II\\
+Bình phương tối thiểu & Mô hình tuyến tính, hàm mất mát và công thức đạo hàm ma trận. & Phần II\\
+\bottomrule
+\end{longtable}
+}
+
+\section{Phần I: Bài tập ôn theo dạng}
+Phần này gom các bài mô hình hóa, tập lồi, tối ưu không ràng buộc, hướng giảm, gradient descent và quy hoạch tuyến tính theo nhóm phương pháp. Mục lục chi tiết của phần gốc được giữ ở trang đầu phần.
+\clearpage
+\includepdf[pages=2-,fitpaper=true,pagecommand={\thispagestyle{empty}}]{bai_lam_them_1_assets/study_guide.pdf}
+
+\section{Phần II: Ghi chép và bài tập theo mạch bài giảng}
+Phần này giữ lại các định nghĩa, công thức, bài tập bổ sung về KKT, bình phương tối thiểu và quy hoạch tuyến tính. Mục lục chi tiết của phần gốc được giữ ở trang đầu phần.
+\clearpage
+\includepdf[pages=2-,fitpaper=true,pagecommand={\thispagestyle{empty}}]{bai_lam_them_1_assets/lecture_notes.pdf}
+
+\section{Phụ lục: ảnh nguồn có nét chấm, chữa}
+Các trang dưới đây được lưu theo tên tệp nguồn sau khi loại các bản trùng hoàn toàn. Nét bút đỏ và xanh trong ảnh được giữ nguyên để đối chiếu với phần đánh máy.
+\input{bai_lam_them_1_assets/source_pages.tex}
+
+\end{document}
